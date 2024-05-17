@@ -10,6 +10,7 @@ const Share = lazy(() => import('@pages/Share/Share'));
 const Setting = lazy(() => import('@pages/Setting/Setting'));
 const MyPage = lazy(() => import('@pages/MyPage/MyPage'));
 const NonExistentDiary = lazy(() => import('@pages/Diary/NonExistentDiary'));
+const RewardPage = lazy(() => import('@pages/RewardPage/RewardPage'));
 
 const router = createBrowserRouter([
   {
@@ -30,6 +31,7 @@ const router = createBrowserRouter([
       { path: '/setting', element: <Setting /> },
       { path: '/mypage', element: <MyPage /> },
       { path: '/non-existent-page', element: <NonExistentDiary /> },
+      { path: '/rewardpage', element: <RewardPage /> },
     ],
   },
 ]);
