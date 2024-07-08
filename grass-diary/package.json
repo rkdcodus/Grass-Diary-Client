@@ -26,6 +26,7 @@
     "react-spring": "^9.7.3",
     "recoil": "^0.7.7",
     "slick-carousel": "^1.8.1",
+    "styled-components": "^6.1.11",
     "sweetalert2": "^11.6.13"
   },
   "devDependencies": {

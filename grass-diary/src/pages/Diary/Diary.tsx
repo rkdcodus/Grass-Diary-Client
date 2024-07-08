@@ -8,6 +8,8 @@ import useUser from '@recoil/user/useUser';
 import EMOJI from '@constants/emoji';
 import Setting from './Setting';
 import { useDiaryDetail } from '@hooks/useDiaryDetail';
+import axios from 'axios';
+import ImageModal from './modal/ImageModal';
 
 const styles = stylex.create({
   wrap: {
@@ -120,6 +122,12 @@ const contentStyle = stylex.create({
   content: {
     minHeight: '200px',
   },
+  image: {
+    display: 'block',
+    margin: '30px auto',
+    width: '50%',
+    cursor: 'pointer',
+  },
 });
 
 const Diary = () => {
@@ -127,7 +135,23 @@ const Diary = () => {
   const { memberId } = useUser();
   const [likeCount, setLikeCount] = useState(0);
   const [mood, setMood] = useState('');
-  const { detail, writer, isLoading } = useDiaryDetail(diaryId!);
+  const [imageModal, setImageModal] = useState(false);
+  const { detail, writer, isLoading, isError, error } = useDiaryDetail(
+    diaryId!,
+  );
+
+  const zoom = () => {
+    if (!imageModal) {
+      setImageModal(true);
+    }
+  };
+
+  useEffect(() => {
+    if (axios.isAxiosError<ResponseType, any>(error)) {
+      console.log('error: ', error?.response?.data.message);
+      navigate('/non-existent-page');
+    }
+  }, [isError, isLoading]);
 
   useEffect(() => {
     if (detail) {
@@ -156,6 +180,9 @@ const Diary = () => {
 
   return (
     <Container>
+      {imageModal && detail?.hasImage && (
+        <ImageModal img={detail?.imageURL} setImageModal={setImageModal} />
+      )}
       <Header />
       <div {...stylex.props(styles.wrap)}>
         <BackButton />
@@ -192,6 +219,13 @@ const Diary = () => {
               return `#${tag.tag} `;
             })}
           </div>
+          {detail?.hasImage && (
+            <img
+              {...stylex.props(contentStyle.image)}
+              src={detail?.imageURL}
+              onClick={zoom}
+            ></img>
+          )}
           <div
             {...stylex.props(contentStyle.content)}
             dangerouslySetInnerHTML={createMarkup(detail?.content)}
