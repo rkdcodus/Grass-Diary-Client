@@ -85,5 +85,4 @@ interface IDiaryDetail extends IDiary {
   hasTag: null;
   id: number;
   memberId: number;
-  imageURL: string;
 }

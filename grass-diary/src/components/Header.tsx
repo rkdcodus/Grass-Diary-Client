@@ -5,7 +5,6 @@ import { useEffect, useRef, useState } from 'react';
 import { Profile } from '@components/index';
 import useLogout from '@hooks/useLogout';
 import useUser from '@recoil/user/useUser';
-import { useQueryClient } from '@tanstack/react-query';
 
 const header = stylex.create({
   container: (position?: string) => ({
@@ -94,10 +93,9 @@ interface IMenuBar {
 
 const MenuBar = ({ toggle, headerRef }: IMenuBar) => {
   const clearAuth = useLogout();
-  const queryClient = useQueryClient();
+
   const handleLogout = () => {
     clearAuth();
-    queryClient.resetQueries({ queryKey: ['memberId'] });
   };
 
   return (
