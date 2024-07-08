@@ -1,6 +1,6 @@
 import stylex from '@stylexjs/stylex';
 import { useState, useEffect } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import DOMPurify from 'dompurify';
 
 import { Header, BackButton, Like, Container } from '@components/index';
@@ -131,7 +131,6 @@ const contentStyle = stylex.create({
 });
 
 const Diary = () => {
-  const navigate = useNavigate();
   const { diaryId } = useParams();
   const { memberId } = useUser();
   const [likeCount, setLikeCount] = useState(0);
