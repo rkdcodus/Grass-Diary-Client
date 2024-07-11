@@ -1,5 +1,5 @@
 import API from '@services/index';
-import END_POINT from '@constants/api';
+import { END_POINT } from '@constants/api';
 import { useQuery } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 

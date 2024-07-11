@@ -12,7 +12,7 @@ import API from '@services/index';
 import useProfile from '@recoil/profile/useProfile';
 import { profileAtom } from '@recoil/profile/profileState';
 import { Container, Header, Profile, Button } from '@components/index';
-import END_POINT from '@constants/api';
+import { END_POINT } from '@constants/api';
 
 interface ISettingSection {
   children: React.ReactNode;

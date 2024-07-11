@@ -1,7 +1,7 @@
 import { selector } from 'recoil';
 import API from '@services/index';
 import { memberIdAtom } from '@recoil/user/userState';
-import END_POINT from '@constants/api';
+import { END_POINT } from '@constants/api';
 
 export const profileSelector = selector<IProfile | undefined>({
   key: 'profileSelector',

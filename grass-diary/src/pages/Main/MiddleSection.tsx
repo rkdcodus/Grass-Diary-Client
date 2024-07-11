@@ -8,7 +8,7 @@ import subCharacter from '@icon/subCharacter.png';
 import useUser from '@recoil/user/useUser';
 import AnimateReward from './AnimateReward';
 import API from '@services/index';
-import END_POINT from '@constants/api';
+import { END_POINT } from '@constants/api';
 
 const MiddleSectionStyle = stylex.create({
   text: {

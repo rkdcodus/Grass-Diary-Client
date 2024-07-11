@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import API from '@services/index';
-import END_POINT from '@constants/api';
+import { END_POINT } from '@constants/api';
 
 interface IUseDiaryProps {
   memberId: number | null;

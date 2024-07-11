@@ -1,0 +1,3 @@
+const ERROR = {};
+
+export { ERROR };

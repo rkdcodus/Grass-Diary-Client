@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import API from '@services/index';
-import END_POINT from '@constants/api';
+import { END_POINT } from '@constants/api';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 

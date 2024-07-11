@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { useWriterProfile } from './useWriterProfile';
 import API from '@services/index';
-import END_POINT from '@constants/api';
+import { END_POINT } from '@constants/api';
 import { AxiosError } from 'axios';
 
 const fetchDiaryDetails = (id: string) => {

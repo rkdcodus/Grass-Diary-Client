@@ -5,7 +5,7 @@ import Swal from 'sweetalert2';
 import QuillEditor from './QuillEditor';
 
 import API from '@services/index';
-import END_POINT from '@constants/api';
+import { END_POINT } from '@constants/api';
 import useUser from '@recoil/user/useUser';
 import { Header, BackButton, Button, Container } from '@components/index';
 import EMOJI from '@constants/emoji';

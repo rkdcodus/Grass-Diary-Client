@@ -5,7 +5,7 @@ import { useQuery } from '@tanstack/react-query';
 import API from '@services/index';
 import { memberIdAtom } from './userState';
 import { useAuth } from '@recoil/auth/useAuth';
-import END_POINT from '@constants/api';
+import { END_POINT } from '@constants/api';
 
 interface IUseUserReturn {
   memberId: number | null;

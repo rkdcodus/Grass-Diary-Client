@@ -1,4 +1,22 @@
-const END_POINT = {
+export const HTTP_STATUS_CODE = {
+  OK: 200,
+  BAD_REQUEST: 400,
+  UNAUTHORIZED: 401,
+  FORBIDDEN: 403,
+  NOT_FOUND: 404,
+  REQUEST_TIMEOUT: 408,
+  CONFLICT: 409,
+  UNSUPPORTED_MEDIA_TYPE: 415,
+  LOCKED: 423,
+  TOO_MANY_REQUESTS: 429,
+  AUTH_SESSION_EXPIRED: 440,
+  INTERNAL_SERVER_ERROR: 500,
+  NOT_IMPLEMENTED: 501,
+  BAD_GATEWAY: 502,
+  SERVICE_UNAVAILABLE: 503,
+};
+
+export const END_POINT = {
   MEMBER_INFO: '/me',
   MEMBER_PROFILE: (id: number) => `/member/profile/${id}`,
   EDIT_MEMBER_INFO: '/members/me',
@@ -17,5 +35,3 @@ const END_POINT = {
   TOTAL_REWARD: (memberId: number | null) => `/member/totalReward/${memberId}`,
   GRASS: (memberId: number | null) => `/main/grass/${memberId}`,
 };
-
-export default END_POINT;

@@ -7,7 +7,7 @@ import { formatDate, getDaysArray } from '@utils/dateUtils';
 import useGrass from '@hooks/api/useGrass';
 import useUser from '@recoil/user/useUser';
 import API from '@services/index';
-import END_POINT from '@constants/api';
+import { END_POINT } from '@constants/api';
 
 type TCreateGrass = () => { year: number; grass: (Date | null)[][] };
 

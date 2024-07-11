@@ -5,7 +5,7 @@ import { Button } from '@components/index';
 import API from '@services/index';
 import mainCharacter from '@icon/mainCharacter.png';
 import Swal from 'sweetalert2';
-import END_POINT from '@constants/api';
+import { END_POINT } from '@constants/api';
 
 const TopSectionStyles = stylex.create({
   container: {
