@@ -5,7 +5,7 @@ const deleteAxios = (id: string) => {
   return API.delete(`/diary/${id}`);
 };
 
-export const useDeleteDiary = (id: string) => {
+export const useDeleteDiaryDetail = (id: string) => {
   return useMutation({
     mutationFn: () => {
       return deleteAxios(id);

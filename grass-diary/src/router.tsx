@@ -5,11 +5,13 @@ import { lazy } from 'react';
 const Intro = lazy(() => import('@pages/Intro/Intro'));
 const Main = lazy(() => import('@pages/Main/Main'));
 const CreateDiary = lazy(() => import('@pages/CreateDiary/CreateDiary'));
-const Diary = lazy(() => import('@pages/Diary/Diary'));
+const DiaryDetail = lazy(() => import('@pages/DiaryDetail/DiaryDetail'));
 const Share = lazy(() => import('@pages/Share/Share'));
 const Setting = lazy(() => import('@pages/Setting/Setting'));
 const MyPage = lazy(() => import('@pages/MyPage/MyPage'));
-const NonExistentDiary = lazy(() => import('@pages/Diary/NonExistentDiary'));
+const NonExistentDiary = lazy(
+  () => import('@pages/DiaryDetail/NonExistentDiary'),
+);
 
 const router = createBrowserRouter([
   {
@@ -25,7 +27,7 @@ const router = createBrowserRouter([
     children: [
       { path: '/creatediary', element: <CreateDiary /> },
       { path: '/editdiary/:id', element: <CreateDiary /> },
-      { path: '/diary/:diaryId', element: <Diary /> },
+      { path: '/diary/:diaryId', element: <DiaryDetail /> },
       { path: '/share', element: <Share /> },
       { path: '/setting', element: <Setting /> },
       { path: '/mypage', element: <MyPage /> },
