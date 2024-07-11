@@ -26,10 +26,11 @@ h1,
 h2,
 h3,
 h4,
+p,
 button,
 input,
 label {
-  line-height: 1.1;
+  line-height: 1.34;
 }
 
 h1,
@@ -37,6 +38,18 @@ h2,
 h3,
 h4 {
   text-wrap: balance;
+  white-space: pre-wrap;
+  word-wrap: break-word; /* IE 5.5-7 */
+  white-space: -moz-pre-wrap; /* Firefox 1.0-2.0 */
+}
+
+h1,
+h2,
+h3,
+h4,
+p {
+  margin: 0;
+  padding: 0;
 }
 
 a:not([class]) {
@@ -68,4 +81,34 @@ textarea:not([rows]) {
 
 li:hover {
   background-color: #e2e2e2;
+}
+
+p {
+  white-space: pre-wrap;
+  word-wrap: break-word; /* IE 5.5-7 */
+  white-space: -moz-pre-wrap; /* Firefox 1.0-2.0 */
+}
+
+.ql-align-center {
+  text-align: center;
+}
+
+.ql-align-right {
+  text-align: right;
+}
+
+.ql-align-justify {
+  text-align: justify;
+}
+
+blockquote {
+  border-left: 4px solid #ccc;
+  margin-bottom: 5px;
+  margin-top: 5px;
+  padding-left: 16px;
+}
+
+.ql-editor {
+  background-color: white;
+  height: 70vh;
 }
