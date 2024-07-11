@@ -130,7 +130,7 @@ const contentStyle = stylex.create({
   },
 });
 
-const Diary = () => {
+const DiaryDetail = () => {
   const navigate = useNavigate();
   const { diaryId } = useParams();
   const { memberId } = useUser();
@@ -254,4 +254,4 @@ const Diary = () => {
   );
 };
 
-export default Diary;
+export default DiaryDetail;

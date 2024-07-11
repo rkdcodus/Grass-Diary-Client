@@ -1,6 +1,6 @@
 import stylex from '@stylexjs/stylex';
 import { Button } from '@components/index';
-import { useDeleteDiary } from '@hooks/useDeleteDiary';
+import { useDeleteDiaryDetail } from '@hooks/useDeleteDiaryDetail';
 import CompleteDeleteModal from './CompleteDeleteModal';
 
 const styles = stylex.create({
@@ -47,7 +47,7 @@ type Props = {
 };
 
 const ConfirmDeleteModal = ({ diaryId, setConfirmModal }: Props) => {
-  const { mutate, isSuccess } = useDeleteDiary(diaryId);
+  const { mutate, isSuccess } = useDeleteDiaryDetail(diaryId);
 
   const closeModal = () => setConfirmModal(false);
 
