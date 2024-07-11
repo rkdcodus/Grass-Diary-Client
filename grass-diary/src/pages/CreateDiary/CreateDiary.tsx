@@ -10,7 +10,7 @@ import useUser from '@recoil/user/useUser';
 import { Header, BackButton, Button, Container } from '@components/index';
 import EMOJI from '@constants/emoji';
 import 'dayjs/locale/ko';
-import { CONSOLE_ERROR } from '@constants/message';
+import { CONSOLE_ERROR, ERROR } from '@constants/message';
 
 const CreateDiaryStyle = stylex.create({
   container: {
@@ -208,7 +208,7 @@ const CreateDiary = () => {
   const handleSave = async () => {
     if (!checkWritingPermission()) {
       Swal.fire({
-        title: '하루에 한 번만 쓸 수 있어요!',
+        title: ERROR.DIARY_ALREADY_EXISTS,
         icon: 'warning',
         showCancelButton: false,
         confirmButtonColor: '#28CA3B',
@@ -231,7 +231,7 @@ const CreateDiary = () => {
 
     if (!quillContent || !quillContent.trim()) {
       Swal.fire({
-        title: '일기를 작성해주세요!',
+        title: ERROR.DIARY_NOT_WRITE,
         icon: 'warning',
         showCancelButton: false,
         confirmButtonColor: '#28CA3B',

@@ -5,6 +5,7 @@ import Slider from 'react-slick';
 
 import { Feed } from '@components/index';
 import { usePopularDiaries } from '@hooks/api/usePopularDiaries';
+import { NULL } from '@constants/message';
 
 const styles = stylex.create({
   slider: {
@@ -54,9 +55,7 @@ const PopularFeed = () => {
         feedList
       )}
       {top10 && !top10.length ? (
-        <div {...stylex.props(styles.noFeed)}>
-          이번 주는 공개된 일기가 아직 없어요
-        </div>
+        <div {...stylex.props(styles.noFeed)}>{NULL.SHARE_POPULAR_FEED}</div>
       ) : null}
     </div>
   );
