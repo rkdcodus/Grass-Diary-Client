@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import API from '@services/index';
+import END_POINT from '@constants/api';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 
@@ -25,7 +26,7 @@ const QuillEditor = ({ onContentChange, quillContent }: QuillEditorProps) => {
   const [todayQuestion, setTodayQuestion] = useState<string>();
 
   useEffect(() => {
-    API.get<QuestionResponse>('/diary/today-question')
+    API.get<QuestionResponse>(END_POINT.TODAY_QUESTION)
       .then(response => {
         setTodayQuestion(response.data.question);
       })

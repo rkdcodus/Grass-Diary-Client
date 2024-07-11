@@ -12,6 +12,7 @@ import API from '@services/index';
 import useProfile from '@recoil/profile/useProfile';
 import { profileAtom } from '@recoil/profile/profileState';
 import { Container, Header, Profile, Button } from '@components/index';
+import END_POINT from '@constants/api';
 
 interface ISettingSection {
   children: React.ReactNode;
@@ -47,7 +48,8 @@ const Setting = () => {
   };
 
   const updateProfile = useMutation<IUpdateProfile, Error, IUpdateProfile>({
-    mutationFn: profileInfo => API.patch('/members/me', profileInfo),
+    mutationFn: profileInfo =>
+      API.patch(END_POINT.EDIT_MEMBER_INFO, profileInfo),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['profileInfo'] });
     },

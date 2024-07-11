@@ -5,6 +5,7 @@ import { useQuery } from '@tanstack/react-query';
 import API from '@services/index';
 import { memberIdAtom } from './userState';
 import { useAuth } from '@recoil/auth/useAuth';
+import END_POINT from '@constants/api';
 
 interface IUseUserReturn {
   memberId: number | null;
@@ -21,7 +22,8 @@ const useUser = (): IUseUserReturn => {
     string[]
   >({
     queryKey: ['memberId'],
-    queryFn: () => API.get('/me').then(({ data }) => data.memberId),
+    queryFn: () =>
+      API.get(END_POINT.MEMBER_INFO).then(({ data }) => data.memberId),
     enabled: !!isAuthenticated,
     onError: error =>
       console.error(`사용자 정보 조회가 불가능합니다. ${error}`),

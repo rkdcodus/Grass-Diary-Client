@@ -5,6 +5,7 @@ import { Button } from '@components/index';
 import API from '@services/index';
 import mainCharacter from '@icon/mainCharacter.png';
 import Swal from 'sweetalert2';
+import END_POINT from '@constants/api';
 
 const TopSectionStyles = stylex.create({
   container: {
@@ -115,13 +116,14 @@ const TopSection = () => {
   const { data: question } = useQuery<QuestionResponse>({
     queryKey: ['todayQuestion'],
     queryFn: () =>
-      API.get('/diary/today-question').then(response => response.data),
+      API.get(END_POINT.TODAY_QUESTION).then(response => response.data),
   });
 
   // 날짜 데이터를 가져오는 쿼리
   const { data: date } = useQuery<DateResponse>({
     queryKey: ['todayDate'],
-    queryFn: () => API.get('/main/today-date').then(response => response.data),
+    queryFn: () =>
+      API.get(END_POINT.TODAY_DATE).then(response => response.data),
   });
 
   const modal = () => {

@@ -5,6 +5,7 @@ import Swal from 'sweetalert2';
 import QuillEditor from './QuillEditor';
 
 import API from '@services/index';
+import END_POINT from '@constants/api';
 import useUser from '@recoil/user/useUser';
 import { Header, BackButton, Button, Container } from '@components/index';
 import EMOJI from '@constants/emoji';
@@ -166,7 +167,7 @@ const CreateDiary = () => {
   });
 
   useEffect(() => {
-    API.get<DiaryInfo>('/main/today-date')
+    API.get<DiaryInfo>(END_POINT.TODAY_DATE)
       .then(response => {
         setYear(response.data.year);
         setMonth(response.data.month);
@@ -240,10 +241,10 @@ const CreateDiary = () => {
 
     try {
       if (diaryId) {
-        await API.patch(`/diary/${diaryId}`, requestBody);
+        await API.patch(END_POINT.DIARY(diaryId), requestBody);
         navigate(`/diary/${diaryId}`, { replace: true, state: 'editcomplete' });
       } else {
-        await API.post(`/diary/${memberId}`, requestBody);
+        await API.post(END_POINT.DIARY(memberId), requestBody);
         navigate('/share');
       }
     } catch (error) {
@@ -263,7 +264,7 @@ const CreateDiary = () => {
   const fetchDiaryData = async () => {
     try {
       if (diaryId) {
-        const response = await API.get(`/diary/${diaryId}`);
+        const response = await API.get(END_POINT.DIARY(diaryId));
         const tags = response.data.tags.map((tag: Tag) => tag.tag);
 
         setHashArr(tags);

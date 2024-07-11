@@ -7,6 +7,7 @@ import { formatDate, getDaysArray } from '@utils/dateUtils';
 import useGrass from '@hooks/ussGrass';
 import useUser from '@recoil/user/useUser';
 import API from '@services/index';
+import END_POINT from '@constants/api';
 
 type TCreateGrass = () => { year: number; grass: (Date | null)[][] };
 
@@ -66,7 +67,7 @@ const Grass = ({ setSelectedDiary }: IGrass) => {
   >({
     queryKey: ['selectedDiary', memberId, selectedDate],
     queryFn: () =>
-      API.get(`/search/date/${memberId}?date=${selectedDate}`).then(
+      API.get(END_POINT.SEARCH_DATE(memberId, selectedDate)).then(
         ({ data }) => data,
       ),
     enabled: !!selectedGrass && !!memberId,

@@ -1,9 +1,10 @@
 import { useQuery } from '@tanstack/react-query';
 import API from '@services/index';
+import END_POINT from '@constants/api';
 import { AxiosError } from 'axios';
 
 const fetchUserProfiles = (id: number) => {
-  return API.get(`/member/profile/${id}`);
+  return API.get(END_POINT.MEMBER_PROFILE(id));
 };
 
 export const useWriterProfile = (writerId: number) => {

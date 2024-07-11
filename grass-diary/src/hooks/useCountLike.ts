@@ -1,4 +1,5 @@
 import API from '@services/index';
+import END_POINT from '@constants/api';
 import { useMutation } from '@tanstack/react-query';
 
 type Props = {
@@ -7,11 +8,11 @@ type Props = {
 };
 
 const postLikeApi = ({ diaryId, memberId }: Props) => {
-  return API.post(`/diary/like/${diaryId}/${memberId}`);
+  return API.post(END_POINT.LIKE(diaryId, memberId));
 };
 
 const deleteLikeApi = ({ diaryId, memberId }: Props) => {
-  return API.delete(`/diary/like/${diaryId}/${memberId}`);
+  return API.delete(END_POINT.LIKE(diaryId, memberId));
 };
 
 export const useCountLike = ({ diaryId, memberId }: Props) => {

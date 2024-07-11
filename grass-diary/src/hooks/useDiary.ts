@@ -1,5 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import API from '@services/index';
+import END_POINT from '@constants/api';
 
 interface IUseDiaryProps {
   memberId: number | null;
@@ -11,7 +12,7 @@ const useDiary = ({ memberId, currentPage, sortOrder }: IUseDiaryProps) => {
   const queryKey = ['diaryList', { memberId, currentPage, sortOrder }];
 
   const queryFn = async (): Promise<IDiaryResponse> => {
-    let apiUrl = `/diary/main/${memberId}?page=${currentPage}`;
+    let apiUrl = END_POINT.MY_DIARIES(memberId, currentPage);
 
     if (sortOrder === 'oldest') apiUrl += `&sort=createdAt,ASC`;
     const response = await API.get(apiUrl);

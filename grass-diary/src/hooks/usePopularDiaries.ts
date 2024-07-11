@@ -1,9 +1,10 @@
 import API from '@services/index';
+import END_POINT from '@constants/api';
 import { useQuery } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 
 const fetchPopularDiary = () => {
-  return API.get('/shared/diaries/popular');
+  return API.get(END_POINT.SHARE_POPULAR);
 };
 
 export const usePopularDiaries = () => {

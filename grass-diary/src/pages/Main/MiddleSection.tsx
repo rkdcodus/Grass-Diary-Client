@@ -8,6 +8,7 @@ import subCharacter from '@icon/subCharacter.png';
 import useUser from '@recoil/user/useUser';
 import AnimateReward from './AnimateReward';
 import API from '@services/index';
+import END_POINT from '@constants/api';
 
 const MiddleSectionStyle = stylex.create({
   text: {
@@ -104,9 +105,7 @@ const MiddleSection = () => {
   const { data: reward } = useQuery<RewardPointResponse>({
     queryKey: ['rewardPoint'],
     queryFn: () =>
-      API.get(`/member/totalReward/${memberId}`).then(
-        response => response.data,
-      ),
+      API.get(END_POINT.TOTAL_REWARD(memberId)).then(response => response.data),
     initialData: { rewardPoint: 0 }, // 초기 데이터 설정
     enabled: !!memberId, // memberId가 있을 때만 쿼리를 실행
   });
@@ -115,7 +114,7 @@ const MiddleSection = () => {
   const { data: grassQuery } = useQuery<GrassApiResponse>({
     queryKey: ['grass'],
     queryFn: () =>
-      API.get(`/main/grass/${memberId}`).then(response => response.data),
+      API.get(END_POINT.GRASS(memberId)).then(response => response.data),
     enabled: !!memberId, // memberId가 있을 때만 쿼리를 실행
   });
 

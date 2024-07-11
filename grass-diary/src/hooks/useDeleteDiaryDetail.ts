@@ -1,8 +1,9 @@
 import API from '@services/index';
+import END_POINT from '@constants/api';
 import { useMutation } from '@tanstack/react-query';
 
 const deleteAxios = (id: string) => {
-  return API.delete(`/diary/${id}`);
+  return API.delete(END_POINT.DIARY(id));
 };
 
 export const useDeleteDiaryDetail = (id: string) => {
