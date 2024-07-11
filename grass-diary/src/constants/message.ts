@@ -30,7 +30,7 @@ const CONSOLE_ERROR = {
   PROFILE: {
     GET: '사용자 프로필을 조회할 수 없습니다.',
   },
-};
+} as const;
 
 const ERROR = {
   // 인증, 엑세스 토큰, 세션 만료 에러메시지
@@ -67,15 +67,15 @@ const ERROR = {
   SERVER_ERR: '서버 내부 오류가 발생했습니다. 잠시 후 다시 시도해주세요.',
   REWARD_HISTORY_SAVE_FAILED: '일기 히스토리 저장에 실패했습니다.',
   IMAGE_UPLOAD_FAILED: '이미지 업로드에 실패했습니다.',
-};
+} as const;
 
 const NULL = {
   SHARE_POPULAR_FEED: '이번 주는 공개된 일기가 아직 없어요.',
   SHARE_FEED: '공개된 일기가 아직 없어요',
-};
+} as const;
 
 const INFO = {
   DIARY_EDIT_INFO: '일기는 당일 00:00부터 24:00전까지 수정 가능합니다.',
-};
+} as const;
 
 export { CONSOLE_ERROR, ERROR, NULL, INFO };

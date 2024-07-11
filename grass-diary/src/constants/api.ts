@@ -14,7 +14,7 @@ export const HTTP_STATUS_CODE = {
   NOT_IMPLEMENTED: 501,
   BAD_GATEWAY: 502,
   SERVICE_UNAVAILABLE: 503,
-};
+} as const;
 
 export const END_POINT = {
   MEMBER_INFO: '/me',
@@ -34,4 +34,4 @@ export const END_POINT = {
     `/shared/diaries/latest?cursorId=${cursorId}&size=12`,
   TOTAL_REWARD: (memberId: number | null) => `/member/totalReward/${memberId}`,
   GRASS: (memberId: number | null) => `/main/grass/${memberId}`,
-};
+} as const;
