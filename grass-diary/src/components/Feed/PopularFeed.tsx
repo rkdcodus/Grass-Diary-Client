@@ -4,7 +4,7 @@ import 'slick-carousel/slick/slick-theme.css';
 import Slider from 'react-slick';
 
 import { Feed } from '@components/index';
-import { usePopularDiaries } from '@hooks/usePopularDiaries';
+import { usePopularDiaries } from '@hooks/api/usePopularDiaries';
 
 const styles = stylex.create({
   slider: {

@@ -1,7 +1,7 @@
 import stylex from '@stylexjs/stylex';
 import { Fragment, useEffect, useRef } from 'react';
 import { Container, Feed, Header, PopularFeed } from '@components/index';
-import { useLatestDiaries } from '@hooks/useLatestDiaries';
+import { useLatestDiaries } from '@hooks/api/useLatestDiaries';
 
 const styles = stylex.create({
   container: {

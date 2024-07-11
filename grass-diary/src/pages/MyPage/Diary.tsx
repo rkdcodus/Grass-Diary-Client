@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import { useState } from 'react';
 
 import useUser from '@recoil/user/useUser';
-import useDiary from '@hooks/useDiary';
+import useDiary from '@hooks/api/useDiary';
 import { NormalLike, MoodProfile } from '@components/index';
 
 interface IPagination {

@@ -7,7 +7,7 @@ import { Header, BackButton, Like, Container } from '@components/index';
 import useUser from '@recoil/user/useUser';
 import EMOJI from '@constants/emoji';
 import Setting from './Setting';
-import { useDiaryDetail } from '@hooks/useDiaryDetail';
+import { useDiaryDetail } from '@hooks/api/useDiaryDetail';
 import axios from 'axios';
 import ImageModal from './modal/ImageModal';
 

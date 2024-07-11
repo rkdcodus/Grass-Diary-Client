@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 
 import { formatDate, getDaysArray } from '@utils/dateUtils';
-import useGrass from '@hooks/ussGrass';
+import useGrass from '@hooks/api/useGrass';
 import useUser from '@recoil/user/useUser';
 import API from '@services/index';
 import END_POINT from '@constants/api';

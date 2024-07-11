@@ -1,6 +1,6 @@
 import stylex from '@stylexjs/stylex';
 import { Button } from '@components/index';
-import { useDeleteDiaryDetail } from '@hooks/useDeleteDiaryDetail';
+import { useDeleteDiaryDetail } from '@hooks/api/useDeleteDiaryDetail';
 import CompleteDeleteModal from './CompleteDeleteModal';
 
 const styles = stylex.create({
