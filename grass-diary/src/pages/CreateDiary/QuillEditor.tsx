@@ -3,6 +3,7 @@ import API from '@services/index';
 import { END_POINT } from '@constants/api';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
+import { CONSOLE_ERROR } from '@constants/message';
 
 type QuillEditorProps = {
   onContentChange: (content: string) => void;
@@ -31,7 +32,7 @@ const QuillEditor = ({ onContentChange, quillContent }: QuillEditorProps) => {
         setTodayQuestion(response.data.question);
       })
       .catch(error => {
-        console.error(`오늘의 질문을 불러올 수 없습니다. ${error}`);
+        console.error(CONSOLE_ERROR.QUESTION.GET + error);
       });
   }, []);
 

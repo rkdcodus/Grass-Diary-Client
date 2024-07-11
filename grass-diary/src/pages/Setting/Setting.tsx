@@ -13,6 +13,7 @@ import useProfile from '@recoil/profile/useProfile';
 import { profileAtom } from '@recoil/profile/profileState';
 import { Container, Header, Profile, Button } from '@components/index';
 import { END_POINT } from '@constants/api';
+import { CONSOLE_ERROR } from '@constants/message';
 
 interface ISettingSection {
   children: React.ReactNode;
@@ -53,8 +54,7 @@ const Setting = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['profileInfo'] });
     },
-    onError: error =>
-      console.error(`사용자 정보를 수정할 수 없습니다. ${error}`),
+    onError: error => console.error(CONSOLE_ERROR.MEMBER.PATCH + error),
   });
 
   return (

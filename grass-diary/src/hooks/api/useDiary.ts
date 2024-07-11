@@ -1,6 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import API from '@services/index';
 import { END_POINT } from '@constants/api';
+import { CONSOLE_ERROR } from '@constants/message';
 
 interface IUseDiaryProps {
   memberId: number | null;
@@ -29,8 +30,7 @@ const useDiary = ({ memberId, currentPage, sortOrder }: IUseDiaryProps) => {
     queryKey,
     queryFn,
     enabled: !!memberId,
-    onError: error =>
-      console.error(`사용자의 일기를 조회할 수 없습니다. ${error}`),
+    onError: error => console.error(CONSOLE_ERROR.DIARY.GET + error),
   });
 
   const diaryList: IDiary[] = diary?.content || [];

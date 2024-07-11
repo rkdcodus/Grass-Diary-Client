@@ -2,6 +2,7 @@ import { selector } from 'recoil';
 import API from '@services/index';
 import { memberIdAtom } from '@recoil/user/userState';
 import { END_POINT } from '@constants/api';
+import { CONSOLE_ERROR } from '@constants/message';
 
 export const profileSelector = selector<IProfile | undefined>({
   key: 'profileSelector',
@@ -14,7 +15,7 @@ export const profileSelector = selector<IProfile | undefined>({
       const response = await API.get(END_POINT.MEMBER_PROFILE(memberId));
       return response.data;
     } catch (error) {
-      console.error(`사용자 프로필을 조회할 수 없습니다. ${error}`);
+      console.error(CONSOLE_ERROR.PROFILE.GET + error);
     }
   },
 });

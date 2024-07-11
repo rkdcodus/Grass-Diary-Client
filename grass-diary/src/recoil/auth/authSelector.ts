@@ -1,6 +1,7 @@
 import { selector } from 'recoil';
 import { checkAuth } from '@utils/authUtils';
 import { isAuthenticatedAtom, isLoadingAtom } from './authState';
+import { CONSOLE_ERROR } from '@constants/message';
 
 export const checkAuthSelector = selector<boolean>({
   key: 'checkAuthSelector',
@@ -11,7 +12,7 @@ export const checkAuthSelector = selector<boolean>({
       const isLoggedIn: boolean = await checkAuth();
       return isLoggedIn;
     } catch (error) {
-      console.error(`로그인되지 않은 사용자입니다. ${error}`);
+      console.error(CONSOLE_ERROR.LOGIN.FALSE + error);
       return false;
     }
   },

@@ -2,6 +2,7 @@ import { useRecoilState, useRecoilValueLoadable } from 'recoil';
 import { isAuthenticatedAtom, isLoadingAtom } from './authState';
 import { checkAuthSelector } from './authSelector';
 import { useEffect } from 'react';
+import { CONSOLE_ERROR } from '@constants/message';
 
 interface IUseAuthReturn {
   isAuthenticated: boolean;
@@ -26,7 +27,7 @@ export const useAuth = (): IUseAuthReturn => {
         break;
       case 'hasError':
         setIsLoading(false);
-        console.error('인증 확인 중 오류가 발생했습니다.');
+        console.error(CONSOLE_ERROR.LOGIN.FAIL);
         break;
     }
   }, [checkAuthLoadable.state]);

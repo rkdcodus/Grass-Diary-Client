@@ -10,6 +10,7 @@ import useUser from '@recoil/user/useUser';
 import { Header, BackButton, Button, Container } from '@components/index';
 import EMOJI from '@constants/emoji';
 import 'dayjs/locale/ko';
+import { CONSOLE_ERROR } from '@constants/message';
 
 const CreateDiaryStyle = stylex.create({
   container: {
@@ -175,7 +176,7 @@ const CreateDiary = () => {
         setDay(response.data.day);
       })
       .catch(error => {
-        console.error(`오늘의 날짜를 불러올 수 없습니다. ${error}`);
+        console.error(CONSOLE_ERROR.DATE.GET + error);
       });
   });
 
@@ -273,7 +274,7 @@ const CreateDiary = () => {
         setQuillContent(response.data.content);
       }
     } catch (error) {
-      console.error(`사용자의 일기 정보를 불러올 수 없습니다. ${error}`);
+      console.error(CONSOLE_ERROR.DIARY.GET + error);
     }
   };
 
