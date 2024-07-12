@@ -1,6 +1,5 @@
 export const TYPO = {
   display4: {
-    fontFamily: 'Pretendard',
     fontSize: '4.5rem',
     fontStyle: 'normal',
     fontWeight: 700,
@@ -8,7 +7,6 @@ export const TYPO = {
     letterSpacing: '-0.018em',
   },
   display3: {
-    fontFamily: 'Pretendard',
     fontSize: '3.5rem',
     fontStyle: 'normal',
     fontWeight: 700,
@@ -16,7 +14,6 @@ export const TYPO = {
     letterSpacing: '-0.018em',
   },
   display2: {
-    fontFamily: 'Pretendard',
     fontSize: '3rem',
     fontStyle: 'normal',
     fontWeight: 700,
@@ -24,7 +21,6 @@ export const TYPO = {
     letterSpacing: '-0.018em',
   },
   display1: {
-    fontFamily: 'Pretendard',
     fontSize: '2.5rem',
     fontStyle: 'normal',
     fontWeight: 700,
@@ -33,7 +29,6 @@ export const TYPO = {
   },
 
   title3: {
-    fontFamily: 'Pretendard',
     fontSize: '2rem',
     fontStyle: 'normal',
     fontWeight: 600,
@@ -41,7 +36,6 @@ export const TYPO = {
     letterSpacing: '-0.0156em',
   },
   title2: {
-    fontFamily: 'Pretendard',
     fontSize: '1.5rem',
     fontStyle: 'normal',
     fontWeight: 600,
@@ -49,7 +43,6 @@ export const TYPO = {
     letterSpacing: '-0.0156em',
   },
   title1: {
-    fontFamily: 'Pretendard',
     fontSize: '1.25rem',
     fontStyle: 'normal',
     fontWeight: 600,
@@ -87,7 +80,6 @@ export const TYPO = {
   },
 
   label3: {
-    fontFamily: 'Pretendard',
     fontSize: '1.125rem',
     fontStyle: 'normal',
     fontWeight: 500,
@@ -95,7 +87,6 @@ export const TYPO = {
     letterSpacing: '-0.006em',
   },
   label2: {
-    fontFamily: 'Pretendard',
     fontSize: '1rem',
     fontStyle: 'normal',
     fontWeight: 500,
@@ -103,7 +94,6 @@ export const TYPO = {
     letterSpacing: '-0.006em',
   },
   label1: {
-    fontFamily: 'Pretendard',
     fontSize: '0.875rem',
     fontStyle: 'normal',
     fontWeight: 500,
@@ -112,21 +102,18 @@ export const TYPO = {
   },
 
   caption3: {
-    fontFamily: 'Pretendard',
     fontSize: '0.9375rem',
     fontStyle: 'normal',
     fontWeight: 400,
     lineHeight: '1.5rem',
   },
   caption2: {
-    fontFamily: 'Pretendard',
     fontSize: '0.875rem',
     fontStyle: 'normal',
     fontWeight: 400,
     lineHeight: '1.375rem',
   },
   caption1: {
-    fontFamily: 'Pretendard',
     fontSize: '0.8125rem',
     fontStyle: 'normal',
     fontWeight: 400,
