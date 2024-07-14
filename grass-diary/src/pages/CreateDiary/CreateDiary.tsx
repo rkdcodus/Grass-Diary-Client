@@ -280,7 +280,6 @@ const CreateDiary = () => {
 
     try {
       if (diaryId) {
-        // 이미지가 있는 글을 수정하게되면 formData가 초기화됌.
         await API.patch(END_POINT.DIARY(diaryId), formData, config);
         navigate(`/diary/${diaryId}`, { replace: true, state: 'editcomplete' });
       } else {
