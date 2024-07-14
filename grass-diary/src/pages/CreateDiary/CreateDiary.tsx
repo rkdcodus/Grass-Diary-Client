@@ -90,6 +90,10 @@ const CreateDiaryStyle = stylex.create({
     fontSize: '12px',
     cursor: 'pointer',
   },
+  imageFile: {
+    padding: '10px 0',
+    width: '170px',
+  },
 });
 
 type HashTag = string;
@@ -118,6 +122,11 @@ const CreateDiary = () => {
   const [month, setMonth] = useState<number | null>(null);
   const [date, setDate] = useState<number | null>(null);
   const [day, setDay] = useState<string | null>(null);
+  // 이미지 state
+  const [file, setFile] = useState(null);
+  const [imageURL, setImageURL] = useState('');
+  const [hasImage, setHasImage] = useState(false);
+  const formData = new FormData(); // FormData 생성
 
   const handlePrivateChange = () => {
     setIsPrivate(true);
@@ -133,6 +142,18 @@ const CreateDiary = () => {
 
   const onChangeHashtag = e => {
     setHashtag(e.target.value);
+  };
+
+  // 이미지 파일 저장 함수
+  const handleFileChange = e => {
+    const file = e.target.files[0];
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onloadend = () => {
+      setImageURL(reader.result);
+    };
+    setFile(file);
+    setHasImage(true);
   };
 
   // 해시태그 로직 함수
@@ -219,14 +240,16 @@ const CreateDiary = () => {
 
     const { quillContent, isPrivate, hashArr, moodValue } = diaryInfo;
 
-    const requestBody = {
+    if (file) {
+      formData.append('image', file);
+    }
+
+    const requestDto = {
       content: quillContent,
       isPrivate,
       conditionLevel: `LEVEL_${moodValue}`,
       hashtags: hashArr,
-      month: month,
-      date: date,
-      day: day,
+      hasImage: hasImage,
     };
 
     if (!quillContent || !quillContent.trim()) {
@@ -240,19 +263,34 @@ const CreateDiary = () => {
       return; // 저장 중단
     }
 
+    formData.append(
+      'requestDto',
+      new Blob([JSON.stringify(requestDto)], {
+        type: 'application/json',
+      }),
+    );
+
+    const config = {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    };
+
+    const currentDate = `${year}년/${month}월/${date}일`;
+
     try {
       if (diaryId) {
-        await API.patch(END_POINT.DIARY(diaryId), requestBody);
+        // 이미지가 있는 글을 수정하게되면 formData가 초기화됌.
+        await API.patch(END_POINT.DIARY(diaryId), formData, config);
         navigate(`/diary/${diaryId}`, { replace: true, state: 'editcomplete' });
       } else {
-        await API.post(END_POINT.DIARY(memberId), requestBody);
+        await API.post(END_POINT.DIARY(memberId), formData);
         navigate('/share');
+        localStorage.setItem('lastWritingDate', currentDate);
       }
     } catch (error) {
       console.error(error);
     }
-    const currentDate = `${year}년/${month}월/${date}일`;
-    localStorage.setItem('lastWritingDate', currentDate);
   };
 
   // 수정 기능일 때의 코드
@@ -272,6 +310,7 @@ const CreateDiary = () => {
         setIsPrivate(response.data.isPrivate);
         setMoodValue(response.data.transparency * 10);
         setQuillContent(response.data.content);
+        setImageURL(response.data.imageURL);
       }
     } catch (error) {
       console.error(CONSOLE_ERROR.DIARY.GET + error);
@@ -335,6 +374,16 @@ const CreateDiary = () => {
             </div>
           </article>
         </section>
+        <form>
+          <input type="file" onChange={handleFileChange} />
+        </form>
+        {imageURL && (
+          <img
+            {...stylex.props(CreateDiaryStyle.imageFile)}
+            src={imageURL}
+            alt="image file"
+          />
+        )}
         <QuillEditor
           onContentChange={setQuillContent}
           quillContent={quillContent}
