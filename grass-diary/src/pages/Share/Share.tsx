@@ -1,7 +1,8 @@
 import stylex from '@stylexjs/stylex';
 import { Fragment, useEffect, useRef } from 'react';
 import { Container, Feed, Header, PopularFeed } from '@components/index';
-import { useLatestDiaries } from '@hooks/useLatestDiaries';
+import { useLatestDiaries } from '@hooks/api/useLatestDiaries';
+import { NULL } from '@constants/message';
 
 const styles = stylex.create({
   container: {
@@ -104,9 +105,7 @@ const Share = () => {
           <div {...stylex.props(styles.latestFeed)}>
             {feedList}
             {!latest ? (
-              <div {...stylex.props(styles.noFeed)}>
-                공개된 일기가 아직 없어요
-              </div>
+              <div {...stylex.props(styles.noFeed)}>{NULL.SHARE_FEED}</div>
             ) : null}
           </div>
           <div ref={target} {...stylex.props(styles.observer)}></div>

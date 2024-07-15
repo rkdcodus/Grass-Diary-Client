@@ -1,8 +1,10 @@
 import API from '@services/index';
+import { END_POINT } from '@constants/api';
 import { useMutation } from '@tanstack/react-query';
+import { CONSOLE_ERROR } from '@constants/message';
 
 const deleteAxios = (id: string) => {
-  return API.delete(`/diary/${id}`);
+  return API.delete(END_POINT.DIARY(id));
 };
 
 export const useDeleteDiaryDetail = (id: string) => {
@@ -14,7 +16,7 @@ export const useDeleteDiaryDetail = (id: string) => {
       localStorage.removeItem('lastWritingDate');
     },
     onError: error => {
-      console.error(`사용자의 일기를 삭제할 수 없습니다. ${error}`);
+      console.error(CONSOLE_ERROR.DIARY.DELETE + error);
     },
   });
 };

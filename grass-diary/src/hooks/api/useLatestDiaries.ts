@@ -1,9 +1,10 @@
 import API from '@services/index';
+import { END_POINT } from '@constants/api';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 
 const fetchLatestDiary = (cursorId: number) => {
-  return API.get(`/shared/diaries/latest?cursorId=${cursorId}&size=12`);
+  return API.get(END_POINT.SHARE_LATEST(cursorId));
 };
 
 export const useLatestDiaries = () => {

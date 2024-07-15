@@ -5,10 +5,12 @@ import Swal from 'sweetalert2';
 import QuillEditor from './QuillEditor';
 
 import API from '@services/index';
+import { END_POINT } from '@constants/api';
 import useUser from '@recoil/user/useUser';
 import { Header, BackButton, Button, Container } from '@components/index';
 import EMOJI from '@constants/emoji';
 import 'dayjs/locale/ko';
+import { CONSOLE_ERROR, ERROR } from '@constants/message';
 
 const CreateDiaryStyle = stylex.create({
   container: {
@@ -166,7 +168,7 @@ const CreateDiary = () => {
   });
 
   useEffect(() => {
-    API.get<DiaryInfo>('/main/today-date')
+    API.get<DiaryInfo>(END_POINT.TODAY_DATE)
       .then(response => {
         setYear(response.data.year);
         setMonth(response.data.month);
@@ -174,7 +176,7 @@ const CreateDiary = () => {
         setDay(response.data.day);
       })
       .catch(error => {
-        console.error(`오늘의 날짜를 불러올 수 없습니다. ${error}`);
+        console.error(CONSOLE_ERROR.DATE.GET + error);
       });
   });
 
@@ -206,7 +208,7 @@ const CreateDiary = () => {
   const handleSave = async () => {
     if (!checkWritingPermission()) {
       Swal.fire({
-        title: '하루에 한 번만 쓸 수 있어요!',
+        title: ERROR.DIARY_ALREADY_EXISTS,
         icon: 'warning',
         showCancelButton: false,
         confirmButtonColor: '#28CA3B',
@@ -229,7 +231,7 @@ const CreateDiary = () => {
 
     if (!quillContent || !quillContent.trim()) {
       Swal.fire({
-        title: '일기를 작성해주세요!',
+        title: ERROR.DIARY_NOT_WRITE,
         icon: 'warning',
         showCancelButton: false,
         confirmButtonColor: '#28CA3B',
@@ -240,10 +242,10 @@ const CreateDiary = () => {
 
     try {
       if (diaryId) {
-        await API.patch(`/diary/${diaryId}`, requestBody);
+        await API.patch(END_POINT.DIARY(diaryId), requestBody);
         navigate(`/diary/${diaryId}`, { replace: true, state: 'editcomplete' });
       } else {
-        await API.post(`/diary/${memberId}`, requestBody);
+        await API.post(END_POINT.DIARY(memberId), requestBody);
         navigate('/share');
       }
     } catch (error) {
@@ -263,7 +265,7 @@ const CreateDiary = () => {
   const fetchDiaryData = async () => {
     try {
       if (diaryId) {
-        const response = await API.get(`/diary/${diaryId}`);
+        const response = await API.get(END_POINT.DIARY(diaryId));
         const tags = response.data.tags.map((tag: Tag) => tag.tag);
 
         setHashArr(tags);
@@ -272,7 +274,7 @@ const CreateDiary = () => {
         setQuillContent(response.data.content);
       }
     } catch (error) {
-      console.error(`사용자의 일기 정보를 불러올 수 없습니다. ${error}`);
+      console.error(CONSOLE_ERROR.DIARY.GET + error);
     }
   };
 
