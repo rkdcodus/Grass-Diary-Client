@@ -240,9 +240,7 @@ const CreateDiary = () => {
 
     const { quillContent, isPrivate, hashArr, moodValue } = diaryInfo;
 
-    if (file) {
-      formData.append('image', file);
-    }
+    if (file) formData.append('image', file);
 
     const requestDto = {
       content: quillContent,
