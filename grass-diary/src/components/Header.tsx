@@ -87,11 +87,6 @@ const menuBar = stylex.create({
   },
 });
 
-interface IMenuBarProps {
-  toggle: boolean;
-  headerRef: React.RefObject<HTMLDivElement>;
-}
-
 const MenuBar = ({ toggle, headerRef }: IMenuBarProps) => {
   const clearAuth = useLogout();
   const queryClient = useQueryClient();
@@ -130,11 +125,6 @@ const MenuBar = ({ toggle, headerRef }: IMenuBarProps) => {
     </div>
   );
 };
-
-interface IHeader {
-  position?: string;
-  margin?: string;
-}
 
 const Header = ({ position, margin }: IHeader) => {
   const [toggle, setToggle] = useState(false);

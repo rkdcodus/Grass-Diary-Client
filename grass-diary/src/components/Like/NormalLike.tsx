@@ -9,11 +9,6 @@ const feed = stylex.create({
   }),
 });
 
-interface INormalLikeProps {
-  likeCount: number;
-  justifyContent: string;
-}
-
 const NormalLike = ({ likeCount, justifyContent }: INormalLikeProps) => {
   return (
     <div {...stylex.props(feed.like(justifyContent))}>
