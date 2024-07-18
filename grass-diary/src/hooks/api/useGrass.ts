@@ -10,7 +10,7 @@ interface IGrassList {
 
 type TUpdatedGrassColor = { [key: string]: string };
 
-const useGrass = (memberId: number | null) => {
+const useGrass = (memberId: Id) => {
   const { data: grass } = useQuery<
     TUpdatedGrassColor,
     Error,

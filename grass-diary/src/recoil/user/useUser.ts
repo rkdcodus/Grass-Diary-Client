@@ -9,11 +9,11 @@ import { END_POINT } from '@constants/api';
 import { CONSOLE_ERROR } from '@constants/message';
 
 interface IUseUserReturn {
-  memberId: number | null;
+  memberId: Id;
 }
 
 const useUser = (): IUseUserReturn => {
-  const setMemberId = useSetRecoilState<number | null>(memberIdAtom);
+  const setMemberId = useSetRecoilState<number>(memberIdAtom);
   const { isAuthenticated }: { isAuthenticated: boolean } = useAuth();
 
   const { data: memberId, isSuccess } = useQuery<
@@ -31,7 +31,7 @@ const useUser = (): IUseUserReturn => {
 
   useEffect(() => {
     if (isSuccess && memberId !== undefined) setMemberId(memberId);
-    if (!isAuthenticated) setMemberId(null);
+    if (!isAuthenticated) setMemberId(0);
   }, [isSuccess, memberId, isAuthenticated, setMemberId]);
 
   return { memberId };

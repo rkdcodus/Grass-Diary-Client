@@ -36,18 +36,18 @@ const ellipsis = stylex.create({
   },
 });
 
-interface IEllipsisBox {
+interface IBoxProps {
   onClick: () => void;
   text: string;
 }
 
-interface IEllipsisIcon {
+interface IIconProps {
   children: React.ReactNode;
   width: string;
   translateValue: string;
 }
 
-const EllipsisBox = ({ onClick, text }: IEllipsisBox) => {
+const EllipsisBox = ({ onClick, text }: IBoxProps) => {
   return (
     <div onClick={onClick} {...stylex.props(ellipsis.box)}>
       {text}
@@ -55,7 +55,7 @@ const EllipsisBox = ({ onClick, text }: IEllipsisBox) => {
   );
 };
 
-const EllipsisIcon = ({ children, width, translateValue }: IEllipsisIcon) => {
+const EllipsisIcon = ({ children, width, translateValue }: IIconProps) => {
   const [open, setOpen] = useState(false);
   const boxRef = useRef<HTMLDivElement>(null);
   const iconRef = useRef<HTMLDivElement>(null);

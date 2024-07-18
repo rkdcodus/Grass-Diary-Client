@@ -21,11 +21,11 @@ const styles = stylex.create({
   },
 });
 
-type BackButtonProps = {
+interface IBackButtonProps {
   goBackTo?: string;
-};
+}
 
-const BackButton: React.FC<BackButtonProps> = ({ goBackTo }) => {
+const BackButton = ({ goBackTo }: IBackButtonProps) => {
   const navigate = useNavigate();
   const location = useLocation();
   const goBack = () => {

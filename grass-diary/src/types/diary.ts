@@ -8,7 +8,7 @@ interface IDiary {
   content: string;
   createdAt: string;
   createdDate: string;
-  diaryId: number;
+  diaryId: Id;
   isPrivate: boolean;
   likeCount: number;
   tags: ITages[];
@@ -57,8 +57,8 @@ interface IDiaryResponse {
 }
 
 interface IDiaryDetail extends IDiary {
-  id: number;
-  memberId: number;
+  id: Id;
+  memberId: Id;
   hasImage: null;
   hasTag: null;
   imageURL: string;

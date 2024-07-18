@@ -3,12 +3,12 @@ import API from '@services/index';
 import { END_POINT } from '@constants/api';
 import { AxiosError } from 'axios';
 
-const fetchUserProfiles = (memberId: number) => {
+const fetchUserProfiles = (memberId: Id) => {
   return API.get(END_POINT.MEMBER_PROFILE(memberId));
 };
 
-export const useWriterProfile = (writerId: number) => {
-  return useQuery<IProfile, AxiosError, IProfile, [string, number]>({
+export const useWriterProfile = (writerId: Id) => {
+  return useQuery<IProfile, AxiosError, IProfile, [string, Id]>({
     queryKey: ['writer-data', writerId],
     queryFn: async () => {
       const res = await fetchUserProfiles(writerId);

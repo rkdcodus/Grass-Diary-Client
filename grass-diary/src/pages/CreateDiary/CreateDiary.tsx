@@ -1,6 +1,6 @@
 import stylex from '@stylexjs/stylex';
 import { useState, useEffect } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import QuillEditor from './QuillEditor';
 
@@ -294,7 +294,7 @@ const CreateDiary = () => {
   // 수정 기능일 때의 코드
 
   type Tag = {
-    id: number;
+    id: Id;
     tag: string;
   };
 

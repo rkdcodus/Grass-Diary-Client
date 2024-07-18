@@ -11,7 +11,7 @@ const useLogout = () => {
   const clearAuth = () => {
     localStorage.removeItem('accessToken');
     setIsAuthenticated(false);
-    setMemberId(null);
+    setMemberId(0);
 
     navigate('/');
   };

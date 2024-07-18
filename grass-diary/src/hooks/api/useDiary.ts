@@ -4,7 +4,7 @@ import { END_POINT } from '@constants/api';
 import { CONSOLE_ERROR } from '@constants/message';
 
 interface IUseDiaryProps {
-  memberId: number | null;
+  memberId: Id;
   currentPage: number;
   sortOrder: string;
 }
