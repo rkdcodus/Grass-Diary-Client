@@ -10,6 +10,7 @@ import Setting from './Setting';
 import { useDiaryDetail } from '@hooks/api/useDiaryDetail';
 import axios from 'axios';
 import ImageModal from './modal/ImageModal';
+import { useParamsId } from '@hooks/useParamsId';
 
 const styles = stylex.create({
   wrap: {
@@ -130,18 +131,9 @@ const contentStyle = stylex.create({
   },
 });
 
-const getParamsNumber = () => {
-  const { diaryId_str } = useParams();
-  const diaryId_num = Number(diaryId_str);
-  if (Number.isNaN(diaryId_num)) {
-    return 0;
-  }
-  return diaryId_num;
-};
-
 const DiaryDetail = () => {
   const navigate = useNavigate();
-  const diaryId = getParamsNumber();
+  const diaryId = useParamsId();
   const { memberId } = useUser();
   const [likeCount, setLikeCount] = useState(0);
   const [mood, setMood] = useState('');

@@ -11,6 +11,7 @@ import { Header, BackButton, Button, Container } from '@components/index';
 import EMOJI from '@constants/emoji';
 import 'dayjs/locale/ko';
 import { CONSOLE_ERROR, ERROR } from '@constants/message';
+import { useParamsId } from '@hooks/useParamsId';
 
 const CreateDiaryStyle = stylex.create({
   container: {
@@ -110,7 +111,7 @@ type DiaryInfo = {
 };
 
 const CreateDiary = () => {
-  const { id: diaryId } = useParams<{ id: string }>();
+  const diaryId = useParamsId();
   const navigate = useNavigate();
   const [hashtag, setHashtag] = useState<string>('');
   const [hashArr, setHashArr] = useState<HashTag[]>([]);
