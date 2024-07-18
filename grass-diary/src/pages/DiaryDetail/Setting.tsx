@@ -5,7 +5,7 @@ import UnmodifyModal from './modal/UnmodifyModal';
 import ConfirmDeleteModal from './modal/ConfirmDeleteModal';
 
 type Props = {
-  diaryId: string | undefined;
+  diaryId: number;
   createdDate: string;
 };
 

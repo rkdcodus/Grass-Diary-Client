@@ -45,7 +45,7 @@ const styles = stylex.create({
 });
 
 interface ILike {
-  diaryId: string | undefined;
+  diaryId: number;
   likeCount: number;
   setLikeCount: React.Dispatch<React.SetStateAction<number>>;
   liked: boolean | undefined;

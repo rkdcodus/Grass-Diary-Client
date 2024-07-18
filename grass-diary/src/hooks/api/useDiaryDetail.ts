@@ -4,17 +4,17 @@ import API from '@services/index';
 import { END_POINT } from '@constants/api';
 import { AxiosError } from 'axios';
 
-const fetchDiaryDetails = (id: string) => {
+const fetchDiaryDetails = (id: number) => {
   return API.get(END_POINT.DIARY(id));
 };
 
-export const useDiaryDetail = (diaryId: string) => {
+export const useDiaryDetail = (diaryId: number) => {
   const {
     data: detail,
     isLoading,
     isError,
     error,
-  } = useQuery<IDiaryDetail, AxiosError, IDiaryDetail, [string, string]>({
+  } = useQuery<IDiaryDetail, AxiosError, IDiaryDetail, [string, number]>({
     queryKey: ['get-diaryDetail', diaryId],
     queryFn: async () => {
       const res = await fetchDiaryDetails(diaryId);

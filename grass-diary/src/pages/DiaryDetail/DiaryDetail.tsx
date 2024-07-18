@@ -130,16 +130,23 @@ const contentStyle = stylex.create({
   },
 });
 
+const getParamsNumber = () => {
+  const { diaryId_str } = useParams();
+  const diaryId_num = Number(diaryId_str);
+  if (Number.isNaN(diaryId_num)) {
+    return 0;
+  }
+  return diaryId_num;
+};
+
 const DiaryDetail = () => {
   const navigate = useNavigate();
-  const { diaryId } = useParams();
+  const diaryId = getParamsNumber();
   const { memberId } = useUser();
   const [likeCount, setLikeCount] = useState(0);
   const [mood, setMood] = useState('');
   const [imageModal, setImageModal] = useState(false);
-  const { detail, writer, isLoading, isError, error } = useDiaryDetail(
-    diaryId!,
-  );
+  const { detail, writer, isLoading, isError, error } = useDiaryDetail(diaryId);
 
   const zoom = () => {
     if (!imageModal) {

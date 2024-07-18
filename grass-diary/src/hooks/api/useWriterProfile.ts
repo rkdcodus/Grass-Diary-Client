@@ -3,8 +3,8 @@ import API from '@services/index';
 import { END_POINT } from '@constants/api';
 import { AxiosError } from 'axios';
 
-const fetchUserProfiles = (id: number) => {
-  return API.get(END_POINT.MEMBER_PROFILE(id));
+const fetchUserProfiles = (memberId: number) => {
+  return API.get(END_POINT.MEMBER_PROFILE(memberId));
 };
 
 export const useWriterProfile = (writerId: number) => {

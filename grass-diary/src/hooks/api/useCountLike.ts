@@ -4,8 +4,8 @@ import { useMutation } from '@tanstack/react-query';
 import { CONSOLE_ERROR } from '@constants/message';
 
 type Props = {
-  diaryId: string;
-  memberId: number;
+  diaryId: number;
+  memberId: number | null;
 };
 
 const postLikeApi = ({ diaryId, memberId }: Props) => {
