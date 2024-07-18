@@ -45,11 +45,6 @@ const imageModal = stylex.create({
   },
 });
 
-interface IImageModalProps {
-  img: string;
-  setImageModal: React.Dispatch<React.SetStateAction<boolean>>;
-}
-
 const ImageModal = ({ img, setImageModal }: IImageModalProps) => {
   const onClick = () => {
     setImageModal(false);

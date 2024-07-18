@@ -4,11 +4,6 @@ import { EllipsisIcon, EllipsisBox } from '@components/index';
 import UnmodifyModal from './modal/UnmodifyModal';
 import ConfirmDeleteModal from './modal/ConfirmDeleteModal';
 
-interface ISettingProps {
-  diaryId: Id;
-  createdDate: string;
-}
-
 const Setting = ({ diaryId, createdDate }: ISettingProps) => {
   const navigate = useNavigate();
   const date = new Date();

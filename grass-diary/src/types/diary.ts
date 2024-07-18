@@ -55,12 +55,3 @@ interface IDiaryResponse {
   totalElements: number;
   totalPages: number;
 }
-
-interface IDiaryDetail extends IDiary {
-  id: Id;
-  memberId: Id;
-  hasImage: null;
-  hasTag: null;
-  imageURL: string;
-  likedByLogInMember: boolean;
-}
