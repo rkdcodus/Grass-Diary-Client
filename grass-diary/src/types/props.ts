@@ -46,5 +46,4 @@ interface IMenuBarProps {
 
 interface IHeader {
   position?: string;
-  margin?: string;
 }

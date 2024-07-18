@@ -126,7 +126,7 @@ const MenuBar = ({ toggle, headerRef }: IMenuBarProps) => {
   );
 };
 
-const Header = ({ position, margin }: IHeader) => {
+const Header = ({ position }: IHeader) => {
   const [toggle, setToggle] = useState(false);
   const headerRef = useRef<HTMLDivElement>(null);
   const iconRef = useRef<HTMLDivElement>(null);
@@ -160,7 +160,7 @@ const Header = ({ position, margin }: IHeader) => {
   }, [memberId, toggle]);
 
   return (
-    <div {...stylex.props(header.container(position, margin))}>
+    <div {...stylex.props(header.container(position))}>
       <div {...stylex.props(header.itemWrapper)}>
         <Link to="/main">
           <span {...stylex.props(header.logo)}>잔디일기</span>
