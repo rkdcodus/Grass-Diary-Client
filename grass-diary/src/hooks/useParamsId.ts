@@ -1,8 +1,8 @@
 import { useParams } from 'react-router-dom';
 
 export const useParamsId = () => {
-  const { diaryId_str } = useParams();
-  const diaryId_num = Number(diaryId_str);
+  const { diaryId } = useParams();
+  const diaryId_num = Number(diaryId);
   if (Number.isNaN(diaryId_num)) {
     return 0;
   }
