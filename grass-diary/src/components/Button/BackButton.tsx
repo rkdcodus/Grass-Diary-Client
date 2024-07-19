@@ -21,6 +21,10 @@ const styles = stylex.create({
   },
 });
 
+interface IBackButtonProps {
+  goBackTo?: string;
+}
+
 const BackButton = ({ goBackTo }: IBackButtonProps) => {
   const navigate = useNavigate();
   const location = useLocation();

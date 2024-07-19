@@ -45,6 +45,15 @@ const feed = stylex.create({
   },
 });
 
+interface IFeedProps {
+  likeCount: number;
+  link: string;
+  createdAt: string;
+  content: string;
+  name: string;
+  memberId: Id;
+}
+
 const Feed = ({
   likeCount,
   link,

@@ -7,6 +7,15 @@ import useLogout from '@hooks/useLogout';
 import useUser from '@recoil/user/useUser';
 import { useQueryClient } from '@tanstack/react-query';
 
+interface IMenuBarProps {
+  toggle: boolean;
+  headerRef: React.RefObject<HTMLDivElement>;
+}
+
+interface IHeader {
+  position?: string;
+}
+
 const header = stylex.create({
   container: (position?: string) => ({
     display: 'flex',
