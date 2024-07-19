@@ -7,21 +7,21 @@ interface IDiaryDetail extends IDiary {
   likedByLogInMember: boolean;
 }
 
-interface IConfirmDeleteModalProps {
+type ConfirmDeleteModalProps = {
   diaryId: Id;
   setConfirmModal: React.Dispatch<React.SetStateAction<boolean>>;
-}
+};
 
-interface IImageModalProps {
+type ImageModalProps = {
   img: string;
   setImageModal: React.Dispatch<React.SetStateAction<boolean>>;
-}
+};
 
-interface IUnmodifyModal {
+type UnmodifyModalProps = {
   setter: React.Dispatch<React.SetStateAction<boolean>>;
-}
+};
 
-interface ISettingProps {
+type SettingProps = {
   diaryId: Id;
   createdDate: string;
-}
+};

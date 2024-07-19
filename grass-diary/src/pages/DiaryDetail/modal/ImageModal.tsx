@@ -45,7 +45,7 @@ const imageModal = stylex.create({
   },
 });
 
-const ImageModal = ({ img, setImageModal }: IImageModalProps) => {
+const ImageModal = ({ img, setImageModal }: ImageModalProps) => {
   const onClick = () => {
     setImageModal(false);
   };

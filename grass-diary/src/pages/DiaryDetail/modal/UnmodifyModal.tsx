@@ -42,7 +42,7 @@ const styles = stylex.create({
   },
 });
 
-const UnmodifyModal = ({ setter }: IUnmodifyModal) => {
+const UnmodifyModal = ({ setter }: UnmodifyModalProps) => {
   const closeModal = () => setter(false);
 
   return (

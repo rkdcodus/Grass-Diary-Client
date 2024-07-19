@@ -44,7 +44,7 @@ const styles = stylex.create({
 const ConfirmDeleteModal = ({
   diaryId,
   setConfirmModal,
-}: IConfirmDeleteModalProps) => {
+}: ConfirmDeleteModalProps) => {
   const { mutate, isSuccess } = useDeleteDiaryDetail(diaryId);
 
   const closeModal = () => setConfirmModal(false);
