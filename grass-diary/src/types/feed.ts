@@ -3,6 +3,6 @@ interface Feed {
   memberId: Id;
   createdAt: string;
   nickname: string;
-  diaryContent: string;
+  content: string;
   diaryLikeCount: number;
 }
