@@ -1,10 +1,11 @@
 import { useQuery } from '@tanstack/react-query';
 import { useWriterProfile } from './useWriterProfile';
 import API from '@services/index';
+import { END_POINT } from '@constants/api';
 import { AxiosError } from 'axios';
 
 const fetchDiaryDetails = (id: string) => {
-  return API.get(`/diary/${id}`);
+  return API.get(END_POINT.DIARY(id));
 };
 
 export const useDiaryDetail = (diaryId: string) => {

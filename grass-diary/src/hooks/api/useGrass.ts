@@ -1,6 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { formatDate } from '@utils/dateUtils';
 import API from '@services/index';
+import { CONSOLE_ERROR } from '@constants/message';
 
 interface IGrassList {
   createdAt: string;
@@ -35,8 +36,7 @@ const useGrass = (memberId: number | null) => {
         return updatedGrassColor;
       }),
     enabled: !!memberId,
-    onError: error =>
-      console.error(`사용자 잔디 현황을 불러올 수 없습니다. ${error}`),
+    onError: error => console.error(CONSOLE_ERROR.GRASS.GET + error),
   });
 
   return grass;

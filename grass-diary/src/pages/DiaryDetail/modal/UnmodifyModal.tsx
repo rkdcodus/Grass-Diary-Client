@@ -1,3 +1,4 @@
+import { ERROR, INFO } from '@constants/message';
 import stylex from '@stylexjs/stylex';
 
 const styles = stylex.create({
@@ -55,13 +56,9 @@ const UnmodifyModal = ({ setter }: IUnmodifyModal) => {
           <i className="fa-solid fa-xmark"></i>
         </div>
         <div {...stylex.props(styles.text)}>
-          <span {...stylex.props(styles.bold)}>
-            ⚠ 수정 가능한 시간이 아닙니다
-          </span>
+          <span {...stylex.props(styles.bold)}>{ERROR.DIARY_CANT_EDIT}</span>
           <br />
-          <span {...stylex.props(styles.ie)}>
-            일기는 당일 00:00부터 24:00전까지 수정 가능합니다.
-          </span>
+          <span {...stylex.props(styles.ie)}>{INFO.DIARY_EDIT_INFO}</span>
         </div>
       </div>
     </div>

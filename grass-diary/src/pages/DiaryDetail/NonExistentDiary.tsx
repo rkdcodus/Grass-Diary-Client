@@ -1,5 +1,6 @@
 import stylex from '@stylexjs/stylex';
 import { Header, BackButton, Container } from '@components/index';
+import { ERROR } from '@constants/message';
 
 const styles = stylex.create({
   wrap: {
@@ -22,7 +23,7 @@ const NonExistentDiary = () => {
       <div {...stylex.props(styles.wrap)}>
         <BackButton goBackTo={'/main'} />
         <div {...stylex.props(styles.content)}>
-          <p>존재하지 않는 일기입니다❗</p>
+          <p>{ERROR.DIARY_NOT_FOUND_ERR}</p>
         </div>
       </div>
     </Container>

@@ -1,5 +1,7 @@
 import API from '@services/index';
+import { END_POINT } from '@constants/api';
 import { useMutation } from '@tanstack/react-query';
+import { CONSOLE_ERROR } from '@constants/message';
 
 type Props = {
   diaryId: string;
@@ -7,11 +9,11 @@ type Props = {
 };
 
 const postLikeApi = ({ diaryId, memberId }: Props) => {
-  return API.post(`/diary/like/${diaryId}/${memberId}`);
+  return API.post(END_POINT.LIKE(diaryId, memberId));
 };
 
 const deleteLikeApi = ({ diaryId, memberId }: Props) => {
-  return API.delete(`/diary/like/${diaryId}/${memberId}`);
+  return API.delete(END_POINT.LIKE(diaryId, memberId));
 };
 
 export const useCountLike = ({ diaryId, memberId }: Props) => {
@@ -20,7 +22,7 @@ export const useCountLike = ({ diaryId, memberId }: Props) => {
       return postLikeApi({ diaryId, memberId });
     },
     onError: error => {
-      console.error(`사용자 좋아요 정보를 불러올 수 없습니다. ${error}`);
+      console.error(CONSOLE_ERROR.LIKE.POST + error);
     },
   });
 
@@ -29,7 +31,7 @@ export const useCountLike = ({ diaryId, memberId }: Props) => {
       return deleteLikeApi({ diaryId, memberId });
     },
     onError: error => {
-      console.error(`사용자의 좋아요 정보를 삭제할 수 없습니다. ${error}`);
+      console.error(CONSOLE_ERROR.LIKE.DELETE + error);
     },
   });
 

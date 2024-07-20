@@ -1,7 +1,7 @@
 import stylex from '@stylexjs/stylex';
 import { Link } from 'react-router-dom';
 import { NormalLike } from '@components/index';
-import { useWriterProfile } from '@hooks/useWriterProfile';
+import { useWriterProfile } from '@hooks/api/useWriterProfile';
 
 const feed = stylex.create({
   box: {

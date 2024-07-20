@@ -4,9 +4,11 @@ import { useEffect, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 
 import { formatDate, getDaysArray } from '@utils/dateUtils';
-import useGrass from '@hooks/ussGrass';
+import useGrass from '@hooks/api/useGrass';
 import useUser from '@recoil/user/useUser';
 import API from '@services/index';
+import { END_POINT } from '@constants/api';
+import { CONSOLE_ERROR } from '@constants/message';
 
 type TCreateGrass = () => { year: number; grass: (Date | null)[][] };
 
@@ -66,12 +68,11 @@ const Grass = ({ setSelectedDiary }: IGrass) => {
   >({
     queryKey: ['selectedDiary', memberId, selectedDate],
     queryFn: () =>
-      API.get(`/search/date/${memberId}?date=${selectedDate}`).then(
+      API.get(END_POINT.SEARCH_DATE(memberId, selectedDate)).then(
         ({ data }) => data,
       ),
     enabled: !!selectedGrass && !!memberId,
-    onError: error =>
-      console.error(`선택된 날짜의 일기를 불러올 수 없습니다. ${error}`),
+    onError: error => console.error(CONSOLE_ERROR.SEARCH_DATE.GET + error),
   });
 
   useEffect(() => {
