@@ -12,6 +12,7 @@ const MyPage = lazy(() => import('@pages/MyPage/MyPage'));
 const NonExistentDiary = lazy(
   () => import('@pages/DiaryDetail/NonExistentDiary'),
 );
+const RewardPage = lazy(() => import('@pages/RewardPage/RewardPage'));
 
 const router = createBrowserRouter([
   {
