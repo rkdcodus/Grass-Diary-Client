@@ -107,7 +107,6 @@ type DiaryInfo = {
   day: string | null;
   quillContent: string | null;
   isPrivate: boolean;
-  hasImage: boolean;
 };
 
 const CreateDiary = () => {
@@ -117,7 +116,6 @@ const CreateDiary = () => {
   const [hashArr, setHashArr] = useState<HashTag[]>([]);
   const [quillContent, setQuillContent] = useState<string>('');
   const [isPrivate, setIsPrivate] = useState<boolean>(true);
-  const [hasImage, setHasImage] = useState<boolean>(false);
   const [moodValue, setMoodValue] = useState<MoodValue>(5);
   const selectedEmoticon = EMOJI[moodValue];
   const [year, setYear] = useState<number | null>(null);
@@ -179,20 +177,6 @@ const CreateDiary = () => {
     setHashArr(prev => prev.filter((_, i) => i !== index));
   };
 
-  // 이미지 검사
-
-  const checkForImage = (content: string): boolean => {
-    const parser = new DOMParser();
-    const doc = parser.parseFromString(content, 'text/html');
-    const images = doc.querySelectorAll('img');
-    return images.length > 0;
-  };
-
-  const handleQuillContentChange = (content: string) => {
-    setQuillContent(content);
-    setHasImage(checkForImage(content));
-  };
-
   const [diaryInfo, setDiaryInfo] = useState<DiaryInfo>({
     hashArr: [],
     moodValue: 0,
@@ -202,7 +186,6 @@ const CreateDiary = () => {
     day: '',
     quillContent: null,
     isPrivate: false,
-    hasImage: false,
   });
 
   useEffect(() => {
@@ -228,9 +211,8 @@ const CreateDiary = () => {
       date: date ?? prevState.date,
       day: day ?? prevState.day,
       isPrivate,
-      hasImage,
     }));
-  }, [hashArr, moodValue, quillContent, isPrivate, hasImage, month, date, day]);
+  }, [hashArr, moodValue, quillContent, isPrivate, month, date, day]);
 
   const checkWritingPermission = () => {
     const lastWritingDate = localStorage.getItem('lastWritingDate');
@@ -243,7 +225,7 @@ const CreateDiary = () => {
   };
 
   const { memberId } = useUser();
-  console.log(diaryInfo);
+
   const handleSave = async () => {
     if (!checkWritingPermission()) {
       Swal.fire({
@@ -256,14 +238,13 @@ const CreateDiary = () => {
       return;
     }
 
-    const { quillContent, isPrivate, hasImage, hashArr, moodValue } = diaryInfo;
+    const { quillContent, isPrivate, hashArr, moodValue } = diaryInfo;
 
     if (file) formData.append('image', file);
 
     const requestDto = {
       content: quillContent,
       isPrivate,
-      hasImage,
       conditionLevel: `LEVEL_${moodValue}`,
       hashtags: hashArr,
       hasImage: hasImage,
@@ -401,7 +382,7 @@ const CreateDiary = () => {
           />
         )}
         <QuillEditor
-          onContentChange={handleQuillContentChange}
+          onContentChange={setQuillContent}
           quillContent={quillContent}
         />
         <section>
