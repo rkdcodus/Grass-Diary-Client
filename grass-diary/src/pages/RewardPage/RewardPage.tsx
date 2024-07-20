@@ -1,5 +1,7 @@
 import stylex from '@stylexjs/stylex';
 import { Button, Header, Container } from '@components/index';
+import Swal from 'sweetalert2';
+import subCharacter from '@icon/subCharacter.png';
 
 const RewardPageStyle = stylex.create({
   titleBanner: {
@@ -79,6 +81,19 @@ const RewardPageStyle = stylex.create({
 });
 
 const RewardPage = () => {
+  const modal = () => {
+    Swal.fire({
+      title: '테마 상점',
+      text: '테마 상점 준비중이에요',
+      imageUrl: subCharacter,
+      imageWidth: 300,
+      imageHeight: 300,
+      imageAlt: 'Custom image',
+      confirmButtonColor: '#28CA3B',
+      confirmButtonText: '확인',
+    });
+  };
+
   return (
     <>
       <Container>
@@ -143,6 +158,7 @@ const RewardPage = () => {
             defaultBgColor="#FFFFFF"
             hoverBgColor="#111111"
             border="1px solid #929292"
+            onClick={modal}
           />
         </section>
         <span {...stylex.props(RewardPageStyle.line)}></span>
