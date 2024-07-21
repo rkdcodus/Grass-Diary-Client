@@ -270,7 +270,7 @@ const CreateDiary = () => {
       } else {
         const response = await API.post(END_POINT.DIARY(memberId), formData);
         const newDiaryId = response.data.diaryId;
-        navigate(`/diary/${newDiaryId}`);
+        navigate(`/diary/${newDiaryId}`, { replace: true });
         localStorage.setItem('lastWritingDate', currentDate);
       }
     } catch (error) {
