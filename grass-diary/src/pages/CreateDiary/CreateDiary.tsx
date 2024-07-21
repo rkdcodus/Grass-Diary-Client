@@ -101,7 +101,6 @@ const CreateDiary = () => {
   const navigate = useNavigate();
   const { memberId } = useUser();
   const [moodValue, setMoodValue] = useState<number>(5);
-  const selectedEmoticon = EMOJI[moodValue];
   const [hashtag, setHashtag] = useState<string>('');
   const [hashArr, setHashArr] = useState<string[]>([]);
   const [quillContent, setQuillContent] = useState<string>('');
@@ -332,7 +331,7 @@ const CreateDiary = () => {
               공개
             </label>
             <div {...stylex.props(CreateDiaryStyle.todayMood)}>
-              <div style={{ fontSize: '30px' }}>{selectedEmoticon}</div>
+              <div style={{ fontSize: '30px' }}>{EMOJI[moodValue]}</div>
               <div>오늘의 기분</div>
               <input
                 type="range"
