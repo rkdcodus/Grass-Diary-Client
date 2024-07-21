@@ -96,32 +96,21 @@ const CreateDiaryStyle = stylex.create({
   },
 });
 
-type HashTag = string;
-type MoodValue = number;
-type DiaryInfo = {
-  hashArr: HashTag[];
-  moodValue: MoodValue;
-  year: number | null;
-  month: number | null;
-  date: number | null;
-  day: string | null;
-  quillContent: string | null;
-  isPrivate: boolean;
-};
-
 const CreateDiary = () => {
   const { id: diaryId } = useParams<{ id: string }>();
   const navigate = useNavigate();
+  const { memberId } = useUser();
+  const [moodValue, setMoodValue] = useState<number>(5);
+  const selectedEmoticon = EMOJI[moodValue];
   const [hashtag, setHashtag] = useState<string>('');
-  const [hashArr, setHashArr] = useState<HashTag[]>([]);
+  const [hashArr, setHashArr] = useState<string[]>([]);
   const [quillContent, setQuillContent] = useState<string>('');
   const [isPrivate, setIsPrivate] = useState<boolean>(true);
-  const [moodValue, setMoodValue] = useState<MoodValue>(5);
-  const selectedEmoticon = EMOJI[moodValue];
   const [year, setYear] = useState<number | null>(null);
   const [month, setMonth] = useState<number | null>(null);
   const [date, setDate] = useState<number | null>(null);
   const [day, setDay] = useState<string | null>(null);
+
   // 이미지 state
   const [file, setFile] = useState(null);
   const [imageURL, setImageURL] = useState('');
@@ -150,7 +139,7 @@ const CreateDiary = () => {
     const reader = new FileReader();
     reader.readAsDataURL(file);
     reader.onloadend = () => {
-      setImageURL(reader.result);
+      setImageURL(reader.result as string);
     };
     setFile(file);
     setHasImage(true);
@@ -177,19 +166,19 @@ const CreateDiary = () => {
     setHashArr(prev => prev.filter((_, i) => i !== index));
   };
 
-  const [diaryInfo, setDiaryInfo] = useState<DiaryInfo>({
+  const [diaryInfo, setDiaryInfo] = useState<IDiaryInfo>({
     hashArr: [],
     moodValue: 0,
     year: 0,
     month: 0,
     date: 0,
     day: '',
-    quillContent: null,
+    quillContent: '',
     isPrivate: false,
   });
 
   useEffect(() => {
-    API.get<DiaryInfo>(END_POINT.TODAY_DATE)
+    API.get<IDiaryInfo>(END_POINT.TODAY_DATE)
       .then(response => {
         setYear(response.data.year);
         setMonth(response.data.month);
@@ -223,8 +212,6 @@ const CreateDiary = () => {
     }
     return true;
   };
-
-  const { memberId } = useUser();
 
   const handleSave = async () => {
     if (!checkWritingPermission()) {
@@ -281,8 +268,9 @@ const CreateDiary = () => {
         await API.patch(END_POINT.DIARY(diaryId), formData, config);
         navigate(`/diary/${diaryId}`, { replace: true, state: 'editcomplete' });
       } else {
-        await API.post(END_POINT.DIARY(memberId), formData);
-        navigate('/share');
+        const response = await API.post(END_POINT.DIARY(memberId), formData);
+        const newDiaryId = response.data.diaryId;
+        navigate(`/diary/${newDiaryId}`);
         localStorage.setItem('lastWritingDate', currentDate);
       }
     } catch (error) {
@@ -292,16 +280,11 @@ const CreateDiary = () => {
 
   // 수정 기능일 때의 코드
 
-  type Tag = {
-    id: number;
-    tag: string;
-  };
-
   const fetchDiaryData = async () => {
     try {
       if (diaryId) {
         const response = await API.get(END_POINT.DIARY(diaryId));
-        const tags = response.data.tags.map((tag: Tag) => tag.tag);
+        const tags = response.data.tags.map((tag: ITages) => tag.tag);
 
         setHashArr(tags);
         setIsPrivate(response.data.isPrivate);
