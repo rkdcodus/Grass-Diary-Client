@@ -100,32 +100,40 @@ const CreateDiary = () => {
   const { id: diaryId } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const { memberId } = useUser();
-  const [moodValue, setMoodValue] = useState<number>(5);
-  const [hashtag, setHashtag] = useState<string>('');
-  const [hashArr, setHashArr] = useState<string[]>([]);
-  const [quillContent, setQuillContent] = useState<string>('');
-  const [isPrivate, setIsPrivate] = useState<boolean>(true);
-  const [year, setYear] = useState<number | null>(null);
-  const [month, setMonth] = useState<number | null>(null);
-  const [date, setDate] = useState<number | null>(null);
-  const [day, setDay] = useState<string | null>(null);
+  const [diaryInfo, setDiaryInfo] = useState<IDiaryInfo>({
+    hashArr: [],
+    moodValue: 5,
+    quillContent: '',
+    isPrivate: true,
+    year: null,
+    month: null,
+    date: null,
+    day: null,
+  });
 
+  // 해시태그 state
+  const [hashtag, setHashtag] = useState<string>('');
   // 이미지 state
   const [file, setFile] = useState(null);
   const [imageURL, setImageURL] = useState('');
   const [hasImage, setHasImage] = useState(false);
   const formData = new FormData(); // FormData 생성
 
+  // 상태 업데이트 함수
+  const setDiaryField = (field: Partial<IDiaryInfo>) => {
+    setDiaryInfo(prev => ({ ...prev, ...field }));
+  };
+
   const handlePrivateChange = () => {
-    setIsPrivate(true);
+    setDiaryField({ isPrivate: true });
   };
 
   const handlePublicChange = () => {
-    setIsPrivate(false);
+    setDiaryField({ isPrivate: false });
   };
 
   const handleMoodChange = e => {
-    setMoodValue(parseInt(e.target.value));
+    setDiaryField({ moodValue: parseInt(e.target.value) });
   };
 
   const onChangeHashtag = e => {
@@ -152,9 +160,9 @@ const CreateDiary = () => {
       const validCharsPattern = /[가-힣A-Za-z0-9]+/g;
 
       const matches = inputText.match(validCharsPattern);
-      if (matches && matches.length > 0 && hashArr.length < 15) {
+      if (matches && matches.length > 0 && diaryInfo.hashArr.length < 15) {
         const hashtagText = matches.join('');
-        setHashArr(prev => [...prev, hashtagText]);
+        setDiaryField({ hashArr: [...diaryInfo.hashArr, hashtagText] });
         setHashtag('');
       }
     }
@@ -162,49 +170,27 @@ const CreateDiary = () => {
 
   // 해시태그를 배열에서 제거하는 함수
   const removeHashtag = (index: number) => {
-    setHashArr(prev => prev.filter((_, i) => i !== index));
+    setDiaryField({ hashArr: diaryInfo.hashArr.filter((_, i) => i !== index) });
   };
-
-  const [diaryInfo, setDiaryInfo] = useState<IDiaryInfo>({
-    hashArr: [],
-    moodValue: 0,
-    year: 0,
-    month: 0,
-    date: 0,
-    day: '',
-    quillContent: '',
-    isPrivate: false,
-  });
 
   useEffect(() => {
     API.get<IDiaryInfo>(END_POINT.TODAY_DATE)
       .then(response => {
-        setYear(response.data.year);
-        setMonth(response.data.month);
-        setDate(response.data.date);
-        setDay(response.data.day);
+        setDiaryField({
+          year: response.data.year,
+          month: response.data.month,
+          date: response.data.date,
+          day: response.data.day,
+        });
       })
       .catch(error => {
         console.error(CONSOLE_ERROR.DATE.GET + error);
       });
-  });
-
-  useEffect(() => {
-    setDiaryInfo(prevState => ({
-      ...prevState,
-      hashArr,
-      moodValue,
-      quillContent,
-      month: month ?? prevState.month,
-      date: date ?? prevState.date,
-      day: day ?? prevState.day,
-      isPrivate,
-    }));
-  }, [hashArr, moodValue, quillContent, isPrivate, month, date, day]);
+  }, []);
 
   const checkWritingPermission = () => {
     const lastWritingDate = localStorage.getItem('lastWritingDate');
-    const currentDate = `${year}년/${month}월/${date}일`;
+    const currentDate = `${diaryInfo.year}년/${diaryInfo.month}월/${diaryInfo.date}일`;
 
     if (lastWritingDate === currentDate) {
       return false;
@@ -213,21 +199,8 @@ const CreateDiary = () => {
   };
 
   const handleSave = async () => {
-    if (!checkWritingPermission()) {
-      Swal.fire({
-        title: ERROR.DIARY_ALREADY_EXISTS,
-        icon: 'warning',
-        showCancelButton: false,
-        confirmButtonColor: '#28CA3B',
-        confirmButtonText: '확인',
-      });
-      return;
-    }
-
+    const currentDate = `${diaryInfo.year}년/${diaryInfo.month}월/${diaryInfo.date}일`;
     const { quillContent, isPrivate, hashArr, moodValue } = diaryInfo;
-
-    if (file) formData.append('image', file);
-
     const requestDto = {
       content: quillContent,
       isPrivate,
@@ -235,18 +208,6 @@ const CreateDiary = () => {
       hashtags: hashArr,
       hasImage: hasImage,
     };
-
-    if (!quillContent || !quillContent.trim()) {
-      Swal.fire({
-        title: ERROR.DIARY_NOT_WRITE,
-        icon: 'warning',
-        showCancelButton: false,
-        confirmButtonColor: '#28CA3B',
-        confirmButtonText: '확인',
-      });
-      return; // 저장 중단
-    }
-
     formData.append(
       'requestDto',
       new Blob([JSON.stringify(requestDto)], {
@@ -259,8 +220,29 @@ const CreateDiary = () => {
         'Content-Type': 'multipart/form-data',
       },
     };
+    if (!checkWritingPermission()) {
+      Swal.fire({
+        title: ERROR.DIARY_ALREADY_EXISTS,
+        icon: 'warning',
+        showCancelButton: false,
+        confirmButtonColor: '#28CA3B',
+        confirmButtonText: '확인',
+      });
+      return;
+    }
 
-    const currentDate = `${year}년/${month}월/${date}일`;
+    if (file) formData.append('image', file);
+
+    if (!quillContent || !quillContent.trim()) {
+      Swal.fire({
+        title: ERROR.DIARY_NOT_WRITE,
+        icon: 'warning',
+        showCancelButton: false,
+        confirmButtonColor: '#28CA3B',
+        confirmButtonText: '확인',
+      });
+      return; // 저장 중단
+    }
 
     try {
       if (diaryId) {
@@ -285,10 +267,12 @@ const CreateDiary = () => {
         const response = await API.get(END_POINT.DIARY(diaryId));
         const tags = response.data.tags.map((tag: ITages) => tag.tag);
 
-        setHashArr(tags);
-        setIsPrivate(response.data.isPrivate);
-        setMoodValue(response.data.transparency * 10);
-        setQuillContent(response.data.content);
+        setDiaryField({
+          hashArr: tags,
+          isPrivate: response.data.isPrivate,
+          moodValue: response.data.transparency * 10,
+          quillContent: response.data.content,
+        });
         setImageURL(response.data.imageURL);
       }
     } catch (error) {
@@ -309,7 +293,7 @@ const CreateDiary = () => {
         <BackButton goBackTo={'/main'} />
         <section {...stylex.props(CreateDiaryStyle.title)}>
           <h2>
-            {month}월 {date}일 {day}요일
+            {diaryInfo.month}월 {diaryInfo.date}일 {diaryInfo.day}요일
           </h2>
         </section>
         <section>
@@ -318,20 +302,22 @@ const CreateDiary = () => {
               <input
                 type="radio"
                 value="private"
-                checked={isPrivate}
+                checked={diaryInfo.isPrivate}
                 onChange={handlePrivateChange}
               />
               비공개
               <input
                 type="radio"
                 value="public"
-                checked={!isPrivate}
+                checked={!diaryInfo.isPrivate}
                 onChange={handlePublicChange}
               />
               공개
             </label>
             <div {...stylex.props(CreateDiaryStyle.todayMood)}>
-              <div style={{ fontSize: '30px' }}>{EMOJI[moodValue]}</div>
+              <div style={{ fontSize: '30px' }}>
+                {EMOJI[diaryInfo.moodValue]}
+              </div>
               <div>오늘의 기분</div>
               <input
                 type="range"
@@ -339,7 +325,7 @@ const CreateDiary = () => {
                 min="1"
                 max="9"
                 list="values"
-                value={moodValue}
+                value={diaryInfo.moodValue}
                 onChange={handleMoodChange}
               />
               <datalist id="values">
@@ -364,8 +350,8 @@ const CreateDiary = () => {
           />
         )}
         <QuillEditor
-          onContentChange={setQuillContent}
-          quillContent={quillContent}
+          onContentChange={content => setDiaryField({ quillContent: content })}
+          quillContent={diaryInfo.quillContent}
         />
         <section>
           <article {...stylex.props(CreateDiaryStyle.borderFooter)}>
@@ -389,7 +375,7 @@ const CreateDiary = () => {
             />
           </article>
           <div {...stylex.props(CreateDiaryStyle.hashtag)}>
-            {hashArr.map((tag, index) => (
+            {diaryInfo.hashArr.map((tag, index) => (
               <span key={index} {...stylex.props(CreateDiaryStyle.hashtagBox)}>
                 {tag}
                 <button
