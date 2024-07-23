@@ -131,6 +131,10 @@ const contentStyle = stylex.create({
   },
 });
 
+interface ResponseDataType {
+  message: string;
+}
+
 const DiaryDetail = () => {
   const navigate = useNavigate();
   const diaryId = useParamsId();
@@ -147,7 +151,7 @@ const DiaryDetail = () => {
   };
 
   useEffect(() => {
-    if (axios.isAxiosError<ResponseType, any>(error)) {
+    if (axios.isAxiosError<ResponseDataType, any>(error)) {
       console.log('error: ', error?.response?.data.message);
       navigate('/non-existent-page');
     }
