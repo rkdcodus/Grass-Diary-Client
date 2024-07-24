@@ -55,3 +55,14 @@ interface IDiaryResponse {
   totalElements: number;
   totalPages: number;
 }
+// CreateDiary Type
+interface IDiaryInfo {
+  hashArr: string[];
+  moodValue: number;
+  year: number | null;
+  month: number | null;
+  date: number | null;
+  day: string | null;
+  quillContent: string;
+  isPrivate: boolean;
+}

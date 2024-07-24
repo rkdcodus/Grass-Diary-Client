@@ -6,6 +6,8 @@ import API from '@services/index';
 import mainCharacter from '@icon/mainCharacter.png';
 import Swal from 'sweetalert2';
 import { END_POINT } from '@constants/api';
+// import { QuestionResponse, DateResponse } from 'src/types/today';
+import { TodayInfo } from 'src/types/today';
 
 const TopSectionStyles = stylex.create({
   container: {
@@ -100,27 +102,16 @@ const TopSectionStyles = stylex.create({
   },
 });
 
-type QuestionResponse = {
-  question: string;
-};
-
-type DateResponse = {
-  year: number;
-  month: number;
-  date: number;
-  day: string;
-};
-
 const TopSection = () => {
   // 질문 데이터를 가져오는 쿼리
-  const { data: question } = useQuery<QuestionResponse>({
+  const { data: question } = useQuery<TodayInfo>({
     queryKey: ['todayQuestion'],
     queryFn: () =>
       API.get(END_POINT.TODAY_QUESTION).then(response => response.data),
   });
 
   // 날짜 데이터를 가져오는 쿼리
-  const { data: date } = useQuery<DateResponse>({
+  const { data: date } = useQuery<TodayInfo>({
     queryKey: ['todayDate'],
     queryFn: () =>
       API.get(END_POINT.TODAY_DATE).then(response => response.data),
