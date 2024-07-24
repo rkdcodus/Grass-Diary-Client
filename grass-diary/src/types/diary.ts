@@ -87,3 +87,15 @@ interface IDiaryDetail extends IDiary {
   memberId: number;
   imageURL: string;
 }
+
+// CreateDiary Type
+interface IDiaryInfo {
+  hashArr: string[];
+  moodValue: number;
+  year: number | null;
+  month: number | null;
+  date: number | null;
+  day: string | null;
+  quillContent: string;
+  isPrivate: boolean;
+}

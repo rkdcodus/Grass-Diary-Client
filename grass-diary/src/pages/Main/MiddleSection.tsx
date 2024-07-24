@@ -1,14 +1,14 @@
 import stylex from '@stylexjs/stylex';
-import Swal from 'sweetalert2';
 import dayjs from 'dayjs';
+import { Link } from 'react-router-dom';
 import { useCallback } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { Button } from '@components/index';
-import subCharacter from '@icon/subCharacter.png';
 import useUser from '@recoil/user/useUser';
 import AnimateReward from './AnimateReward';
 import API from '@services/index';
 import { END_POINT } from '@constants/api';
+import { GrassApiResponse, RewardPointResponse } from 'src/types/grass';
 
 const MiddleSectionStyle = stylex.create({
   text: {
@@ -72,26 +72,6 @@ const MiddleSectionStyle = stylex.create({
   },
 });
 
-type Grass = {
-  createdAt: string;
-  transparency: number;
-};
-
-type GrassInfoDTO = {
-  grassList: Grass[];
-  colorRGB: string;
-};
-
-type GrassApiResponse = {
-  totalCount: number;
-  thisMonthCount: number;
-  grassInfoDTO: GrassInfoDTO;
-};
-
-type RewardPointResponse = {
-  rewardPoint: number;
-};
-
 const MiddleSection = () => {
   // 잔디 날짜 계산
   const currentDate = dayjs();
@@ -149,19 +129,6 @@ const MiddleSection = () => {
       week = [];
     }
   });
-
-  const modal = () => {
-    Swal.fire({
-      title: '테마 상점',
-      text: '테마 상점 준비중이에요',
-      imageUrl: subCharacter,
-      imageWidth: 300,
-      imageHeight: 300,
-      imageAlt: 'Custom image',
-      confirmButtonColor: '#28CA3B',
-      confirmButtonText: '확인',
-    });
-  };
 
   return (
     <>
@@ -229,17 +196,18 @@ const MiddleSection = () => {
             <span>잔디를 꾸준히 심고 리워드를 받으세요</span>
             <span>테마 상점에서 다양한 아이템을 만날 수 있어요</span>
           </div>
-          <Button
-            text="테마 상점"
-            width="130px"
-            defaultColor="#2d2d2d"
-            hoverColor="#FFF"
-            defaultBgColor="#FFFFFF"
-            hoverBgColor="#111111"
-            border="1px solid #929292"
-            marginTop="25px"
-            onClick={modal}
-          />
+          <Link to="/rewardpage">
+            <Button
+              text="리워드 보기"
+              width="130px"
+              defaultColor="#2d2d2d"
+              hoverColor="#FFF"
+              defaultBgColor="#FFFFFF"
+              hoverBgColor="#111111"
+              border="1px solid #929292"
+              marginTop="25px"
+            />
+          </Link>
         </div>
       </div>
     </>
