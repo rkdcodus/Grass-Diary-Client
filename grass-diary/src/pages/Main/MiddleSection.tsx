@@ -8,6 +8,7 @@ import useUser from '@recoil/user/useUser';
 import AnimateReward from './AnimateReward';
 import API from '@services/index';
 import { END_POINT } from '@constants/api';
+import { GrassApiResponse, RewardPointResponse } from 'src/types/grass';
 
 const MiddleSectionStyle = stylex.create({
   text: {
@@ -70,26 +71,6 @@ const MiddleSectionStyle = stylex.create({
     alignItems: 'center',
   },
 });
-
-type Grass = {
-  createdAt: string;
-  transparency: number;
-};
-
-type GrassInfoDTO = {
-  grassList: Grass[];
-  colorRGB: string;
-};
-
-type GrassApiResponse = {
-  totalCount: number;
-  thisMonthCount: number;
-  grassInfoDTO: GrassInfoDTO;
-};
-
-type RewardPointResponse = {
-  rewardPoint: number;
-};
 
 const MiddleSection = () => {
   // 잔디 날짜 계산
