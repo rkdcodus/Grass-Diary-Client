@@ -66,3 +66,13 @@ interface IDiaryInfo {
   quillContent: string;
   isPrivate: boolean;
 }
+
+// DiaryDetail Type
+interface IDiaryDetail extends IDiary {
+  id: Id;
+  memberId: Id;
+  hasImage: null;
+  hasTag: null;
+  imageURL: string;
+  likedByLogInMember: boolean;
+}
