@@ -2,11 +2,10 @@ import stylex from '@stylexjs/stylex';
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
-import QuillEditor from './QuillEditor';
+import QuillEditor from '../CreateDiary/QuillEditor';
 
 import API from '@services/index';
 import { END_POINT } from '@constants/api';
-import useUser from '@recoil/user/useUser';
 import { Header, BackButton, Button, Container } from '@components/index';
 import EMOJI from '@constants/emoji';
 import 'dayjs/locale/ko';
@@ -97,9 +96,10 @@ const CreateDiaryStyle = stylex.create({
   },
 });
 
-const CreateDiary = () => {
+const EditDiary = () => {
+  const diaryId = useParamsId();
   const navigate = useNavigate();
-  const { memberId } = useUser();
+
   const [diaryInfo, setDiaryInfo] = useState<IDiaryInfo>({
     hashArr: [],
     moodValue: 5,
@@ -199,7 +199,6 @@ const CreateDiary = () => {
   };
 
   const handleSave = async () => {
-    const currentDate = `${diaryInfo.year}년/${diaryInfo.month}월/${diaryInfo.date}일`;
     const { quillContent, isPrivate, hashArr, moodValue } = diaryInfo;
     const requestDto = {
       content: quillContent,
@@ -220,6 +219,7 @@ const CreateDiary = () => {
         'Content-Type': 'multipart/form-data',
       },
     };
+
     if (!checkWritingPermission()) {
       Swal.fire({
         title: ERROR.DIARY_ALREADY_EXISTS,
@@ -245,14 +245,35 @@ const CreateDiary = () => {
     }
 
     try {
-      const response = await API.post(END_POINT.DIARY(memberId), formData);
-      const newDiaryId = response.data.diaryId;
-      navigate(`/diary/${newDiaryId}`, { replace: true });
-      localStorage.setItem('lastWritingDate', currentDate);
+      await API.patch(END_POINT.DIARY(diaryId), formData, config);
+      navigate(`/diary/${diaryId}`, { replace: true, state: 'editcomplete' });
     } catch (error) {
       console.error(error);
     }
   };
+
+  // 수정 기능일 때의 코드
+
+  const fetchDiaryData = async () => {
+    try {
+      const response = await API.get(END_POINT.DIARY(diaryId));
+      const tags = response.data.tags.map((tag: ITages) => tag.tag);
+
+      setDiaryField({
+        hashArr: tags,
+        isPrivate: response.data.isPrivate,
+        moodValue: response.data.transparency * 10,
+        quillContent: response.data.content,
+      });
+      setImageURL(response.data.imageURL);
+    } catch (error) {
+      console.error(CONSOLE_ERROR.DIARY.GET + error);
+    }
+  };
+
+  useEffect(() => {
+    fetchDiaryData();
+  }, []);
 
   return (
     <Container>
@@ -363,4 +384,4 @@ const CreateDiary = () => {
   );
 };
 
-export default CreateDiary;
+export default EditDiary;
