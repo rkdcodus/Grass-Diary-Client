@@ -8,10 +8,9 @@ interface IDiary {
   content: string;
   createdAt: string;
   createdDate: string;
-  diaryId: number;
+  diaryId: Id;
   isPrivate: boolean;
   likeCount: number;
-  likedByLogInMember: boolean;
   tags: ITages[];
   transparency: number;
 }
@@ -56,38 +55,6 @@ interface IDiaryResponse {
   totalElements: number;
   totalPages: number;
 }
-
-interface IPopularDiaryResponse {
-  createdAt: string;
-  diaryContent: string;
-  diaryId: number;
-  diaryLikeCount: number;
-  memberId: number;
-  nickname: string;
-}
-
-interface ILatestDiaryResponse {
-  pageParams: number[];
-  pages: ILatestDiary[][];
-}
-
-interface ILatestDiary {
-  content: string;
-  createdAt: string;
-  diaryId: number;
-  diaryLikeCount: number;
-  memberId: number;
-  nickname: string;
-}
-
-interface IDiaryDetail extends IDiary {
-  hasImage: null;
-  hasTag: null;
-  id: number;
-  memberId: number;
-  imageURL: string;
-}
-
 // CreateDiary Type
 interface IDiaryInfo {
   hashArr: string[];
@@ -98,4 +65,14 @@ interface IDiaryInfo {
   day: string | null;
   quillContent: string;
   isPrivate: boolean;
+}
+
+// DiaryDetail Type
+interface IDiaryDetail extends IDiary {
+  id: Id;
+  memberId: Id;
+  hasImage: null;
+  hasTag: null;
+  imageURL: string;
+  likedByLogInMember: boolean;
 }

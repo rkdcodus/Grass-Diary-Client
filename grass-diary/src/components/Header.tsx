@@ -7,6 +7,15 @@ import useLogout from '@hooks/useLogout';
 import useUser from '@recoil/user/useUser';
 import { useQueryClient } from '@tanstack/react-query';
 
+interface IMenuBarProps {
+  toggle: boolean;
+  headerRef: React.RefObject<HTMLDivElement>;
+}
+
+interface IHeader {
+  position?: string;
+}
+
 const header = stylex.create({
   container: (position?: string) => ({
     display: 'flex',
@@ -87,12 +96,7 @@ const menuBar = stylex.create({
   },
 });
 
-interface IMenuBar {
-  toggle: boolean;
-  headerRef: React.RefObject<HTMLDivElement>;
-}
-
-const MenuBar = ({ toggle, headerRef }: IMenuBar) => {
+const MenuBar = ({ toggle, headerRef }: IMenuBarProps) => {
   const clearAuth = useLogout();
   const queryClient = useQueryClient();
   const handleLogout = () => {
@@ -131,12 +135,7 @@ const MenuBar = ({ toggle, headerRef }: IMenuBar) => {
   );
 };
 
-type THeader = {
-  position?: string;
-  margin?: string;
-};
-
-const Header = ({ position, margin }: THeader) => {
+const Header = ({ position }: IHeader) => {
   const [toggle, setToggle] = useState(false);
   const headerRef = useRef<HTMLDivElement>(null);
   const iconRef = useRef<HTMLDivElement>(null);
@@ -170,7 +169,7 @@ const Header = ({ position, margin }: THeader) => {
   }, [memberId, toggle]);
 
   return (
-    <div {...stylex.props(header.container(position, margin))}>
+    <div {...stylex.props(header.container(position))}>
       <div {...stylex.props(header.itemWrapper)}>
         <Link to="/main">
           <span {...stylex.props(header.logo)}>잔디일기</span>

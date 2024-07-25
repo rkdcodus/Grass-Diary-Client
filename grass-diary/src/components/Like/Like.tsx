@@ -44,14 +44,14 @@ const styles = stylex.create({
   },
 });
 
-interface ILike {
-  diaryId: string | undefined;
+interface ILikeProps {
+  diaryId: Id;
   likeCount: number;
   setLikeCount: React.Dispatch<React.SetStateAction<number>>;
   liked: boolean | undefined;
 }
 
-const Like = ({ diaryId, likeCount, setLikeCount, liked }: ILike) => {
+const Like = ({ diaryId, likeCount, setLikeCount, liked }: ILikeProps) => {
   const [isRed, setIsRed] = useState(false);
   const { memberId } = useUser();
   const { postLike, deleteLike, postSuccess, deleteSuccess } = useCountLike({

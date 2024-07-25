@@ -1,6 +1,6 @@
 import stylex from '@stylexjs/stylex';
 import { useState, useEffect } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import QuillEditor from './QuillEditor';
 
@@ -11,6 +11,7 @@ import { Header, BackButton, Button, Container } from '@components/index';
 import EMOJI from '@constants/emoji';
 import 'dayjs/locale/ko';
 import { CONSOLE_ERROR, ERROR } from '@constants/message';
+import { useParamsId } from '@hooks/useParamsId';
 
 const CreateDiaryStyle = stylex.create({
   container: {
@@ -97,7 +98,7 @@ const CreateDiaryStyle = stylex.create({
 });
 
 const CreateDiary = () => {
-  const { id: diaryId } = useParams<{ id: string }>();
+  const diaryId = useParamsId();
   const navigate = useNavigate();
   const { memberId } = useUser();
   const [diaryInfo, setDiaryInfo] = useState<IDiaryInfo>({

@@ -8,12 +8,7 @@ const fetchPopularDiary = () => {
 };
 
 export const usePopularDiaries = () => {
-  return useQuery<
-    IPopularDiaryResponse[],
-    AxiosError,
-    IPopularDiaryResponse[],
-    [string]
-  >({
+  return useQuery<Feed[], AxiosError, Feed[], [string]>({
     queryKey: ['top10'],
     queryFn: async () => {
       const res = await fetchPopularDiary();

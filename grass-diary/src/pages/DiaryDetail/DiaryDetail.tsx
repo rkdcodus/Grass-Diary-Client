@@ -10,6 +10,7 @@ import Setting from './Setting';
 import { useDiaryDetail } from '@hooks/api/useDiaryDetail';
 import axios from 'axios';
 import ImageModal from './modal/ImageModal';
+import { useParamsId } from '@hooks/useParamsId';
 
 const styles = stylex.create({
   wrap: {
@@ -130,16 +131,18 @@ const contentStyle = stylex.create({
   },
 });
 
+interface ResponseDataType {
+  message: string;
+}
+
 const DiaryDetail = () => {
   const navigate = useNavigate();
-  const { diaryId } = useParams();
+  const diaryId = useParamsId();
   const { memberId } = useUser();
   const [likeCount, setLikeCount] = useState(0);
   const [mood, setMood] = useState('');
   const [imageModal, setImageModal] = useState(false);
-  const { detail, writer, isLoading, isError, error } = useDiaryDetail(
-    diaryId!,
-  );
+  const { detail, writer, isLoading, isError, error } = useDiaryDetail(diaryId);
 
   const zoom = () => {
     if (!imageModal) {
@@ -148,7 +151,7 @@ const DiaryDetail = () => {
   };
 
   useEffect(() => {
-    if (axios.isAxiosError<ResponseType, any>(error)) {
+    if (axios.isAxiosError<ResponseDataType, any>(error)) {
       console.log('error: ', error?.response?.data.message);
       navigate('/non-existent-page');
     }

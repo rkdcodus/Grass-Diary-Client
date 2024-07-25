@@ -4,12 +4,12 @@ import { EllipsisIcon, EllipsisBox } from '@components/index';
 import UnmodifyModal from './modal/UnmodifyModal';
 import ConfirmDeleteModal from './modal/ConfirmDeleteModal';
 
-type Props = {
-  diaryId: string | undefined;
+type SettingProps = {
+  diaryId: Id;
   createdDate: string;
 };
 
-const Setting = ({ diaryId, createdDate }: Props) => {
+const Setting = ({ diaryId, createdDate }: SettingProps) => {
   const navigate = useNavigate();
   const date = new Date();
   const [canEdit, setCanEdit] = useState(false);

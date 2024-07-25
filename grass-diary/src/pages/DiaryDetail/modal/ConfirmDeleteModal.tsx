@@ -41,12 +41,10 @@ const styles = stylex.create({
   },
 });
 
-type Props = {
-  diaryId: string;
-  setConfirmModal: React.Dispatch<React.SetStateAction<boolean>>;
-};
-
-const ConfirmDeleteModal = ({ diaryId, setConfirmModal }: Props) => {
+const ConfirmDeleteModal = ({
+  diaryId,
+  setConfirmModal,
+}: ConfirmDeleteModalProps) => {
   const { mutate, isSuccess } = useDeleteDiaryDetail(diaryId);
 
   const closeModal = () => setConfirmModal(false);
