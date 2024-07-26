@@ -1,14 +1,11 @@
 interface IProfile {
-  profileImageURL?: string;
-  nickName?: string;
-  profileIntro?: string;
+  profileImageURL: string;
+  nickName: string;
+  profileIntro: string;
 }
 
 // Setting Page updateProfile Type
-interface IUpdateProfile {
-  nickname?: string;
-  profileIntro?: string;
-}
+type UpdateProfile = Omit<IProfile, 'profileImageURL'>;
 
 // Mood Profile Type
 interface IMoodProfile {

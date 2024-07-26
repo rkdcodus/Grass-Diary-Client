@@ -48,7 +48,7 @@ const Setting = () => {
     setProfile({ ...profile, profileIntro: event.target.value });
   };
 
-  const updateProfile = useMutation<IUpdateProfile, Error, IUpdateProfile>({
+  const updateProfile = useMutation<UpdateProfile, Error, UpdateProfile>({
     mutationFn: profileInfo =>
       API.patch(END_POINT.EDIT_MEMBER_INFO, profileInfo),
     onSuccess: () => {
