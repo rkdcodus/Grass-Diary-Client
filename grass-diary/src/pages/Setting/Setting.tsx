@@ -31,7 +31,7 @@ const SettingSection = ({ children, label }: ISettingSection) => {
 
 const Setting = () => {
   const queryClient: QueryClient = useQueryClient();
-  const { nickName, profileIntro }: Partial<IProfile> = useProfile();
+  const { nickName, profileIntro }: UpdateProfile = useProfile();
   const [profile, setProfile] = useRecoilState(profileAtom);
 
   useEffect(() => {
