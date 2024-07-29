@@ -114,7 +114,7 @@ const Setting = () => {
                   border="1px solid #929292"
                   onClick={() =>
                     updateProfile.mutate({
-                      nickname: profile.nickName,
+                      nickName: profile.nickName,
                       profileIntro: profile.profileIntro,
                     })
                   }
