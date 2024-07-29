@@ -4,10 +4,10 @@ interface IProfile {
   profileIntro: string;
 }
 
-type onlyProfileImageURL = Pick<IProfile, 'profileImageURL'>;
+type pickProfileImageURL = Pick<IProfile, 'profileImageURL'>;
 
 // Setting Page updateProfile Type
-type UpdateProfile = Omit<IProfile, 'profileImageURL'>;
+type omitProfileImageURL = Omit<IProfile, 'profileImageURL'>;
 
 // Mood Profile Type
 interface IMoodProfile {

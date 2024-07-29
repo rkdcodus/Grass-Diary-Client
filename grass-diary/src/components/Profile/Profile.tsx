@@ -17,7 +17,7 @@ interface IProfileProps {
 }
 
 const Profile = ({ width, height }: IProfileProps) => {
-  const { profileImageURL }: onlyProfileImageURL = useProfile();
+  const { profileImageURL }: pickProfileImageURL = useProfile();
 
   return profileImageURL ? (
     <img

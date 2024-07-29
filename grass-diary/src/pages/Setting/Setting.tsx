@@ -31,7 +31,7 @@ const SettingSection = ({ children, label }: ISettingSection) => {
 
 const Setting = () => {
   const queryClient: QueryClient = useQueryClient();
-  const { nickName, profileIntro }: UpdateProfile = useProfile();
+  const { nickName, profileIntro }: omitProfileImageURL = useProfile();
   const [profile, setProfile] = useRecoilState(profileAtom);
 
   useEffect(() => {
@@ -48,7 +48,11 @@ const Setting = () => {
     setProfile({ ...profile, profileIntro: event.target.value });
   };
 
-  const updateProfile = useMutation<UpdateProfile, Error, UpdateProfile>({
+  const updateProfile = useMutation<
+    omitProfileImageURL,
+    Error,
+    omitProfileImageURL
+  >({
     mutationFn: profileInfo =>
       API.patch(END_POINT.EDIT_MEMBER_INFO, profileInfo),
     onSuccess: () => {
