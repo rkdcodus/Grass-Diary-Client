@@ -11,6 +11,7 @@ import EMOJI from '@constants/emoji';
 import 'dayjs/locale/ko';
 import { CONSOLE_ERROR, ERROR } from '@constants/message';
 import { useParamsId } from '@hooks/useParamsId';
+import { usePatchDiary } from '@hooks/api/usePatchDiary';
 
 const CreateDiaryStyle = stylex.create({
   container: {
@@ -98,7 +99,6 @@ const CreateDiaryStyle = stylex.create({
 
 const EditDiary = () => {
   const diaryId = useParamsId();
-  const navigate = useNavigate();
 
   const [diaryInfo, setDiaryInfo] = useState<IDiaryInfo>({
     hashArr: [],
@@ -117,7 +117,8 @@ const EditDiary = () => {
   const [file, setFile] = useState(null);
   const [imageURL, setImageURL] = useState('');
   const [hasImage, setHasImage] = useState(false);
-  const formData = new FormData(); // FormData 생성
+  const [requestDto, setRequestDto] = useState({});
+  const { mutate } = usePatchDiary(diaryId, file, requestDto);
 
   // 상태 업데이트 함수
   const setDiaryField = (field: Partial<IDiaryInfo>) => {
@@ -200,25 +201,14 @@ const EditDiary = () => {
 
   const handleSave = async () => {
     const { quillContent, isPrivate, hashArr, moodValue } = diaryInfo;
-    const requestDto = {
+
+    setRequestDto({
       content: quillContent,
       isPrivate,
       conditionLevel: `LEVEL_${moodValue}`,
       hashtags: hashArr,
       hasImage: hasImage,
-    };
-    formData.append(
-      'requestDto',
-      new Blob([JSON.stringify(requestDto)], {
-        type: 'application/json',
-      }),
-    );
-
-    const config = {
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      },
-    };
+    });
 
     if (!checkWritingPermission()) {
       Swal.fire({
@@ -231,8 +221,6 @@ const EditDiary = () => {
       return;
     }
 
-    if (file) formData.append('image', file);
-
     if (!quillContent || !quillContent.trim()) {
       Swal.fire({
         title: ERROR.DIARY_NOT_WRITE,
@@ -244,12 +232,7 @@ const EditDiary = () => {
       return; // 저장 중단
     }
 
-    try {
-      await API.patch(END_POINT.DIARY(diaryId), formData, config);
-      navigate(`/diary/${diaryId}`, { replace: true, state: 'editcomplete' });
-    } catch (error) {
-      console.error(error);
-    }
+    mutate();
   };
 
   // 수정 기능일 때의 코드
