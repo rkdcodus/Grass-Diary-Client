@@ -117,8 +117,14 @@ const EditDiary = () => {
   const [file, setFile] = useState(null);
   const [imageURL, setImageURL] = useState('');
   const [hasImage, setHasImage] = useState(false);
-  const [requestDto, setRequestDto] = useState({});
-  const { mutate } = usePatchDiary(diaryId, file, requestDto);
+  const [requestDto, setRequestDto] = useState<RequestDto>({
+    content: '',
+    isPrivate: true,
+    conditionLevel: `LEVEL_1`,
+    hashtags: [],
+    hasImage: false,
+  });
+  const { mutate } = usePatchDiary({ diaryId, file, requestDto });
 
   // 상태 업데이트 함수
   const setDiaryField = (field: Partial<IDiaryInfo>) => {
