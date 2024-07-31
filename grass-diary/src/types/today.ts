@@ -5,3 +5,10 @@ interface TodayInfo {
   date: number;
   day: string;
 }
+
+interface TodayDate {
+  year: number;
+  month: number;
+  date: number;
+  day: string;
+}

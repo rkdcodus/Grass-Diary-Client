@@ -4,7 +4,7 @@ import API from '@services/index';
 import { useQuery } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 
-const fetchAxios = async (): Promise<TodayInfo> => {
+const fetchAxios = async (): Promise<TodayDate> => {
   const res = await API.get(END_POINT.TODAY_DATE);
 
   return res.data;
@@ -15,7 +15,7 @@ export const useTodayDate = () => {
     data: date,
     isError,
     error,
-  } = useQuery<TodayInfo, AxiosError, TodayInfo, [string]>({
+  } = useQuery<TodayDate, AxiosError, TodayDate, [string]>({
     queryKey: ['todayDate'],
     queryFn: fetchAxios,
   });
