@@ -6,8 +6,8 @@ import API from '@services/index';
 import mainCharacter from '@icon/mainCharacter.png';
 import Swal from 'sweetalert2';
 import { END_POINT } from '@constants/api';
+import { useTodayDate } from '@hooks/api/useTodayDate';
 // import { QuestionResponse, DateResponse } from 'src/types/today';
-import { TodayInfo } from 'src/types/today';
 
 const TopSectionStyles = stylex.create({
   container: {
@@ -111,11 +111,7 @@ const TopSection = () => {
   });
 
   // 날짜 데이터를 가져오는 쿼리
-  const { data: date } = useQuery<TodayInfo>({
-    queryKey: ['todayDate'],
-    queryFn: () =>
-      API.get(END_POINT.TODAY_DATE).then(response => response.data),
-  });
+  const { data: date } = useTodayDate();
 
   const modal = () => {
     Swal.fire({
