@@ -4,7 +4,6 @@ import { EllipsisIcon, EllipsisBox } from '@components/index';
 import UnmodifyModal from './modal/UnmodifyModal';
 import ConfirmDeleteModal from './modal/ConfirmDeleteModal';
 import { useTodayDate } from '@hooks/api/useTodayDate';
-import { create } from 'node_modules/axios/index.d.cts';
 
 type SettingProps = {
   diaryId: Id;
@@ -13,7 +12,7 @@ type SettingProps = {
 
 const Setting = ({ diaryId, createdDate }: SettingProps) => {
   const navigate = useNavigate();
-  const { data: date } = useTodayDate();
+  const { date } = useTodayDate();
   const [canEdit, setCanEdit] = useState(false);
   const [editModal, setEditModal] = useState(false);
   const [confirmModal, setConfirmModal] = useState(false);
@@ -21,7 +20,6 @@ const Setting = ({ diaryId, createdDate }: SettingProps) => {
   const showConfirmModal = () => setConfirmModal(true);
 
   const linkToModify = () => {
-    localStorage.removeItem('lastWritingDate');
     if (!canEdit && !editModal) {
       setEditModal(true);
       return;
