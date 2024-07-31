@@ -111,7 +111,7 @@ const TopSection = () => {
   });
 
   // 날짜 데이터를 가져오는 쿼리
-  const { data: date } = useTodayDate();
+  const { date } = useTodayDate();
 
   const modal = () => {
     Swal.fire({
