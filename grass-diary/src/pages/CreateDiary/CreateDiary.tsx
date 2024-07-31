@@ -10,8 +10,8 @@ import useUser from '@recoil/user/useUser';
 import { Header, BackButton, Button, Container } from '@components/index';
 import EMOJI from '@constants/emoji';
 import 'dayjs/locale/ko';
-import { CONSOLE_ERROR, ERROR } from '@constants/message';
-import { useParamsId } from '@hooks/useParamsId';
+import { ERROR } from '@constants/message';
+import { useTodayDate } from '@hooks/api/useTodayDate';
 
 const CreateDiaryStyle = stylex.create({
   container: {
@@ -100,6 +100,7 @@ const CreateDiaryStyle = stylex.create({
 const CreateDiary = () => {
   const navigate = useNavigate();
   const { memberId } = useUser();
+  const { date } = useTodayDate();
   const [diaryInfo, setDiaryInfo] = useState<IDiaryInfo>({
     hashArr: [],
     moodValue: 5,
@@ -173,21 +174,6 @@ const CreateDiary = () => {
     setDiaryField({ hashArr: diaryInfo.hashArr.filter((_, i) => i !== index) });
   };
 
-  useEffect(() => {
-    API.get<IDiaryInfo>(END_POINT.TODAY_DATE)
-      .then(response => {
-        setDiaryField({
-          year: response.data.year,
-          month: response.data.month,
-          date: response.data.date,
-          day: response.data.day,
-        });
-      })
-      .catch(error => {
-        console.error(CONSOLE_ERROR.DATE.GET + error);
-      });
-  }, []);
-
   const checkWritingPermission = () => {
     const lastWritingDate = localStorage.getItem('lastWritingDate');
     const currentDate = `${diaryInfo.year}년/${diaryInfo.month}월/${diaryInfo.date}일`;
@@ -215,11 +201,6 @@ const CreateDiary = () => {
       }),
     );
 
-    const config = {
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      },
-    };
     if (!checkWritingPermission()) {
       Swal.fire({
         title: ERROR.DIARY_ALREADY_EXISTS,
@@ -253,6 +234,17 @@ const CreateDiary = () => {
       console.error(error);
     }
   };
+
+  useEffect(() => {
+    if (date) {
+      setDiaryField({
+        year: date.year,
+        month: date.month,
+        date: date.date,
+        day: date.day,
+      });
+    }
+  }, [date]);
 
   return (
     <Container>
