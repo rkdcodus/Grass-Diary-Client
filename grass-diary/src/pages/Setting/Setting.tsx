@@ -31,7 +31,7 @@ const SettingSection = ({ children, label }: ISettingSection) => {
 
 const Setting = () => {
   const queryClient: QueryClient = useQueryClient();
-  const { nickName, profileIntro }: Partial<IProfile> = useProfile();
+  const { nickName, profileIntro }: omitProfileImageURL = useProfile();
   const [profile, setProfile] = useRecoilState(profileAtom);
 
   useEffect(() => {
@@ -48,7 +48,11 @@ const Setting = () => {
     setProfile({ ...profile, profileIntro: event.target.value });
   };
 
-  const updateProfile = useMutation<IUpdateProfile, Error, IUpdateProfile>({
+  const updateProfile = useMutation<
+    omitProfileImageURL,
+    Error,
+    omitProfileImageURL
+  >({
     mutationFn: profileInfo =>
       API.patch(END_POINT.EDIT_MEMBER_INFO, profileInfo),
     onSuccess: () => {
@@ -112,7 +116,7 @@ const Setting = () => {
                   border="1px solid #929292"
                   onClick={() =>
                     updateProfile.mutate({
-                      nickname: profile.nickName,
+                      nickName: profile.nickName,
                       profileIntro: profile.profileIntro,
                     })
                   }

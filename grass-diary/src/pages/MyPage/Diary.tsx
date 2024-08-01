@@ -25,10 +25,6 @@ const Pagination = ({ pageSize, onPageChange }: IPagination) => {
   );
 };
 
-type TCreateMarpkup = (htmlContent: string | Node | undefined) => {
-  __html: string;
-};
-
 const DiaryItem = ({ diary, diaryList, index }: IDiaryItem) => {
   const createMarkup: TCreateMarpkup = htmlContent => {
     const content = htmlContent || '';
