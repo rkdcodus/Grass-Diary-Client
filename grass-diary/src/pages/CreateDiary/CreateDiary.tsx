@@ -11,6 +11,7 @@ import useUser from '@recoil/user/useUser';
 import { Header, BackButton, Button, Container } from '@components/index';
 import EMOJI from '@constants/emoji';
 import { CONSOLE_ERROR, ERROR } from '@constants/message';
+import { useCreateDiary } from '@hooks/api/useCreateDiary';
 
 const CreateDiaryStyle = stylex.create({
   container: {
@@ -99,6 +100,7 @@ const CreateDiaryStyle = stylex.create({
 const CreateDiary = () => {
   const navigate = useNavigate();
   const { memberId } = useUser();
+  const { mutate: createDiary } = useCreateDiary(memberId);
   const [diaryInfo, setDiaryInfo] = useState<IDiaryInfo>({
     hashArr: [],
     moodValue: 5,
@@ -116,7 +118,6 @@ const CreateDiary = () => {
   const [file, setFile] = useState<File | null>(null);
   const [imageURL, setImageURL] = useState('');
   const [hasImage, setHasImage] = useState(false);
-  const formData = new FormData(); // FormData 생성
 
   // 상태 업데이트 함수
   const setDiaryField = (field: Partial<IDiaryInfo>) => {
@@ -187,28 +188,6 @@ const CreateDiary = () => {
   };
 
   const handleSave = async () => {
-    const currentDate = `${diaryInfo.year}년/${diaryInfo.month}월/${diaryInfo.date}일`;
-    const { quillContent, isPrivate, hashArr, moodValue } = diaryInfo;
-    const requestDto = {
-      content: quillContent,
-      isPrivate,
-      conditionLevel: `LEVEL_${moodValue}`,
-      hashtags: hashArr,
-      hasImage: hasImage,
-    };
-    formData.append(
-      'requestDto',
-      new Blob([JSON.stringify(requestDto)], {
-        type: 'application/json',
-      }),
-    );
-
-    const config = {
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      },
-    };
-
     if (!checkWritingPermission()) {
       Swal.fire({
         title: ERROR.DIARY_ALREADY_EXISTS,
@@ -220,9 +199,7 @@ const CreateDiary = () => {
       return;
     }
 
-    if (file) formData.append('image', file);
-
-    if (!quillContent || !quillContent.trim()) {
+    if (!diaryInfo.quillContent || !diaryInfo.quillContent.trim()) {
       Swal.fire({
         title: ERROR.DIARY_NOT_WRITE,
         icon: 'warning',
@@ -230,21 +207,36 @@ const CreateDiary = () => {
         confirmButtonColor: '#28CA3B',
         confirmButtonText: '확인',
       });
-      return; // 저장 중단
+      return;
     }
 
-    try {
-      const response = await API.post(
-        END_POINT.DIARY(memberId),
-        formData,
-        config,
-      );
-      const newDiaryId = response.data.diaryId;
-      navigate(`/diary/${newDiaryId}`, { replace: true });
-      localStorage.setItem('lastWritingDate', currentDate);
-    } catch (error) {
-      console.error(error);
-    }
+    const formData = new FormData();
+    const requestDto = {
+      content: diaryInfo.quillContent,
+      isPrivate: diaryInfo.isPrivate,
+      conditionLevel: `LEVEL_${diaryInfo.moodValue}`,
+      hashtags: diaryInfo.hashArr,
+      hasImage,
+    };
+
+    formData.append(
+      'requestDto',
+      new Blob([JSON.stringify(requestDto)], { type: 'application/json' }),
+    );
+
+    if (file) formData.append('image', file);
+
+    createDiary(formData, {
+      onSuccess: response => {
+        const newDiaryId = response.data.diaryId;
+        navigate(`/diary/${newDiaryId}`, { replace: true });
+        const currentDate = `${diaryInfo.year}년/${diaryInfo.month}월/${diaryInfo.date}일`;
+        localStorage.setItem('lastWritingDate', currentDate);
+      },
+      onError: error => {
+        console.error(error);
+      },
+    });
   };
 
   return (
