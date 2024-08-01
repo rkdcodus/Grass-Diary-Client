@@ -113,7 +113,7 @@ const CreateDiary = () => {
   // 해시태그 state
   const [hashtag, setHashtag] = useState<string>('');
   // 이미지 state
-  const [file, setFile] = useState(null);
+  const [file, setFile] = useState<File | null>(null);
   const [imageURL, setImageURL] = useState('');
   const [hasImage, setHasImage] = useState(false);
   const formData = new FormData(); // FormData 생성
@@ -131,15 +131,17 @@ const CreateDiary = () => {
     setHashtag(e.target.value);
 
   // 이미지 파일 저장 함수
-  const handleFileChange = e => {
-    const file = e.target.files[0];
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onloadend = () => {
-      setImageURL(reader.result as string);
-    };
-    setFile(file);
-    setHasImage(true);
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const selectedFile = e.target.files?.[0];
+    if (selectedFile) {
+      const reader = new FileReader();
+      reader.readAsDataURL(selectedFile);
+      reader.onloadend = () => {
+        setImageURL(reader.result as string);
+      };
+      setFile(selectedFile);
+      setHasImage(true);
+    }
   };
 
   // 해시태그 로직 함수
