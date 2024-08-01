@@ -183,11 +183,7 @@ const CreateDiary = () => {
   const checkWritingPermission = () => {
     const lastWritingDate = localStorage.getItem('lastWritingDate');
     const currentDate = `${diaryInfo.year}년/${diaryInfo.month}월/${diaryInfo.date}일`;
-
-    if (lastWritingDate === currentDate) {
-      return false;
-    }
-    return true;
+    return lastWritingDate !== currentDate;
   };
 
   const handleSave = async () => {
