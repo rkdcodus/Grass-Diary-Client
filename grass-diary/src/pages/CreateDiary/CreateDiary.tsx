@@ -3,13 +3,13 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import QuillEditor from './QuillEditor';
+import 'dayjs/locale/ko';
 
 import API from '@services/index';
 import { END_POINT } from '@constants/api';
 import useUser from '@recoil/user/useUser';
 import { Header, BackButton, Button, Container } from '@components/index';
 import EMOJI from '@constants/emoji';
-import 'dayjs/locale/ko';
 import { CONSOLE_ERROR, ERROR } from '@constants/message';
 
 const CreateDiaryStyle = stylex.create({
@@ -123,21 +123,12 @@ const CreateDiary = () => {
     setDiaryInfo(prev => ({ ...prev, ...field }));
   };
 
-  const handlePrivateChange = () => {
-    setDiaryField({ isPrivate: true });
-  };
-
-  const handlePublicChange = () => {
-    setDiaryField({ isPrivate: false });
-  };
-
-  const handleMoodChange = e => {
+  const handlePrivateChange = () => setDiaryField({ isPrivate: true });
+  const handlePublicChange = () => setDiaryField({ isPrivate: false });
+  const handleMoodChange = (e: React.ChangeEvent<HTMLInputElement>) =>
     setDiaryField({ moodValue: parseInt(e.target.value) });
-  };
-
-  const onChangeHashtag = e => {
+  const onChangeHashtag = (e: React.ChangeEvent<HTMLInputElement>) =>
     setHashtag(e.target.value);
-  };
 
   // 이미지 파일 저장 함수
   const handleFileChange = e => {
