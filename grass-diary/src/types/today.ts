@@ -1,4 +1,4 @@
-export interface TodayInfo {
+interface TodayInfo {
   question: string;
   year: number;
   month: number;

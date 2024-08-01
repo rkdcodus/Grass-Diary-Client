@@ -6,8 +6,6 @@ import API from '@services/index';
 import mainCharacter from '@icon/mainCharacter.png';
 import Swal from 'sweetalert2';
 import { END_POINT } from '@constants/api';
-// import { QuestionResponse, DateResponse } from 'src/types/today';
-import { TodayInfo } from 'src/types/today';
 
 const TopSectionStyles = stylex.create({
   container: {
