@@ -11,7 +11,6 @@ import { Header, BackButton, Button, Container } from '@components/index';
 import EMOJI from '@constants/emoji';
 import 'dayjs/locale/ko';
 import { CONSOLE_ERROR, ERROR } from '@constants/message';
-import { useParamsId } from '@hooks/useParamsId';
 
 const CreateDiaryStyle = stylex.create({
   container: {
@@ -220,6 +219,7 @@ const CreateDiary = () => {
         'Content-Type': 'multipart/form-data',
       },
     };
+
     if (!checkWritingPermission()) {
       Swal.fire({
         title: ERROR.DIARY_ALREADY_EXISTS,
@@ -245,7 +245,11 @@ const CreateDiary = () => {
     }
 
     try {
-      const response = await API.post(END_POINT.DIARY(memberId), formData);
+      const response = await API.post(
+        END_POINT.DIARY(memberId),
+        formData,
+        config,
+      );
       const newDiaryId = response.data.diaryId;
       navigate(`/diary/${newDiaryId}`, { replace: true });
       localStorage.setItem('lastWritingDate', currentDate);
