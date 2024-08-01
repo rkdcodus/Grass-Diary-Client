@@ -3,13 +3,18 @@ import { END_POINT } from '@constants/api';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 
+interface ILatestDiaryResponse {
+  pageParams: number[];
+  pages: Feed[][];
+}
+
 const fetchLatestDiary = (cursorId: number) => {
   return API.get(END_POINT.SHARE_LATEST(cursorId));
 };
 
 export const useLatestDiaries = () => {
   const { data, fetchNextPage } = useInfiniteQuery<
-    ILatestDiary[],
+    Feed[],
     AxiosError,
     ILatestDiaryResponse,
     [string],
@@ -27,7 +32,7 @@ export const useLatestDiaries = () => {
     initialPageParam: 922337203685477600,
   });
 
-  const latest: ILatestDiary[][] = data?.pages || [];
+  const latest: Feed[][] = data?.pages || [];
 
   return { latest, fetchNextPage };
 };

@@ -5,6 +5,7 @@ import { lazy } from 'react';
 const Intro = lazy(() => import('@pages/Intro/Intro'));
 const Main = lazy(() => import('@pages/Main/Main'));
 const CreateDiary = lazy(() => import('@pages/CreateDiary/CreateDiary'));
+const EditDiary = lazy(() => import('@pages/EditDiary/EditDiary'));
 const DiaryDetail = lazy(() => import('@pages/DiaryDetail/DiaryDetail'));
 const Share = lazy(() => import('@pages/Share/Share'));
 const Setting = lazy(() => import('@pages/Setting/Setting'));
@@ -27,7 +28,7 @@ const router = createBrowserRouter([
     element: <ProtectedRoute />,
     children: [
       { path: '/creatediary', element: <CreateDiary /> },
-      { path: '/editdiary/:id', element: <CreateDiary /> },
+      { path: '/editdiary/:diaryId', element: <EditDiary /> },
       { path: '/diary/:diaryId', element: <DiaryDetail /> },
       { path: '/share', element: <Share /> },
       { path: '/setting', element: <Setting /> },

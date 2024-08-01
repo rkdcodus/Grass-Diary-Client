@@ -3,20 +3,20 @@ import { END_POINT } from '@constants/api';
 import { useMutation } from '@tanstack/react-query';
 import { CONSOLE_ERROR } from '@constants/message';
 
-type Props = {
-  diaryId: string;
-  memberId: number;
-};
+interface IApiProps {
+  diaryId: Id;
+  memberId: Id;
+}
 
-const postLikeApi = ({ diaryId, memberId }: Props) => {
+const postLikeApi = ({ diaryId, memberId }: IApiProps) => {
   return API.post(END_POINT.LIKE(diaryId, memberId));
 };
 
-const deleteLikeApi = ({ diaryId, memberId }: Props) => {
+const deleteLikeApi = ({ diaryId, memberId }: IApiProps) => {
   return API.delete(END_POINT.LIKE(diaryId, memberId));
 };
 
-export const useCountLike = ({ diaryId, memberId }: Props) => {
+export const useCountLike = ({ diaryId, memberId }: IApiProps) => {
   const { mutate: postLike, isSuccess: postSuccess } = useMutation({
     mutationFn: () => {
       return postLikeApi({ diaryId, memberId });

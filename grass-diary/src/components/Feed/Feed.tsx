@@ -45,13 +45,13 @@ const feed = stylex.create({
   },
 });
 
-interface propsType {
+interface IFeedProps {
   likeCount: number;
   link: string;
   createdAt: string;
   content: string;
   name: string;
-  memberId: number;
+  memberId: Id;
 }
 
 const Feed = ({
@@ -61,7 +61,7 @@ const Feed = ({
   content,
   name,
   memberId,
-}: propsType) => {
+}: IFeedProps) => {
   const { data: writer } = useWriterProfile(memberId);
 
   const title =
