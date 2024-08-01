@@ -26,7 +26,8 @@
     "recoil": "^0.7.7",
     "slick-carousel": "^1.8.1",
     "styled-components": "^6.1.11",
-    "sweetalert2": "^11.6.13"
+    "sweetalert2": "^11.6.13",
+    "zustand": "^4.5.4"
   },
   "devDependencies": {
     "@types/node": "^20.12.7",
