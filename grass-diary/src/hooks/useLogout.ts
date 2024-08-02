@@ -1,11 +1,11 @@
 import { useSetRecoilState } from 'recoil';
 import { useNavigate } from 'react-router-dom';
-import { memberIdAtom } from '@recoil/user/userState';
-import { isAuthenticatedAtom } from '@recoil/auth/authState';
+import { memberIdAtom } from '@state/user/userState';
+import { useAuthStore } from '@state/auth/authStore';
 
 const useLogout = () => {
   const navigate = useNavigate();
-  const setIsAuthenticated = useSetRecoilState(isAuthenticatedAtom);
+  const setIsAuthenticated = useAuthStore(state => state.setIsAuthenticated);
   const setMemberId = useSetRecoilState(memberIdAtom);
 
   const clearAuth = () => {

@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 
 import { Profile } from '@components/index';
 import useLogout from '@hooks/useLogout';
-import useUser from '@recoil/user/useUser';
+import useUser from '@state/user/useUser';
 import { useQueryClient } from '@tanstack/react-query';
 
 interface IMenuBarProps {

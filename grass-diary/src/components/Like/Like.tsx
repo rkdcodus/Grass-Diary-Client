@@ -1,6 +1,6 @@
 import stylex from '@stylexjs/stylex';
 import { useEffect, useState } from 'react';
-import useUser from '@recoil/user/useUser';
+import useUser from '@state/user/useUser';
 import { useCountLike } from '@hooks/api/useCountLike';
 
 const beat1 = stylex.keyframes({

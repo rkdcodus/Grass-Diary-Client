@@ -9,8 +9,8 @@ import {
 } from '@tanstack/react-query';
 
 import API from '@services/index';
-import useProfile from '@recoil/profile/useProfile';
-import { profileAtom } from '@recoil/profile/profileState';
+import useProfile from '@state/profile/useProfile';
+import { profileAtom } from '@state/profile/profileState';
 import { Container, Header, Profile, Button } from '@components/index';
 import { END_POINT } from '@constants/api';
 import { CONSOLE_ERROR } from '@constants/message';

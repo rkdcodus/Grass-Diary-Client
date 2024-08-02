@@ -6,12 +6,12 @@ import QuillEditor from './QuillEditor';
 
 import API from '@services/index';
 import { END_POINT } from '@constants/api';
-import useUser from '@recoil/user/useUser';
+import useUser from '@state/user/useUser';
 import { Header, BackButton, Button, Container } from '@components/index';
 import EMOJI from '@constants/emoji';
 import 'dayjs/locale/ko';
 import { CONSOLE_ERROR, ERROR } from '@constants/message';
-import { useParamsId } from '@hooks/useParamsId';
+// import { useParamsId } from '@hooks/useParamsId';
 
 const CreateDiaryStyle = stylex.create({
   container: {

@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { useCallback } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { Button } from '@components/index';
-import useUser from '@recoil/user/useUser';
+import useUser from '@state/user/useUser';
 import AnimateReward from './AnimateReward';
 import API from '@services/index';
 import { END_POINT } from '@constants/api';

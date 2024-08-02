@@ -4,7 +4,7 @@ import DOMPurify from 'dompurify';
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
 
-import useUser from '@recoil/user/useUser';
+import useUser from '@state/user/useUser';
 import useDiary from '@hooks/api/useDiary';
 import { NormalLike, MoodProfile } from '@components/index';
 
