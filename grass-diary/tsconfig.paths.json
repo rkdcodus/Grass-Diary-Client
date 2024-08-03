@@ -9,7 +9,7 @@
       "@services/*": ["src/services/*"],
       "@utils/*": ["src/utils/*"],
       "@recoil/*": ["src/recoil/*"],
-      "@style/*": ["src/style/*"]
+      "@styles/*": ["src/styles/*"]
     }
   }
 }
