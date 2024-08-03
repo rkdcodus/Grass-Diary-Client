@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom/client';
 import { RecoilRoot } from 'recoil';
 import { RouterProvider } from 'react-router-dom';
 import router from './router';
-import './styles/reset.css';
+import { GlobalStyle } from './styles/GlobalStyle';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
@@ -14,7 +14,8 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
     <QueryClientProvider client={queryClient}>
       <ReactQueryDevtools />
       <RecoilRoot>
-        <RouterProvider router={router} />
+          <GlobalStyle />
+          <RouterProvider router={router} />
       </RecoilRoot>
     </QueryClientProvider>
   </React.StrictMode>,
