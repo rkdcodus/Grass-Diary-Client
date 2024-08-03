@@ -1,6 +1,6 @@
 import styles from './styles';
 import stylex from '@stylexjs/stylex';
-import { useEffect } from 'react';
+import { Suspense, useEffect } from 'react';
 import { useRecoilState } from 'recoil';
 import {
   QueryClient,
@@ -70,7 +70,9 @@ const Setting = () => {
         </div>
         <div {...stylex.props(styles.profileSection)}>
           <div {...stylex.props(styles.profileLeft)}>
-            <Profile width="12.5rem" height="12.5rem" />
+            <Suspense>
+              <Profile width="12.5rem" height="12.5rem" />
+            </Suspense>
             <Button
               text="프로필 사진 변경"
               width="9.4rem"
