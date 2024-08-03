@@ -69,7 +69,6 @@ interface IDiaryInfo {
 
 // DiaryDetail Type
 interface IDiaryDetail extends IDiary {
-  id: Id;
   memberId: Id;
   hasImage: null;
   hasTag: null;
