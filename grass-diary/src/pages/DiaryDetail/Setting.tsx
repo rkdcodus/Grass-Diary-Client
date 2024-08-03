@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { EllipsisIcon, EllipsisBox } from '@components/index';
 import UnmodifyModal from './modal/UnmodifyModal';
 import ConfirmDeleteModal from './modal/ConfirmDeleteModal';
+import { useTodayDate } from '@hooks/api/useTodayDate';
 
 type SettingProps = {
   diaryId: Id;
@@ -11,7 +12,7 @@ type SettingProps = {
 
 const Setting = ({ diaryId, createdDate }: SettingProps) => {
   const navigate = useNavigate();
-  const date = new Date();
+  const { date } = useTodayDate();
   const [canEdit, setCanEdit] = useState(false);
   const [editModal, setEditModal] = useState(false);
   const [confirmModal, setConfirmModal] = useState(false);
@@ -19,7 +20,6 @@ const Setting = ({ diaryId, createdDate }: SettingProps) => {
   const showConfirmModal = () => setConfirmModal(true);
 
   const linkToModify = () => {
-    localStorage.removeItem('lastWritingDate');
     if (!canEdit && !editModal) {
       setEditModal(true);
       return;
@@ -28,12 +28,12 @@ const Setting = ({ diaryId, createdDate }: SettingProps) => {
   };
 
   useEffect(() => {
-    if (createdDate) {
+    if (createdDate && date) {
       if (
         // 당일 : 일기 수정 가능
-        createdDate.slice(0, 2) === String(date.getFullYear()).slice(2, 4) &&
-        +createdDate.slice(5, 6) === date.getMonth() + 1 &&
-        +createdDate.slice(8, 10) === date.getDate()
+        +createdDate.slice(0, 2) === date.year % 100 &&
+        +createdDate.slice(5, 6) === date.month &&
+        +createdDate.slice(8, 10) === date.date
       ) {
         setCanEdit(true);
       } else {

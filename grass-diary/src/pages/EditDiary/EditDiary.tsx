@@ -1,16 +1,16 @@
 import stylex from '@stylexjs/stylex';
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import QuillEditor from '../CreateDiary/QuillEditor';
 
-import API from '@services/index';
-import { END_POINT } from '@constants/api';
 import { Header, BackButton, Button, Container } from '@components/index';
 import EMOJI from '@constants/emoji';
 import 'dayjs/locale/ko';
-import { CONSOLE_ERROR, ERROR } from '@constants/message';
+import { ERROR } from '@constants/message';
 import { useParamsId } from '@hooks/useParamsId';
+import { usePatchDiary } from '@hooks/api/usePatchDiary';
+import { useTodayDate } from '@hooks/api/useTodayDate';
+import { useDiaryDetail } from '@hooks/api/useDiaryDetail';
 
 const CreateDiaryStyle = stylex.create({
   container: {
@@ -97,9 +97,6 @@ const CreateDiaryStyle = stylex.create({
 });
 
 const EditDiary = () => {
-  const diaryId = useParamsId();
-  const navigate = useNavigate();
-
   const [diaryInfo, setDiaryInfo] = useState<IDiaryInfo>({
     hashArr: [],
     moodValue: 5,
@@ -117,7 +114,18 @@ const EditDiary = () => {
   const [file, setFile] = useState(null);
   const [imageURL, setImageURL] = useState('');
   const [hasImage, setHasImage] = useState(false);
-  const formData = new FormData(); // FormData 생성
+  const [requestDto, setRequestDto] = useState<RequestDto>({
+    content: '',
+    isPrivate: true,
+    conditionLevel: `LEVEL_1`,
+    hashtags: [],
+    hasImage: false,
+  });
+
+  const diaryId = useParamsId();
+  const { mutate } = usePatchDiary({ diaryId, file, requestDto });
+  const { date } = useTodayDate();
+  const { detail } = useDiaryDetail(diaryId);
 
   // 상태 업데이트 함수
   const setDiaryField = (field: Partial<IDiaryInfo>) => {
@@ -173,65 +181,16 @@ const EditDiary = () => {
     setDiaryField({ hashArr: diaryInfo.hashArr.filter((_, i) => i !== index) });
   };
 
-  useEffect(() => {
-    API.get<IDiaryInfo>(END_POINT.TODAY_DATE)
-      .then(response => {
-        setDiaryField({
-          year: response.data.year,
-          month: response.data.month,
-          date: response.data.date,
-          day: response.data.day,
-        });
-      })
-      .catch(error => {
-        console.error(CONSOLE_ERROR.DATE.GET + error);
-      });
-  }, []);
-
-  const checkWritingPermission = () => {
-    const lastWritingDate = localStorage.getItem('lastWritingDate');
-    const currentDate = `${diaryInfo.year}년/${diaryInfo.month}월/${diaryInfo.date}일`;
-
-    if (lastWritingDate === currentDate) {
-      return false;
-    }
-    return true;
-  };
-
   const handleSave = async () => {
     const { quillContent, isPrivate, hashArr, moodValue } = diaryInfo;
-    const requestDto = {
+
+    setRequestDto({
       content: quillContent,
       isPrivate,
       conditionLevel: `LEVEL_${moodValue}`,
       hashtags: hashArr,
       hasImage: hasImage,
-    };
-    formData.append(
-      'requestDto',
-      new Blob([JSON.stringify(requestDto)], {
-        type: 'application/json',
-      }),
-    );
-
-    const config = {
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      },
-    };
-
-    if (!checkWritingPermission()) {
-      Swal.fire({
-        title: ERROR.DIARY_ALREADY_EXISTS,
-        icon: 'warning',
-        showCancelButton: false,
-        confirmButtonColor: '#28CA3B',
-        confirmButtonText: '확인',
-      });
-      return;
-    }
-
-    if (file) formData.append('image', file);
+    });
 
     if (!quillContent || !quillContent.trim()) {
       Swal.fire({
@@ -244,36 +203,28 @@ const EditDiary = () => {
       return; // 저장 중단
     }
 
-    try {
-      await API.patch(END_POINT.DIARY(diaryId), formData, config);
-      navigate(`/diary/${diaryId}`, { replace: true, state: 'editcomplete' });
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  // 수정 기능일 때의 코드
-
-  const fetchDiaryData = async () => {
-    try {
-      const response = await API.get(END_POINT.DIARY(diaryId));
-      const tags = response.data.tags.map((tag: ITages) => tag.tag);
-
-      setDiaryField({
-        hashArr: tags,
-        isPrivate: response.data.isPrivate,
-        moodValue: response.data.transparency * 10,
-        quillContent: response.data.content,
-      });
-      setImageURL(response.data.imageURL);
-    } catch (error) {
-      console.error(CONSOLE_ERROR.DIARY.GET + error);
-    }
+    mutate();
   };
 
   useEffect(() => {
-    fetchDiaryData();
-  }, []);
+    if (date) {
+      setDiaryField({
+        year: date.year,
+        month: date.month,
+        date: date.date,
+        day: date.day,
+      });
+    }
+    if (detail) {
+      setDiaryField({
+        hashArr: detail.tags.map((tag: ITages) => tag.tag),
+        isPrivate: detail.isPrivate,
+        moodValue: detail.transparency * 10,
+        quillContent: detail.content,
+      });
+      setImageURL(detail.imageURL);
+    }
+  }, [date, detail]);
 
   return (
     <Container>
