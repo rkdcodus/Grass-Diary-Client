@@ -1,4 +1,4 @@
-export { default as Header } from './Header';
+export { default as Header } from './NavBar/Header';
 export { default as BackButton } from './Button/BackButton';
 export { default as Button } from './Button/Button';
 export { default as Like } from './Like/Like';
