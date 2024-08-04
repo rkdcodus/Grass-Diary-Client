@@ -1,11 +1,11 @@
 import { ReactNode } from 'react';
 import styled from 'styled-components';
 
-interface Props {
+interface ButtonContainerProps {
   children: ReactNode;
 }
 
-const ButtonContainer = ({ children }: Props) => {
+const ButtonContainer = ({ children }: ButtonContainerProps) => {
   return <Btn>{children}</Btn>;
 };
 
