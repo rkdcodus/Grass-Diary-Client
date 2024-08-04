@@ -13,14 +13,28 @@ interface MenuProps {
   link?: string;
   onClick?: () => void;
   line?: number;
+  topRadius?: number;
+  bottomRadius?: number;
 }
 
-const Menu = ({ link, onClick, text, svg, line }: MenuProps) => {
+const Menu = ({
+  link,
+  onClick,
+  text,
+  svg,
+  line,
+  topRadius,
+  bottomRadius,
+}: MenuProps) => {
   return (
     <>
       <Link to={link || ''}>
         <ButtonContainer>
-          <Interaction1 onClick={onClick} />
+          <Interaction1
+            onClick={onClick}
+            topRadius={topRadius}
+            bottomRadius={bottomRadius}
+          />
           <MenuContainer>
             <MenuStr>{text}</MenuStr>
             <MenuImg src={svg} alt={text} />

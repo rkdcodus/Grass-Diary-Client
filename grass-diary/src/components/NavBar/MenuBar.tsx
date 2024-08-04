@@ -28,10 +28,21 @@ const MenuBar = ({ toggle, headerRef }: MenuBarProps) => {
   return (
     <div ref={headerRef}>
       <Menus toggle={toggle}>
-        <Menu link={'/mypage'} text={'마이페이지'} svg={person} line={4} />
+        <Menu
+          link={'/mypage'}
+          text={'마이페이지'}
+          svg={person}
+          line={4}
+          topRadius={16}
+        />
         <Menu link={'/setting'} text={'설정'} svg={setting} />
         <Menu onClick={handleLogout} text={'로그아웃'} svg={logout} />
-        <Menu onClick={deleteAccount} text={'탈퇴'} svg={person_remove} />
+        <Menu
+          onClick={deleteAccount}
+          text={'탈퇴'}
+          svg={person_remove}
+          bottomRadius={16}
+        />
       </Menus>
     </div>
   );

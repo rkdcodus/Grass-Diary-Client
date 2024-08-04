@@ -14,9 +14,9 @@ const Menus = ({ children, toggle }: MenusProps) => {
 export default Menus;
 
 const MenusContainer = styled.div<{ toggle: boolean }>`
-  display: ${props => (props.toggle ? 'flex' : 'none')};
+  display: flex;
   width: 160px;
-  height: 'auto';
+  height: ${props => (props.toggle ? 'auto' : '0px')};
   padding: var(--gap-empty, 0px);
   flex-direction: column;
   align-items: flex-start;
@@ -32,5 +32,6 @@ const MenusContainer = styled.div<{ toggle: boolean }>`
 
   position: absolute;
   transform: translate(-92px, 11px);
+  overflow: hidden;
   z-index: 998;
 `;
