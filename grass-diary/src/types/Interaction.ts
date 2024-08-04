@@ -1,4 +1,4 @@
 type InteractionProps = {
-  onClick: () => void;
-  radius: number;
+  onClick?: () => void;
+  radius?: number;
 };

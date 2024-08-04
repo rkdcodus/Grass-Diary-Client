@@ -7,14 +7,14 @@ const Interaction2 = ({ onClick, radius }: InteractionProps) => {
 
 export default Interaction2;
 
-const Interaction = styled.button<{ radius: number }>`
+const Interaction = styled.button<{ radius: number | undefined }>`
   position: absolute;
-  z-index: 2;
   width: 100%;
   height: 100%;
-  border-radius: ${props => props.radius}px;
+  border-radius: ${props => props.radius || 0}px;
   // opacity: var(--opacity-subtlest, 0);
   background: rgba(59, 59, 59, 0);
+  cursor: pointer;
 
   &:hover {
     // opacity: var(--opacity-subtlest, 0.05);
