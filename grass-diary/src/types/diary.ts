@@ -69,10 +69,18 @@ interface IDiaryInfo {
 
 // DiaryDetail Type
 interface IDiaryDetail extends IDiary {
-  id: Id;
   memberId: Id;
   hasImage: null;
   hasTag: null;
   imageURL: string;
   likedByLogInMember: boolean;
 }
+
+// Create/Edit page api request Type
+type RequestDto = {
+  content: string;
+  isPrivate: boolean;
+  conditionLevel: string;
+  hashtags: string[];
+  hasImage: boolean;
+};

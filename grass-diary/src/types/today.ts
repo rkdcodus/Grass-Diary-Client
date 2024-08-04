@@ -5,3 +5,5 @@ interface TodayInfo {
   date: number;
   day: string;
 }
+
+type TodayDate = Omit<TodayInfo, 'question'>;

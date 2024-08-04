@@ -22,11 +22,6 @@ const styles = stylex.create({
   },
 });
 
-interface INormalLikeProps {
-  likeCount: number;
-  justifyContent: string;
-}
-
 const PopularFeed = () => {
   const { data: top10 } = usePopularDiaries();
 
@@ -46,7 +41,7 @@ const PopularFeed = () => {
       likeCount={data.diaryLikeCount}
       link={`/diary/${data.diaryId}`}
       createdAt={data.createdAt}
-      content={data.diaryContent}
+      content={data.content}
       name={data.nickname}
       memberId={data.memberId}
     />

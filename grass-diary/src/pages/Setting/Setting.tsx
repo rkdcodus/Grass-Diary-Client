@@ -1,6 +1,6 @@
 import styles from './styles';
 import stylex from '@stylexjs/stylex';
-import { useEffect } from 'react';
+import { Suspense, useEffect } from 'react';
 import { useRecoilState } from 'recoil';
 import {
   QueryClient,
@@ -31,7 +31,7 @@ const SettingSection = ({ children, label }: ISettingSection) => {
 
 const Setting = () => {
   const queryClient: QueryClient = useQueryClient();
-  const { nickName, profileIntro }: Partial<IProfile> = useProfile();
+  const { nickName, profileIntro }: omitProfileImageURL = useProfile();
   const [profile, setProfile] = useRecoilState(profileAtom);
 
   useEffect(() => {
@@ -48,7 +48,11 @@ const Setting = () => {
     setProfile({ ...profile, profileIntro: event.target.value });
   };
 
-  const updateProfile = useMutation<IUpdateProfile, Error, IUpdateProfile>({
+  const updateProfile = useMutation<
+    omitProfileImageURL,
+    Error,
+    omitProfileImageURL
+  >({
     mutationFn: profileInfo =>
       API.patch(END_POINT.EDIT_MEMBER_INFO, profileInfo),
     onSuccess: () => {
@@ -66,7 +70,9 @@ const Setting = () => {
         </div>
         <div {...stylex.props(styles.profileSection)}>
           <div {...stylex.props(styles.profileLeft)}>
-            <Profile width="12.5rem" height="12.5rem" />
+            <Suspense>
+              <Profile width="12.5rem" height="12.5rem" />
+            </Suspense>
             <Button
               text="프로필 사진 변경"
               width="9.4rem"
@@ -110,7 +116,7 @@ const Setting = () => {
                   border="1px solid #929292"
                   onClick={() =>
                     updateProfile.mutate({
-                      nickname: profile.nickName,
+                      nickName: profile.nickName,
                       profileIntro: profile.profileIntro,
                     })
                   }
