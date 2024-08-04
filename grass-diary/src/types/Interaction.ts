@@ -1,4 +1,10 @@
 type InteractionProps = {
   onClick?: () => void;
-  radius?: number;
+  topRadius?: number;
+  bottomRadius?: number;
+};
+
+type InteractionStyleProps = {
+  topRadius?: number;
+  bottomRadius?: number;
 };

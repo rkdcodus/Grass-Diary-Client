@@ -1,17 +1,30 @@
 import styled from 'styled-components';
 import { semantic } from '@styles/semantic';
 
-const Interaction3 = ({ onClick, radius }: InteractionProps) => {
-  return <Interaction onClick={onClick} radius={radius}></Interaction>;
+const Interaction3 = ({
+  onClick,
+  topRadius,
+  bottomRadius,
+}: InteractionProps) => {
+  return (
+    <Interaction
+      onClick={onClick}
+      topRadius={topRadius}
+      bottomRadius={bottomRadius}
+    ></Interaction>
+  );
 };
 
 export default Interaction3;
 
-const Interaction = styled.button<{ radius: number | undefined }>`
+const Interaction = styled.button<InteractionStyleProps>`
   position: absolute;
   width: 100%;
   height: 100%;
-  border-radius: ${props => props.radius || 0}px;
+  border-top-left-radius: ${props => props.topRadius || 0}px;
+  border-top-right-radius: ${props => props.topRadius || 0}px;
+  border-bottom-left-radius: ${props => props.bottomRadius || 0}px;
+  border-bottom-right-radius: ${props => props.bottomRadius || 0}px;
   // opacity: var(--opacity-subtlest, 0);
   background: rgba(0, 137, 90, 0);
   cursor: pointer;
