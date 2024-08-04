@@ -3,9 +3,12 @@ import { useWriterProfile } from './useWriterProfile';
 import API from '@services/index';
 import { END_POINT } from '@constants/api';
 import { AxiosError } from 'axios';
+import { useNavigate } from 'react-router-dom';
 
-const fetchDiaryDetails = (id: Id) => {
-  return API.get(END_POINT.DIARY(id));
+const fetchDiaryDetails = async (id: Id): Promise<IDiaryDetail> => {
+  const res = await API.get(END_POINT.DIARY(id));
+
+  return res.data;
 };
 
 export const useDiaryDetail = (diaryId: Id) => {
@@ -16,15 +19,18 @@ export const useDiaryDetail = (diaryId: Id) => {
     error,
   } = useQuery<IDiaryDetail, AxiosError, IDiaryDetail, [string, Id]>({
     queryKey: ['get-diaryDetail', diaryId],
-    queryFn: async () => {
-      const res = await fetchDiaryDetails(diaryId);
-      return res.data;
-    },
+    queryFn: () => fetchDiaryDetails(diaryId),
     retry: 1,
   });
 
   const writerId = detail?.memberId;
   const { data: writer } = useWriterProfile(writerId!);
+  const navigate = useNavigate();
 
-  return { detail, writer, isLoading, isError, error };
+  if (isError) {
+    console.error(error.message);
+    navigate('/non-existent-page');
+  }
+
+  return { detail, writer, isLoading };
 };

@@ -1,6 +1,6 @@
 import stylex from '@stylexjs/stylex';
 import { Link } from 'react-router-dom';
-import { useEffect, useRef, useState } from 'react';
+import { Suspense, useEffect, useRef, useState } from 'react';
 
 import { Profile } from '@components/index';
 import useLogout from '@hooks/useLogout';
@@ -177,7 +177,9 @@ const Header = ({ position }: IHeader) => {
         {memberId ? (
           <div {...stylex.props(header.userMenu)} onClick={dropDown}>
             <div ref={profileRef}>
-              <Profile width="44px" height="44px" />
+              <Suspense fallback={<div>loading</div>}>
+                <Profile width="44px" height="44px" />
+              </Suspense>
             </div>
             <div
               {...stylex.props(header.arrowUp, toggle && header.arrowDown)}

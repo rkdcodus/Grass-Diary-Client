@@ -1,6 +1,5 @@
 import stylex from '@stylexjs/stylex';
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 import DOMPurify from 'dompurify';
 
 import { Header, BackButton, Like, Container } from '@components/index';
@@ -8,7 +7,6 @@ import useUser from '@state/user/useUser';
 import EMOJI from '@constants/emoji';
 import Setting from './Setting';
 import { useDiaryDetail } from '@hooks/api/useDiaryDetail';
-import axios from 'axios';
 import ImageModal from './modal/ImageModal';
 import { useParamsId } from '@hooks/useParamsId';
 
@@ -131,31 +129,19 @@ const contentStyle = stylex.create({
   },
 });
 
-interface ResponseDataType {
-  message: string;
-}
-
 const DiaryDetail = () => {
-  const navigate = useNavigate();
   const diaryId = useParamsId();
   const { memberId } = useUser();
   const [likeCount, setLikeCount] = useState(0);
   const [mood, setMood] = useState('');
   const [imageModal, setImageModal] = useState(false);
-  const { detail, writer, isLoading, isError, error } = useDiaryDetail(diaryId);
+  const { detail, writer, isLoading } = useDiaryDetail(diaryId);
 
   const zoom = () => {
     if (!imageModal) {
       setImageModal(true);
     }
   };
-
-  useEffect(() => {
-    if (axios.isAxiosError<ResponseDataType, any>(error)) {
-      console.log('error: ', error?.response?.data.message);
-      navigate('/non-existent-page');
-    }
-  }, [isError, isLoading]);
 
   useEffect(() => {
     if (detail) {

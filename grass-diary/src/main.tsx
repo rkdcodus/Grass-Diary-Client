@@ -14,10 +14,8 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
     <QueryClientProvider client={queryClient}>
       <ReactQueryDevtools />
       <RecoilRoot>
-        <Suspense>
           <GlobalStyle />
           <RouterProvider router={router} />
-        </Suspense>
       </RecoilRoot>
     </QueryClientProvider>
   </React.StrictMode>,

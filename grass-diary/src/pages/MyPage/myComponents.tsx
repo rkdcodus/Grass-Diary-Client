@@ -1,7 +1,7 @@
 import stylex from '@stylexjs/stylex';
 import styles from './style';
 import Swal from 'sweetalert2';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import Grass from './Grass';
@@ -43,7 +43,10 @@ const MainContainer = () => {
   return (
     <div {...stylex.props(styles.mainContainer)}>
       <div {...stylex.props(styles.profileSection)}>
-        <ProfileSection setSelectedDiary={setSelectedDiary} />
+        <Suspense>
+          <ProfileSection setSelectedDiary={setSelectedDiary} />
+        </Suspense>
+
         <ToggleButton
           buttonLabel={toggleButton}
           handleToggleButton={handleToggleButton}
@@ -114,7 +117,9 @@ const ProfileSection = ({ setSelectedDiary }: IProfileSection) => {
   return (
     <div {...stylex.props(styles.profileDetails)}>
       <div {...stylex.props(styles.profileLeft)}>
-        <Profile width="200px" height="200px" />
+        <Suspense>
+          <Profile width="200px" height="200px" />
+        </Suspense>
         <div>
           <Button
             text="교환 일기 신청"
