@@ -75,7 +75,11 @@ const Header = () => {
             </div>
           ) : (
             <ButtonContainer>
-              <Interaction1 onClick={() => console.log('로그인')} radius={8} />
+              <Interaction1
+                onClick={() => console.log('로그인')}
+                topRadius={8}
+                bottomRadius={8}
+              />
               <LoginBtn>로그인</LoginBtn>
             </ButtonContainer>
           )}
