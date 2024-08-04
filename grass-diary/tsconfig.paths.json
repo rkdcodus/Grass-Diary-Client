@@ -9,7 +9,9 @@
       "@services/*": ["src/services/*"],
       "@utils/*": ["src/utils/*"],
       "@recoil/*": ["src/recoil/*"],
-      "@styles/*": ["src/styles/*"]
+      "@styles/*": ["src/styles/*"],
+      "@svg/*": ["src/assets/svg/*"],
+      "@image/*": ["src/assets/image/*"]
     }
   }
 }

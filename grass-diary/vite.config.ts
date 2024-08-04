@@ -20,6 +20,8 @@ export default defineConfig({
       '@icon': path.resolve(__dirname, 'src/assets/icon'),
       '@recoil': path.resolve(__dirname, 'src/recoil'),
       '@styles': path.resolve(__dirname, 'src/styles'),
+      '@svg': path.resolve(__dirname, 'src/assets/svg'),
+      '@image': path.resolve(__dirname, 'src/assets/image'),
     },
   },
 });
