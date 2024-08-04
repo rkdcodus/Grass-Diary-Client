@@ -1,7 +1,12 @@
+import { ReactNode } from 'react';
 import styled from 'styled-components';
 
-const ButtonContainer = props => {
-  return <Btn>{props.children}</Btn>;
+interface Props {
+  children: ReactNode;
+}
+
+const ButtonContainer = ({ children }: Props) => {
+  return <Btn>{children}</Btn>;
 };
 
 export default ButtonContainer;
