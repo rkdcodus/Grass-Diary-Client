@@ -12,17 +12,17 @@ import {
 } from './ProfileStore';
 
 const fetchAxios = async (memberId: Id) => {
-  console.log('profile fetch');
   const res = await API.get(END_POINT.MEMBER_PROFILE(memberId));
   return res.data;
 };
+
 export const useProfile = () => {
+  const memberId = useUser();
   const { setProfileImageURL, setNickName, setProfileIntro } =
     useProfileActions();
   const profileImageURL = useProfileImageURL();
   const nickname = useNickname();
   const profileIntro = useProfileIntro();
-  const memberId = useUser();
 
   const { data, isSuccess, isError, error } = useQuery({
     queryKey: ['profile'],
