@@ -4,9 +4,8 @@ import { useQuery } from '@tanstack/react-query';
 
 import API from '@services/index';
 import { memberIdAtom } from './userState';
-import { useAuth } from '@recoil/auth/useAuth';
+import { useAuth } from '@state/auth/useAuth';
 import { END_POINT } from '@constants/api';
-import { CONSOLE_ERROR } from '@constants/message';
 
 interface IUseUserReturn {
   memberId: Id;
@@ -16,7 +15,7 @@ const useUser = (): IUseUserReturn => {
   const setMemberId = useSetRecoilState<number>(memberIdAtom);
   const { isAuthenticated }: { isAuthenticated: boolean } = useAuth();
 
-  const { data: memberId, isSuccess } = useQuery<
+  const { data: memberId = 0, isSuccess } = useQuery<
     number,
     Error,
     number,
@@ -26,7 +25,6 @@ const useUser = (): IUseUserReturn => {
     queryFn: () =>
       API.get(END_POINT.MEMBER_INFO).then(({ data }) => data.memberId),
     enabled: !!isAuthenticated,
-    onError: error => console.error(CONSOLE_ERROR.MEMBER.GET + error),
   });
 
   useEffect(() => {

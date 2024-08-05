@@ -1,5 +1,5 @@
 import { Outlet, Navigate } from 'react-router-dom';
-import { useAuth } from '@recoil/auth/useAuth';
+import { useAuth } from '@state/auth/useAuth';
 
 const ProtectedRoute = () => {
   const { isAuthenticated, isLoading } = useAuth();

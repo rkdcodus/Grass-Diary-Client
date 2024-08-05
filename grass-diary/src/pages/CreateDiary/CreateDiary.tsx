@@ -7,7 +7,7 @@ import 'dayjs/locale/ko';
 
 import API from '@services/index';
 import { END_POINT } from '@constants/api';
-import useUser from '@recoil/user/useUser';
+import useUser from '@state/user/useUser';
 import { Header, BackButton, Button, Container } from '@components/index';
 import EMOJI from '@constants/emoji';
 import { CONSOLE_ERROR, ERROR } from '@constants/message';

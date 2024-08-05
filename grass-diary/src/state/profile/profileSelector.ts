@@ -1,6 +1,6 @@
 import { selector } from 'recoil';
 import API from '@services/index';
-import { memberIdAtom } from '@recoil/user/userState';
+import { memberIdAtom } from '@state/user/userState';
 import { END_POINT } from '@constants/api';
 import { CONSOLE_ERROR } from '@constants/message';
 

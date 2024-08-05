@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import DOMPurify from 'dompurify';
 
 import { Header, BackButton, Like, Container } from '@components/index';
-import useUser from '@recoil/user/useUser';
+import useUser from '@state/user/useUser';
 import EMOJI from '@constants/emoji';
 import Setting from './Setting';
 import { useDiaryDetail } from '@hooks/api/useDiaryDetail';

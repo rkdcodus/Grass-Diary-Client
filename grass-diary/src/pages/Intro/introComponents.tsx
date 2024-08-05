@@ -19,7 +19,7 @@ const OpenModalButton = ({ top }: { top: string }) => {
 
   useEffect(() => {
     const loggedIn = async () => {
-      const accessToken: boolean = await checkAuth();
+      const accessToken = await checkAuth();
       if (accessToken) setIsLoggedIn(true);
     };
 
