@@ -10,7 +10,7 @@
       "@utils/*": ["src/utils/*"],
       "@recoil/*": ["src/recoil/*"],
       "@style/*": ["src/style/*"],
-      "@store/*": ["src/store/*"]
+      "@state/*": ["src/state/*"]
     }
   }
 }
