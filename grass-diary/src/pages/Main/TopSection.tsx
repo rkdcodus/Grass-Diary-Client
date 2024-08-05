@@ -7,7 +7,6 @@ import mainCharacter from '@icon/mainCharacter.png';
 import Swal from 'sweetalert2';
 import { END_POINT } from '@constants/api';
 import { useTodayDate } from '@hooks/api/useTodayDate';
-// import { QuestionResponse, DateResponse } from 'src/types/today';
 
 const TopSectionStyles = stylex.create({
   container: {

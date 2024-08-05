@@ -1,19 +1,19 @@
-export interface Grass {
+interface Grass {
   createdAt: string;
   transparency: number;
 }
 
-export interface GrassInfo {
+interface GrassInfo {
   grassList: Grass[];
   colorRGB: string;
 }
 
-export interface GrassApiResponse {
+interface GrassApiResponse {
   totalCount: number;
   thisMonthCount: number;
   grassInfoDTO: GrassInfo;
 }
 
-export interface RewardPointResponse {
+interface RewardPointResponse {
   rewardPoint: number;
 }
