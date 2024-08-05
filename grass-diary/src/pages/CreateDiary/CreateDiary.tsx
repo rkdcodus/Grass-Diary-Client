@@ -12,9 +12,6 @@ import { Header, BackButton, Button, Container } from '@components/index';
 import EMOJI from '@constants/emoji';
 import { CONSOLE_ERROR, ERROR } from '@constants/message';
 import { useCreateDiary } from '@hooks/api/useCreateDiary';
-import 'dayjs/locale/ko';
-import { useTodayDate } from '@hooks/api/useTodayDate';
-
 
 const CreateDiaryStyle = stylex.create({
   container: {
@@ -104,7 +101,6 @@ const CreateDiary = () => {
   const navigate = useNavigate();
   const { memberId } = useUser();
   const { mutate: createDiary } = useCreateDiary(memberId);
-  const { date } = useTodayDate();
   const [diaryInfo, setDiaryInfo] = useState<IDiaryInfo>({
     hashArr: [],
     moodValue: 5,
@@ -170,6 +166,21 @@ const CreateDiary = () => {
     setDiaryField({ hashArr: diaryInfo.hashArr.filter((_, i) => i !== index) });
   };
 
+  useEffect(() => {
+    API.get<IDiaryInfo>(END_POINT.TODAY_DATE)
+      .then(response => {
+        setDiaryField({
+          year: response.data.year,
+          month: response.data.month,
+          date: response.data.date,
+          day: response.data.day,
+        });
+      })
+      .catch(error => {
+        console.error(CONSOLE_ERROR.DATE.GET + error);
+      });
+  }, []);
+
   const checkWritingPermission = () => {
     const lastWritingDate = localStorage.getItem('lastWritingDate');
     const currentDate = `${diaryInfo.year}년/${diaryInfo.month}월/${diaryInfo.date}일`;
@@ -177,23 +188,6 @@ const CreateDiary = () => {
   };
 
   const handleSave = async () => {
-
-    const currentDate = `${diaryInfo.year}년/${diaryInfo.month}월/${diaryInfo.date}일`;
-    const { quillContent, isPrivate, hashArr, moodValue } = diaryInfo;
-    const requestDto = {
-      content: quillContent,
-      isPrivate,
-      conditionLevel: `LEVEL_${moodValue}`,
-      hashtags: hashArr,
-      hasImage: hasImage,
-    };
-    formData.append(
-      'requestDto',
-      new Blob([JSON.stringify(requestDto)], {
-        type: 'application/json',
-      }),
-    );
-
     if (!checkWritingPermission()) {
       Swal.fire({
         title: ERROR.DIARY_ALREADY_EXISTS,
@@ -244,17 +238,6 @@ const CreateDiary = () => {
       },
     });
   };
-
-  useEffect(() => {
-    if (date) {
-      setDiaryField({
-        year: date.year,
-        month: date.month,
-        date: date.date,
-        day: date.day,
-      });
-    }
-  }, [date]);
 
   return (
     <Container>
