@@ -3,15 +3,18 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import QuillEditor from './QuillEditor';
+import 'dayjs/locale/ko';
 
 import API from '@services/index';
 import { END_POINT } from '@constants/api';
 import useUser from '@recoil/user/useUser';
 import { Header, BackButton, Button, Container } from '@components/index';
 import EMOJI from '@constants/emoji';
+import { CONSOLE_ERROR, ERROR } from '@constants/message';
+import { useCreateDiary } from '@hooks/api/useCreateDiary';
 import 'dayjs/locale/ko';
-import { ERROR } from '@constants/message';
 import { useTodayDate } from '@hooks/api/useTodayDate';
+
 
 const CreateDiaryStyle = stylex.create({
   container: {
@@ -100,6 +103,7 @@ const CreateDiaryStyle = stylex.create({
 const CreateDiary = () => {
   const navigate = useNavigate();
   const { memberId } = useUser();
+  const { mutate: createDiary } = useCreateDiary(memberId);
   const { date } = useTodayDate();
   const [diaryInfo, setDiaryInfo] = useState<IDiaryInfo>({
     hashArr: [],
@@ -126,19 +130,11 @@ const CreateDiary = () => {
     setDiaryInfo(prev => ({ ...prev, ...field }));
   };
 
-  const handlePrivateChange = () => {
-    setDiaryField({ isPrivate: true });
-  };
-
-  const handlePublicChange = () => {
-    setDiaryField({ isPrivate: false });
-  };
-
-  const handleMoodChange = e => {
+  const handlePrivateChange = () => setDiaryField({ isPrivate: true });
+  const handlePublicChange = () => setDiaryField({ isPrivate: false });
+  const handleMoodChange = (e: React.ChangeEvent<HTMLInputElement>) =>
     setDiaryField({ moodValue: parseInt(e.target.value) });
-  };
-
-  const onChangeHashtag = e => {
+  const onChangeHashtag = (e: React.ChangeEvent<HTMLInputElement>) =>
     setHashtag(e.target.value);
   };
 
@@ -166,14 +162,11 @@ const CreateDiary = () => {
   const checkWritingPermission = () => {
     const lastWritingDate = localStorage.getItem('lastWritingDate');
     const currentDate = `${diaryInfo.year}년/${diaryInfo.month}월/${diaryInfo.date}일`;
-
-    if (lastWritingDate === currentDate) {
-      return false;
-    }
-    return true;
+    return lastWritingDate !== currentDate;
   };
 
   const handleSave = async () => {
+
     const currentDate = `${diaryInfo.year}년/${diaryInfo.month}월/${diaryInfo.date}일`;
     const { quillContent, isPrivate, hashArr, moodValue } = diaryInfo;
     const requestDto = {
@@ -201,9 +194,7 @@ const CreateDiary = () => {
       return;
     }
 
-    if (file) formData.append('image', file);
-
-    if (!quillContent || !quillContent.trim()) {
+    if (!diaryInfo.quillContent || !diaryInfo.quillContent.trim()) {
       Swal.fire({
         title: ERROR.DIARY_NOT_WRITE,
         icon: 'warning',
@@ -211,17 +202,36 @@ const CreateDiary = () => {
         confirmButtonColor: '#28CA3B',
         confirmButtonText: '확인',
       });
-      return; // 저장 중단
+      return;
     }
 
-    try {
-      const response = await API.post(END_POINT.DIARY(memberId), formData);
-      const newDiaryId = response.data.diaryId;
-      navigate(`/diary/${newDiaryId}`, { replace: true });
-      localStorage.setItem('lastWritingDate', currentDate);
-    } catch (error) {
-      console.error(error);
-    }
+    const formData = new FormData();
+    const requestDto = {
+      content: diaryInfo.quillContent,
+      isPrivate: diaryInfo.isPrivate,
+      conditionLevel: `LEVEL_${diaryInfo.moodValue}`,
+      hashtags: diaryInfo.hashArr,
+      hasImage,
+    };
+
+    formData.append(
+      'requestDto',
+      new Blob([JSON.stringify(requestDto)], { type: 'application/json' }),
+    );
+
+    if (file) formData.append('image', file);
+
+    createDiary(formData, {
+      onSuccess: response => {
+        const newDiaryId = response.data.diaryId;
+        navigate(`/diary/${newDiaryId}`, { replace: true });
+        const currentDate = `${diaryInfo.year}년/${diaryInfo.month}월/${diaryInfo.date}일`;
+        localStorage.setItem('lastWritingDate', currentDate);
+      },
+      onError: error => {
+        console.error(error);
+      },
+    });
   };
 
   useEffect(() => {
