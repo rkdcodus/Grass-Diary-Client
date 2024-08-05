@@ -68,7 +68,7 @@ interface IDiaryInfo {
 }
 
 interface DiaryImage {
-  imageId: string;
+  imageId: number;
   imageURL: string;
 }
 
@@ -82,10 +82,10 @@ interface IDiaryDetail extends IDiary {
 }
 
 // Create/Edit page api request Type
-type RequestDto = {
+type DiaryRequest = {
   content: string;
   isPrivate: boolean;
   conditionLevel: string;
   hashtags: string[];
-  hasImage: boolean;
+  imageId: number;
 };

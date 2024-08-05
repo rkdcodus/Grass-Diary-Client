@@ -114,12 +114,12 @@ const EditDiary = () => {
   const [file, setFile] = useState(null);
   const [imageURL, setImageURL] = useState('');
   const [hasImage, setHasImage] = useState(false);
-  const [requestDto, setRequestDto] = useState<RequestDto>({
+  const [requestDto, setRequestDto] = useState<DiaryRequest>({
     content: '',
     isPrivate: true,
     conditionLevel: `LEVEL_1`,
     hashtags: [],
-    hasImage: false,
+    imageId: 0,
   });
 
   const diaryId = useParamsId();
