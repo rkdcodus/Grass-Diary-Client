@@ -212,13 +212,13 @@ const DiaryDetail = () => {
               return `#${tag.tag} `;
             })}
           </div>
-          {detail?.image.length && (
+          {detail?.image.length ? (
             <img
               {...stylex.props(contentStyle.image)}
               src={detail?.image[0].imageURL}
               onClick={zoom}
             ></img>
-          )}
+          ) : null}
           <div
             {...stylex.props(contentStyle.content)}
             dangerouslySetInnerHTML={createMarkup(detail?.content)}
