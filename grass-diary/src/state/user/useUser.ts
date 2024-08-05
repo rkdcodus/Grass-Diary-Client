@@ -1,7 +1,7 @@
 import { useAuth } from '../auth/useAuth';
 import { useEffect } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { useMemberId, useSetMemberId } from './UserStore';
+import { useMemberId, useSetMemberId } from './userStore';
 import API from '@services/index';
 import { END_POINT } from '@constants/api';
 
@@ -10,7 +10,7 @@ const fetchAxios = async () => {
   return res.data.memberId;
 };
 
-export const useUser = () => {
+export const useUser = (): Id => {
   const { isAuthenticated } = useAuth();
   const memberId = useMemberId();
   const setMemberId = useSetMemberId();
@@ -25,6 +25,7 @@ export const useUser = () => {
     queryFn: fetchAxios,
     enabled: !!isAuthenticated,
   });
+
   useEffect(() => {
     if (!isAuthenticated) setMemberId(0);
     else if (isError) setMemberId(0);

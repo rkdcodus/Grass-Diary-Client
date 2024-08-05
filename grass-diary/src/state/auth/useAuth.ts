@@ -1,9 +1,14 @@
-import { useActions, useIsAuthenticated, useIsLoding } from './AuthStore';
+import { useAuthActions, useIsAuthenticated, useIsLoding } from './authStore';
 
-export const useAuth = () => {
+interface IUseAuthReturn {
+  isAuthenticated: boolean;
+  isLoading: boolean;
+}
+
+export const useAuth = (): IUseAuthReturn => {
   const isAuthenticated = useIsAuthenticated();
   const isLoading = useIsLoding();
-  const { handleCheckAuth } = useActions();
+  const { handleCheckAuth } = useAuthActions();
   handleCheckAuth();
 
   return { isAuthenticated, isLoading };

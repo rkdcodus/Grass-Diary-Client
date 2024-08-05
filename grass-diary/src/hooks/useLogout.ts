@@ -1,10 +1,10 @@
 import { useNavigate } from 'react-router-dom';
-import { useActions } from '@state/auth/AuthStore';
-import { useSetMemberId } from '@state/user/UserStore';
+import { useAuthActions } from '@state/auth/authStore';
+import { useSetMemberId } from '@state/user/userStore';
 
 const useLogout = () => {
   const navigate = useNavigate();
-  const { setIsAuthenticated } = useActions();
+  const { setIsAuthenticated } = useAuthActions();
   const setMemberId = useSetMemberId();
 
   const clearAuth = () => {

@@ -13,7 +13,7 @@ import { Container, Header, Profile, Button } from '@components/index';
 import { END_POINT } from '@constants/api';
 import { CONSOLE_ERROR } from '@constants/message';
 import { useProfile } from '@state/profile/useProfile';
-import { useProfileActions } from '@state/profile/ProfileStore';
+import { useProfileActions } from '@state/profile/profileStore';
 
 interface ISettingSection {
   children: React.ReactNode;

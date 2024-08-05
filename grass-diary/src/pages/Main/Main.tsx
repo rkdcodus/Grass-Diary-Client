@@ -6,11 +6,11 @@ import { PopularFeed, Header, Container } from '@components/index';
 import TopSection from './TopSection';
 import MiddleSection from './MiddleSection';
 import BottomSection from './BottomSection';
-import { useActions } from '@state/auth/AuthStore';
+import { useAuthActions } from '@state/auth/authStore';
 
 const Main = () => {
   const navigate = useNavigate();
-  const { setIsAuthenticated, setIsLoading } = useActions();
+  const { setIsAuthenticated, setIsLoading } = useAuthActions();
 
   useEffect(() => {
     const initLoad = async () => {

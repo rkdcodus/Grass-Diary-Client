@@ -9,7 +9,7 @@ import {
   useProfileActions,
   useProfileImageURL,
   useProfileIntro,
-} from './ProfileStore';
+} from './profileStore';
 
 const fetchAxios = async (memberId: Id) => {
   const res = await API.get(END_POINT.MEMBER_PROFILE(memberId));
