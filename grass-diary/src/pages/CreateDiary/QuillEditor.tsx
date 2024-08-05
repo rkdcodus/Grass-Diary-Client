@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import API from '@services/index';
 import { END_POINT } from '@constants/api';
 import ReactQuill from 'react-quill';
@@ -8,13 +8,18 @@ import { CONSOLE_ERROR } from '@constants/message';
 type QuillEditorProps = {
   onContentChange: (content: string) => void;
   quillContent: string;
+  setImage: React.Dispatch<React.SetStateAction<DiaryImage>>;
 };
 
 type QuestionResponse = {
   question: string;
 };
 
-const QuillEditor = ({ onContentChange, quillContent }: QuillEditorProps) => {
+const QuillEditor = ({
+  onContentChange,
+  quillContent,
+  setImage,
+}: QuillEditorProps) => {
   const handleChange = (
     content: string,
     delta: any,
@@ -25,6 +30,31 @@ const QuillEditor = ({ onContentChange, quillContent }: QuillEditorProps) => {
   };
 
   const [todayQuestion, setTodayQuestion] = useState<string>();
+
+  const ImageHandler = () => {
+    const input = document.createElement('input');
+    input.setAttribute('type', 'file');
+    input.setAttribute('accept', 'image/*');
+    input.click(); // image icon 누르면 실행
+
+    input.onchange = async () => {
+      const file = input.files ? input.files[0] : null;
+      if (!file) return;
+
+      const formData = new FormData();
+      formData.append('image', file);
+
+      try {
+        const res = await API.post('/image/diary', formData);
+        setImage({
+          imageId: res.data.imageId,
+          imageURL: res.data.imageURL,
+        });
+      } catch {
+        console.error('image post 실패');
+      }
+    };
+  };
 
   useEffect(() => {
     API.get<QuestionResponse>(END_POINT.TODAY_QUESTION)
@@ -65,11 +95,16 @@ const QuillEditor = ({ onContentChange, quillContent }: QuillEditorProps) => {
     'width',
   ];
 
-  const modules = {
-    toolbar: {
-      container: toolbarOptions,
-    },
-  };
+  const modules = useMemo(() => {
+    return {
+      toolbar: {
+        container: toolbarOptions,
+        handlers: {
+          image: ImageHandler,
+        },
+      },
+    };
+  }, []);
 
   return (
     <>

@@ -115,9 +115,10 @@ const CreateDiary = () => {
   // 해시태그 state
   const [hashtag, setHashtag] = useState<string>('');
   // 이미지 state
-  const [file, setFile] = useState(null);
-  const [imageURL, setImageURL] = useState('');
-  const [hasImage, setHasImage] = useState(false);
+  const [image, setImage] = useState<DiaryImage>({
+    imageId: '',
+    imageURL: '',
+  });
   const formData = new FormData(); // FormData 생성
 
   // 상태 업데이트 함수
@@ -139,18 +140,6 @@ const CreateDiary = () => {
 
   const onChangeHashtag = e => {
     setHashtag(e.target.value);
-  };
-
-  // 이미지 파일 저장 함수
-  const handleFileChange = e => {
-    const file = e.target.files[0];
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onloadend = () => {
-      setImageURL(reader.result as string);
-    };
-    setFile(file);
-    setHasImage(true);
   };
 
   // 해시태그 로직 함수
@@ -301,19 +290,17 @@ const CreateDiary = () => {
             </div>
           </article>
         </section>
-        <form>
-          <input type="file" onChange={handleFileChange} />
-        </form>
-        {imageURL && (
+        {image.imageURL ? (
           <img
             {...stylex.props(CreateDiaryStyle.imageFile)}
-            src={imageURL}
+            src={image.imageURL}
             alt="image file"
           />
-        )}
+        ) : null}
         <QuillEditor
           onContentChange={content => setDiaryField({ quillContent: content })}
           quillContent={diaryInfo.quillContent}
+          setImage={setImage}
         />
         <section>
           <article {...stylex.props(CreateDiaryStyle.borderFooter)}>

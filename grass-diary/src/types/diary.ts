@@ -67,6 +67,11 @@ interface IDiaryInfo {
   isPrivate: boolean;
 }
 
+interface DiaryImage {
+  imageId: string;
+  imageURL: string;
+}
+
 // DiaryDetail Type
 interface IDiaryDetail extends IDiary {
   memberId: Id;
