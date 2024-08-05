@@ -1,12 +1,11 @@
-import { useSetRecoilState } from 'recoil';
 import { useNavigate } from 'react-router-dom';
-import { memberIdAtom } from '@recoil/user/userState';
-import { isAuthenticatedAtom } from '@recoil/auth/authState';
+import { useActions } from '@state/auth/AuthStore';
+import { useSetMemberId } from '@state/user/UserStore';
 
 const useLogout = () => {
   const navigate = useNavigate();
-  const setIsAuthenticated = useSetRecoilState(isAuthenticatedAtom);
-  const setMemberId = useSetRecoilState(memberIdAtom);
+  const { setIsAuthenticated } = useActions();
+  const setMemberId = useSetMemberId();
 
   const clearAuth = () => {
     localStorage.removeItem('accessToken');
