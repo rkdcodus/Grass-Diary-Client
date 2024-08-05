@@ -1,11 +1,11 @@
 import stylex from '@stylexjs/stylex';
 import { Link } from 'react-router-dom';
-import { Suspense, useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import { Profile } from '@components/index';
 import useLogout from '@hooks/useLogout';
 import { useQueryClient } from '@tanstack/react-query';
-import { useUser } from '@store/UserStore';
+import { useUser } from '@state/user/useUser';
 
 interface IMenuBarProps {
   toggle: boolean;
@@ -177,9 +177,7 @@ const Header = ({ position }: IHeader) => {
         {memberId ? (
           <div {...stylex.props(header.userMenu)} onClick={dropDown}>
             <div ref={profileRef}>
-              <Suspense fallback={<div>loading</div>}>
-                <Profile width="44px" height="44px" />
-              </Suspense>
+              <Profile width="44px" height="44px" />
             </div>
             <div
               {...stylex.props(header.arrowUp, toggle && header.arrowDown)}

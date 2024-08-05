@@ -1,14 +1,14 @@
 import stylex from '@stylexjs/stylex';
 import styles from './style';
 import Swal from 'sweetalert2';
-import { useState, useEffect, Suspense } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import Grass from './Grass';
 import Diary from './Diary';
 import mainCharacter from '@icon/mainCharacter.png';
 import { Button, EllipsisBox, EllipsisIcon, Profile } from '@components/index';
-import { useProfile } from '@store/ProfileStore';
+import { useProfile } from '@state/profile/useProfile';
 
 const MainContainer = () => {
   const navigate = useNavigate();
@@ -28,6 +28,11 @@ const MainContainer = () => {
     setSearchTerm(event.target.value);
   };
 
+  const handleSortChange = (order: string) => {
+    setSortOrder(order);
+    navigate(`?sort=${order}`);
+  };
+
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const sortQuery = params.get('sort');
@@ -35,17 +40,10 @@ const MainContainer = () => {
     if (sortQuery) setSortOrder(sortQuery);
   }, [window.location.search]);
 
-  const handleSortChange = (order: string) => {
-    setSortOrder(order);
-    navigate(`?sort=${order}`);
-  };
-
   return (
     <div {...stylex.props(styles.mainContainer)}>
       <div {...stylex.props(styles.profileSection)}>
-        <Suspense>
-          <ProfileSection setSelectedDiary={setSelectedDiary} />
-        </Suspense>
+        <ProfileSection setSelectedDiary={setSelectedDiary} />
 
         <ToggleButton
           buttonLabel={toggleButton}
@@ -99,7 +97,7 @@ interface IProfileSection {
 }
 
 const ProfileSection = ({ setSelectedDiary }: IProfileSection) => {
-  const { nickName, profileIntro } = useProfile();
+  const { nickname, profileIntro } = useProfile();
 
   const modal = () => {
     Swal.fire({
@@ -117,9 +115,7 @@ const ProfileSection = ({ setSelectedDiary }: IProfileSection) => {
   return (
     <div {...stylex.props(styles.profileDetails)}>
       <div {...stylex.props(styles.profileLeft)}>
-        <Suspense>
-          <Profile width="200px" height="200px" />
-        </Suspense>
+        <Profile width="200px" height="200px" />
         <div>
           <Button
             text="교환 일기 신청"
@@ -136,7 +132,7 @@ const ProfileSection = ({ setSelectedDiary }: IProfileSection) => {
       </div>
       <div {...stylex.props(styles.profileRight)}>
         <div {...stylex.props(styles.nameSection)}>
-          <span>{nickName}</span>
+          <span>{nickname}</span>
         </div>
         <Grass setSelectedDiary={setSelectedDiary} />
         <div>

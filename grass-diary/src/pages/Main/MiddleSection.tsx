@@ -7,7 +7,7 @@ import { Button } from '@components/index';
 import AnimateReward from './AnimateReward';
 import API from '@services/index';
 import { END_POINT } from '@constants/api';
-import { useUser } from '@store/UserStore';
+import { useUser } from '@state/user/useUser';
 
 const MiddleSectionStyle = stylex.create({
   text: {

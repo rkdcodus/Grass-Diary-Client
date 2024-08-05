@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import useDiary from '@hooks/api/useDiary';
 import { NormalLike, MoodProfile } from '@components/index';
-import { useUser } from '@store/UserStore';
+import { useUser } from '@state/user/useUser';
 
 interface IPagination {
   pageSize: number;

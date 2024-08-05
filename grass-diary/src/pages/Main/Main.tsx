@@ -6,7 +6,7 @@ import { PopularFeed, Header, Container } from '@components/index';
 import TopSection from './TopSection';
 import MiddleSection from './MiddleSection';
 import BottomSection from './BottomSection';
-import { useActions } from '@store/AuthStore';
+import { useActions } from '@state/auth/AuthStore';
 
 const Main = () => {
   const navigate = useNavigate();

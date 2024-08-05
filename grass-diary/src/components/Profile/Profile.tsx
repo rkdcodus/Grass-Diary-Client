@@ -1,4 +1,4 @@
-import { useProfile } from '@store/ProfileStore';
+import { useProfile } from '@state/profile/useProfile';
 import stylex from '@stylexjs/stylex';
 
 const styles = stylex.create({

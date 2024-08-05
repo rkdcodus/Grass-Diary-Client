@@ -8,7 +8,7 @@ import useGrass from '@hooks/api/useGrass';
 import API from '@services/index';
 import { END_POINT } from '@constants/api';
 import { CONSOLE_ERROR } from '@constants/message';
-import { useUser } from '@store/UserStore';
+import { useUser } from '@state/user/useUser';
 
 type TCreateGrass = () => { year: number; grass: (Date | null)[][] };
 

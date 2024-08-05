@@ -1,7 +1,7 @@
 import stylex from '@stylexjs/stylex';
 import { useEffect, useState } from 'react';
 import { useCountLike } from '@hooks/api/useCountLike';
-import { useUser } from '@store/UserStore';
+import { useUser } from '@state/user/useUser';
 
 const beat1 = stylex.keyframes({
   '0%': { transform: 'scale(0.8)' },

@@ -13,7 +13,7 @@ import { CONSOLE_ERROR, ERROR } from '@constants/message';
 import { useCreateDiary } from '@hooks/api/useCreateDiary';
 import 'dayjs/locale/ko';
 import { useTodayDate } from '@hooks/api/useTodayDate';
-import { useUser } from '@store/UserStore';
+import { useUser } from '@state/user/useUser';
 
 const CreateDiaryStyle = stylex.create({
   container: {

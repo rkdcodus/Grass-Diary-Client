@@ -8,7 +8,7 @@ import Setting from './Setting';
 import { useDiaryDetail } from '@hooks/api/useDiaryDetail';
 import ImageModal from './modal/ImageModal';
 import { useParamsId } from '@hooks/useParamsId';
-import { useUser } from '@store/UserStore';
+import { useUser } from '@state/user/useUser';
 
 const styles = stylex.create({
   wrap: {

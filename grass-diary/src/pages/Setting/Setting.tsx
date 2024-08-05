@@ -1,6 +1,6 @@
 import styles from './styles';
 import stylex from '@stylexjs/stylex';
-import { Suspense, useEffect } from 'react';
+import { useEffect } from 'react';
 import { useRecoilState } from 'recoil';
 import {
   QueryClient,
@@ -13,7 +13,7 @@ import { profileAtom } from '@recoil/profile/profileState';
 import { Container, Header, Profile, Button } from '@components/index';
 import { END_POINT } from '@constants/api';
 import { CONSOLE_ERROR } from '@constants/message';
-import { useProfile } from '@store/ProfileStore';
+import { useProfile } from '@state/profile/useProfile';
 
 interface ISettingSection {
   children: React.ReactNode;
@@ -70,9 +70,7 @@ const Setting = () => {
         </div>
         <div {...stylex.props(styles.profileSection)}>
           <div {...stylex.props(styles.profileLeft)}>
-            <Suspense>
-              <Profile width="12.5rem" height="12.5rem" />
-            </Suspense>
+            <Profile width="12.5rem" height="12.5rem" />
             <Button
               text="프로필 사진 변경"
               width="9.4rem"
