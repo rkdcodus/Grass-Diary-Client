@@ -5,16 +5,13 @@ import Swal from 'sweetalert2';
 import QuillEditor from './QuillEditor';
 import 'dayjs/locale/ko';
 
-import API from '@services/index';
-import { END_POINT } from '@constants/api';
 import useUser from '@recoil/user/useUser';
 import { Header, BackButton, Button, Container } from '@components/index';
 import EMOJI from '@constants/emoji';
-import { CONSOLE_ERROR, ERROR } from '@constants/message';
+import { ERROR } from '@constants/message';
 import { useCreateDiary } from '@hooks/api/useCreateDiary';
 import 'dayjs/locale/ko';
 import { useTodayDate } from '@hooks/api/useTodayDate';
-
 
 const CreateDiaryStyle = stylex.create({
   container: {
@@ -120,10 +117,9 @@ const CreateDiary = () => {
   const [hashtag, setHashtag] = useState<string>('');
   // 이미지 state
   const [image, setImage] = useState<DiaryImage>({
-    imageId: '',
+    imageId: 0,
     imageURL: '',
   });
-  const formData = new FormData(); // FormData 생성
 
   // 상태 업데이트 함수
   const setDiaryField = (field: Partial<IDiaryInfo>) => {
@@ -136,7 +132,6 @@ const CreateDiary = () => {
     setDiaryField({ moodValue: parseInt(e.target.value) });
   const onChangeHashtag = (e: React.ChangeEvent<HTMLInputElement>) =>
     setHashtag(e.target.value);
-  };
 
   // 해시태그 로직 함수
   const addHashtag = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -166,22 +161,14 @@ const CreateDiary = () => {
   };
 
   const handleSave = async () => {
-
-    const currentDate = `${diaryInfo.year}년/${diaryInfo.month}월/${diaryInfo.date}일`;
     const { quillContent, isPrivate, hashArr, moodValue } = diaryInfo;
-    const requestDto = {
+    const request = {
       content: quillContent,
       isPrivate,
       conditionLevel: `LEVEL_${moodValue}`,
       hashtags: hashArr,
-      hasImage: hasImage,
+      imageId: image.imageId,
     };
-    formData.append(
-      'requestDto',
-      new Blob([JSON.stringify(requestDto)], {
-        type: 'application/json',
-      }),
-    );
 
     if (!checkWritingPermission()) {
       Swal.fire({
@@ -205,23 +192,7 @@ const CreateDiary = () => {
       return;
     }
 
-    const formData = new FormData();
-    const requestDto = {
-      content: diaryInfo.quillContent,
-      isPrivate: diaryInfo.isPrivate,
-      conditionLevel: `LEVEL_${diaryInfo.moodValue}`,
-      hashtags: diaryInfo.hashArr,
-      hasImage,
-    };
-
-    formData.append(
-      'requestDto',
-      new Blob([JSON.stringify(requestDto)], { type: 'application/json' }),
-    );
-
-    if (file) formData.append('image', file);
-
-    createDiary(formData, {
+    createDiary(request, {
       onSuccess: response => {
         const newDiaryId = response.data.diaryId;
         navigate(`/diary/${newDiaryId}`, { replace: true });
