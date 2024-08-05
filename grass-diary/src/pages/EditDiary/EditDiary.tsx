@@ -110,20 +110,15 @@ const EditDiary = () => {
 
   // 해시태그 state
   const [hashtag, setHashtag] = useState<string>('');
+
   // 이미지 state
-  const [file, setFile] = useState(null);
-  const [imageURL, setImageURL] = useState('');
-  const [hasImage, setHasImage] = useState(false);
-  const [requestDto, setRequestDto] = useState<DiaryRequest>({
-    content: '',
-    isPrivate: true,
-    conditionLevel: `LEVEL_1`,
-    hashtags: [],
+  const [image, setImage] = useState<DiaryImage>({
     imageId: 0,
+    imageURL: '',
   });
 
   const diaryId = useParamsId();
-  const { mutate } = usePatchDiary({ diaryId, file, requestDto });
+  const { mutate } = usePatchDiary(diaryId);
   const { date } = useTodayDate();
   const { detail } = useDiaryDetail(diaryId);
 
@@ -140,24 +135,12 @@ const EditDiary = () => {
     setDiaryField({ isPrivate: false });
   };
 
-  const handleMoodChange = e => {
+  const handleMoodChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setDiaryField({ moodValue: parseInt(e.target.value) });
   };
 
-  const onChangeHashtag = e => {
+  const onChangeHashtag = (e: React.ChangeEvent<HTMLInputElement>) => {
     setHashtag(e.target.value);
-  };
-
-  // 이미지 파일 저장 함수
-  const handleFileChange = e => {
-    const file = e.target.files[0];
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onloadend = () => {
-      setImageURL(reader.result as string);
-    };
-    setFile(file);
-    setHasImage(true);
   };
 
   // 해시태그 로직 함수
@@ -181,16 +164,22 @@ const EditDiary = () => {
     setDiaryField({ hashArr: diaryInfo.hashArr.filter((_, i) => i !== index) });
   };
 
+  const removeImage = () => {
+    setImage({
+      imageId: 0,
+      imageURL: '',
+    });
+  };
+
   const handleSave = async () => {
     const { quillContent, isPrivate, hashArr, moodValue } = diaryInfo;
-
-    setRequestDto({
+    const request = {
       content: quillContent,
       isPrivate,
       conditionLevel: `LEVEL_${moodValue}`,
       hashtags: hashArr,
-      hasImage: hasImage,
-    });
+      imageId: image.imageId,
+    };
 
     if (!quillContent || !quillContent.trim()) {
       Swal.fire({
@@ -203,7 +192,7 @@ const EditDiary = () => {
       return; // 저장 중단
     }
 
-    mutate();
+    mutate(request);
   };
 
   useEffect(() => {
@@ -222,7 +211,12 @@ const EditDiary = () => {
         moodValue: detail.transparency * 10,
         quillContent: detail.content,
       });
-      setImageURL(detail.imageURL);
+      if (detail.image.length) {
+        setImage({
+          imageId: detail.image[0].imageId,
+          imageURL: detail.image[0].imageURL,
+        });
+      }
     }
   }, [date, detail]);
 
@@ -281,19 +275,20 @@ const EditDiary = () => {
             </div>
           </article>
         </section>
-        <form>
-          <input type="file" onChange={handleFileChange} />
-        </form>
-        {imageURL && (
-          <img
-            {...stylex.props(CreateDiaryStyle.imageFile)}
-            src={imageURL}
-            alt="image file"
-          />
-        )}
+        {image.imageURL ? (
+          <>
+            <img
+              {...stylex.props(CreateDiaryStyle.imageFile)}
+              src={image.imageURL}
+              alt="image file"
+            />
+            <button onClick={removeImage}>삭제</button>
+          </>
+        ) : null}
         <QuillEditor
           onContentChange={content => setDiaryField({ quillContent: content })}
           quillContent={diaryInfo.quillContent}
+          setImage={setImage}
         />
         <section>
           <article {...stylex.props(CreateDiaryStyle.borderFooter)}>
