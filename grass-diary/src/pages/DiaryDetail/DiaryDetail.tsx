@@ -170,8 +170,11 @@ const DiaryDetail = () => {
 
   return (
     <Container>
-      {imageModal && detail?.hasImage && (
-        <ImageModal img={detail?.imageURL} setImageModal={setImageModal} />
+      {imageModal && detail?.image.length && (
+        <ImageModal
+          img={detail?.image[0].imageURL}
+          setImageModal={setImageModal}
+        />
       )}
       <Header />
       <div {...stylex.props(styles.wrap)}>
@@ -209,10 +212,10 @@ const DiaryDetail = () => {
               return `#${tag.tag} `;
             })}
           </div>
-          {detail?.hasImage && (
+          {detail?.image.length && (
             <img
               {...stylex.props(contentStyle.image)}
-              src={detail?.imageURL}
+              src={detail?.image[0].imageURL}
               onClick={zoom}
             ></img>
           )}
