@@ -3,10 +3,9 @@ import stylex from '@stylexjs/stylex';
 import DOMPurify from 'dompurify';
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
-
-import useUser from '@recoil/user/useUser';
 import useDiary from '@hooks/api/useDiary';
 import { NormalLike, MoodProfile } from '@components/index';
+import { useUser } from '@store/UserStore';
 
 interface IPagination {
   pageSize: number;
@@ -68,7 +67,7 @@ interface IDiaryProps {
 }
 
 const Diary = ({ searchTerm, sortOrder, selectedDiary }: IDiaryProps) => {
-  const { memberId } = useUser();
+  const memberId = useUser();
   const [currentPage, setCurrentPage] = useState(0);
   const { diaryList, pageSize } = useDiary({
     memberId,

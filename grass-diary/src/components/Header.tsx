@@ -4,8 +4,8 @@ import { Suspense, useEffect, useRef, useState } from 'react';
 
 import { Profile } from '@components/index';
 import useLogout from '@hooks/useLogout';
-import useUser from '@recoil/user/useUser';
 import { useQueryClient } from '@tanstack/react-query';
+import { useUser } from '@store/UserStore';
 
 interface IMenuBarProps {
   toggle: boolean;
@@ -140,7 +140,7 @@ const Header = ({ position }: IHeader) => {
   const headerRef = useRef<HTMLDivElement>(null);
   const iconRef = useRef<HTMLDivElement>(null);
   const profileRef = useRef<HTMLDivElement>(null);
-  const { memberId } = useUser();
+  const memberId = useUser();
 
   const dropDown = () => {
     setToggle(current => !current);

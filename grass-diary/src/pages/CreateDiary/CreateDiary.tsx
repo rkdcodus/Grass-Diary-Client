@@ -7,14 +7,13 @@ import 'dayjs/locale/ko';
 
 import API from '@services/index';
 import { END_POINT } from '@constants/api';
-import useUser from '@recoil/user/useUser';
 import { Header, BackButton, Button, Container } from '@components/index';
 import EMOJI from '@constants/emoji';
 import { CONSOLE_ERROR, ERROR } from '@constants/message';
 import { useCreateDiary } from '@hooks/api/useCreateDiary';
 import 'dayjs/locale/ko';
 import { useTodayDate } from '@hooks/api/useTodayDate';
-
+import { useUser } from '@store/UserStore';
 
 const CreateDiaryStyle = stylex.create({
   container: {
@@ -102,7 +101,7 @@ const CreateDiaryStyle = stylex.create({
 
 const CreateDiary = () => {
   const navigate = useNavigate();
-  const { memberId } = useUser();
+  const memberId = useUser();
   const { mutate: createDiary } = useCreateDiary(memberId);
   const { date } = useTodayDate();
   const [diaryInfo, setDiaryInfo] = useState<IDiaryInfo>({
@@ -177,23 +176,6 @@ const CreateDiary = () => {
   };
 
   const handleSave = async () => {
-
-    const currentDate = `${diaryInfo.year}년/${diaryInfo.month}월/${diaryInfo.date}일`;
-    const { quillContent, isPrivate, hashArr, moodValue } = diaryInfo;
-    const requestDto = {
-      content: quillContent,
-      isPrivate,
-      conditionLevel: `LEVEL_${moodValue}`,
-      hashtags: hashArr,
-      hasImage: hasImage,
-    };
-    formData.append(
-      'requestDto',
-      new Blob([JSON.stringify(requestDto)], {
-        type: 'application/json',
-      }),
-    );
-
     if (!checkWritingPermission()) {
       Swal.fire({
         title: ERROR.DIARY_ALREADY_EXISTS,

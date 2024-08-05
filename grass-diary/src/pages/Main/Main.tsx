@@ -1,18 +1,16 @@
 import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
-import { useSetRecoilState } from 'recoil';
-import { isAuthenticatedAtom, isLoadingAtom } from '@recoil/auth/authState';
 import { checkAuth } from '@utils/authUtils';
 import { PopularFeed, Header, Container } from '@components/index';
 
 import TopSection from './TopSection';
 import MiddleSection from './MiddleSection';
 import BottomSection from './BottomSection';
+import { useActions } from '@store/AuthStore';
 
 const Main = () => {
   const navigate = useNavigate();
-  const setIsAuthenticated = useSetRecoilState(isAuthenticatedAtom);
-  const setIsLoading = useSetRecoilState(isLoadingAtom);
+  const { setIsAuthenticated, setIsLoading } = useActions();
 
   useEffect(() => {
     const initLoad = async () => {

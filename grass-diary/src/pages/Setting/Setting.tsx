@@ -9,11 +9,11 @@ import {
 } from '@tanstack/react-query';
 
 import API from '@services/index';
-import useProfile from '@recoil/profile/useProfile';
 import { profileAtom } from '@recoil/profile/profileState';
 import { Container, Header, Profile, Button } from '@components/index';
 import { END_POINT } from '@constants/api';
 import { CONSOLE_ERROR } from '@constants/message';
+import { useProfile } from '@store/ProfileStore';
 
 interface ISettingSection {
   children: React.ReactNode;
@@ -31,15 +31,15 @@ const SettingSection = ({ children, label }: ISettingSection) => {
 
 const Setting = () => {
   const queryClient: QueryClient = useQueryClient();
-  const { nickName, profileIntro }: omitProfileImageURL = useProfile();
+  const { nickname, profileIntro }: omitProfileImageURL = useProfile();
   const [profile, setProfile] = useRecoilState(profileAtom);
 
   useEffect(() => {
-    setProfile({ ...profile, nickName, profileIntro });
-  }, [nickName, profileIntro]);
+    setProfile({ ...profile, nickname, profileIntro });
+  }, [nickname, profileIntro]);
 
   const handleChangeNickname = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setProfile({ ...profile, nickName: event.target.value });
+    setProfile({ ...profile, nickname: event.target.value });
   };
 
   const handleChangeProfileIntro = (
@@ -89,7 +89,7 @@ const Setting = () => {
               <input
                 {...stylex.props(styles.textInput('0 0 0 1.25rem', '3.2rem'))}
                 name="nickName"
-                value={profile.nickName || ''}
+                value={profile.nickname || ''}
                 onChange={handleChangeNickname}
               ></input>
             </SettingSection>
@@ -116,7 +116,7 @@ const Setting = () => {
                   border="1px solid #929292"
                   onClick={() =>
                     updateProfile.mutate({
-                      nickName: profile.nickName,
+                      nickname: profile.nickname,
                       profileIntro: profile.profileIntro,
                     })
                   }

@@ -6,9 +6,9 @@ import { useNavigate } from 'react-router-dom';
 
 import Grass from './Grass';
 import Diary from './Diary';
-import useProfile from '@recoil/profile/useProfile';
 import mainCharacter from '@icon/mainCharacter.png';
 import { Button, EllipsisBox, EllipsisIcon, Profile } from '@components/index';
+import { useProfile } from '@store/ProfileStore';
 
 const MainContainer = () => {
   const navigate = useNavigate();

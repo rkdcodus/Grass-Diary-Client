@@ -3,12 +3,12 @@ import { useState, useEffect } from 'react';
 import DOMPurify from 'dompurify';
 
 import { Header, BackButton, Like, Container } from '@components/index';
-import useUser from '@recoil/user/useUser';
 import EMOJI from '@constants/emoji';
 import Setting from './Setting';
 import { useDiaryDetail } from '@hooks/api/useDiaryDetail';
 import ImageModal from './modal/ImageModal';
 import { useParamsId } from '@hooks/useParamsId';
+import { useUser } from '@store/UserStore';
 
 const styles = stylex.create({
   wrap: {
@@ -131,7 +131,7 @@ const contentStyle = stylex.create({
 
 const DiaryDetail = () => {
   const diaryId = useParamsId();
-  const { memberId } = useUser();
+  const memberId = useUser();
   const [likeCount, setLikeCount] = useState(0);
   const [mood, setMood] = useState('');
   const [imageModal, setImageModal] = useState(false);
