@@ -5,7 +5,7 @@ import Swal from 'sweetalert2';
 import QuillEditor from './QuillEditor';
 import 'dayjs/locale/ko';
 
-import useUser from '@recoil/user/useUser';
+import useUser from '@state/user/useUser';
 import { Header, BackButton, Button, Container } from '@components/index';
 import EMOJI from '@constants/emoji';
 import { ERROR } from '@constants/message';
