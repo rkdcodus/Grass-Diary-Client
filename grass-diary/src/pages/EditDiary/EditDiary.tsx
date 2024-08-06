@@ -11,6 +11,7 @@ import { useParamsId } from '@hooks/useParamsId';
 import { usePatchDiary } from '@hooks/api/usePatchDiary';
 import { useTodayDate } from '@hooks/api/useTodayDate';
 import { useDiaryDetail } from '@hooks/api/useDiaryDetail';
+import { usePostImage } from '@hooks/api/usePostImage';
 
 const CreateDiaryStyle = stylex.create({
   container: {
@@ -112,13 +113,15 @@ const EditDiary = () => {
   const [hashtag, setHashtag] = useState<string>('');
 
   // 이미지 state
+  const [file, setFile] = useState<FormData>();
+  const { mutate: postImage } = usePostImage();
   const [image, setImage] = useState<DiaryImage>({
     imageId: 0,
     imageURL: '',
   });
 
   const diaryId = useParamsId();
-  const { mutate } = usePatchDiary(diaryId);
+  const { mutate: patchDiary } = usePatchDiary(diaryId);
   const { date } = useTodayDate();
   const { detail } = useDiaryDetail(diaryId);
 
@@ -192,7 +195,22 @@ const EditDiary = () => {
       return; // 저장 중단
     }
 
-    mutate(request);
+    if (file) {
+      postImage(file, {
+        onSuccess: res => {
+          const request = {
+            content: quillContent,
+            isPrivate,
+            conditionLevel: `LEVEL_${moodValue}`,
+            hashtags: hashArr,
+            imageId: res.data.imageId,
+          };
+          patchDiary(request);
+        },
+      });
+      return;
+    }
+    patchDiary(request);
   };
 
   useEffect(() => {
@@ -204,6 +222,7 @@ const EditDiary = () => {
         day: date.day,
       });
     }
+
     if (detail) {
       setDiaryField({
         hashArr: detail.tags.map((tag: ITages) => tag.tag),
@@ -289,6 +308,7 @@ const EditDiary = () => {
           onContentChange={content => setDiaryField({ quillContent: content })}
           quillContent={diaryInfo.quillContent}
           setImage={setImage}
+          setFile={setFile}
         />
         <section>
           <article {...stylex.props(CreateDiaryStyle.borderFooter)}>

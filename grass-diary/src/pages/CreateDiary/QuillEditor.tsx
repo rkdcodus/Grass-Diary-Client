@@ -9,6 +9,7 @@ type QuillEditorProps = {
   onContentChange: (content: string) => void;
   quillContent: string;
   setImage: React.Dispatch<React.SetStateAction<DiaryImage>>;
+  setFile: React.Dispatch<React.SetStateAction<FormData | undefined>>;
 };
 
 type QuestionResponse = {
@@ -19,6 +20,7 @@ const QuillEditor = ({
   onContentChange,
   quillContent,
   setImage,
+  setFile,
 }: QuillEditorProps) => {
   const handleChange = (
     content: string,
@@ -37,21 +39,22 @@ const QuillEditor = ({
     input.setAttribute('accept', 'image/*');
     input.click(); // image icon 누르면 실행
 
-    input.onchange = async () => {
+    input.onchange = () => {
       const file = input.files ? input.files[0] : null;
-      if (!file) return;
 
-      const formData = new FormData();
-      formData.append('image', file);
+      if (file) {
+        const formData = new FormData();
+        formData.append('image', file);
+        setFile(formData);
 
-      try {
-        const res = await API.post('/image/diary', formData);
-        setImage({
-          imageId: res.data.imageId,
-          imageURL: res.data.imageURL,
-        });
-      } catch {
-        console.error('image post 실패');
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onloadend = () => {
+          setImage({
+            imageId: 0,
+            imageURL: reader.result as string,
+          });
+        };
       }
     };
   };

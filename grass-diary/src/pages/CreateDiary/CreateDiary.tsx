@@ -12,6 +12,7 @@ import { ERROR } from '@constants/message';
 import { useCreateDiary } from '@hooks/api/useCreateDiary';
 import 'dayjs/locale/ko';
 import { useTodayDate } from '@hooks/api/useTodayDate';
+import { usePostImage } from '@hooks/api/usePostImage';
 
 const CreateDiaryStyle = stylex.create({
   container: {
@@ -101,6 +102,7 @@ const CreateDiary = () => {
   const navigate = useNavigate();
   const { memberId } = useUser();
   const { mutate: createDiary } = useCreateDiary(memberId);
+  const { mutate: postImage } = usePostImage();
   const { date } = useTodayDate();
   const [diaryInfo, setDiaryInfo] = useState<IDiaryInfo>({
     hashArr: [],
@@ -115,7 +117,9 @@ const CreateDiary = () => {
 
   // 해시태그 state
   const [hashtag, setHashtag] = useState<string>('');
+
   // 이미지 state
+  const [file, setFile] = useState<FormData>();
   const [image, setImage] = useState<DiaryImage>({
     imageId: 0,
     imageURL: '',
@@ -160,6 +164,13 @@ const CreateDiary = () => {
     return lastWritingDate !== currentDate;
   };
 
+  const removeImage = () => {
+    setImage({
+      imageId: 0,
+      imageURL: '',
+    });
+  };
+
   const handleSave = async () => {
     const { quillContent, isPrivate, hashArr, moodValue } = diaryInfo;
     const request = {
@@ -167,7 +178,7 @@ const CreateDiary = () => {
       isPrivate,
       conditionLevel: `LEVEL_${moodValue}`,
       hashtags: hashArr,
-      imageId: image.imageId,
+      imageId: 0,
     };
 
     if (!checkWritingPermission()) {
@@ -188,6 +199,34 @@ const CreateDiary = () => {
         showCancelButton: false,
         confirmButtonColor: '#28CA3B',
         confirmButtonText: '확인',
+      });
+      return;
+    }
+
+    // 사용자가 이미지를 첨부할 경우 postImage -> createDiary 실행
+    if (file) {
+      postImage(file, {
+        onSuccess: res => {
+          const request = {
+            content: quillContent,
+            isPrivate,
+            conditionLevel: `LEVEL_${moodValue}`,
+            hashtags: hashArr,
+            imageId: res.data.imageId,
+          };
+
+          createDiary(request, {
+            onSuccess: response => {
+              const newDiaryId = response.data.diaryId;
+              navigate(`/diary/${newDiaryId}`, { replace: true });
+              const currentDate = `${diaryInfo.year}년/${diaryInfo.month}월/${diaryInfo.date}일`;
+              localStorage.setItem('lastWritingDate', currentDate);
+            },
+            onError: error => {
+              console.error(error);
+            },
+          });
+        },
       });
       return;
     }
@@ -272,16 +311,20 @@ const CreateDiary = () => {
           </article>
         </section>
         {image.imageURL ? (
-          <img
-            {...stylex.props(CreateDiaryStyle.imageFile)}
-            src={image.imageURL}
-            alt="image file"
-          />
+          <>
+            <img
+              {...stylex.props(CreateDiaryStyle.imageFile)}
+              src={image.imageURL}
+              alt="image file"
+            />
+            <button onClick={removeImage}>삭제</button>
+          </>
         ) : null}
         <QuillEditor
           onContentChange={content => setDiaryField({ quillContent: content })}
           quillContent={diaryInfo.quillContent}
           setImage={setImage}
+          setFile={setFile}
         />
         <section>
           <article {...stylex.props(CreateDiaryStyle.borderFooter)}>
