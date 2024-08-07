@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import API from '@services/index';
 import { END_POINT } from '@constants/api';
 import ReactQuill from 'react-quill';
@@ -8,13 +8,20 @@ import { CONSOLE_ERROR } from '@constants/message';
 type QuillEditorProps = {
   onContentChange: (content: string) => void;
   quillContent: string;
+  setImage: React.Dispatch<React.SetStateAction<DiaryImage>>;
+  setFile: React.Dispatch<React.SetStateAction<FormData | undefined>>;
 };
 
 type QuestionResponse = {
   question: string;
 };
 
-const QuillEditor = ({ onContentChange, quillContent }: QuillEditorProps) => {
+const QuillEditor = ({
+  onContentChange,
+  quillContent,
+  setImage,
+  setFile,
+}: QuillEditorProps) => {
   const handleChange = (
     content: string,
     delta: any,
@@ -25,6 +32,32 @@ const QuillEditor = ({ onContentChange, quillContent }: QuillEditorProps) => {
   };
 
   const [todayQuestion, setTodayQuestion] = useState<string>();
+
+  const ImageHandler = () => {
+    const input = document.createElement('input');
+    input.setAttribute('type', 'file');
+    input.setAttribute('accept', 'image/*');
+    input.click(); // image icon 누르면 실행
+
+    input.onchange = () => {
+      const file = input.files ? input.files[0] : null;
+
+      if (file) {
+        const formData = new FormData();
+        formData.append('image', file);
+        setFile(formData);
+
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onloadend = () => {
+          setImage({
+            imageId: 0,
+            imageURL: reader.result as string,
+          });
+        };
+      }
+    };
+  };
 
   useEffect(() => {
     API.get<QuestionResponse>(END_POINT.TODAY_QUESTION)
@@ -65,11 +98,16 @@ const QuillEditor = ({ onContentChange, quillContent }: QuillEditorProps) => {
     'width',
   ];
 
-  const modules = {
-    toolbar: {
-      container: toolbarOptions,
-    },
-  };
+  const modules = useMemo(() => {
+    return {
+      toolbar: {
+        container: toolbarOptions,
+        handlers: {
+          image: ImageHandler,
+        },
+      },
+    };
+  }, []);
 
   return (
     <>

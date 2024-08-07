@@ -2,7 +2,6 @@ import styled from 'styled-components';
 import { semantic } from '@styles/semantic';
 
 import sampleLogo from '@image/sampleLogo.png';
-import avatarBg from '@svg/avatarBg.svg';
 import { ReactComponent as Arrow } from '@svg/arrow_drop_down.svg';
 import { ReactComponent as LogoSVG } from '@svg/logo.svg';
 
@@ -12,15 +11,15 @@ import MenuBar from '@components/NavBar/MenuBar';
 import { Profile } from '@components/index';
 
 import { Link } from 'react-router-dom';
-import { Suspense, useEffect, useRef, useState } from 'react';
-import useUser from '@recoil/user/useUser';
+import { useEffect, useRef, useState } from 'react';
+import { useUser } from '@state/user/useUser';
 
 const Header = () => {
   const [toggle, setToggle] = useState(false);
   const headerRef = useRef<HTMLDivElement>(null);
   const iconRef = useRef<HTMLDivElement>(null);
   const profileRef = useRef<HTMLDivElement>(null);
-  const { memberId } = useUser();
+  const memberId = useUser();
 
   const dropDown = () => {
     setToggle(current => !current);
@@ -63,10 +62,7 @@ const Header = () => {
           {memberId ? (
             <div onClick={dropDown}>
               <RightContent ref={profileRef}>
-                <Suspense fallback={<img src={avatarBg}></img>}>
-                  <Profile width="32px" height="32px" />
-                </Suspense>
-
+                <Profile width="32px" height="32px" />
                 <IconBtn ref={iconRef}>
                   <Arrow />
                 </IconBtn>
