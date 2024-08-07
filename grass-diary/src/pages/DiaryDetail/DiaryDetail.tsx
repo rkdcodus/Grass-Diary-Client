@@ -187,7 +187,7 @@ const DiaryDetail = () => {
               src={writer?.profileImageURL}
             ></img>
             <div {...stylex.props(titleStyle.emoji)}>{mood}</div>
-            <div {...stylex.props(titleStyle.name)}>{writer?.nickName}</div>
+            <div {...stylex.props(titleStyle.name)}>{writer?.nickname}</div>
           </div>
           <div {...stylex.props(titleStyle.diaryHeader)}>
             <span {...stylex.props(titleStyle.title)}>
@@ -231,7 +231,7 @@ const DiaryDetail = () => {
             diaryId={diaryId}
             likeCount={likeCount}
             setLikeCount={setLikeCount}
-            liked={detail?.likedByLogInMember}
+            liked={detail?.isLikedByLogInMember}
           />
           <div {...stylex.props(styles.feelBackground)}>
             <div
