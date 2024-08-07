@@ -1,7 +1,7 @@
 import stylex from '@stylexjs/stylex';
 import { useEffect, useState } from 'react';
-import useUser from '@state/user/useUser';
 import { useCountLike } from '@hooks/api/useCountLike';
+import { useUser } from '@state/user/useUser';
 
 const beat1 = stylex.keyframes({
   '0%': { transform: 'scale(0.8)' },
@@ -53,7 +53,7 @@ interface ILikeProps {
 
 const Like = ({ diaryId, likeCount, setLikeCount, liked }: ILikeProps) => {
   const [isRed, setIsRed] = useState(false);
-  const { memberId } = useUser();
+  const memberId = useUser();
   const { postLike, deleteLike, postSuccess, deleteSuccess } = useCountLike({
     diaryId,
     memberId,

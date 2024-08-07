@@ -1,17 +1,16 @@
 import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
-import { useAuthStore } from '@state/auth/authStore';
 import { checkAuth } from '@utils/authUtils';
 import { PopularFeed, Header, Container } from '@components/index';
 
 import TopSection from './TopSection';
 import MiddleSection from './MiddleSection';
 import BottomSection from './BottomSection';
+import { useAuthActions } from '@state/auth/authStore';
 
 const Main = () => {
   const navigate = useNavigate();
-  const setIsAuthenticated = useAuthStore(state => state.setIsAuthenticated);
-  const setIsLoading = useAuthStore(state => state.setIsLoading);
+  const { setIsAuthenticated, setIsLoading } = useAuthActions();
 
   useEffect(() => {
     const initLoad = async () => {
