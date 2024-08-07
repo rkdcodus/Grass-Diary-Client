@@ -1,15 +1,43 @@
-import { useRecoilValue } from 'recoil';
-import { profileSelector } from './profileSelector';
-import { profileAtom } from './profileState';
+import { useEffect } from 'react';
+import { useUser } from '../user/useUser';
+import API from '@services/index';
+import { END_POINT } from '@constants/api';
+import { useQuery } from '@tanstack/react-query';
+import { CONSOLE_ERROR } from '@constants/message';
+import {
+  useNickname,
+  useProfileActions,
+  useProfileImageURL,
+  useProfileIntro,
+} from './profileStore';
 
-const useProfile = () => {
-  const profile = useRecoilValue<IProfile | undefined>(profileSelector);
-  const profileFromAtom = useRecoilValue(profileAtom);
-
-  const { profileImageURL, nickName, profileIntro } =
-    profile || profileFromAtom;
-
-  return { profileImageURL, nickName, profileIntro };
+const fetchAxios = async (memberId: Id) => {
+  const res = await API.get(END_POINT.MEMBER_PROFILE(memberId));
+  return res.data;
 };
 
-export default useProfile;
+export const useProfile = () => {
+  const memberId = useUser();
+  const { setProfileImageURL, setNickName, setProfileIntro } =
+    useProfileActions();
+  const profileImageURL = useProfileImageURL();
+  const nickname = useNickname();
+  const profileIntro = useProfileIntro();
+
+  const { data, isSuccess, isError, error } = useQuery({
+    queryKey: ['profile'],
+    queryFn: () => fetchAxios(memberId),
+    enabled: !!memberId,
+  });
+
+  useEffect(() => {
+    if (isError) console.error(CONSOLE_ERROR.PROFILE.GET + error);
+    if (isSuccess) {
+      setProfileImageURL(data.profileImageURL);
+      setNickName(data.nickname);
+      setProfileIntro(data.profileIntro);
+    }
+  }, [isError, isSuccess]);
+
+  return { profileImageURL, nickname, profileIntro };
+};

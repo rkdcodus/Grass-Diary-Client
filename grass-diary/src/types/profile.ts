@@ -1,6 +1,6 @@
 interface IProfile {
   profileImageURL: string;
-  nickName: string;
+  nickname: string;
   profileIntro: string;
 }
 

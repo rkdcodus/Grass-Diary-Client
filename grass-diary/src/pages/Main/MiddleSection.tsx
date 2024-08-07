@@ -4,10 +4,10 @@ import { Link } from 'react-router-dom';
 import { useCallback } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { Button } from '@components/index';
-import useUser from '@state/user/useUser';
 import AnimateReward from './AnimateReward';
 import API from '@services/index';
 import { END_POINT } from '@constants/api';
+import { useUser } from '@state/user/useUser';
 
 const MiddleSectionStyle = stylex.create({
   text: {
@@ -78,8 +78,7 @@ const MiddleSection = () => {
   const nextMonthFirstDay = currentDate.add(1, 'month').startOf('month');
   const currentMonthLastDay = nextMonthFirstDay.subtract(1, 'day');
 
-  const { memberId } = useUser();
-
+  const memberId = useUser();
   // reward 쿼리
   const { data: reward } = useQuery<RewardPointResponse>({
     queryKey: ['rewardPoint'],

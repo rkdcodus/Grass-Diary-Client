@@ -1,38 +1,36 @@
+import { useAuth } from '../auth/useAuth';
 import { useEffect } from 'react';
-import { useSetRecoilState } from 'recoil';
 import { useQuery } from '@tanstack/react-query';
-
+import { useMemberId, useSetMemberId } from './userStore';
 import API from '@services/index';
-import { memberIdAtom } from './userState';
-import { useAuth } from '@state/auth/useAuth';
 import { END_POINT } from '@constants/api';
 
-interface IUseUserReturn {
-  memberId: Id;
-}
+const fetchAxios = async () => {
+  const res = await API.get(END_POINT.MEMBER_INFO);
+  return res.data.memberId;
+};
 
-const useUser = (): IUseUserReturn => {
-  const setMemberId = useSetRecoilState<number>(memberIdAtom);
-  const { isAuthenticated }: { isAuthenticated: boolean } = useAuth();
+export const useUser = (): Id => {
+  const { isAuthenticated } = useAuth();
+  const memberId = useMemberId();
+  const setMemberId = useSetMemberId();
 
-  const { data: memberId = 0, isSuccess } = useQuery<
+  const { data, isSuccess, isError } = useQuery<
     number,
     Error,
     number,
     string[]
   >({
     queryKey: ['memberId'],
-    queryFn: () =>
-      API.get(END_POINT.MEMBER_INFO).then(({ data }) => data.memberId),
+    queryFn: fetchAxios,
     enabled: !!isAuthenticated,
   });
 
   useEffect(() => {
-    if (isSuccess && memberId !== undefined) setMemberId(memberId);
     if (!isAuthenticated) setMemberId(0);
-  }, [isSuccess, memberId, isAuthenticated, setMemberId]);
+    else if (isError) setMemberId(0);
+    else if (isSuccess) setMemberId(data);
+  }, [isAuthenticated, isError, isSuccess]);
 
-  return { memberId };
+  return memberId;
 };
-
-export default useUser;

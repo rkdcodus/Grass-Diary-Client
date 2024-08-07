@@ -5,6 +5,7 @@ import Swal from 'sweetalert2';
 import QuillEditor from './QuillEditor';
 import 'dayjs/locale/ko';
 
+
 import useUser from '@state/user/useUser';
 import { Header, BackButton, Button, Container } from '@components/index';
 import EMOJI from '@constants/emoji';
@@ -13,6 +14,7 @@ import { useCreateDiary } from '@hooks/api/useCreateDiary';
 import 'dayjs/locale/ko';
 import { useTodayDate } from '@hooks/api/useTodayDate';
 import { usePostImage } from '@hooks/api/usePostImage';
+
 
 const CreateDiaryStyle = stylex.create({
   container: {
@@ -100,7 +102,7 @@ const CreateDiaryStyle = stylex.create({
 
 const CreateDiary = () => {
   const navigate = useNavigate();
-  const { memberId } = useUser();
+  const memberId = useUser();
   const { mutate: createDiary } = useCreateDiary(memberId);
   const { mutate: postImage } = usePostImage();
   const { date } = useTodayDate();
@@ -180,7 +182,7 @@ const CreateDiary = () => {
       hashtags: hashArr,
       imageId: 0,
     };
-
+      
     if (!checkWritingPermission()) {
       Swal.fire({
         title: ERROR.DIARY_ALREADY_EXISTS,
