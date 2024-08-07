@@ -5,12 +5,8 @@ import { END_POINT } from '@constants/api';
 export const useCreateDiary = (memberId: number) => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: (formData: FormData) =>
-      API.post(END_POINT.DIARY(memberId), formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      }),
+    mutationFn: (request: DiaryRequest) =>
+      API.post(END_POINT.DIARY(memberId), request),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['diaries'] });
     },
