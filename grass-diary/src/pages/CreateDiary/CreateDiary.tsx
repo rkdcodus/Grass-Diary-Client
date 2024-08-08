@@ -5,13 +5,14 @@ import Swal from 'sweetalert2';
 import QuillEditor from './QuillEditor';
 import 'dayjs/locale/ko';
 
-import API from '@services/index';
-import { END_POINT } from '@constants/api';
-import useUser from '@recoil/user/useUser';
 import { Header, BackButton, Button, Container } from '@components/index';
 import EMOJI from '@constants/emoji';
-import { CONSOLE_ERROR, ERROR } from '@constants/message';
+import { ERROR } from '@constants/message';
 import { useCreateDiary } from '@hooks/api/useCreateDiary';
+import 'dayjs/locale/ko';
+import { useTodayDate } from '@hooks/api/useTodayDate';
+import { useUser } from '@state/user/useUser';
+import { usePostImage } from '@hooks/api/usePostImage';
 
 const CreateDiaryStyle = stylex.create({
   container: {
@@ -99,8 +100,10 @@ const CreateDiaryStyle = stylex.create({
 
 const CreateDiary = () => {
   const navigate = useNavigate();
-  const { memberId } = useUser();
+  const memberId = useUser();
   const { mutate: createDiary } = useCreateDiary(memberId);
+  const { mutate: postImage } = usePostImage();
+  const { date } = useTodayDate();
   const [diaryInfo, setDiaryInfo] = useState<IDiaryInfo>({
     hashArr: [],
     moodValue: 5,
@@ -114,10 +117,13 @@ const CreateDiary = () => {
 
   // 해시태그 state
   const [hashtag, setHashtag] = useState<string>('');
+
   // 이미지 state
-  const [file, setFile] = useState<File | null>(null);
-  const [imageURL, setImageURL] = useState('');
-  const [hasImage, setHasImage] = useState(false);
+  const [file, setFile] = useState<FormData>();
+  const [image, setImage] = useState<DiaryImage>({
+    imageId: 0,
+    imageURL: '',
+  });
 
   // 상태 업데이트 함수
   const setDiaryField = (field: Partial<IDiaryInfo>) => {
@@ -130,20 +136,6 @@ const CreateDiary = () => {
     setDiaryField({ moodValue: parseInt(e.target.value) });
   const onChangeHashtag = (e: React.ChangeEvent<HTMLInputElement>) =>
     setHashtag(e.target.value);
-
-  // 이미지 파일 저장 함수
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const selectedFile = e.target.files?.[0];
-    if (selectedFile) {
-      const reader = new FileReader();
-      reader.readAsDataURL(selectedFile);
-      reader.onloadend = () => {
-        setImageURL(reader.result as string);
-      };
-      setFile(selectedFile);
-      setHasImage(true);
-    }
-  };
 
   // 해시태그 로직 함수
   const addHashtag = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -166,28 +158,29 @@ const CreateDiary = () => {
     setDiaryField({ hashArr: diaryInfo.hashArr.filter((_, i) => i !== index) });
   };
 
-  useEffect(() => {
-    API.get<IDiaryInfo>(END_POINT.TODAY_DATE)
-      .then(response => {
-        setDiaryField({
-          year: response.data.year,
-          month: response.data.month,
-          date: response.data.date,
-          day: response.data.day,
-        });
-      })
-      .catch(error => {
-        console.error(CONSOLE_ERROR.DATE.GET + error);
-      });
-  }, []);
-
   const checkWritingPermission = () => {
     const lastWritingDate = localStorage.getItem('lastWritingDate');
     const currentDate = `${diaryInfo.year}년/${diaryInfo.month}월/${diaryInfo.date}일`;
     return lastWritingDate !== currentDate;
   };
 
+  const removeImage = () => {
+    setImage({
+      imageId: 0,
+      imageURL: '',
+    });
+  };
+
   const handleSave = async () => {
+    const { quillContent, isPrivate, hashArr, moodValue } = diaryInfo;
+    const request = {
+      content: quillContent,
+      isPrivate,
+      conditionLevel: `LEVEL_${moodValue}`,
+      hashtags: hashArr,
+      imageId: 0,
+    };
+
     if (!checkWritingPermission()) {
       Swal.fire({
         title: ERROR.DIARY_ALREADY_EXISTS,
@@ -210,23 +203,35 @@ const CreateDiary = () => {
       return;
     }
 
-    const formData = new FormData();
-    const requestDto = {
-      content: diaryInfo.quillContent,
-      isPrivate: diaryInfo.isPrivate,
-      conditionLevel: `LEVEL_${diaryInfo.moodValue}`,
-      hashtags: diaryInfo.hashArr,
-      hasImage,
-    };
+    // 사용자가 이미지를 첨부할 경우 postImage -> createDiary 실행
+    if (file) {
+      postImage(file, {
+        onSuccess: res => {
+          const request = {
+            content: quillContent,
+            isPrivate,
+            conditionLevel: `LEVEL_${moodValue}`,
+            hashtags: hashArr,
+            imageId: res.data.imageId,
+          };
 
-    formData.append(
-      'requestDto',
-      new Blob([JSON.stringify(requestDto)], { type: 'application/json' }),
-    );
+          createDiary(request, {
+            onSuccess: response => {
+              const newDiaryId = response.data.diaryId;
+              navigate(`/diary/${newDiaryId}`, { replace: true });
+              const currentDate = `${diaryInfo.year}년/${diaryInfo.month}월/${diaryInfo.date}일`;
+              localStorage.setItem('lastWritingDate', currentDate);
+            },
+            onError: error => {
+              console.error(error);
+            },
+          });
+        },
+      });
+      return;
+    }
 
-    if (file) formData.append('image', file);
-
-    createDiary(formData, {
+    createDiary(request, {
       onSuccess: response => {
         const newDiaryId = response.data.diaryId;
         navigate(`/diary/${newDiaryId}`, { replace: true });
@@ -238,6 +243,17 @@ const CreateDiary = () => {
       },
     });
   };
+
+  useEffect(() => {
+    if (date) {
+      setDiaryField({
+        year: date.year,
+        month: date.month,
+        date: date.date,
+        day: date.day,
+      });
+    }
+  }, [date]);
 
   return (
     <Container>
@@ -294,19 +310,21 @@ const CreateDiary = () => {
             </div>
           </article>
         </section>
-        <form>
-          <input type="file" onChange={handleFileChange} />
-        </form>
-        {imageURL && (
-          <img
-            {...stylex.props(CreateDiaryStyle.imageFile)}
-            src={imageURL}
-            alt="image file"
-          />
-        )}
+        {image.imageURL ? (
+          <>
+            <img
+              {...stylex.props(CreateDiaryStyle.imageFile)}
+              src={image.imageURL}
+              alt="image file"
+            />
+            <button onClick={removeImage}>삭제</button>
+          </>
+        ) : null}
         <QuillEditor
           onContentChange={content => setDiaryField({ quillContent: content })}
           quillContent={diaryInfo.quillContent}
+          setImage={setImage}
+          setFile={setFile}
         />
         <section>
           <article {...stylex.props(CreateDiaryStyle.borderFooter)}>

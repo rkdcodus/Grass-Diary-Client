@@ -1,5 +1,5 @@
 import stylex from '@stylexjs/stylex';
-import useProfile from '@recoil/profile/useProfile';
+import { useProfile } from '@state/profile/useProfile';
 
 const styles = stylex.create({
   profileImage: (width: string, height: string) => ({

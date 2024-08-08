@@ -1,4 +1,4 @@
-import React, { Suspense } from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { RecoilRoot } from 'recoil';
 import { RouterProvider } from 'react-router-dom';
@@ -14,8 +14,8 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
     <QueryClientProvider client={queryClient}>
       <ReactQueryDevtools />
       <RecoilRoot>
-          <GlobalStyle />
-          <RouterProvider router={router} />
+        <GlobalStyle />
+        <RouterProvider router={router} />
       </RecoilRoot>
     </QueryClientProvider>
   </React.StrictMode>,

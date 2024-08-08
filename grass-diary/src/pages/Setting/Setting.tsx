@@ -1,6 +1,6 @@
 import styles from './styles';
 import stylex from '@stylexjs/stylex';
-import { Suspense, useEffect } from 'react';
+import { useEffect } from 'react';
 import { useRecoilState } from 'recoil';
 import {
   QueryClient,
@@ -9,11 +9,11 @@ import {
 } from '@tanstack/react-query';
 
 import API from '@services/index';
-import useProfile from '@recoil/profile/useProfile';
-import { profileAtom } from '@recoil/profile/profileState';
 import { Container, Header, Profile, Button } from '@components/index';
 import { END_POINT } from '@constants/api';
 import { CONSOLE_ERROR } from '@constants/message';
+import { useProfile } from '@state/profile/useProfile';
+import { useProfileActions } from '@state/profile/profileStore';
 
 interface ISettingSection {
   children: React.ReactNode;
@@ -31,21 +31,21 @@ const SettingSection = ({ children, label }: ISettingSection) => {
 
 const Setting = () => {
   const queryClient: QueryClient = useQueryClient();
-  const { nickName, profileIntro }: omitProfileImageURL = useProfile();
-  const [profile, setProfile] = useRecoilState(profileAtom);
+  const { nickname, profileIntro }: omitProfileImageURL = useProfile();
+  const { setNickName, setProfileIntro } = useProfileActions();
 
-  useEffect(() => {
-    setProfile({ ...profile, nickName, profileIntro });
-  }, [nickName, profileIntro]);
+  // useEffect(() => {
+  //   setProfile({ ...profile, nickname, profileIntro });
+  // }, [nickname, profileIntro]);
 
   const handleChangeNickname = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setProfile({ ...profile, nickName: event.target.value });
+    setNickName(event.target.value);
   };
 
   const handleChangeProfileIntro = (
     event: React.ChangeEvent<HTMLTextAreaElement>,
   ) => {
-    setProfile({ ...profile, profileIntro: event.target.value });
+    setProfileIntro(event.target.value);
   };
 
   const updateProfile = useMutation<
@@ -70,9 +70,7 @@ const Setting = () => {
         </div>
         <div {...stylex.props(styles.profileSection)}>
           <div {...stylex.props(styles.profileLeft)}>
-            <Suspense>
-              <Profile width="12.5rem" height="12.5rem" />
-            </Suspense>
+            <Profile width="12.5rem" height="12.5rem" />
             <Button
               text="프로필 사진 변경"
               width="9.4rem"
@@ -89,7 +87,7 @@ const Setting = () => {
               <input
                 {...stylex.props(styles.textInput('0 0 0 1.25rem', '3.2rem'))}
                 name="nickName"
-                value={profile.nickName || ''}
+                value={nickname || ''}
                 onChange={handleChangeNickname}
               ></input>
             </SettingSection>
@@ -97,7 +95,7 @@ const Setting = () => {
               <textarea
                 {...stylex.props(styles.textInput('1rem 1.25rem', '6.25rem'))}
                 name="profileIntro"
-                value={profile.profileIntro || ''}
+                value={profileIntro || ''}
                 onChange={handleChangeProfileIntro}
               ></textarea>
             </SettingSection>
@@ -116,8 +114,8 @@ const Setting = () => {
                   border="1px solid #929292"
                   onClick={() =>
                     updateProfile.mutate({
-                      nickName: profile.nickName,
-                      profileIntro: profile.profileIntro,
+                      nickname: nickname,
+                      profileIntro: profileIntro,
                     })
                   }
                 />

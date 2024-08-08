@@ -5,10 +5,10 @@ import { useQuery } from '@tanstack/react-query';
 
 import { formatDate, getDaysArray } from '@utils/dateUtils';
 import useGrass from '@hooks/api/useGrass';
-import useUser from '@recoil/user/useUser';
 import API from '@services/index';
 import { END_POINT } from '@constants/api';
 import { CONSOLE_ERROR } from '@constants/message';
+import { useUser } from '@state/user/useUser';
 
 type TCreateGrass = () => { year: number; grass: (Date | null)[][] };
 
@@ -41,7 +41,7 @@ const Grass = ({ setSelectedDiary }: IGrass) => {
   const [selectedGrass, setSelectedGrass] = useState<string | null>(null);
   const [hoveredGrass, setHoveredGrass] = useState<string | null>(null);
   const { year, grass } = createGrass();
-  const { memberId } = useUser();
+  const memberId = useUser();
   const grassColors = useGrass(memberId);
 
   const handleGrassClick = (date: Date | null) => {
