@@ -8,15 +8,15 @@ interface MenusProps {
 }
 
 const Menus = ({ children, toggle }: MenusProps) => {
-  return <MenusContainer toggle={toggle}>{children}</MenusContainer>;
+  return <MenusContainer $toggle={toggle}>{children}</MenusContainer>;
 };
 
 export default Menus;
 
-const MenusContainer = styled.div<{ toggle: boolean }>`
+const MenusContainer = styled.div<{ $toggle: boolean }>`
   display: flex;
   width: 160px;
-  height: ${props => (props.toggle ? 'auto' : '0px')};
+  height: ${props => (props.$toggle ? 'auto' : '0px')};
   padding: var(--gap-empty, 0px);
   flex-direction: column;
   align-items: flex-start;

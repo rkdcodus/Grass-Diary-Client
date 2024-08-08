@@ -5,6 +5,6 @@ type InteractionProps = {
 };
 
 type InteractionStyleProps = {
-  topRadius?: number;
-  bottomRadius?: number;
+  $topRadius?: number;
+  $bottomRadius?: number;
 };
