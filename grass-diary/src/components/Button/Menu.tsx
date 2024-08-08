@@ -3,7 +3,7 @@ import { semantic } from '@styles/semantic';
 import { TYPO } from '@styles/typo';
 
 import Interaction1 from '@components/Interactions/Interaction1';
-import ButtonContainer from '@components/Button/ButtonContainer';
+import ButtonWrapper from '@components/Button/ButtonWrapper';
 
 import { Link } from 'react-router-dom';
 
@@ -29,7 +29,7 @@ const Menu = ({
   return (
     <>
       <Link to={link || ''}>
-        <ButtonContainer>
+        <ButtonWrapper>
           <Interaction1
             onClick={onClick}
             topRadius={topRadius}
@@ -39,7 +39,7 @@ const Menu = ({
             <MenuStr>{text}</MenuStr>
             <MenuImg src={svg} alt={text} />
           </MenuContainer>
-        </ButtonContainer>
+        </ButtonWrapper>
       </Link>
       <Line height={line} />
     </>
