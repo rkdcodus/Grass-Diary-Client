@@ -4,6 +4,12 @@ import { EllipsisIcon, EllipsisBox } from '@components/index';
 import UnmodifyModal from './modal/UnmodifyModal';
 import ConfirmDeleteModal from './modal/ConfirmDeleteModal';
 import { useTodayDate } from '@hooks/api/useTodayDate';
+import more from '@svg/more_horiz.svg';
+import editIcon from '@svg/mode_edit.svg';
+import deleteIcon from '@svg/delete_forever.svg';
+import Menus from '@components/Button/Menus';
+import Menu from '@components/Button/Menu';
+import { semantic } from '@styles/semantic';
 
 type SettingProps = {
   diaryId: Id;
@@ -45,10 +51,21 @@ const Setting = ({ diaryId, createdDate }: SettingProps) => {
 
   return (
     <>
-      <EllipsisIcon width="136" translateValue="115px">
-        <EllipsisBox onClick={linkToModify} text="수정" />
-        <EllipsisBox onClick={showConfirmModal} text="삭제" />
-      </EllipsisIcon>
+      <Menus icon={more}>
+        <Menu
+          onClick={linkToModify}
+          text={'일기 수정'}
+          svg={editIcon}
+          topRadius={16}
+        />
+        <Menu
+          onClick={showConfirmModal}
+          text={'일기 삭제'}
+          svg={deleteIcon}
+          bottomRadius={16}
+          color={semantic.light.feedback.solid.negative}
+        />
+      </Menus>
 
       {editModal && <UnmodifyModal setter={setEditModal} />}
       {confirmModal && (

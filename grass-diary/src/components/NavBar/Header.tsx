@@ -2,7 +2,6 @@ import styled from 'styled-components';
 import { semantic } from '@styles/semantic';
 
 import sampleLogo from '@image/sampleLogo.png';
-import { ReactComponent as Arrow } from '@svg/arrow_drop_down.svg';
 import { ReactComponent as LogoSVG } from '@svg/logo.svg';
 
 import Interaction1 from '@components/Interactions/Interaction1';
@@ -11,41 +10,10 @@ import MenuBar from '@components/NavBar/MenuBar';
 import { Profile } from '@components/index';
 
 import { Link } from 'react-router-dom';
-import { useEffect, useRef, useState } from 'react';
 import { useUser } from '@state/user/useUser';
 
 const Header = () => {
-  const [toggle, setToggle] = useState(false);
-  const headerRef = useRef<HTMLDivElement>(null);
-  const iconRef = useRef<HTMLDivElement>(null);
-  const profileRef = useRef<HTMLDivElement>(null);
   const memberId = useUser();
-
-  const dropDown = () => {
-    setToggle(current => !current);
-  };
-
-  useEffect(() => {
-    const closeToggle = (e: MouseEvent) => {
-      if (
-        toggle &&
-        headerRef.current &&
-        iconRef.current &&
-        profileRef.current
-      ) {
-        if (
-          !headerRef.current.contains(e.target as HTMLElement) &&
-          !iconRef.current.contains(e.target as HTMLElement) &&
-          !profileRef.current.contains(e.target as HTMLElement)
-        )
-          setToggle(false);
-      }
-    };
-
-    document.addEventListener('click', closeToggle);
-
-    return () => document.removeEventListener('click', closeToggle);
-  }, [memberId, toggle]);
 
   return (
     <div>
@@ -60,15 +28,12 @@ const Header = () => {
             </Link>
           </LogoContainer>
           {memberId ? (
-            <div onClick={dropDown}>
-              <RightContent ref={profileRef}>
-                <Profile width="32px" height="32px" />
-                <IconBtn ref={iconRef}>
-                  <Arrow />
-                </IconBtn>
-              </RightContent>
-              <MenuBar headerRef={headerRef} toggle={toggle} />
-            </div>
+            <RightContent>
+              <Profile width="32px" height="32px" />
+              <IconBtn>
+                <MenuBar />
+              </IconBtn>
+            </RightContent>
           ) : (
             <ButtonContainer>
               <Interaction1
@@ -90,6 +55,7 @@ export default Header;
 const NavBar = styled.div`
   display: flex;
   width: 100vw;
+  min-width: var(--vw-desktop-min, 960px);
   padding: var(--gap-xs, 10px) var(--gap-xl, 24px);
   justify-content: center;
   align-items: center;
@@ -149,7 +115,7 @@ const LogoStr = styled(LogoSVG)`
   width: 71.626px;
   height: 18px;
   opacity: var(--opacity-visible, 1);
-  fill: red;
+  fill: ${semantic.light.object.solid.normal};
 `;
 
 const RightContent = styled.div`

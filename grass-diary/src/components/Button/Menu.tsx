@@ -15,6 +15,7 @@ interface MenuProps {
   line?: number;
   topRadius?: number;
   bottomRadius?: number;
+  color?: string;
 }
 
 const Menu = ({
@@ -25,6 +26,7 @@ const Menu = ({
   line,
   topRadius,
   bottomRadius,
+  color,
 }: MenuProps) => {
   return (
     <>
@@ -36,7 +38,7 @@ const Menu = ({
             bottomRadius={bottomRadius}
           />
           <MenuContainer>
-            <MenuStr>{text}</MenuStr>
+            <MenuStr color={color}>{text}</MenuStr>
             <MenuImg src={svg} alt={text} />
           </MenuContainer>
         </ButtonContainer>
@@ -66,9 +68,9 @@ const Line = styled.div<{ height: number | undefined }>`
   background: ${semantic.light.border.transparent.assistive};
 `;
 
-const MenuStr = styled.p`
+const MenuStr = styled.p<{ color?: string }>`
   flex: 1 0 0;
-  color: ${semantic.light.object.solid.normal};
+  color: ${props => props.color || semantic.light.object.solid.normal};
   ${TYPO.label2};
 
   opacity: var(--opacity-visible, 1);
