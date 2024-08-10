@@ -2,47 +2,11 @@ import stylex from '@stylexjs/stylex';
 import { useEffect, useState } from 'react';
 import { useCountLike } from '@hooks/api/useCountLike';
 import { useUser } from '@state/user/useUser';
-
-const beat1 = stylex.keyframes({
-  '0%': { transform: 'scale(0.8)' },
-  '50%': { transform: 'scale(1.2)' },
-  '80%': { transform: 'scale(0.9)' },
-  '100%': { transform: 'scale(1.0)' },
-});
-
-const beat2 = stylex.keyframes({
-  '0%': { transform: 'scale(0.9)' },
-  '50%': { transform: 'scale(1.2)' },
-  '80%': { transform: 'scale(0.9)' },
-  '100%': { transform: 'scale(1.0)' },
-});
-
-const styles = stylex.create({
-  likeContainer: {
-    display: 'flex',
-    width: '35px',
-    justifyContent: 'space-between',
-    textAlign: 'center',
-    margin: '0px 15px',
-    cursor: 'pointer',
-    gap: '10px',
-  },
-  heart: {
-    width: '20px',
-    height: '40px',
-    lineHeight: '40px',
-    animationName: beat1,
-    animationDuration: '0.5s',
-  },
-  like: {
-    animationName: beat2,
-    color: 'red',
-  },
-  count: {
-    lineHeight: '40px',
-    fontWeight: '600',
-  },
-});
+import styled from 'styled-components';
+import { semantic } from '@styles/semantic';
+import { TYPO } from '@styles/typo';
+import { ReactComponent as LikeBorder } from '@svg/favorite_border.svg';
+import { ReactComponent as LikeIcon } from '@svg/favorite.svg';
 
 interface ILikeProps {
   diaryId: Id;
@@ -52,7 +16,7 @@ interface ILikeProps {
 }
 
 const Like = ({ diaryId, likeCount, setLikeCount, liked }: ILikeProps) => {
-  const [isRed, setIsRed] = useState(false);
+  const [isPushed, setIsPushed] = useState(false);
   const memberId = useUser();
   const { postLike, deleteLike, postSuccess, deleteSuccess } = useCountLike({
     diaryId,
@@ -61,38 +25,73 @@ const Like = ({ diaryId, likeCount, setLikeCount, liked }: ILikeProps) => {
 
   useEffect(() => {
     if (postSuccess) {
-      setIsRed(true);
+      setIsPushed(true);
       setLikeCount(prev => (prev += 1));
     }
   }, [postSuccess]);
 
   useEffect(() => {
     if (deleteSuccess) {
-      setIsRed(false);
+      setIsPushed(false);
       setLikeCount(prev => (prev -= 1));
     }
   }, [deleteSuccess]);
 
   useEffect(() => {
-    liked ? setIsRed(true) : setIsRed(false);
+    liked ? setIsPushed(true) : setIsPushed(false);
   }, [liked]);
 
   return (
     <>
-      <div {...stylex.props(styles.likeContainer)}>
-        {isRed ? (
-          <div {...stylex.props(styles.heart, styles.like)}>
-            <i onClick={() => deleteLike()} className="fa-solid fa-heart"></i>
-          </div>
+      <LikeContainer $isPushed={isPushed}>
+        <LikeCount>{likeCount}</LikeCount>
+        {isPushed ? (
+          <YES onClick={() => deleteLike()} />
         ) : (
-          <div {...stylex.props(styles.heart)}>
-            <i onClick={() => postLike()} className="fa-regular fa-heart"></i>
-          </div>
+          <No onClick={() => postLike()} />
         )}
-        <div {...stylex.props(styles.count)}>{likeCount}</div>
-      </div>
+      </LikeContainer>
     </>
   );
 };
 
 export default Like;
+
+const LikeContainer = styled.div<{ $isPushed: boolean }>`
+  margin-left: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: var(--gap-xs, 10px) var(--gap-md, 16px);
+  gap: var(--gap-2xs, 8px);
+  border-radius: var(--radius-xs, 8px);
+  border: var(--stroke-thin, 1px) solid
+    ${props =>
+      props.$isPushed
+        ? semantic.light.accent.solid.normal
+        : semantic.light.border.transparent.alternative};
+  opacity: var(--opacity-visible, 1);
+  background: ${props =>
+    props.$isPushed
+      ? semantic.light.accent.transparent.normal
+      : semantic.light.bg.solid.normal};
+
+  color: ${props =>
+    props.$isPushed
+      ? semantic.light.accent.solid.hero
+      : semantic.light.object.transparent.alternative};
+`;
+
+const LikeCount = styled.p`
+  text-align: center;
+  ${TYPO.label2}
+`;
+
+const YES = styled(LikeIcon)`
+  cursor: pointer;
+  fill: ${semantic.light.accent.solid.hero};
+`;
+
+const No = styled(LikeBorder)`
+  cursor: pointer;
+`;
