@@ -32,6 +32,7 @@ export const END_POINT = {
   SHARE_LATEST: (cursorId: number) =>
     `/shared/diaries/latest?cursorId=${cursorId}&size=12`,
   TOTAL_REWARD: (memberId: Id) => `/member/totalReward/${memberId}`,
-  GRASS: (memberId: Id) => `/main/grass/${memberId}`,
+  TOTAL_GRASS: (memberId: Id) => `/grass/${memberId}`,
+  GRASS: (memberId: Id) => `/grass/main-page/${memberId}`,
   IMAGE: '/image/diary',
 } as const;
