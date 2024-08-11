@@ -9,7 +9,9 @@
       "@services/*": ["src/services/*"],
       "@utils/*": ["src/utils/*"],
       "@state/*": ["src/state/*"],
-      "@style/*": ["src/style/*"]
+      "@styles/*": ["src/styles/*"],
+      "@svg/*": ["src/assets/svg/*"],
+      "@image/*": ["src/assets/image/*"]
     }
   }
 }

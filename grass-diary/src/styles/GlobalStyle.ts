@@ -50,6 +50,10 @@ export const GlobalStyle = createGlobalStyle`
     line-height: 1.34;
   }
 
+  button {
+  border: none;
+  }
+
   h1,
   h2,
   h3,
