@@ -1,9 +1,9 @@
 import styled from 'styled-components';
+import { semantic } from '@styles/semantic';
+import { TYPO } from '@styles/typo';
 
 import { ReactComponent as LogoText } from '@svg/logo.svg';
 import logoIcon from '@image/sampleLogo_white.png';
-import { semantic } from '@styles/semantic';
-import { TYPO } from '@styles/typo';
 
 const Footer = () => {
   return (

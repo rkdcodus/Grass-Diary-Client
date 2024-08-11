@@ -1,10 +1,11 @@
-import stylex from '@stylexjs/stylex';
-import { useEffect, useState } from 'react';
-import { useCountLike } from '@hooks/api/useCountLike';
-import { useUser } from '@state/user/useUser';
 import styled from 'styled-components';
 import { semantic } from '@styles/semantic';
 import { TYPO } from '@styles/typo';
+
+import { useEffect, useState } from 'react';
+import { useCountLike } from '@hooks/api/useCountLike';
+import { useUser } from '@state/user/useUser';
+
 import { ReactComponent as LikeBorder } from '@svg/favorite_border.svg';
 import { ReactComponent as LikeIcon } from '@svg/favorite.svg';
 
