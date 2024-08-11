@@ -55,7 +55,6 @@ export default Header;
 const NavBar = styled.div`
   display: flex;
   width: 100vw;
-  min-width: var(--vw-desktop-min, 960px);
   padding: var(--gap-xs, 10px) var(--gap-xl, 24px);
   justify-content: center;
   align-items: center;
