@@ -29,7 +29,7 @@ export const semantic = {
       },
     },
 
-    background: {
+    bg: {
       solid: {
         normal: '#FFF' as HexColor,
         subtlest: '#FAFAFA' as HexColor,
@@ -142,7 +142,7 @@ export const semantic = {
       },
     },
 
-    background: {
+    bg: {
       solid: {
         normal: '#2B2B2B' as HexColor,
         subtlest: '#262626' as HexColor,
