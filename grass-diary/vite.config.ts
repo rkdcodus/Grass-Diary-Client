@@ -18,7 +18,7 @@ export default defineConfig({
       '@utils': path.resolve(__dirname, 'src/utils'),
       '@icon': path.resolve(__dirname, 'src/assets/icon'),
       '@state': path.resolve(__dirname, 'src/state'),
-      '@style': path.resolve(__dirname, 'src/style'),
+      '@styles': path.resolve(__dirname, 'src/styles'),
       '@state': path.resolve(__dirname, 'src/state'),
     },
   },
