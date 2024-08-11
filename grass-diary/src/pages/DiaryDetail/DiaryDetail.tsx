@@ -15,12 +15,12 @@ import { useParamsId } from '@hooks/useParamsId';
 import { useUser } from '@state/user/useUser';
 
 import { ReactComponent as AvatarBg } from '@svg/avatarBg.svg';
-import { ReactComponent as LeftArrow } from '@svg/chevron_left.svg';
+import { ReactComponent as MoreVert } from '@svg/more_vert.svg';
 import { ReactComponent as LockOpen } from '@svg/lock_open.svg';
 
 import { ReactComponent as Tag } from '@svg/tag.svg';
-import { ReactComponent as LogoText } from '@svg/logo.svg';
-import logoIcon from '@image/sampleLogo_white.png';
+import Footer from '@components/NavBar/Footer';
+import Comments from '@components/Comment/Comments';
 
 const styles = stylex.create({
   wrap: {
@@ -147,6 +147,7 @@ const DiaryDetail = () => {
   const [likeCount, setLikeCount] = useState(0);
   const [mood, setMood] = useState('');
   const [imageModal, setImageModal] = useState(false);
+  const [commentCount, setCommentCount] = useState(0);
   const { detail, writer, isLoading } = useDiaryDetail(diaryId);
 
   const zoom = () => {
@@ -268,7 +269,7 @@ const DiaryDetail = () => {
         <DiaryBox>
           <TopSection>
             <Title>
-              <LeftArrow />
+              <BackButton />
               <Date>{detail?.createdDate}</Date>
               <SubTitle>
                 {writer ? (
@@ -295,6 +296,7 @@ const DiaryDetail = () => {
               <Setting diaryId={diaryId} createdDate={detail?.createdDate} />
             )}
           </TopSection>
+
           <DiaryContent>
             {detail?.image.length ? (
               <ImageCard
@@ -306,6 +308,7 @@ const DiaryDetail = () => {
               dangerouslySetInnerHTML={createMarkup(detail?.content)}
             />
           </DiaryContent>
+
           <BottomSection>
             <HashTagContainer>
               {detail?.tags?.map(tag => {
@@ -324,22 +327,20 @@ const DiaryDetail = () => {
               liked={detail?.isLikedByLogInMember}
             />
           </BottomSection>
+
           <Divider></Divider>
-          <CommentLable>댓글</CommentLable>
-          <CommentContainer></CommentContainer>
+
+          <CommentLable>{`댓글 ${commentCount}`}</CommentLable>
+          <CommentContainer>
+            <Comments
+              memberId={memberId}
+              diaryId={diaryId}
+              setCommentCount={setCommentCount}
+            ></Comments>
+          </CommentContainer>
         </DiaryBox>
       </Container>
-      <Footer>
-        <ContentWrap>
-          <LogoWrap>
-            <LogoIcon src={logoIcon} />
-            <LogoText fill={semantic.light.base.solid.white} />
-          </LogoWrap>
-          <CopyRight>
-            Copyright © 2024 Jandi Diary. All rights reserved.
-          </CopyRight>
-        </ContentWrap>
-      </Footer>
+      <Footer />
     </>
   );
 };
@@ -580,51 +581,4 @@ const CommentContainer = styled.div`
 
   border-radius: var(--radius-empty, 0px);
   opacity: var(--opacity-visible, 1);
-`;
-
-const Footer = styled.div`
-  min-width: var(--vw-desktop-min, 960px);
-
-  align-self: stretch;
-  display: flex;
-  padding: var(--gap-xl, 24px);
-  justify-content: center;
-  align-items: center;
-  gap: var(--gap-xl, 24px);
-
-  border-radius: var(--radius-empty, 0px);
-  border-top: var(--stroke-thicker, 4px) solid
-    ${semantic.light.accent.solid.hero};
-  opacity: var(--opacity-visible, 1);
-  background: ${semantic.light.base.solid.darkgray};
-`;
-
-const ContentWrap = styled.div`
-  display: flex;
-  max-width: var(--vw-desktop-min, 960px);
-  padding: var(--gap-empty, 0px);
-  align-items: center;
-  gap: var(--gap-empty, 0px);
-  align-self: stretch;
-  flex: 1;
-`;
-
-const LogoWrap = styled.div`
-  display: flex;
-  padding: var(--gap-empty, 0px);
-  align-items: center;
-  gap: var(--gap-xs, 10px);
-  flex: 1 0 0;
-  border-radius: var(--radius-empty, 0px);
-  opacity: var(--opacity-visible, 1);
-`;
-
-const LogoIcon = styled.img`
-  width: 24px;
-  height: 24px;
-`;
-
-const CopyRight = styled.p`
-  color: ${semantic.light.base.solid.white};
-  ${TYPO.caption2}
 `;
