@@ -74,7 +74,9 @@ const Like = ({ diaryId, likeCount, setLikeCount, liked }: ILikeProps) => {
   }, [deleteSuccess]);
 
   useEffect(() => {
-    liked ? setIsRed(true) : setIsRed(false);
+    if (liked) {
+      liked ? setIsRed(true) : setIsRed(false);
+    }
   }, [liked]);
 
   return (
