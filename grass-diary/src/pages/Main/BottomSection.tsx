@@ -2,11 +2,16 @@ import AnimateReward from './AnimateReward';
 import styled from 'styled-components';
 import { semantic } from '@styles/semantic';
 import { useReward } from '@hooks/api/useReward';
+import { Link } from 'react-router-dom';
 import subCharacter from '@icon/subCharacter.png';
 import Swal from 'sweetalert2';
+import { ReactComponent as Avatar } from '@svg/avatarBg.svg';
+import { ReactComponent as Arrow } from '@svg/chevron_right.svg';
+import { ReactComponent as ArrowBlack } from '@svg/chevron_right_black.svg';
 
 const BottomSection = () => {
   const { reward } = useReward();
+
   const modal = () => {
     Swal.fire({
       title: '테마 상점',
@@ -19,6 +24,10 @@ const BottomSection = () => {
       confirmButtonText: '확인',
     });
   };
+
+  const handleClick = () => {
+    window.scrollTo(0, 0);
+  };
   return (
     <>
       <Section>
@@ -29,12 +38,14 @@ const BottomSection = () => {
             <Divider></Divider>
             <Wrap>
               <RewardContainer>
+                <Avatar></Avatar>
                 <RewardPoint>
                   <AnimateReward n={reward?.rewardPoint ?? 0} />
                 </RewardPoint>
               </RewardContainer>
               <ThemeMarketBtn>
                 <ThemeMarketText onClick={modal}>테마 상점</ThemeMarketText>
+                <Arrow></Arrow>
               </ThemeMarketBtn>
             </Wrap>
           </Card>
@@ -46,7 +57,10 @@ const BottomSection = () => {
             <Divider></Divider>
             <RetrospectContainer>
               <RetrospectBtn>
-                <RetrospectText>회고하러 가기</RetrospectText>
+                <Link to="/mypage" onClick={handleClick}>
+                  <RetrospectText>회고하러 가기</RetrospectText>
+                </Link>
+                <ArrowBlack></ArrowBlack>
               </RetrospectBtn>
             </RetrospectContainer>
           </Card>
