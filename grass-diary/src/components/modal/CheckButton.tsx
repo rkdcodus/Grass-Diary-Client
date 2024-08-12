@@ -3,7 +3,11 @@ import Interaction4 from '@components/Interactions/Interaction4';
 import { semantic } from '@styles/semantic';
 import styled from 'styled-components';
 
-const CheckButton = (onClick: () => void) => {
+type CheckButtonProps = {
+  onClick: () => void;
+};
+
+const CheckButton = ({ onClick }: CheckButtonProps) => {
   return (
     <ButtonContainer>
       <Interaction4 onClick={onClick} topRadius={12} bottomRadius={12} />
