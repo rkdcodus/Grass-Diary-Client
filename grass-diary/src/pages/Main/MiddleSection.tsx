@@ -16,14 +16,6 @@ const MiddleSection = () => {
   const currentMonthLastDay = nextMonthFirstDay.subtract(1, 'day');
 
   const memberId = useUser();
-  // reward 쿼리
-  const { data: reward } = useQuery<RewardPointResponse>({
-    queryKey: ['rewardPoint'],
-    queryFn: () =>
-      API.get(END_POINT.TOTAL_REWARD(memberId)).then(response => response.data),
-    initialData: { rewardPoint: 0 }, // 초기 데이터 설정
-    enabled: !!memberId, // memberId가 있을 때만 쿼리를 실행
-  });
 
   // grass 쿼리
   const { data: grassQuery } = useQuery<GrassApiResponse>({
@@ -93,9 +85,6 @@ const MiddleSection = () => {
             </div>
           ))}
         </GrassTable>
-
-        <AnimateReward n={reward?.rewardPoint ?? 0} />
-        <h2>나의 리워드</h2>
       </Container>
     </>
   );
