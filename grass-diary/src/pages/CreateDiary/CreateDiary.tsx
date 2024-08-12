@@ -11,8 +11,8 @@ import { ERROR } from '@constants/message';
 import { useCreateDiary } from '@hooks/api/useCreateDiary';
 import 'dayjs/locale/ko';
 import { useTodayDate } from '@hooks/api/useTodayDate';
-import { useUser } from '@state/user/useUser';
 import { usePostImage } from '@hooks/api/usePostImage';
+import { useUser } from '@state/user/useUser';
 
 const CreateDiaryStyle = stylex.create({
   container: {

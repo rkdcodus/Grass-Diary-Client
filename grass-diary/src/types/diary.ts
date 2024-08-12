@@ -75,7 +75,7 @@ interface DiaryImage {
 // DiaryDetail Type
 interface IDiaryDetail extends IDiary {
   memberId: Id;
-  likedByLogInMember: boolean;
+  isLikedByLogInMember: boolean;
   image: DiaryImage[];
 }
 

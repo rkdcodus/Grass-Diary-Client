@@ -23,6 +23,7 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+vite.config.*.timestamp-*
 
 .env
 .DS_Store

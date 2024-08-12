@@ -2,9 +2,10 @@ import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import styleX from 'vite-plugin-stylex';
 import path from 'path';
+import svgr from '@svgr/rollup';
 
 export default defineConfig({
-  plugins: [react(), styleX()],
+  plugins: [react(), styleX(), svgr()],
   server: {
     port: 3000,
   },
@@ -19,7 +20,8 @@ export default defineConfig({
       '@icon': path.resolve(__dirname, 'src/assets/icon'),
       '@state': path.resolve(__dirname, 'src/state'),
       '@styles': path.resolve(__dirname, 'src/styles'),
-      '@state': path.resolve(__dirname, 'src/state'),
+      '@svg': path.resolve(__dirname, 'src/assets/svg'),
+      '@image': path.resolve(__dirname, 'src/assets/image'),
     },
   },
 });
