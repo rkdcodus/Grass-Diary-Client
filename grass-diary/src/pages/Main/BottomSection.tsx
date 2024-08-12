@@ -2,9 +2,23 @@ import AnimateReward from './AnimateReward';
 import styled from 'styled-components';
 import { semantic } from '@styles/semantic';
 import { useReward } from '@hooks/api/useReward';
+import subCharacter from '@icon/subCharacter.png';
+import Swal from 'sweetalert2';
 
 const BottomSection = () => {
   const { reward } = useReward();
+  const modal = () => {
+    Swal.fire({
+      title: '테마 상점',
+      text: '테마 상점 준비중이에요',
+      imageUrl: subCharacter,
+      imageWidth: 300,
+      imageHeight: 300,
+      imageAlt: 'Custom image',
+      confirmButtonColor: '#28CA3B',
+      confirmButtonText: '확인',
+    });
+  };
   return (
     <>
       <Section>
@@ -14,11 +28,14 @@ const BottomSection = () => {
             <CardSubText>잔디를 꾸준히 심고, 리워드를 모아봐요!</CardSubText>
             <Divider></Divider>
             <Wrap>
-              <WrapContainer>
+              <RewardContainer>
                 <RewardPoint>
                   <AnimateReward n={reward?.rewardPoint ?? 0} />
                 </RewardPoint>
-              </WrapContainer>
+              </RewardContainer>
+              <ThemeMarketBtn>
+                <ThemeMarketText onClick={modal}>테마 상점</ThemeMarketText>
+              </ThemeMarketBtn>
             </Wrap>
           </Card>
           <Card>
@@ -27,6 +44,11 @@ const BottomSection = () => {
               지난 한 달 간의 내 시간과 경험들을 돌아보며 회고해봐요.
             </CardSubText>
             <Divider></Divider>
+            <RetrospectContainer>
+              <RetrospectBtn>
+                <RetrospectText>회고하러 가기</RetrospectText>
+              </RetrospectBtn>
+            </RetrospectContainer>
           </Card>
         </Container>
       </Section>
@@ -130,7 +152,7 @@ const Wrap = styled.div`
   opacity: var(--opacity-visible, 1);
 `;
 
-const WrapContainer = styled.div`
+const RewardContainer = styled.div`
   display: flex;
   padding: var(--gap-empty, 0px);
   align-items: center;
@@ -148,11 +170,77 @@ const RewardPoint = styled.p`
 
   /* title/3 */
   font-family: Pretendard;
-  font-size: 32px;
+  font-size: 17.5px;
   font-style: normal;
   font-weight: 600;
   line-height: 42px; /* 131.25% */
   letter-spacing: -0.499px;
+
+  opacity: var(--opacity-visible, 1);
+`;
+
+const ThemeMarketBtn = styled.button`
+  display: flex;
+  padding: var(--gap-xs, 10px) var(--gap-md, 16px);
+  justify-content: center;
+  align-items: center;
+  gap: var(--gap-2xs, 8px);
+
+  border-radius: var(--radius-xs, 8px);
+  border: var(--stroke-thin, 1px) solid ${semantic.light.accent.solid.normal};
+  opacity: var(--opacity-visible, 1);
+  background: ${semantic.light.accent.transparent.normal};
+
+  cursor: pointer;
+`;
+
+const ThemeMarketText = styled.p`
+  color: ${semantic.light.accent.solid.hero};
+  text-align: center;
+
+  /* label/2 */
+  font-family: Pretendard;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 22px; /* 137.5% */
+  letter-spacing: -0.096px;
+
+  opacity: var(--opacity-visible, 1);
+`;
+
+const RetrospectContainer = styled.div`
+  display: flex;
+  padding: var(--gap-empty, 0px);
+  justify-content: flex-end;
+  align-items: center;
+  gap: var(--gap-empty, 0px);
+  align-self: stretch;
+
+  border-radius: var(--radius-empty, 0px);
+  opacity: var(--opacity-visible, 1);
+`;
+const RetrospectBtn = styled.button`
+  display: flex;
+  padding: var(--gap-xs, 10px) var(--gap-md, 16px);
+  justify-content: center;
+  align-items: center;
+  gap: var(--gap-2xs, 8px);
+
+  border-radius: var(--radius-xs, 8px);
+  opacity: var(--opacity-visible, 1);
+`;
+
+const RetrospectText = styled.p`
+  text-align: center;
+
+  /* label/2 */
+  font-family: Pretendard;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 22px; /* 137.5% */
+  letter-spacing: -0.096px;
 
   opacity: var(--opacity-visible, 1);
 `;
