@@ -1,12 +1,8 @@
 import dayjs from 'dayjs';
 import { useCallback } from 'react';
-import { useQuery } from '@tanstack/react-query';
-import AnimateReward from './AnimateReward';
-import API from '@services/index';
-import { END_POINT } from '@constants/api';
-import { useUser } from '@state/user/useUser';
 import { semantic } from '@styles/semantic';
 import styled from 'styled-components';
+import { useGrassRecord } from '@hooks/api/useGrassRecord';
 
 const MiddleSection = () => {
   // 잔디 날짜 계산
@@ -14,16 +10,7 @@ const MiddleSection = () => {
   const currentMonth = currentDate.format('M');
   const nextMonthFirstDay = currentDate.add(1, 'month').startOf('month');
   const currentMonthLastDay = nextMonthFirstDay.subtract(1, 'day');
-
-  const memberId = useUser();
-
-  // grass 쿼리
-  const { data: grassQuery } = useQuery<GrassApiResponse>({
-    queryKey: ['grass'],
-    queryFn: () =>
-      API.get(END_POINT.GRASS(memberId)).then(response => response.data),
-    enabled: !!memberId, // memberId가 있을 때만 쿼리를 실행
-  });
+  const { grassQuery } = useGrassRecord();
 
   const getGrassStyle = useCallback(
     (day: number | string) => {
