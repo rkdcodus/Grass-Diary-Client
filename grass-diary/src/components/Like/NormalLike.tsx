@@ -1,9 +1,10 @@
 import stylex from '@stylexjs/stylex';
+import { ReactComponent as Favorite } from '@svg/favorite.svg';
 
 const feed = stylex.create({
   like: (justifyContent: string) => ({
     display: 'flex',
-    gap: '15px',
+    gap: '10px',
 
     justifyContent,
   }),
@@ -18,7 +19,7 @@ const NormalLike = ({ likeCount, justifyContent }: INormalLikeProps) => {
   return (
     <div {...stylex.props(feed.like(justifyContent))}>
       <span>
-        <i className="fa-solid fa-heart"></i>
+        <Favorite></Favorite>
       </span>
       <span>{likeCount}</span>
     </div>

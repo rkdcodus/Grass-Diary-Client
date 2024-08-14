@@ -1,50 +1,9 @@
-import stylex from '@stylexjs/stylex';
 import { Link } from 'react-router-dom';
 import { NormalLike } from '@components/index';
 import { useWriterProfile } from '@hooks/api/useWriterProfile';
-
-const feed = stylex.create({
-  box: {
-    display: 'inline-block',
-    backgroundColor: '#F9F9F9',
-    boxShadow: `rgba(149, 157, 165, 0.2) 2px 2px 4px`,
-    borderRadius: '20px',
-    margin: '10px',
-    padding: '20px 30px',
-    width: '360px',
-    height: '440px',
-    ':hover': {
-      transform: 'scale(1.02)',
-    },
-    transition: '0.3s',
-    overflow: 'hidden',
-  },
-  header: {
-    display: 'flex',
-  },
-  img: {
-    width: '40px',
-    height: '40px',
-    objectFit: 'cover',
-    borderRadius: '50%',
-  },
-  name: {
-    lineHeight: '40px',
-    marginLeft: '10px',
-    fontSize: '13px',
-  },
-  title: {
-    fontSize: '22px',
-    fontWeight: '600',
-    margin: '18px 0',
-  },
-  content: {
-    height: '260px',
-    lineHeight: '27px',
-    overflow: 'hidden',
-  },
-});
-
+import styled from 'styled-components';
+import { semantic } from '@styles/semantic';
+import { ReactComponent as Comment } from '@svg/comment.svg';
 interface IFeedProps {
   likeCount: number;
   link: string;
@@ -84,19 +43,128 @@ const Feed = ({
   };
 
   return (
-    <Link to={link}>
-      <article {...stylex.props(feed.box)}>
-        <NormalLike likeCount={likeCount} justifyContent={'flex-end'} />
-        <div {...stylex.props(feed.header)}>
-          <img {...stylex.props(feed.img)} src={writer?.profileImageURL}></img>
-          <div {...stylex.props(feed.name)}>{name}</div>
-        </div>
-
-        <div {...stylex.props(feed.title)}>{title}</div>
-        <div {...stylex.props(feed.content)}>{textWithoutTags()}</div>
-      </article>
-    </Link>
+    <>
+      <Link to={link}>
+        <CardContainer>
+          <CardHeaderSection>
+            <CardUserImg>
+              <img
+                src={writer?.profileImageURL}
+                style={{ borderRadius: '40px' }}
+              ></img>
+            </CardUserImg>
+            <CardHeaderWrap>
+              <CardHeaderDate>{title}</CardHeaderDate>
+              <CardNameWrap>{name} 00:00</CardNameWrap>
+            </CardHeaderWrap>
+            <CardEmojiContainer>🔥</CardEmojiContainer>
+          </CardHeaderSection>
+          <CardContent>{textWithoutTags()}</CardContent>
+          <CardFooterSection>
+            <Comment></Comment> 0
+            <NormalLike likeCount={likeCount} justifyContent={'flex-end'} />
+          </CardFooterSection>
+        </CardContainer>
+      </Link>
+    </>
   );
 };
 
 export default Feed;
+
+const CardContainer = styled.div`
+  width: 283px;
+  height: 460px;
+  display: flex;
+  flex-direction: column;
+  padding: var(--gap-md, 16px);
+  gap: var(--gap-xl, 24px);
+
+  border-radius: var(--radius-md, 16px);
+  border: var(--stroke-thin, 1px) solid
+    ${semantic.light.border.transparent.assistive};
+  background: ${semantic.light.bg.solid.normal};
+  box-shadow: 0px 0px 1px 0px rgba(0, 0, 0, 0.04),
+    0px 2px 0px 0px rgba(0, 0, 0, 0.08);
+`;
+
+const CardHeaderSection = styled.div`
+  display: flex;
+  padding: var(--gap-empty, 0px);
+  align-items: center;
+  gap: var(--gap-sm, 12px);
+  align-self: stretch;
+
+  border-radius: var(--radius-empty, 0px);
+  opacity: var(--opacity-visible, 1);
+`;
+
+const CardUserImg = styled.div`
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+
+  opacity: var(--opacity-visible, 1);
+`;
+
+const CardHeaderWrap = styled.div`
+  display: flex;
+  padding: var(--gap-empty, 0px);
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: var(--gap-4xs, 4px);
+  flex: 1 0 0;
+
+  border-radius: var(--radius-empty, 0px);
+  opacity: var(--opacity-visible, 1);
+`;
+
+const CardHeaderDate = styled.div`
+  color: ${semantic.light.object.transparent.neutral};
+
+  /* label/1 */
+  font-family: Pretendard;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 20px; /* 142.857% */
+  letter-spacing: -0.084px;
+
+  opacity: var(--opacity-visible, 1);
+`;
+
+const CardNameWrap = styled.div`
+  display: flex;
+  align-items: center;
+  gap: var(--gap-2xs, 8px);
+
+  border-radius: var(--radius-empty, 0px);
+`;
+
+const CardEmojiContainer = styled.div`
+  display: flex;
+  padding: var(--gap-5xs, 2px);
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: var(--gap-empty, 0px);
+
+  border-radius: var(--radius-round, 96px);
+  border: var(--stroke-thin, 1px) solid
+    ${semantic.light.border.transparent.assistive};
+  opacity: var(--opacity-visible, 1);
+  background: ${semantic.light.fill.transparent.assistive};
+`;
+
+const CardFooterSection = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--gap-md, 16px);
+  width: 100%;
+`;
+
+const CardContent = styled.div`
+  flex: 1;
+  overflow-y: auto;
+`;
