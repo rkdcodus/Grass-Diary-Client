@@ -10,3 +10,5 @@ export { default as MoodProfile } from './Profile/MoodProfile';
 export { default as ProtectedRoute } from './ProtectedRoute';
 export { default as Container } from './Container';
 export { EllipsisIcon, EllipsisBox } from './Ellipsis';
+export { default as Footer } from './NavBar/Footer';
+export { default as Comments } from './Comment/Comments';
