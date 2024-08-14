@@ -28,6 +28,8 @@ const Feed = ({
     `${createdAt.slice(5, 7)}월 ` +
     `${createdAt.slice(8, 10)}일`;
 
+  const time = createdAt.slice(11, 16);
+
   const extractTextFromHTML = (htmlString: string) => {
     const parser = new DOMParser();
     const doc = parser.parseFromString(htmlString, 'text/html');
@@ -55,7 +57,10 @@ const Feed = ({
             </CardUserImg>
             <CardHeaderWrap>
               <CardHeaderDate>{title}</CardHeaderDate>
-              <CardNameWrap>{name} 00:00</CardNameWrap>
+              <CardNameWrap>
+                {name}
+                <CardTime>{time}</CardTime>
+              </CardNameWrap>
             </CardHeaderWrap>
             <CardEmojiContainer>🔥</CardEmojiContainer>
           </CardHeaderSection>
@@ -117,6 +122,19 @@ const CardHeaderWrap = styled.div`
   flex: 1 0 0;
 
   border-radius: var(--radius-empty, 0px);
+  opacity: var(--opacity-visible, 1);
+`;
+
+const CardTime = styled.p`
+  color: ${semantic.light.object.transparent.assistive};
+
+  /* caption/1 */
+  font-family: Pretendard;
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 20px; /* 153.846% */
+
   opacity: var(--opacity-visible, 1);
 `;
 
