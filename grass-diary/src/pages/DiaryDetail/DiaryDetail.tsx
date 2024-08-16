@@ -23,9 +23,7 @@ const DiaryDetail = () => {
   const diaryId = useParamsId();
   const memberId = useUser();
   const [likeCount, setLikeCount] = useState(0);
-  const [mood, setMood] = useState('');
   const [imageModal, setImageModal] = useState(false);
-  const [commentCount, setCommentCount] = useState(0);
   const { detail, writer } = useDiaryDetail(diaryId);
 
   const zoom = () => {
@@ -37,7 +35,6 @@ const DiaryDetail = () => {
   useEffect(() => {
     if (detail) {
       setLikeCount(detail.likeCount);
-      setMood(EMOJI[detail.transparency * 10]);
     }
   }, [detail]);
 
@@ -86,7 +83,7 @@ const DiaryDetail = () => {
               )}
             </PrivateContainer>
             <EmojiContainer>
-              <Emoji>{mood}</Emoji>
+              <Emoji>{detail && EMOJI[detail.transparency * 10]}</Emoji>
             </EmojiContainer>
             {memberId === detail?.memberId && (
               <Setting diaryId={diaryId} createdDate={detail?.createdDate} />
@@ -125,15 +122,7 @@ const DiaryDetail = () => {
           </BottomSection>
 
           <Divider></Divider>
-
-          <CommentLable>{`댓글 ${commentCount}`}</CommentLable>
-          <CommentContainer>
-            <Comments
-              memberId={memberId}
-              diaryId={diaryId}
-              setCommentCount={setCommentCount}
-            ></Comments>
-          </CommentContainer>
+          <Comments />
         </DiaryBox>
       </Container>
       <Footer />
@@ -357,24 +346,4 @@ const Divider = styled.div`
 
   opacity: var(--opacity-visible, 1);
   background: ${semantic.light.border.transparent.alternative};
-`;
-
-const CommentLable = styled.div`
-  align-self: stretch;
-
-  color: ${semantic.light.object.transparent.neutral};
-
-  ${TYPO.label3}
-`;
-
-const CommentContainer = styled.div`
-  display: flex;
-  padding: var(--gap-empty, 0px);
-  flex-direction: column;
-  align-items: flex-start;
-  gap: var(--gap-xs, 10px);
-  align-self: stretch;
-
-  border-radius: var(--radius-empty, 0px);
-  opacity: var(--opacity-visible, 1);
 `;
