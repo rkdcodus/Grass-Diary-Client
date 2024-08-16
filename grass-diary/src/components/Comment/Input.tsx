@@ -1,34 +1,15 @@
 import styled from 'styled-components';
 import { semantic } from '@styles/semantic';
 import { TYPO } from '@styles/typo';
-
 import { useEffect, useState } from 'react';
 
 import { useParamsId } from '@hooks/useParamsId';
 import { useUser } from '@state/user/useUser';
 import { useProfile } from '@state/profile/useProfile';
+import { useCommentActions } from '@state/comment/CommentStore';
 import { usePostComment } from '@hooks/api/comment/usePostcomment';
 import { usePatchComment } from '@hooks/api/comment/usePatchComment';
-import { useCommentActions } from '@state/comment/CommentStore';
 import { ReactComponent as ReplySvg } from '@svg/subdirectory_arrow_right.svg';
-
-type CommentInputProps = {
-  submit: (e) => void;
-  text: string;
-  setText: React.Dispatch<React.SetStateAction<string>>;
-  isReply: boolean;
-  isPatch: boolean;
-};
-
-type PostInputProps = {
-  parentId: Id | null;
-};
-
-type PatchInputProps = {
-  commentId: Id;
-  isReply: boolean;
-  content: string;
-};
 
 const CommentInput = ({
   submit,
