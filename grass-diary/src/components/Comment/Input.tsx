@@ -9,32 +9,43 @@ import { useProfile } from '@state/profile/useProfile';
 import { useCommentActions } from '@state/comment/CommentStore';
 import { usePostComment } from '@hooks/api/comment/usePostcomment';
 import { usePatchComment } from '@hooks/api/comment/usePatchComment';
-import { ReactComponent as ReplySvg } from '@svg/subdirectory_arrow_right.svg';
+import { ReactComponent as ReplyIcon } from '@svg/subdirectory_arrow_right.svg';
 
 const CommentInput = ({
   submit,
   text,
   setText,
   isReply,
+  isCancleBtn,
   isPatch,
 }: CommentInputProps) => {
   const { profileImageURL, nickname } = useProfile();
-  const { resetEditId } = useCommentActions();
+  const { resetEditId, resetReplyId } = useCommentActions();
   const [focus, setFocus] = useState(false);
+
+  // focus 될 때
   const onFocus = () => setFocus(true);
+
+  // focus 해지될 때
   const onBlur = () => setFocus(false);
+
   const commentHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setText(e.target.value);
   };
+
   const cancle = () => {
-    resetEditId();
+    if (isPatch) {
+      resetEditId();
+    } else {
+      resetReplyId();
+    }
   };
 
   return (
-    <InputComment $focus={focus}>
+    <InputComment $focus={focus} $isReply={isReply}>
       <CommentTop>
-        {isReply && <ReplyIcon />}
         <WriterWrap>
+          {isReply && <ReplyIcon />}
           <WriterProfile src={profileImageURL} />
           <WriterName>{nickname}</WriterName>
         </WriterWrap>
@@ -47,11 +58,7 @@ const CommentInput = ({
           onChange={commentHandler}
           placeholder="댓글을 입력해주세요"
         ></Input>
-        {isPatch && (
-          <SubmitBtn type="button" onClick={cancle}>
-            취소
-          </SubmitBtn>
-        )}
+        {isCancleBtn && <CancleBtn onClick={cancle}>취소</CancleBtn>}
         <SubmitBtn type="button" onClick={submit} disabled={text === ''}>
           등록
         </SubmitBtn>
@@ -65,6 +72,7 @@ const PostInput = ({ parentId }: PostInputProps) => {
   const diaryId = useParamsId();
   const memberId = useUser();
   const { mutate: postComment } = usePostComment(diaryId);
+  const { resetReplyId } = useCommentActions();
   const [text, setText] = useState('');
 
   const submit = e => {
@@ -80,6 +88,7 @@ const PostInput = ({ parentId }: PostInputProps) => {
     postComment(request, {
       onSuccess() {
         setText('');
+        resetReplyId();
       },
     });
   };
@@ -89,6 +98,7 @@ const PostInput = ({ parentId }: PostInputProps) => {
       text={text}
       setText={setText}
       isReply={parentId ? true : false}
+      isCancleBtn={parentId ? true : false}
       isPatch={false}
     />
   );
@@ -129,20 +139,13 @@ const PatchInput = ({ commentId, isReply, content }: PatchInputProps) => {
       text={text}
       setText={setText}
       isReply={isReply}
+      isCancleBtn={true}
       isPatch={true}
     />
   );
 };
 
 export { PostInput, PatchInput };
-
-const ReplyIcon = styled(ReplySvg)`
-  display: flex;
-  padding: var(--gap-5xs, 2px);
-  align-items: center;
-  gap: var(--gap-empty, 0px);
-  margin-right: -4px;
-`;
 
 const CommentTop = styled.div`
   display: flex;
@@ -182,7 +185,7 @@ const WriterName = styled.p`
   ${TYPO.label2}
 `;
 
-const InputComment = styled.div<{ $focus: boolean }>`
+const InputComment = styled.div<{ $focus: boolean; $isReply: boolean }>`
   display: flex;
   padding: var(--gap-sm, 12px) var(--gap-md, 16px);
   flex-direction: column;
@@ -197,6 +200,9 @@ const InputComment = styled.div<{ $focus: boolean }>`
       props.$focus
         ? semantic.light.accent.solid.hero
         : semantic.light.border.transparent.normal};
+  ${props =>
+    props.$isReply &&
+    `box-shadow: 0px 0px 2px 0px rgba(0, 0, 0, 0.06), 0px 3px 6px 0px rgba(0, 0, 0, 0.11);`}
 
   &:hover {
     background: rgba(59, 59, 59, 0.05);
@@ -237,6 +243,16 @@ const Input = styled.input`
   line-height: 26px;
 
   caret-color: ${semantic.light.accent.solid.normal};
+`;
+
+const CancleBtn = styled.div`
+  cursor: pointer;
+  padding: var(--gap-4xs, 4px) var(--gap-2xs, 8px);
+  gap: var(--gap-2xs, 8px);
+
+  color: ${semantic.light.object.transparent.alternative};
+  text-align: center;
+  ${TYPO.label1}
 `;
 
 const SubmitBtn = styled.button`

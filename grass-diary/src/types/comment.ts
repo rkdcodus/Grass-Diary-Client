@@ -25,6 +25,7 @@ type CommentResponse = {
 
 type CommentSettingProps = {
   commentId: Id;
+  writerId: Id;
 };
 
 type CommentProps = {
@@ -47,6 +48,7 @@ type CommentInputProps = {
   text: string;
   setText: React.Dispatch<React.SetStateAction<string>>;
   isReply: boolean;
+  isCancleBtn: boolean;
   isPatch: boolean;
 };
 
