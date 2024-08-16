@@ -5,9 +5,9 @@ type PostRequest = {
   parentCommentId: Id | null;
 };
 
-type PatchRequestDto = {
+type PatchRequest = {
   commentId: Id;
-  request: {
+  content: {
     content: string;
   };
 };
@@ -19,17 +19,43 @@ type CommentResponse = {
   deleted: boolean;
   createdDate: string;
   createdAt: string;
-  childcomments: CommentResponse[];
-};
-
-type CommentsProps = {
-  memberId: Id;
-  diaryId: Id;
-  setCommentCount: React.Dispatch<React.SetStateAction<number>>;
+  depth: number;
+  childComments: CommentResponse[];
 };
 
 type CommentSettingProps = {
-  diaryId: Id;
   commentId: Id;
-  setEditingId: React.Dispatch<React.SetStateAction<number>>;
+};
+
+type CommentProps = {
+  comment: CommentResponse;
+};
+
+type CommentListProps = {
+  childs: CommentResponse[];
+  parentId: Id;
+};
+
+type CommentDisplayProps = {
+  comment: CommentResponse;
+  parentId: Id;
+};
+
+// input 관련 props 타입
+type CommentInputProps = {
+  submit: (e) => void;
+  text: string;
+  setText: React.Dispatch<React.SetStateAction<string>>;
+  isReply: boolean;
+  isPatch: boolean;
+};
+
+type PostInputProps = {
+  parentId: Id | null;
+};
+
+type PatchInputProps = {
+  commentId: Id;
+  isReply: boolean;
+  content: string;
 };
