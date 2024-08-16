@@ -7,9 +7,11 @@ import { useCommentActions } from '@state/comment/CommentStore';
 import { ReactComponent as ReplyIcon } from '@svg/subdirectory_arrow_right.svg';
 import CommentSetting from './CommentSetting';
 import { useTodayDate } from '@hooks/api/useTodayDate';
+import { useUser } from '@state/user/useUser';
 
 const CommentDisplay = ({ comment, parentId }: CommentDisplayProps) => {
   const { data: writer } = useWriterProfile(comment.memberId);
+  const memberId = useUser();
   const { setReplyId } = useCommentActions();
   const { date } = useTodayDate();
   const setting = useRef<HTMLDivElement>(null);
@@ -35,7 +37,7 @@ const CommentDisplay = ({ comment, parentId }: CommentDisplayProps) => {
   }, [date, comment.createdDate]);
 
   return comment.deleted ? (
-    <CommentWrap>
+    <CommentWrap $isMe={memberId === comment.memberId}>
       <WriterWrap>
         {comment.depth ? <ReplyIcon /> : null}
         <CommentContent $deleted={comment.deleted}>
@@ -44,12 +46,14 @@ const CommentDisplay = ({ comment, parentId }: CommentDisplayProps) => {
       </WriterWrap>
     </CommentWrap>
   ) : (
-    <CommentWrap onClick={reply}>
+    <CommentWrap onClick={reply} $isMe={memberId === comment.memberId}>
       <CommentTop>
         <WriterWrap>
           {comment.depth ? <ReplyIcon /> : null}
           <WriterProfile src={writer?.profileImageURL} />
-          <WriterName>{writer?.nickname}</WriterName>
+          <WriterName $isMe={memberId === comment.memberId}>
+            {writer?.nickname}
+          </WriterName>
           <CreateTime>
             {isToday
               ? comment.createdAt
@@ -77,7 +81,7 @@ const CommentDisplay = ({ comment, parentId }: CommentDisplayProps) => {
 
 export default CommentDisplay;
 
-const CommentWrap = styled.div`
+const CommentWrap = styled.div<{ $isMe: boolean }>`
   display: flex;
   padding: var(--gap-sm, 12px) var(--gap-md, 16px);
   flex-direction: column;
@@ -86,9 +90,16 @@ const CommentWrap = styled.div`
   align-self: stretch;
 
   border-radius: var(--radius-sm, 12px);
-  border: var(--stroke-thin, 1px) solid
-    ${semantic.light.border.transparent.assistive};
   opacity: var(--opacity-visible, 1);
+
+  border: ${props =>
+    props.$isMe
+      ? 'none'
+      : `var(--stroke-thin, 1px) solid
+    ${semantic.light.border.transparent.assistive}`};
+
+  background: ${props =>
+    props.$isMe ? semantic.light.fill.transparent.assistive : 'none'};
 `;
 
 const CommentTop = styled.div`
@@ -124,8 +135,11 @@ const WriterProfile = styled.img`
   objectfit: cover;
 `;
 
-const WriterName = styled.p`
-  color: ${semantic.light.object.solid.normal};
+const WriterName = styled.p<{ $isMe: boolean }>`
+  color: ${props =>
+    props.$isMe
+      ? semantic.light.accent.solid.hero
+      : semantic.light.object.solid.normal};
   ${TYPO.label2}
 `;
 
