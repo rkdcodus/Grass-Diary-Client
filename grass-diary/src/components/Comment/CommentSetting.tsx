@@ -9,9 +9,13 @@ import Menus from '@components/Button/Menus';
 import { useParamsId } from '@hooks/useParamsId';
 import { useDeleteComment } from '@hooks/api/comment/useDeleteComment';
 import { useCommentActions } from '@state/comment/CommentStore';
+import { useUser } from '@state/user/useUser';
+import { useDiaryDetail } from '@hooks/api/useDiaryDetail';
 
-const CommentSetting = ({ commentId }: CommentSettingProps) => {
+const CommentSetting = ({ commentId, writerId }: CommentSettingProps) => {
   const diaryId = useParamsId();
+  const memberId = useUser();
+  const { detail } = useDiaryDetail(diaryId);
   const { setEditId } = useCommentActions();
   const { mutate: deleteComment } = useDeleteComment(diaryId);
 
@@ -21,21 +25,43 @@ const CommentSetting = ({ commentId }: CommentSettingProps) => {
 
   return (
     <SettingWrap>
-      <Menus icon={moreVert}>
-        <Menu
-          onClick={editHandler}
-          text={'댓글 수정'}
-          svg={editIcon}
-          topRadius={16}
-        />
-        <Menu
-          onClick={() => deleteComment(commentId)}
-          text={'댓글 삭제'}
-          svg={deleteIcon}
-          color={semantic.light.feedback.solid.negative}
-          bottomRadius={16}
-        />
-      </Menus>
+      {memberId === detail?.memberId ? (
+        <Menus icon={moreVert}>
+          {memberId === writerId && (
+            <Menu
+              onClick={editHandler}
+              text={'댓글 수정'}
+              svg={editIcon}
+              topRadius={16}
+            />
+          )}
+          <Menu
+            onClick={() => deleteComment(commentId)}
+            text={'댓글 삭제'}
+            svg={deleteIcon}
+            color={semantic.light.feedback.solid.negative}
+            bottomRadius={16}
+          />
+        </Menus>
+      ) : (
+        memberId === writerId && (
+          <Menus icon={moreVert}>
+            <Menu
+              onClick={editHandler}
+              text={'댓글 수정'}
+              svg={editIcon}
+              topRadius={16}
+            />
+            <Menu
+              onClick={() => deleteComment(commentId)}
+              text={'댓글 삭제'}
+              svg={deleteIcon}
+              color={semantic.light.feedback.solid.negative}
+              bottomRadius={16}
+            />
+          </Menus>
+        )
+      )}
     </SettingWrap>
   );
 };

@@ -4,15 +4,15 @@ import { TYPO } from '@styles/typo';
 import { useEffect, useRef, useState } from 'react';
 import { useWriterProfile } from '@hooks/api/useWriterProfile';
 import { useCommentActions } from '@state/comment/CommentStore';
-import { ReactComponent as ReplySvg } from '@svg/subdirectory_arrow_right.svg';
+import { ReactComponent as ReplyIcon } from '@svg/subdirectory_arrow_right.svg';
 import CommentSetting from './CommentSetting';
 import { useTodayDate } from '@hooks/api/useTodayDate';
 
 const CommentDisplay = ({ comment, parentId }: CommentDisplayProps) => {
-  const setting = useRef<HTMLDivElement>(null);
   const { data: writer } = useWriterProfile(comment.memberId);
   const { setReplyId } = useCommentActions();
   const { date } = useTodayDate();
+  const setting = useRef<HTMLDivElement>(null);
   const [isToday, setIsToday] = useState(false);
 
   const reply = e => {
@@ -32,31 +32,43 @@ const CommentDisplay = ({ comment, parentId }: CommentDisplayProps) => {
         setIsToday(true);
       }
     }
-  }, []);
+  }, [date, comment.createdDate]);
 
   return comment.deleted ? (
     <CommentWrap>
-      {comment.depth ? <ReplyIcon /> : null}
-      <CommentContent $deleted={comment.deleted}>
-        삭제된 댓글입니다
-      </CommentContent>
+      <WriterWrap>
+        {comment.depth ? <ReplyIcon /> : null}
+        <CommentContent $deleted={comment.deleted}>
+          삭제된 댓글입니다
+        </CommentContent>
+      </WriterWrap>
     </CommentWrap>
   ) : (
     <CommentWrap onClick={reply}>
       <CommentTop>
-        {comment.depth ? <ReplyIcon /> : null}
         <WriterWrap>
+          {comment.depth ? <ReplyIcon /> : null}
           <WriterProfile src={writer?.profileImageURL} />
           <WriterName>{writer?.nickname}</WriterName>
           <CreateTime>
-            {isToday ? comment.createdAt : `20${comment.createdDate}`}
+            {isToday
+              ? comment.createdAt
+              : comment.createdDate
+              ? `20${comment.createdDate}`
+              : ''}
           </CreateTime>
         </WriterWrap>
         <div ref={setting}>
-          <CommentSetting commentId={comment.commentId} />
+          <CommentSetting
+            commentId={comment.commentId}
+            writerId={comment.memberId}
+          />
         </div>
       </CommentTop>
-      <CommentContent $deleted={comment.deleted}>
+      <CommentContent
+        $deleted={comment.deleted}
+        $isReply={comment.depth ? true : false}
+      >
         {comment.content}
       </CommentContent>
     </CommentWrap>
@@ -122,18 +134,11 @@ const CreateTime = styled.p`
   ${TYPO.caption1}
 `;
 
-const CommentContent = styled.div<{ $deleted?: boolean }>`
+const CommentContent = styled.div<{ $deleted?: boolean; $isReply?: boolean }>`
+  ${props => props.$isReply && `padding-left: var(--gap-2xl, 32px);`}
   color: ${props =>
     props.$deleted
       ? semantic.light.object.transparent.alternative
       : semantic.light.object.solid.normal};
   ${TYPO.body1}
-`;
-
-const ReplyIcon = styled(ReplySvg)`
-  display: flex;
-  padding: var(--gap-5xs, 2px);
-  align-items: center;
-  gap: var(--gap-empty, 0px);
-  margin-right: -4px;
 `;
