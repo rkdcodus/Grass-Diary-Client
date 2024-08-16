@@ -52,6 +52,8 @@ export const GlobalStyle = createGlobalStyle`
 
   button {
   border: none;
+  background: none;
+  cursor: pointer;
   }
 
   h1,
@@ -133,5 +135,15 @@ export const GlobalStyle = createGlobalStyle`
     background-color: white;
     height: 70vh;
   }
+
+
+  input {
+    margin: 0;
+    padding: 0;
+    border: 1px solid #ccc; /* 경계선을 일관되게 설정 */
+    outline: none; /* 포커스 시 발생하는 외곽선 제거 */
+    font-family: inherit; /* 폰트 스타일을 상속받아 일관성 유지 */
+    background-color: transparent; /* 배경색을 투명하게 설정 */
+}
 
 `;
