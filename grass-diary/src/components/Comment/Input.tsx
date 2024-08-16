@@ -75,7 +75,7 @@ const PostInput = ({ parentId }: PostInputProps) => {
   const { resetReplyId } = useCommentActions();
   const [text, setText] = useState('');
 
-  const submit = e => {
+  const submit = (e: React.MouseEvent<HTMLElement, MouseEvent>) => {
     e.preventDefault();
     if (text === '') return;
     const request = {
@@ -110,7 +110,7 @@ const PatchInput = ({ commentId, isReply, content }: PatchInputProps) => {
   const { mutate: patchComment } = usePatchComment(diaryId);
   const { resetEditId } = useCommentActions();
 
-  const submit = e => {
+  const submit = (e: React.MouseEvent<HTMLElement, MouseEvent>) => {
     e.preventDefault();
     if (text === '') return;
     const request = {

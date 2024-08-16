@@ -17,7 +17,7 @@ const CommentDisplay = ({ comment, parentId }: CommentDisplayProps) => {
   const setting = useRef<HTMLDivElement>(null);
   const [isToday, setIsToday] = useState(false);
 
-  const reply = e => {
+  const reply = (e: React.MouseEvent<HTMLElement, MouseEvent>) => {
     if (setting.current) {
       if (setting.current.contains(e.target as HTMLElement)) return;
     }
