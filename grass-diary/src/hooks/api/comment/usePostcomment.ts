@@ -11,11 +11,21 @@ export const usePostComment = (diaryId: Id) => {
 
       // 업데이트 이전 정보 저장.
       const priviousData = queryClient.getQueryData(['comment', diaryId]);
+      const newRequest = {
+        commentId: 999,
+        memberId: request.memberId,
+        content: request.content,
+        deleted: false,
+        createdDate: null,
+        createdAt: null,
+        depth: 0,
+        childComments: [],
+      };
 
-      queryClient.setQueryData(['comment', diaryId], prev => [
-        ...prev,
-        request,
-      ]);
+      queryClient.setQueryData(
+        ['comment', diaryId],
+        (prev: CommentResponse[]) => [...prev, newRequest],
+      );
 
       return { priviousData };
     },

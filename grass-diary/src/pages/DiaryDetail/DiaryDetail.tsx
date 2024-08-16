@@ -106,7 +106,7 @@ const DiaryDetail = () => {
             <HashTagContainer>
               {detail?.tags?.map(tag => {
                 return (
-                  <HashWrap>
+                  <HashWrap key={tag.id}>
                     <Tag />
                     <HashText>{tag.tag}</HashText>
                   </HashWrap>

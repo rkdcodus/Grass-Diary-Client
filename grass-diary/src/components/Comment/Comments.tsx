@@ -15,7 +15,7 @@ const Comments = () => {
       <CommentLable>{`댓글 ${comments?.length}`}</CommentLable>
       <CommentContainer>
         {comments?.map((comment: CommentResponse) => (
-          <Comment comment={comment} />
+          <Comment key={comment.commentId} comment={comment} />
         ))}
         <PostInput parentId={null} />
       </CommentContainer>

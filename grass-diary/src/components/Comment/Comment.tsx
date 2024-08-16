@@ -1,3 +1,4 @@
+import React from 'react';
 import CommentDisplay from './CommentDisplay';
 import { PatchInput, PostInput } from './Input';
 import {
@@ -11,15 +12,19 @@ const ChildCommentList = ({ childs, parentId }: CommentListProps) => {
     <>
       {childs?.length
         ? childs.map((child: CommentResponse) => {
-            return editId === child.commentId ? (
-              // 대댓글 patch input
-              <PatchInput
-                commentId={child.commentId}
-                isReply={true}
-                content={child.content}
-              />
-            ) : (
-              <CommentDisplay comment={child} parentId={parentId} />
+            return (
+              <React.Fragment key={child.commentId}>
+                {editId === child.commentId ? (
+                  // 대댓글 patch input
+                  <PatchInput
+                    commentId={child.commentId}
+                    isReply={true}
+                    content={child.content}
+                  />
+                ) : (
+                  <CommentDisplay comment={child} parentId={parentId} />
+                )}
+              </React.Fragment>
             );
           })
         : null}
