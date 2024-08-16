@@ -1,16 +1,19 @@
 import styled from 'styled-components';
 import { semantic } from '@styles/semantic';
 import { TYPO } from '@styles/typo';
-import { useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useWriterProfile } from '@hooks/api/useWriterProfile';
 import { useCommentActions } from '@state/comment/CommentStore';
 import { ReactComponent as ReplySvg } from '@svg/subdirectory_arrow_right.svg';
 import CommentSetting from './CommentSetting';
+import { useTodayDate } from '@hooks/api/useTodayDate';
 
 const CommentDisplay = ({ comment, parentId }: CommentDisplayProps) => {
   const setting = useRef<HTMLDivElement>(null);
   const { data: writer } = useWriterProfile(comment.memberId);
   const { setReplyId } = useCommentActions();
+  const { date } = useTodayDate();
+  const [isToday, setIsToday] = useState(false);
 
   const reply = e => {
     if (setting.current) {
@@ -18,6 +21,18 @@ const CommentDisplay = ({ comment, parentId }: CommentDisplayProps) => {
     }
     setReplyId(parentId);
   };
+
+  useEffect(() => {
+    if (date && comment.createdDate) {
+      if (
+        +comment.createdDate.slice(0, 2) === date.year % 100 &&
+        +comment.createdDate.slice(4, 6) === date.month &&
+        +comment.createdDate.slice(8, 10) === date.date
+      ) {
+        setIsToday(true);
+      }
+    }
+  }, []);
 
   return comment.deleted ? (
     <CommentWrap>
@@ -33,6 +48,9 @@ const CommentDisplay = ({ comment, parentId }: CommentDisplayProps) => {
         <WriterWrap>
           <WriterProfile src={writer?.profileImageURL} />
           <WriterName>{writer?.nickname}</WriterName>
+          <CreateTime>
+            {isToday ? comment.createdAt : `20${comment.createdDate}`}
+          </CreateTime>
         </WriterWrap>
         <div ref={setting}>
           <CommentSetting commentId={comment.commentId} />
@@ -97,6 +115,11 @@ const WriterProfile = styled.img`
 const WriterName = styled.p`
   color: ${semantic.light.object.solid.normal};
   ${TYPO.label2}
+`;
+
+const CreateTime = styled.p`
+  color: ${semantic.light.object.transparent.assistive};
+  ${TYPO.caption1}
 `;
 
 const CommentContent = styled.div<{ $deleted?: boolean }>`
