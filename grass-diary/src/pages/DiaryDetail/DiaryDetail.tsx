@@ -284,10 +284,11 @@ const DiaryContent = styled.div`
 `;
 
 const ImageCard = styled.img`
-  height: 360px;
-
+  height: 460px;
+  width: 100%;
   border-radius: var(--radius-sm, 12px);
   opacity: var(--opacity-visible, 1);
+  object-fit: cover;
 `;
 
 const ContentCard = styled.div`
