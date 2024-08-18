@@ -54,14 +54,14 @@ export default PopularFeed;
 
 const RankContainer = styled.div`
   display: flex;
-  padding: var(--gap-4xl, 48px) var(--gap-xl, 24px);
+  padding: 3rem 1.5rem; /* 48px 24px */
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: var(--gap-2xl, 32px);
+  gap: 2rem; /* 32px */
   align-self: stretch;
 
-  border-radius: var(--radius-empty, 0px);
+  border-radius: var(--radius-empty, 0rem); /* 0px */
   opacity: var(--opacity-visible, 1);
   background: ${semantic.light.fill.transparent.alternative};
 `;
@@ -72,15 +72,15 @@ const RankText = styled.p`
 
   /* title/2 */
   font-family: Pretendard;
-  font-size: 24px;
+  font-size: 1.5rem; /* 24px */
   font-style: normal;
   font-weight: 600;
-  line-height: 32px; /* 133.333% */
-  letter-spacing: -0.374px;
+  line-height: 2rem; /* 32px */
+  letter-spacing: -0.023375rem; /* -0.374px */
 
   opacity: var(--opacity-visible, 1);
 `;
 
 const RankCardContainer = styled.div`
-  width: 960px;
+  width: 60rem; /* 960px */
 `;
