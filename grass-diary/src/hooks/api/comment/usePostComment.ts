@@ -1,3 +1,4 @@
+import { END_POINT } from '@constants/api';
 import API from '@services/index';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
@@ -5,7 +6,7 @@ export const usePostComment = (diaryId: Id) => {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: async (request: PostRequest) =>
-      API.post(`/comment/${diaryId}`, request),
+      API.post(END_POINT.COMMENT(diaryId), request),
     onSuccess() {
       queryClient.invalidateQueries({ queryKey: ['comment', diaryId] });
     },

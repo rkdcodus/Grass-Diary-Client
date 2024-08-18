@@ -34,4 +34,6 @@ export const END_POINT = {
   TOTAL_REWARD: (memberId: Id) => `/member/totalReward/${memberId}`,
   GRASS: (memberId: Id) => `/main/grass/${memberId}`,
   IMAGE: '/image/diary',
+  COMMENT: (id: Id) => `/comment/${id}`,
+  COMMENT_DELETE: (id: Id) => `/comment/${id}/delete`,
 } as const;
