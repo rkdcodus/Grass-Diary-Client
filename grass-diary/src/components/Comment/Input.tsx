@@ -7,7 +7,7 @@ import { useParamsId } from '@hooks/useParamsId';
 import { useUser } from '@state/user/useUser';
 import { useProfile } from '@state/profile/useProfile';
 import { useCommentActions } from '@state/comment/CommentStore';
-import { usePostComment } from '@hooks/api/comment/usePostcomment';
+import { usePostComment } from '@hooks/api/comment/usePostComment';
 import { usePatchComment } from '@hooks/api/comment/usePatchComment';
 import { ReactComponent as ReplyIcon } from '@svg/subdirectory_arrow_right.svg';
 
