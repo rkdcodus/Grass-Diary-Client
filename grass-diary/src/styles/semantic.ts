@@ -112,6 +112,15 @@ export const semantic = {
         diamond: '#029AE8' as HexColor,
       },
     },
+    inverse: {
+      solid: {
+        accent: '#00A66E' as HexColor,
+        negative: '#F17961' as HexColor,
+        hero: '#ffffff' as HexColor,
+        normal: '#E2E2E2' as HexColor,
+        bg: '#2B2B2B' as HexColor,
+      },
+    },
   },
 
   dark: {
@@ -223,6 +232,15 @@ export const semantic = {
         lightblue: '#BFC3FA' as HexColor,
         ruby: '#F6547E' as HexColor,
         diamond: '#01AAFF' as HexColor,
+      },
+    },
+    inverse: {
+      solid: {
+        accent: '#00895A' as HexColor,
+        negative: '#D93526' as HexColor,
+        hero: '#262626' as HexColor,
+        normal: '#3B3B3B' as HexColor,
+        bg: '#ffffff' as HexColor,
       },
     },
   },
