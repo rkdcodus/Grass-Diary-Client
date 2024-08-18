@@ -183,6 +183,7 @@ const DayBox = styled.div`
   border-radius: var(--radius-sm, 0.75rem); /* 12px */
   opacity: var(--opacity-visible, 1);
 
+  background: ${semantic.light.fill.transparent.assistive};
   /* shadow/embossed */
   box-shadow: 0rem 0rem 0.0625rem 0rem rgba(0, 0, 0, 0.04),
     /* 1px */ 0rem 0.125rem 0.25rem 0rem rgba(0, 0, 0, 0.08); /* 2px 4px */
