@@ -235,12 +235,7 @@ const Input = styled.input`
     color: ${semantic.light.object.transparent.assistive};
   }
 
-  // ${TYPO.body1}
-  font-family: Pretendard;
-  font-size: 14px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: 26px;
+  ${TYPO.body1}
 
   caret-color: ${semantic.light.accent.solid.normal};
 `;

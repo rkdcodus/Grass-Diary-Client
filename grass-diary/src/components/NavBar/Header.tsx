@@ -35,14 +35,16 @@ const Header = () => {
               </IconBtn>
             </RightContent>
           ) : (
-            <ButtonWrapper>
-              <Interaction1
-                onClick={() => console.log('로그인')}
-                topRadius={8}
-                bottomRadius={8}
-              />
-              <LoginBtn>로그인</LoginBtn>
-            </ButtonWrapper>
+            <div>
+              <ButtonWrapper>
+                <Interaction1
+                  onClick={() => console.log('로그인')}
+                  topRadius={8}
+                  bottomRadius={8}
+                />
+                <LoginBtn>로그인</LoginBtn>
+              </ButtonWrapper>
+            </div>
           )}
         </ContentWrap>
       </NavBar>
