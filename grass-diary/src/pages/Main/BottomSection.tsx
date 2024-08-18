@@ -66,6 +66,12 @@ const BottomSection = () => {
           </Card>
         </Container>
       </Section>
+      <Link to="/share" onClick={handleClick}>
+        <SeeMoreContainer>
+          <SeeMoreBtn>더 보러가기</SeeMoreBtn>
+          <ArrowBlack></ArrowBlack>
+        </SeeMoreContainer>
+      </Link>
     </>
   );
 };
@@ -257,6 +263,32 @@ const RetrospectText = styled.p`
   font-weight: 500;
   line-height: 1.375rem; /* 22px, 137.5% */
   letter-spacing: -0.006rem; /* -0.096px */
+
+  opacity: var(--opacity-visible, 1);
+`;
+
+const SeeMoreContainer = styled.div`
+  display: flex;
+  padding: var(--gap-4xs, 0.25rem) var(--gap-2xs, 0.5rem);
+  justify-content: center;
+  align-items: center;
+  gap: var(--gap-2xs, 0.5rem);
+
+  border-radius: var(--radius-xs, 0.5rem);
+  opacity: var(--opacity-visible, 1);
+`;
+
+const SeeMoreBtn = styled.p`
+  color: ${semantic.light.object.transparent.alternative};
+  text-align: center;
+
+  /* label/2 */
+  font-family: Pretendard;
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 1.375rem; /* 137.5% */
+  letter-spacing: -0.006rem;
 
   opacity: var(--opacity-visible, 1);
 `;
