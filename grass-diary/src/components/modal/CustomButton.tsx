@@ -1,4 +1,4 @@
-import ButtonContainer from '@components/Button/ButtonContainer';
+import ButtonWrapper from '@components/Button/ButtonWrapper';
 import Interaction1 from '@components/Interactions/Interaction1';
 import { semantic } from '@styles/semantic';
 import styled from 'styled-components';
@@ -11,10 +11,10 @@ type CustomButtonProps = {
 
 const CustomButton = ({ onClick, text, color }: CustomButtonProps) => {
   return (
-    <ButtonContainer>
+    <ButtonWrapper>
       <Interaction1 onClick={onClick} topRadius={12} bottomRadius={12} />
       <CustomBtn $color={color}>{text}</CustomBtn>
-    </ButtonContainer>
+    </ButtonWrapper>
   );
 };
 

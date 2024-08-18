@@ -1,4 +1,4 @@
-import ButtonContainer from '@components/Button/ButtonContainer';
+import ButtonWrapper from '@components/Button/ButtonWrapper';
 import Interaction4 from '@components/Interactions/Interaction4';
 import { semantic } from '@styles/semantic';
 import styled from 'styled-components';
@@ -9,10 +9,10 @@ type CheckButtonProps = {
 
 const CheckButton = ({ onClick }: CheckButtonProps) => {
   return (
-    <ButtonContainer>
+    <ButtonWrapper>
       <Interaction4 onClick={onClick} topRadius={12} bottomRadius={12} />
       <CheckBtn>확인</CheckBtn>
-    </ButtonContainer>
+    </ButtonWrapper>
   );
 };
 
