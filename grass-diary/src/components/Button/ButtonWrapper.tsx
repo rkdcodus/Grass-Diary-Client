@@ -1,15 +1,15 @@
 import { ReactNode } from 'react';
 import styled from 'styled-components';
 
-interface ButtonContainerProps {
+interface ButtonWrapperProps {
   children: ReactNode;
 }
 
-const ButtonContainer = ({ children }: ButtonContainerProps) => {
+const ButtonWrapper = ({ children }: ButtonWrapperProps) => {
   return <Btn>{children}</Btn>;
 };
 
-export default ButtonContainer;
+export default ButtonWrapper;
 
 const Btn = styled.div`
   flex: 1;

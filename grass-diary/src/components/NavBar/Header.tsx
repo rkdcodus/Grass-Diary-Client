@@ -5,7 +5,7 @@ import sampleLogo from '@image/sampleLogo.png';
 import { ReactComponent as LogoSVG } from '@svg/logo.svg';
 
 import Interaction1 from '@components/Interactions/Interaction1';
-import ButtonContainer from '@components/Button/ButtonContainer';
+import ButtonWrapper from '@components/Button/ButtonWrapper';
 import MenuBar from '@components/NavBar/MenuBar';
 import { Profile } from '@components/index';
 
@@ -35,16 +35,14 @@ const Header = () => {
               </IconBtn>
             </RightContent>
           ) : (
-            <div>
-              <ButtonContainer>
-                <Interaction1
-                  onClick={() => console.log('로그인')}
-                  topRadius={8}
-                  bottomRadius={8}
-                />
-                <LoginBtn>로그인</LoginBtn>
-              </ButtonContainer>
-            </div>
+            <ButtonWrapper>
+              <Interaction1
+                onClick={() => console.log('로그인')}
+                topRadius={8}
+                bottomRadius={8}
+              />
+              <LoginBtn>로그인</LoginBtn>
+            </ButtonWrapper>
           )}
         </ContentWrap>
       </NavBar>
