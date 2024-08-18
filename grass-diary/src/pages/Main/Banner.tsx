@@ -21,26 +21,26 @@ export default Banner;
 
 const Section = styled.div`
   display: flex;
-  max-width: var(--vw-desktop-min, 960px);
-  padding: var(--gap-4xl, 48px) var(--gap-xl, 24px);
+  max-width: var(--vw-desktop-min, 60rem); /* 960px */
+  padding: var(--gap-4xl, 3rem) var(--gap-xl, 1.5rem); /* 48px, 24px */
   justify-content: center;
   align-items: center;
-  gap: var(--gap-empty, 0px);
+  gap: var(--gap-empty, 0rem); /* 0px */
 
-  border-radius: var(--radius-empty, 0px);
+  border-radius: var(--radius-empty, 0rem); /* 0px */
   opacity: var(--opacity-visible, 1);
 `;
 
 const Container = styled.div`
   display: flex;
-  width: 420px;
-  padding: var(--gap-3xs, 6px) var(--gap-sm, 12px);
+  width: 26.25rem; /* 420px */
+  padding: var(--gap-3xs, 0.375rem) var(--gap-sm, 0.75rem); /* 6px, 12px */
   align-items: flex-start;
-  gap: var(--gap-2xs, 8px);
+  gap: var(--gap-2xs, 0.5rem); /* 8px */
 
-  border-radius: var(--radius-xs, 8px);
-  border: var(--stroke-thin, 1px) solid
-    ${semantic.light.border.transparent.alternative};
+  border-radius: var(--radius-xs, 0.5rem); /* 8px */
+  border: var(--stroke-thin, 0.0625rem) solid
+    ${semantic.light.border.transparent.alternative}; /* 1px */
   opacity: var(--opacity-visible, 1);
   background: ${semantic.light.fill.transparent.assistive};
 `;
@@ -52,10 +52,10 @@ const Text = styled.p`
 
   /* caption/2 */
   font-family: Pretendard;
-  font-size: 14px;
+  font-size: 0.875rem; /* 14px */
   font-style: normal;
   font-weight: 400;
-  line-height: 22px; /* 157.143% */
+  line-height: 1.375rem; /* 22px */
 
   opacity: var(--opacity-visible, 1);
 `;

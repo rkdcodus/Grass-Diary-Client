@@ -74,51 +74,51 @@ export default BottomSection;
 
 const Section = styled.div`
   display: flex;
-  padding: var(--gap-lg, 20px) var(--gap-xl, 24px);
+  padding: var(--gap-lg, 1.25rem) var(--gap-xl, 1.5rem); /* 20px, 24px */
   justify-content: center;
   align-items: center;
-  gap: var(--gap-xl, 24px);
+  gap: var(--gap-xl, 1.5rem); /* 24px */
   align-self: stretch;
 
-  border-radius: var(--radius-empty, 0px);
+  border-radius: var(--radius-empty, 0rem); /* 0px */
   opacity: var(--opacity-visible, 1);
 `;
 
 const Container = styled.div`
   display: flex;
-  max-width: var(--vw-desktop-min, 960px);
-  padding: var(--gap-empty, 0px);
+  max-width: var(--vw-desktop-min, 60rem); /* 960px */
+  padding: var(--gap-empty, 0rem); /* 0px */
   justify-content: center;
   align-items: center;
-  gap: var(--gap-xl, 24px);
+  gap: var(--gap-xl, 1.5rem); /* 24px */
   flex: 1 0 0;
 
-  border-radius: var(--radius-empty, 0px);
+  border-radius: var(--radius-empty, 0rem); /* 0px */
   opacity: var(--opacity-visible, 1);
 `;
 
 const Card = styled.div`
   display: flex;
-  padding: var(--gap-lg, 20px);
+  padding: var(--gap-lg, 1.25rem); /* 20px */
   flex-direction: column;
   align-items: flex-start;
-  gap: var(--gap-md, 16px);
+  gap: var(--gap-md, 1rem); /* 16px */
   flex: 1 0 0;
 
-  border-radius: var(--radius-md, 16px);
-  border: var(--stroke-thin, 1px) solid
-    ${semantic.light.border.transparent.assistive};
+  border-radius: var(--radius-md, 1rem); /* 16px */
+  border: var(--stroke-thin, 0.0625rem) solid
+    ${semantic.light.border.transparent.assistive}; /* 1px */
   opacity: var(--opacity-visible, 1);
   background: ${semantic.light.bg.solid.normal};
 
   /* shadow/embossed */
-  box-shadow: 0px 0px 1px 0px rgba(0, 0, 0, 0.04),
-    0px 2px 4px 0px rgba(0, 0, 0, 0.08);
+  box-shadow: 0rem 0rem 0.0625rem 0rem rgba(0, 0, 0, 0.04),
+    /* 1px */ 0rem 0.125rem 0.25rem 0rem rgba(0, 0, 0, 0.08); /* 2px 4px */
 `;
 
 const Divider = styled.div`
-  width: 428px;
-  height: 1px;
+  width: 26.75rem; /* 428px */
+  height: 0.0625rem; /* 1px */
 
   opacity: var(--opacity-visible, 1);
   background: ${semantic.light.border.transparent.alternative};
@@ -131,11 +131,11 @@ const CardText = styled.p`
 
   /* label/3 */
   font-family: Pretendard;
-  font-size: 18px;
+  font-size: 1.125rem; /* 18px */
   font-style: normal;
   font-weight: 500;
-  line-height: 24px; /* 133.333% */
-  letter-spacing: -0.108px;
+  line-height: 1.5rem; /* 24px, 133.333% */
+  letter-spacing: -0.00675rem; /* -0.108px */
 
   opacity: var(--opacity-visible, 1);
 `;
@@ -147,33 +147,33 @@ const CardSubText = styled.p`
 
   /* caption/2 */
   font-family: Pretendard;
-  font-size: 14px;
+  font-size: 0.875rem; /* 14px */
   font-style: normal;
   font-weight: 400;
-  line-height: 22px; /* 157.143% */
+  line-height: 1.375rem; /* 22px, 157.143% */
 
   opacity: var(--opacity-visible, 1);
 `;
 
 const Wrap = styled.div`
   display: flex;
-  padding: var(--gap-empty, 0px);
+  padding: var(--gap-empty, 0rem); /* 0px */
   align-items: center;
-  gap: var(--gap-md, 16px);
+  gap: var(--gap-md, 1rem); /* 16px */
   align-self: stretch;
 
-  border-radius: var(--radius-empty, 0px);
+  border-radius: var(--radius-empty, 0rem); /* 0px */
   opacity: var(--opacity-visible, 1);
 `;
 
 const RewardContainer = styled.div`
   display: flex;
-  padding: var(--gap-empty, 0px);
+  padding: var(--gap-empty, 0rem); /* 0px */
   align-items: center;
-  gap: var(--gap-2xs, 8px);
+  gap: var(--gap-2xs, 0.5rem); /* 8px */
   flex: 1 0 0;
 
-  border-radius: var(--radius-empty, 0px);
+  border-radius: var(--radius-empty, 0rem); /* 0px */
   opacity: var(--opacity-visible, 1);
 `;
 
@@ -184,24 +184,25 @@ const RewardPoint = styled.p`
 
   /* title/3 */
   font-family: Pretendard;
-  font-size: 17.5px;
+  font-size: 1.09375rem; /* 17.5px */
   font-style: normal;
   font-weight: 600;
-  line-height: 42px; /* 131.25% */
-  letter-spacing: -0.499px;
+  line-height: 2.625rem; /* 42px, 131.25% */
+  letter-spacing: -0.0311875rem; /* -0.499px */
 
   opacity: var(--opacity-visible, 1);
 `;
 
 const ThemeMarketBtn = styled.button`
   display: flex;
-  padding: var(--gap-xs, 10px) var(--gap-md, 16px);
+  padding: var(--gap-xs, 0.625rem) var(--gap-md, 1rem); /* 10px, 16px */
   justify-content: center;
   align-items: center;
-  gap: var(--gap-2xs, 8px);
+  gap: var(--gap-2xs, 0.5rem); /* 8px */
 
-  border-radius: var(--radius-xs, 8px);
-  border: var(--stroke-thin, 1px) solid ${semantic.light.accent.solid.normal};
+  border-radius: var(--radius-xs, 0.5rem); /* 8px */
+  border: var(--stroke-thin, 0.0625rem) solid
+    ${semantic.light.accent.solid.normal}; /* 1px */
   opacity: var(--opacity-visible, 1);
   background: ${semantic.light.accent.transparent.normal};
 
@@ -214,34 +215,35 @@ const ThemeMarketText = styled.p`
 
   /* label/2 */
   font-family: Pretendard;
-  font-size: 16px;
+  font-size: 1rem; /* 16px */
   font-style: normal;
   font-weight: 500;
-  line-height: 22px; /* 137.5% */
-  letter-spacing: -0.096px;
+  line-height: 1.375rem; /* 22px, 137.5% */
+  letter-spacing: -0.006rem; /* -0.096px */
 
   opacity: var(--opacity-visible, 1);
 `;
 
 const RetrospectContainer = styled.div`
   display: flex;
-  padding: var(--gap-empty, 0px);
+  padding: var(--gap-empty, 0rem); /* 0px */
   justify-content: flex-end;
   align-items: center;
-  gap: var(--gap-empty, 0px);
+  gap: var(--gap-empty, 0rem); /* 0px */
   align-self: stretch;
 
-  border-radius: var(--radius-empty, 0px);
+  border-radius: var(--radius-empty, 0rem); /* 0px */
   opacity: var(--opacity-visible, 1);
 `;
+
 const RetrospectBtn = styled.button`
   display: flex;
-  padding: var(--gap-xs, 10px) var(--gap-md, 16px);
+  padding: var(--gap-xs, 0.625rem) var(--gap-md, 1rem); /* 10px, 16px */
   justify-content: center;
   align-items: center;
-  gap: var(--gap-2xs, 8px);
+  gap: var(--gap-2xs, 0.5rem); /* 8px */
 
-  border-radius: var(--radius-xs, 8px);
+  border-radius: var(--radius-xs, 0.5rem); /* 8px */
   opacity: var(--opacity-visible, 1);
 `;
 
@@ -250,11 +252,11 @@ const RetrospectText = styled.p`
 
   /* label/2 */
   font-family: Pretendard;
-  font-size: 16px;
+  font-size: 1rem; /* 16px */
   font-style: normal;
   font-weight: 500;
-  line-height: 22px; /* 137.5% */
-  letter-spacing: -0.096px;
+  line-height: 1.375rem; /* 22px, 137.5% */
+  letter-spacing: -0.006rem; /* -0.096px */
 
   opacity: var(--opacity-visible, 1);
 `;
