@@ -67,13 +67,13 @@ const CloseWrap = styled.div`
 `;
 
 const CloseText = styled.span`
-  color: ${semantic.light.interactive.solid.focused};
+  color: ${semantic.light.inverse.solid.normal};
   text-align: center;
   ${TYPO.label3}
 `;
 
 const CloseIcon = styled(CloseSvg)`
-  fill: ${semantic.light.interactive.solid.focused};
+  fill: ${semantic.light.inverse.solid.normal};
 `;
 
 const Image = styled.img`

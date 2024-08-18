@@ -42,7 +42,7 @@ const ToastContainer = styled.div<{ $active: boolean }>`
   box-shadow: 0px 0px 2px 0px rgba(0, 0, 0, 0.06),
     0px 2px 4px 0px rgba(0, 0, 0, 0.06), 0px 4px 8px 0px rgba(0, 0, 0, 0.13);
 
-  color: ${semantic.light.interactive.solid.focused};
+  color: ${semantic.light.object.solid.hero};
   text-align: center;
   ${TYPO.label2}
   transition: 1s;
