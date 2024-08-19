@@ -99,17 +99,12 @@ const CardHeaderSection = styled.div`
   align-items: center;
   gap: var(--gap-sm, 0.75rem);
   align-self: stretch;
-
-  border-radius: var(--radius-empty, 0rem);
-  opacity: var(--opacity-visible, 1);
 `;
 
 const CardUserImg = styled.div`
   width: 2.5rem;
   height: 2.5rem;
   flex-shrink: 0;
-
-  opacity: var(--opacity-visible, 1);
 `;
 
 const CardHeaderWrap = styled.div`
@@ -120,9 +115,6 @@ const CardHeaderWrap = styled.div`
   align-items: flex-start;
   gap: var(--gap-4xs, 0.25rem);
   flex: 1 0 0;
-
-  border-radius: var(--radius-empty, 0rem);
-  opacity: var(--opacity-visible, 1);
 `;
 
 const CardTime = styled.p`
@@ -133,8 +125,6 @@ const CardTime = styled.p`
   font-style: normal;
   font-weight: 400;
   line-height: 1.25rem;
-
-  opacity: var(--opacity-visible, 1);
 `;
 
 const CardHeaderDate = styled.div`
@@ -146,16 +136,12 @@ const CardHeaderDate = styled.div`
   font-weight: 500;
   line-height: 1.25rem;
   letter-spacing: -0.00525rem;
-
-  opacity: var(--opacity-visible, 1);
 `;
 
 const CardNameWrap = styled.div`
   display: flex;
   align-items: center;
   gap: var(--gap-2xs, 0.5rem);
-
-  border-radius: var(--radius-empty, 0rem);
 `;
 
 const CardEmojiContainer = styled.div`
@@ -169,7 +155,7 @@ const CardEmojiContainer = styled.div`
   border-radius: var(--radius-round, 6rem);
   border: var(--stroke-thin, 0.0625rem) solid
     ${semantic.light.border.transparent.assistive};
-  opacity: var(--opacity-visible, 1);
+
   background: ${semantic.light.fill.transparent.assistive};
 `;
 

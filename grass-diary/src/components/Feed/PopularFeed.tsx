@@ -62,8 +62,6 @@ const RankContainer = styled.div`
   gap: 2rem;
   align-self: stretch;
 
-  border-radius: var(--radius-empty, 0rem);
-  opacity: var(--opacity-visible, 1);
   background: ${semantic.light.fill.transparent.alternative};
 `;
 
@@ -72,8 +70,6 @@ const RankText = styled.p`
   text-align: center;
 
   ${TYPO.title2}
-
-  opacity: var(--opacity-visible, 1);
 `;
 
 const RankCardContainer = styled.div`

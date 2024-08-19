@@ -95,9 +95,6 @@ const Section = styled.div`
   align-items: center;
   gap: var(--gap-xl, 1.5rem);
   align-self: stretch;
-
-  border-radius: var(--radius-empty, 0rem);
-  opacity: var(--opacity-visible, 1);
 `;
 
 const Container = styled.div`
@@ -108,9 +105,6 @@ const Container = styled.div`
   align-items: center;
   gap: var(--gap-xl, 1.5rem);
   flex: 1 0 0;
-
-  border-radius: var(--radius-empty, 0rem);
-  opacity: var(--opacity-visible, 1);
 `;
 
 const Card = styled.div`
@@ -124,7 +118,7 @@ const Card = styled.div`
   border-radius: var(--radius-md, 1rem);
   border: var(--stroke-thin, 0.0625rem) solid
     ${semantic.light.border.transparent.assistive};
-  opacity: var(--opacity-visible, 1);
+
   background: ${semantic.light.bg.solid.normal};
 
   box-shadow: 0rem 0rem 0.0625rem 0rem rgba(0, 0, 0, 0.04),
@@ -135,7 +129,6 @@ const Divider = styled.div`
   width: 26.75rem;
   height: 0.0625rem;
 
-  opacity: var(--opacity-visible, 1);
   background: ${semantic.light.border.transparent.alternative};
 `;
 
@@ -145,8 +138,6 @@ const CardText = styled.p`
   color: ${semantic.light.object.transparent.neutral};
 
   ${TYPO.label3}
-
-  opacity: var(--opacity-visible, 1);
 `;
 
 const CardSubText = styled.p`
@@ -155,8 +146,6 @@ const CardSubText = styled.p`
   color: ${semantic.light.object.transparent.neutral};
 
   ${TYPO.caption2}
-
-  opacity: var(--opacity-visible, 1);
 `;
 
 const Wrap = styled.div`
@@ -165,9 +154,6 @@ const Wrap = styled.div`
   align-items: center;
   gap: var(--gap-md, 1rem);
   align-self: stretch;
-
-  border-radius: var(--radius-empty, 0rem);
-  opacity: var(--opacity-visible, 1);
 `;
 
 const RewardContainer = styled.div`
@@ -176,17 +162,12 @@ const RewardContainer = styled.div`
   align-items: center;
   gap: var(--gap-2xs, 0.5rem);
   flex: 1 0 0;
-
-  border-radius: var(--radius-empty, 0rem);
-  opacity: var(--opacity-visible, 1);
 `;
 
 const RewardPoint = styled.p`
   flex: 1 0 0;
 
   color: ${semantic.light.accent.solid.normal};
-
-  opacity: var(--opacity-visible, 1);
 `;
 
 const ThemeMarketBtn = styled.button`
@@ -199,7 +180,7 @@ const ThemeMarketBtn = styled.button`
   border-radius: var(--radius-xs, 0.5rem);
   border: var(--stroke-thin, 0.0625rem) solid
     ${semantic.light.accent.solid.normal};
-  opacity: var(--opacity-visible, 1);
+
   background: ${semantic.light.accent.transparent.normal};
 
   cursor: pointer;
@@ -210,8 +191,6 @@ const ThemeMarketText = styled.p`
   text-align: center;
 
   ${TYPO.label2}
-
-  opacity: var(--opacity-visible, 1);
 `;
 
 const RetrospectContainer = styled.div`
@@ -221,9 +200,6 @@ const RetrospectContainer = styled.div`
   align-items: center;
   gap: var(--gap-empty, 0rem);
   align-self: stretch;
-
-  border-radius: var(--radius-empty, 0rem);
-  opacity: var(--opacity-visible, 1);
 `;
 
 const RetrospectBtn = styled.button`
@@ -234,15 +210,12 @@ const RetrospectBtn = styled.button`
   gap: var(--gap-2xs, 0.5rem);
 
   border-radius: var(--radius-xs, 0.5rem);
-  opacity: var(--opacity-visible, 1);
 `;
 
 const RetrospectText = styled.p`
   text-align: center;
 
   ${TYPO.label2}
-
-  opacity: var(--opacity-visible, 1);
 `;
 
 const SeeMoreContainer = styled.div`
@@ -253,7 +226,6 @@ const SeeMoreContainer = styled.div`
   gap: var(--gap-2xs, 0.5rem);
 
   border-radius: var(--radius-xs, 0.5rem);
-  opacity: var(--opacity-visible, 1);
 `;
 
 const SeeMoreBtn = styled.p`
@@ -261,6 +233,4 @@ const SeeMoreBtn = styled.p`
   text-align: center;
 
   ${TYPO.label2}
-
-  opacity: var(--opacity-visible, 1);
 `;

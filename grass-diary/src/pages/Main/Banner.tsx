@@ -26,9 +26,6 @@ const Section = styled.div`
   justify-content: center;
   align-items: center;
   gap: var(--gap-empty, 0rem);
-
-  border-radius: var(--radius-empty, 0rem);
-  opacity: var(--opacity-visible, 1);
 `;
 
 const Container = styled.div`
@@ -41,7 +38,7 @@ const Container = styled.div`
   border-radius: var(--radius-xs, 0.5rem);
   border: var(--stroke-thin, 0.0625rem) solid
     ${semantic.light.border.transparent.alternative};
-  opacity: var(--opacity-visible, 1);
+
   background: ${semantic.light.fill.transparent.assistive};
 `;
 
@@ -51,6 +48,4 @@ const Text = styled.p`
   color: ${semantic.light.object.transparent.alternative};
 
   ${TYPO.caption2}
-
-  opacity: var(--opacity-visible, 1);
 `;

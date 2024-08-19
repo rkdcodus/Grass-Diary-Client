@@ -58,9 +58,6 @@ const Container = styled.div`
   flex-direction: column;
   align-items: center;
   gap: 2rem;
-
-  border-radius: var(--radius-empty, 0rem);
-  opacity: var(--opacity-visible, 1);
 `;
 
 const TodayDateText = styled.p`
@@ -72,8 +69,6 @@ const TodayDateText = styled.p`
   font-weight: 500;
   line-height: 1.5rem;
   letter-spacing: -0.00675rem;
-
-  opacity: var(--opacity-visible, 1);
 `;
 
 const DailyQuestionText = styled.p`
@@ -81,8 +76,6 @@ const DailyQuestionText = styled.p`
   text-align: center;
 
   ${TYPO.display1}
-
-  opacity: var(--opacity-visible, 1);
 `;
 
 const ButtonContainer = styled.div`
@@ -90,9 +83,6 @@ const ButtonContainer = styled.div`
   padding: var(--gap-empty, 0rem);
   align-items: flex-start;
   gap: 1rem;
-
-  border-radius: var(--radius-empty, 0rem);
-  opacity: var(--opacity-visible, 1);
 `;
 
 const CreateDiaryBtn = styled.button`
@@ -103,7 +93,7 @@ const CreateDiaryBtn = styled.button`
   gap: 0.5rem;
 
   border-radius: 0.75rem;
-  opacity: var(--opacity-visible, 1);
+
   background: ${semantic.light.accent.solid.normal};
   border: none;
 `;
@@ -113,8 +103,6 @@ const CreateDiaryText = styled.p`
   text-align: center;
 
   ${TYPO.label3}
-
-  opacity: var(--opacity-visible, 1);
 `;
 
 const MydiaryBtn = styled.button`
@@ -126,7 +114,7 @@ const MydiaryBtn = styled.button`
 
   border-radius: 0.75rem;
   border: 0.0625rem solid ${semantic.light.border.transparent.alternative};
-  opacity: var(--opacity-visible, 1);
+
   background: ${semantic.light.bg.solid.normal};
 `;
 
@@ -135,6 +123,4 @@ const MydaryTxt = styled.p`
   text-align: center;
 
   ${TYPO.label3}
-
-  opacity: var(--opacity-visible, 1);
 `;

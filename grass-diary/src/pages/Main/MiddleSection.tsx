@@ -91,9 +91,6 @@ const Container = styled.div`
   flex-direction: column;
   align-items: center;
   gap: var(--gap-2xl, 2rem);
-
-  border-radius: var(--radius-empty, 0rem);
-  opacity: var(--opacity-visible, 1);
 `;
 
 const GrassLabel = styled.div`
@@ -106,7 +103,7 @@ const GrassLabel = styled.div`
   border-radius: var(--radius-sm, 0.75rem);
   border: var(--stroke-thin, 0.0625rem) solid
     ${semantic.light.border.transparent.alternative};
-  opacity: var(--opacity-visible, 1);
+
   background: ${semantic.light.bg.solid.normal};
 `;
 
@@ -115,8 +112,6 @@ const GrassLabelText = styled.p`
   text-align: center;
 
   ${TYPO.label2}
-
-  opacity: var(--opacity-visible, 1);
 `;
 
 const GrassBanner = styled.div`
@@ -126,9 +121,6 @@ const GrassBanner = styled.div`
   align-items: center;
   gap: var(--gap-2xs, 0.5rem);
   align-self: stretch;
-
-  border-radius: var(--radius-empty, 0rem);
-  opacity: var(--opacity-visible, 1);
 `;
 
 const GrassBannerText = styled.p`
@@ -137,8 +129,6 @@ const GrassBannerText = styled.p`
   text-align: center;
 
   ${TYPO.title1}
-
-  opacity: var(--opacity-visible, 1);
 `;
 
 const GrassBannerTextSecond = styled.p`
@@ -148,8 +138,6 @@ const GrassBannerTextSecond = styled.p`
   text-align: center;
 
   ${TYPO.label2}
-
-  opacity: var(--opacity-visible, 1);
 `;
 
 const HighlightedText = styled.span`
@@ -168,7 +156,6 @@ const DayBox = styled.div`
   height: 3.5rem;
 
   border-radius: var(--radius-sm, 0.75rem);
-  opacity: var(--opacity-visible, 1);
 
   background: ${semantic.light.fill.transparent.assistive};
 
