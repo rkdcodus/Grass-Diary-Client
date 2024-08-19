@@ -5,6 +5,7 @@ import { useReward } from '@hooks/api/useReward';
 import { Link } from 'react-router-dom';
 import subCharacter from '@icon/subCharacter.png';
 import Swal from 'sweetalert2';
+import { MAIN_MESSAGES } from '@constants/message';
 import { ReactComponent as Avatar } from '@svg/avatarBg.svg';
 import { ReactComponent as Arrow } from '@svg/chevron_right.svg';
 import { ReactComponent as ArrowBlack } from '@svg/chevron_right_black.svg';
@@ -33,8 +34,10 @@ const BottomSection = () => {
       <Section>
         <Container>
           <Card>
-            <CardText>내 잔디 리워드</CardText>
-            <CardSubText>잔디를 꾸준히 심고, 리워드를 모아봐요!</CardSubText>
+            <CardText>{MAIN_MESSAGES.BOTTOM_SECTION.MY_REWARD}</CardText>
+            <CardSubText>
+              {MAIN_MESSAGES.BOTTOM_SECTION.REWARD_MESSAGE}
+            </CardSubText>
             <Divider></Divider>
             <Wrap>
               <RewardContainer>
@@ -44,21 +47,27 @@ const BottomSection = () => {
                 </RewardPoint>
               </RewardContainer>
               <ThemeMarketBtn>
-                <ThemeMarketText onClick={modal}>테마 상점</ThemeMarketText>
+                <ThemeMarketText onClick={modal}>
+                  {MAIN_MESSAGES.BOTTOM_SECTION.THEME_STORE}
+                </ThemeMarketText>
                 <Arrow></Arrow>
               </ThemeMarketBtn>
             </Wrap>
           </Card>
           <Card>
-            <CardText>한 달 일기 회고</CardText>
+            <CardText>
+              {MAIN_MESSAGES.BOTTOM_SECTION.MONTHLY_DIARY_REVIEW}
+            </CardText>
             <CardSubText>
-              지난 한 달 간의 내 시간과 경험들을 돌아보며 회고해봐요.
+              {MAIN_MESSAGES.BOTTOM_SECTION.REVIEW_DESCRIPTION}
             </CardSubText>
             <Divider></Divider>
             <RetrospectContainer>
               <RetrospectBtn>
                 <Link to="/mypage" onClick={handleClick}>
-                  <RetrospectText>회고하러 가기</RetrospectText>
+                  <RetrospectText>
+                    {MAIN_MESSAGES.BOTTOM_SECTION.GO_TO_REVIEW}
+                  </RetrospectText>
                 </Link>
                 <ArrowBlack></ArrowBlack>
               </RetrospectBtn>
@@ -68,7 +77,7 @@ const BottomSection = () => {
       </Section>
       <Link to="/share" onClick={handleClick}>
         <SeeMoreContainer>
-          <SeeMoreBtn>더 보러가기</SeeMoreBtn>
+          <SeeMoreBtn>{MAIN_MESSAGES.BOTTOM_SECTION.SEE_MORE}</SeeMoreBtn>
           <ArrowBlack></ArrowBlack>
         </SeeMoreContainer>
       </Link>

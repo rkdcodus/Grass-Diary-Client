@@ -3,6 +3,7 @@ import { useCallback } from 'react';
 import { semantic } from '@styles/semantic';
 import styled from 'styled-components';
 import { useGrassRecord } from '@hooks/api/useGrassRecord';
+import { MAIN_MESSAGES } from '@constants/message';
 
 const MiddleSection = () => {
   // 잔디 날짜 계산
@@ -49,26 +50,29 @@ const MiddleSection = () => {
     <>
       <Container>
         <GrassLabel>
-          <GrassLabelText>이번 달 잔디 현황</GrassLabelText>
+          <GrassLabelText>
+            {MAIN_MESSAGES.MIDDLE_SECTION.STATUS_LABEL}
+          </GrassLabelText>
         </GrassLabel>
 
         <GrassBanner>
           <GrassBannerText>
-            {currentMonth}월에는 총{' '}
+            {currentMonth}
+            {MAIN_MESSAGES.MIDDLE_SECTION.MONTHLY_GRASS_SUMMARY}
             <HighlightedText>
-              {grassQuery?.thisMonthCount ? grassQuery?.thisMonthCount : 0}개
+              {grassQuery?.thisMonthCount ? grassQuery?.thisMonthCount : 0}
             </HighlightedText>
-            의 잔디를 심었어요.
+            {MAIN_MESSAGES.MIDDLE_SECTION.PLANTED_GRASS_COUNT}
           </GrassBannerText>
           <GrassBannerTextSecond>
-            일기를 쓰고, 잔디를 더 심어보세요!
+            {MAIN_MESSAGES.MIDDLE_SECTION.GRASS_PROMPT}
           </GrassBannerTextSecond>
         </GrassBanner>
 
         <GrassTable>
           {daysInMonth.map(day => (
             <div key={day} style={getGrassStyle(day)}>
-              <DayBox>{/* {day} */}</DayBox>
+              <DayBox>{day}</DayBox>
             </div>
           ))}
         </GrassTable>

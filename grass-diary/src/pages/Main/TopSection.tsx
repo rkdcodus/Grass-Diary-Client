@@ -3,6 +3,7 @@ import { useTodayDate } from '@hooks/api/useTodayDate';
 import { useTodayQuestion } from '@hooks/api/useTodayQuestion';
 import { semantic } from '@styles/semantic';
 import styled from 'styled-components';
+import { MAIN_MESSAGES } from '@constants/message';
 
 const TopSection = () => {
   // 질문 데이터를 가져오는 쿼리
@@ -30,13 +31,15 @@ const TopSection = () => {
         <ButtonContainer>
           <CreateDiaryBtn>
             <Link to="/creatediary">
-              <CreateDiaryText>일기 쓰기</CreateDiaryText>
+              <CreateDiaryText>
+                {MAIN_MESSAGES.TOP_SECTION.WRITE_DIARY}
+              </CreateDiaryText>
             </Link>
           </CreateDiaryBtn>
 
           <MydiaryBtn>
             <Link to="/mypage">
-              <MydaryTxt>내 일기장</MydaryTxt>
+              <MydaryTxt>{MAIN_MESSAGES.TOP_SECTION.MY_DIARY}</MydaryTxt>
             </Link>
           </MydiaryBtn>
         </ButtonContainer>

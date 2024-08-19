@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { MAIN_MESSAGES } from '@constants/message';
 import { semantic } from '@styles/semantic';
 import { ReactComponent as Info } from '@svg/info.svg';
 
@@ -8,9 +9,7 @@ const Banner = () => {
       <Section>
         <Container>
           <Info />
-          <Text>
-            잔디 일기에는 앞으로 더 매력적인 콘텐츠들이 추가될 예정이에요!
-          </Text>
+          <Text>{MAIN_MESSAGES.BANNER.FUTURE_CONTENT_MESSAGE}</Text>
         </Container>
       </Section>
     </>
