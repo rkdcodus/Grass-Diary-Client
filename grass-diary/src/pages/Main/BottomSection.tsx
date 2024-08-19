@@ -186,8 +186,6 @@ const RewardPoint = styled.p`
 
   color: ${semantic.light.accent.solid.normal};
 
-  ${TYPO.title3}
-
   opacity: var(--opacity-visible, 1);
 `;
 
