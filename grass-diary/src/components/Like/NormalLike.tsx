@@ -4,7 +4,7 @@ import { ReactComponent as Favorite } from '@svg/favorite.svg';
 const feed = stylex.create({
   like: (justifyContent: string) => ({
     display: 'flex',
-    gap: '10px',
+    gap: '0.625rem',
 
     justifyContent,
   }),
