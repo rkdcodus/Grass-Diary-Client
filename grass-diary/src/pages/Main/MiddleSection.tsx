@@ -1,9 +1,10 @@
 import dayjs from 'dayjs';
+import styled from 'styled-components';
 import { useCallback } from 'react';
 import { semantic } from '@styles/semantic';
-import styled from 'styled-components';
 import { useGrassRecord } from '@hooks/api/useGrassRecord';
 import { MAIN_MESSAGES } from '@constants/message';
+import { TYPO } from '@styles/typo';
 
 const MiddleSection = () => {
   // 잔디 날짜 계산
@@ -72,7 +73,7 @@ const MiddleSection = () => {
         <GrassTable>
           {daysInMonth.map(day => (
             <div key={day} style={getGrassStyle(day)}>
-              <DayBox>{day}</DayBox>
+              <DayBox></DayBox>
             </div>
           ))}
         </GrassTable>
@@ -113,13 +114,7 @@ const GrassLabelText = styled.p`
   color: ${semantic.light.object.transparent.alternative};
   text-align: center;
 
-  /* label/2 */
-  font-family: Pretendard;
-  font-size: 1rem;
-  font-style: normal;
-  font-weight: 500;
-  line-height: 1.375rem;
-  letter-spacing: -0.006rem;
+  ${TYPO.label2}
 
   opacity: var(--opacity-visible, 1);
 `;
@@ -141,13 +136,7 @@ const GrassBannerText = styled.p`
   color: ${semantic.light.object.transparent.alternative};
   text-align: center;
 
-  /* title/1 */
-  font-family: Pretendard;
-  font-size: 1.25rem;
-  font-style: normal;
-  font-weight: 600;
-  line-height: 1.75rem;
-  letter-spacing: -0.0195rem;
+  ${TYPO.title1}
 
   opacity: var(--opacity-visible, 1);
 `;
@@ -158,13 +147,7 @@ const GrassBannerTextSecond = styled.p`
   color: ${semantic.light.object.transparent.alternative};
   text-align: center;
 
-  /* label/2 */
-  font-family: Pretendard;
-  font-size: 1rem;
-  font-style: normal;
-  font-weight: 500;
-  line-height: 1.375rem;
-  letter-spacing: -0.006rem;
+  ${TYPO.label2}
 
   opacity: var(--opacity-visible, 1);
 `;

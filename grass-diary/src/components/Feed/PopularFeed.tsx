@@ -1,12 +1,13 @@
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 
+import styled from 'styled-components';
 import Slider from 'react-slick';
 import { Feed } from '@components/index';
 import { usePopularDiaries } from '@hooks/api/usePopularDiaries';
 import { NULL } from '@constants/message';
-import styled from 'styled-components';
 import { semantic } from '@styles/semantic';
+import { TYPO } from '@styles/typo';
 
 const PopularFeed = () => {
   const { data: top10 } = usePopularDiaries();
@@ -70,13 +71,7 @@ const RankText = styled.p`
   color: ${semantic.light.object.transparent.neutral};
   text-align: center;
 
-  /* title/2 */
-  font-family: Pretendard;
-  font-size: 1.5rem;
-  font-style: normal;
-  font-weight: 600;
-  line-height: 2rem;
-  letter-spacing: -0.023375rem;
+  ${TYPO.title2}
 
   opacity: var(--opacity-visible, 1);
 `;

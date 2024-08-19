@@ -1,9 +1,10 @@
+import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { useTodayDate } from '@hooks/api/useTodayDate';
 import { useTodayQuestion } from '@hooks/api/useTodayQuestion';
 import { semantic } from '@styles/semantic';
-import styled from 'styled-components';
 import { MAIN_MESSAGES } from '@constants/message';
+import { TYPO } from '@styles/typo';
 
 const TopSection = () => {
   // 질문 데이터를 가져오는 쿼리
@@ -79,13 +80,7 @@ const DailyQuestionText = styled.p`
   color: ${semantic.light.object.solid.hero};
   text-align: center;
 
-  /* display/1 */
-  font-family: Pretendard;
-  font-size: 2.5rem;
-  font-style: normal;
-  font-weight: 700;
-  line-height: 3rem;
-  letter-spacing: -0.045rem;
+  ${TYPO.display1}
 
   opacity: var(--opacity-visible, 1);
 `;
@@ -117,13 +112,7 @@ const CreateDiaryText = styled.p`
   color: ${semantic.light.base.solid.white};
   text-align: center;
 
-  /* label/3 */
-  font-family: Pretendard;
-  font-size: 1.125rem;
-  font-style: normal;
-  font-weight: 500;
-  line-height: 1.5rem;
-  letter-spacing: -0.00675rem;
+  ${TYPO.label3}
 
   opacity: var(--opacity-visible, 1);
 `;
@@ -145,13 +134,7 @@ const MydaryTxt = styled.p`
   color: ${semantic.light.object.transparent.alternative};
   text-align: center;
 
-  /* label/3 */
-  font-family: Pretendard;
-  font-size: 1.125rem;
-  font-style: normal;
-  font-weight: 500;
-  line-height: 1.5rem;
-  letter-spacing: -0.00675rem;
+  ${TYPO.label3}
 
   opacity: var(--opacity-visible, 1);
 `;

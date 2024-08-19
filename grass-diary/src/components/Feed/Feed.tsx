@@ -1,7 +1,7 @@
+import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { NormalLike } from '@components/index';
 import { useWriterProfile } from '@hooks/api/useWriterProfile';
-import styled from 'styled-components';
 import { semantic } from '@styles/semantic';
 import { ReactComponent as Comment } from '@svg/comment.svg';
 interface IFeedProps {

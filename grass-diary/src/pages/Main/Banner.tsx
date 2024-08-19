@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import { MAIN_MESSAGES } from '@constants/message';
 import { semantic } from '@styles/semantic';
 import { ReactComponent as Info } from '@svg/info.svg';
+import { TYPO } from '@styles/typo';
 
 const Banner = () => {
   return (
@@ -49,12 +50,7 @@ const Text = styled.p`
 
   color: ${semantic.light.object.transparent.alternative};
 
-  /* caption/2 */
-  font-family: Pretendard;
-  font-size: 0.875rem;
-  font-style: normal;
-  font-weight: 400;
-  line-height: 1.375rem;
+  ${TYPO.caption2}
 
   opacity: var(--opacity-visible, 1);
 `;

@@ -1,14 +1,15 @@
 import AnimateReward from './AnimateReward';
 import styled from 'styled-components';
+import subCharacter from '@icon/subCharacter.png';
+import Swal from 'sweetalert2';
 import { semantic } from '@styles/semantic';
 import { useReward } from '@hooks/api/useReward';
 import { Link } from 'react-router-dom';
-import subCharacter from '@icon/subCharacter.png';
-import Swal from 'sweetalert2';
 import { MAIN_MESSAGES } from '@constants/message';
 import { ReactComponent as Avatar } from '@svg/avatarBg.svg';
 import { ReactComponent as Arrow } from '@svg/chevron_right.svg';
 import { ReactComponent as ArrowBlack } from '@svg/chevron_right_black.svg';
+import { TYPO } from '@styles/typo';
 
 const BottomSection = () => {
   const { reward } = useReward();
@@ -143,13 +144,7 @@ const CardText = styled.p`
 
   color: ${semantic.light.object.transparent.neutral};
 
-  /* label/3 */
-  font-family: Pretendard;
-  font-size: 1.125rem;
-  font-style: normal;
-  font-weight: 500;
-  line-height: 1.5rem;
-  letter-spacing: -0.00675rem;
+  ${TYPO.label3}
 
   opacity: var(--opacity-visible, 1);
 `;
@@ -159,12 +154,7 @@ const CardSubText = styled.p`
 
   color: ${semantic.light.object.transparent.neutral};
 
-  /* caption/2 */
-  font-family: Pretendard;
-  font-size: 0.875rem;
-  font-style: normal;
-  font-weight: 400;
-  line-height: 1.375rem;
+  ${TYPO.caption2}
 
   opacity: var(--opacity-visible, 1);
 `;
@@ -196,13 +186,7 @@ const RewardPoint = styled.p`
 
   color: ${semantic.light.accent.solid.normal};
 
-  /* title/3 */
-  font-family: Pretendard;
-  font-size: 1.09375rem;
-  font-style: normal;
-  font-weight: 600;
-  line-height: 2.625rem;
-  letter-spacing: -0.0311875rem;
+  ${TYPO.title3}
 
   opacity: var(--opacity-visible, 1);
 `;
@@ -227,13 +211,7 @@ const ThemeMarketText = styled.p`
   color: ${semantic.light.accent.solid.hero};
   text-align: center;
 
-  /* label/2 */
-  font-family: Pretendard;
-  font-size: 1rem;
-  font-style: normal;
-  font-weight: 500;
-  line-height: 1.375rem;
-  letter-spacing: -0.006rem;
+  ${TYPO.label2}
 
   opacity: var(--opacity-visible, 1);
 `;
@@ -264,13 +242,7 @@ const RetrospectBtn = styled.button`
 const RetrospectText = styled.p`
   text-align: center;
 
-  /* label/2 */
-  font-family: Pretendard;
-  font-size: 1rem;
-  font-style: normal;
-  font-weight: 500;
-  line-height: 1.375rem;
-  letter-spacing: -0.006rem;
+  ${TYPO.label2}
 
   opacity: var(--opacity-visible, 1);
 `;
@@ -290,13 +262,7 @@ const SeeMoreBtn = styled.p`
   color: ${semantic.light.object.transparent.alternative};
   text-align: center;
 
-  /* label/2 */
-  font-family: Pretendard;
-  font-size: 1rem;
-  font-style: normal;
-  font-weight: 500;
-  line-height: 1.375rem;
-  letter-spacing: -0.006rem;
+  ${TYPO.label2}
 
   opacity: var(--opacity-visible, 1);
 `;
