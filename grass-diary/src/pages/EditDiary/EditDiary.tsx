@@ -245,7 +245,7 @@ const EditDiary = () => {
         <Header />
       </header>
       <main {...stylex.props(CreateDiaryStyle.container)}>
-        <BackButton goBackTo={'/main'} />
+        <BackButton />
         <section {...stylex.props(CreateDiaryStyle.title)}>
           <h2>
             {diaryInfo.month}월 {diaryInfo.date}일 {diaryInfo.day}요일
