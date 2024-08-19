@@ -14,90 +14,6 @@ import { useTodayDate } from '@hooks/api/useTodayDate';
 import { usePostImage } from '@hooks/api/usePostImage';
 import { useUser } from '@state/user/useUser';
 
-const CreateDiaryStyle = stylex.create({
-  container: {
-    background: '#F9F9F9',
-    width: '100vw',
-    margin: 'auto',
-    border: '1px solid #BFBFBF',
-    borderRadius: '50px 50px 0 0',
-    padding: '65px 100px',
-    maxWidth: '1200px',
-  },
-
-  title: {
-    display: 'flex',
-    justifyContent: 'space-around',
-    alignItems: 'center',
-  },
-
-  subtitle: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    padding: '10px',
-  },
-
-  borderFooter: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    paddingTop: '100px',
-  },
-
-  inputStyle: {
-    backgroundColor: 'white',
-    border: 'solid 1px #BFBFBF',
-    borderRadius: '10px',
-    padding: '20px',
-    width: '700px',
-    height: '50px',
-    outline: 'none',
-    resize: 'none',
-  },
-
-  todayMood: {
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-
-  hashtag: {
-    display: 'flex',
-    justifyContent: 'flex-start',
-    alignItems: 'center',
-    flexWrap: 'wrap',
-    gap: '10px',
-    paddingTop: '20px',
-  },
-
-  hashtagBox: {
-    backgroundColor: 'white',
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    gap: '10px',
-    padding: '10px 15px',
-    border: 'solid 1px #bfbfbf',
-    borderRadius: '30px',
-    fontSize: '15px',
-    fontWeight: 'bold',
-    transition: 'all 0.3s ease',
-  },
-
-  hashtagBtn: {
-    background: 'none',
-    border: 'none',
-    fontSize: '12px',
-    cursor: 'pointer',
-  },
-  imageFile: {
-    padding: '10px 0',
-    width: '170px',
-  },
-});
-
 const CreateDiary = () => {
   const navigate = useNavigate();
   const memberId = useUser();
@@ -260,15 +176,15 @@ const CreateDiary = () => {
       <header>
         <Header />
       </header>
-      <main {...stylex.props(CreateDiaryStyle.container)}>
+      <main>
         <BackButton goBackTo={'/main'} />
-        <section {...stylex.props(CreateDiaryStyle.title)}>
+        <section>
           <h2>
             {diaryInfo.month}월 {diaryInfo.date}일 {diaryInfo.day}요일
           </h2>
         </section>
         <section>
-          <article {...stylex.props(CreateDiaryStyle.subtitle)}>
+          <article>
             <label>
               <input
                 type="radio"
@@ -285,7 +201,7 @@ const CreateDiary = () => {
               />
               공개
             </label>
-            <div {...stylex.props(CreateDiaryStyle.todayMood)}>
+            <div>
               <div style={{ fontSize: '30px' }}>
                 {EMOJI[diaryInfo.moodValue]}
               </div>
@@ -312,11 +228,7 @@ const CreateDiary = () => {
         </section>
         {image.imageURL ? (
           <>
-            <img
-              {...stylex.props(CreateDiaryStyle.imageFile)}
-              src={image.imageURL}
-              alt="image file"
-            />
+            <img src={image.imageURL} alt="image file" />
             <button onClick={removeImage}>삭제</button>
           </>
         ) : null}
@@ -327,9 +239,8 @@ const CreateDiary = () => {
           setFile={setFile}
         />
         <section>
-          <article {...stylex.props(CreateDiaryStyle.borderFooter)}>
+          <article>
             <input
-              {...stylex.props(CreateDiaryStyle.inputStyle)}
               type="text"
               value={hashtag}
               onChange={onChangeHashtag}
@@ -347,16 +258,11 @@ const CreateDiary = () => {
               onClick={handleSave}
             />
           </article>
-          <div {...stylex.props(CreateDiaryStyle.hashtag)}>
+          <div>
             {diaryInfo.hashArr.map((tag, index) => (
-              <span key={index} {...stylex.props(CreateDiaryStyle.hashtagBox)}>
+              <span key={index}>
                 {tag}
-                <button
-                  {...stylex.props(CreateDiaryStyle.hashtagBtn)}
-                  onClick={() => removeHashtag(index)}
-                >
-                  X
-                </button>
+                <button onClick={() => removeHashtag(index)}>X</button>
               </span>
             ))}
           </div>
