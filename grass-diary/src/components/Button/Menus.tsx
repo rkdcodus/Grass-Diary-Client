@@ -44,19 +44,19 @@ export default Menus;
 
 const MenusContainer = styled.div<{ $toggle: boolean }>`
   display: flex;
-  width: 160px;
-  height: ${props => (props.$toggle ? 'auto' : '0px')};
+  width: 10rem;
+  height: ${props => (props.$toggle ? 'auto' : '0rem')};
   flex-direction: column;
   align-items: flex-start;
 
-  border-radius: var(--radius-md, 16px);
+  border-radius: var(--radius-md, 1rem);
   background: ${semantic.light.bg.solid.normal};
 
   box-shadow: 0px 0px 2px 0px rgba(0, 0, 0, 0.06),
     0px 2px 4px 0px rgba(0, 0, 0, 0.06), 0px 4px 8px 0px rgba(0, 0, 0, 0.13);
 
   position: absolute;
-  transform: translate(-132px, 15px);
+  transform: translate(-8.25rem, 1rem);
   overflow: hidden;
   z-index: 998;
 `;

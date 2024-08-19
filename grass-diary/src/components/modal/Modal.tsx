@@ -47,11 +47,11 @@ const ModalContainer = styled.div`
   left: 50%;
   transform: translate(-50%, -50%);
   display: flex;
-  width: 360px;
+  width: 22.5rem;
   flex-direction: column;
   align-items: flex-start;
 
-  border-radius: var(--radius-md, 16px);
+  border-radius: var(--radius-md, 1rem);
   background: ${semantic.light.bg.solid.normal};
   box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.08),
     0px 3px 8px 0px rgba(0, 0, 0, 0.12), 0px 8px 16px 0px rgba(0, 0, 0, 0.16);
@@ -59,10 +59,10 @@ const ModalContainer = styled.div`
 
 const TopSection = styled.div`
   display: flex;
-  padding: var(--gap-md, 16px) var(--gap-lg, 20px) var(--gap-md, 16px)
-    var(--gap-xl, 24px);
+  padding: var(--gap-md, 1rem) var(--gap-lg, 1.25rem) var(--gap-md, 1rem)
+    var(--gap-xl, 1.5rem);
   align-items: center;
-  gap: var(--gap-md, 16px);
+  gap: var(--gap-md, 1rem);
   align-self: stretch;
 `;
 
@@ -77,8 +77,8 @@ const CloseBtn = styled(Close)`
 `;
 
 const Content = styled.p`
-  padding: var(--gap-md, 16px) var(--gap-xl, 24px) var(--gap-xl, 24px)
-    var(--gap-xl, 24px);
+  padding: var(--gap-md, 1rem) var(--gap-xl, 1.5rem) var(--gap-xl, 1.5rem)
+    var(--gap-xl, 1.5rem);
   text-align: center;
   align-self: stretch;
   ${TYPO.body1}
@@ -86,16 +86,16 @@ const Content = styled.p`
 `;
 
 const Divider = styled.div`
-  width: 360px;
-  height: 1px;
+  width: 22.5rem;
+  height: 0.0625rem;
 
   background: ${semantic.light.border.transparent.assistive};
 `;
 
 const BottomSection = styled.div`
   display: flex;
-  padding: var(--gap-2xs, 8px);
+  padding: var(--gap-2xs, 0.5rem);
   align-items: flex-start;
-  gap: var(--gap-2xs, 8px);
+  gap: var(--gap-2xs, 0.5rem);
   align-self: stretch;
 `;

@@ -34,10 +34,10 @@ const ToastContainer = styled.div<{ $active: boolean }>`
   left: 50%;
   transform: translate(-50%);
 
-  padding: var(--gap-sm, 12px) var(--gap-xl, 24px);
-  gap: var(--gap-2xs, 8px);
+  padding: var(--gap-sm, 0.75rem) var(--gap-xl, 1.5rem);
+  gap: var(--gap-2xs, 0.5rem);
 
-  border-radius: var(--radius-round, 96px);
+  border-radius: var(--radius-round, 6rem);
   background: ${semantic.light.object.solid.hero};
 
   box-shadow: 0px 0px 2px 0px rgba(0, 0, 0, 0.06),

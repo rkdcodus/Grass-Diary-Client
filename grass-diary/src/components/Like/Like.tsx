@@ -63,15 +63,16 @@ const LikeContainer = styled.div<{ $isPushed: boolean }>`
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: var(--gap-xs, 10px) var(--gap-md, 16px);
-  gap: var(--gap-2xs, 8px);
-  border-radius: var(--radius-xs, 8px);
-  border: var(--stroke-thin, 1px) solid
+  padding: var(--gap-xs, 0.625rem) var(--gap-md, 1rem);
+  gap: var(--gap-2xs, 0.5rem);
+  border-radius: var(--radius-xs, 0.5rem);
+
+  border: var(--stroke-thin, 0.0625rem) solid
     ${props =>
       props.$isPushed
         ? semantic.light.accent.solid.normal
         : semantic.light.border.transparent.alternative};
-  opacity: var(--opacity-visible, 1);
+
   background: ${props =>
     props.$isPushed
       ? semantic.light.accent.transparent.normal

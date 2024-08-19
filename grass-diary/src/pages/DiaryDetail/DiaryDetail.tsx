@@ -130,8 +130,8 @@ export default DiaryDetail;
 const Container = styled.div`
   display: flex;
   width: 100vw;
-  min-width: var(--vw-desktop-min, 960px);
-  max-width: var(--vw-desktop-max, 2560px);
+  min-width: var(--vw-desktop-min, 60rem);
+  max-width: var(--vw-desktop-max, 160rem);
   flex-direction: column;
   align-items: center;
 
@@ -142,44 +142,43 @@ const DiaryBox = styled.div`
   margin: auto;
   min-height: 100vh;
   display: flex;
-  width: 960px;
-  padding: var(--gap-xl, 24px) var(--gap-xl, 24px) var(--gap-2xl, 32px)
-    var(--gap-xl, 24px);
+  width: 60rem;
+  padding: var(--gap-xl, 1.5rem) var(--gap-xl, 1.5rem) var(--gap-2xl, 2rem)
+    var(--gap-xl, 1.5rem);
   flex-direction: column;
   align-items: flex-start;
-  gap: var(--gap-lg, 20px);
+  gap: var(--gap-lg, 1.25rem);
   align-self: stretch;
 
-  border-top: var(--stroke-empty, 0px) solid
+  border-top: var(--stroke-empty, 0rem) solid
     ${semantic.light.border.transparent.alternative};
-  border-right: var(--stroke-thin, 1px) solid
+  border-right: var(--stroke-thin, 0.0625rem) solid
     ${semantic.light.border.transparent.alternative};
-  border-bottom: var(--stroke-empty, 0px) solid
+  border-bottom: var(--stroke-empty, 0rem) solid
     ${semantic.light.border.transparent.alternative};
-  border-left: var(--stroke-thin, 1px) solid
+  border-left: var(--stroke-thin, 0.0625rem) solid
     ${semantic.light.border.transparent.alternative};
-  opacity: var(--opacity-visible, 1);
   background: ${semantic.light.bg.solid.subtlest};
 `;
 
 const TopSection = styled.div`
   display: flex;
   align-items: center;
-  gap: var(--gap-xl, 24px);
+  gap: var(--gap-xl, 1.5rem);
   align-self: stretch;
 `;
 
 const Title = styled.div`
   display: flex;
   align-items: center;
-  gap: var(--gap-2xs, 8px);
+  gap: var(--gap-2xs, 0.5rem);
   flex: 1 0 0;
 `;
 
 const SubTitle = styled.div`
   display: flex;
   align-items: center;
-  gap: var(--gap-2xs, 8px);
+  gap: var(--gap-2xs, 0.5rem);
 `;
 
 const Date = styled.div`
@@ -188,9 +187,9 @@ const Date = styled.div`
 `;
 
 const Profile = styled.img`
-  width: 32px;
-  height: 32px;
-  border-radius: 16px;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 1rem;
   object-fit: cover;
 `;
 
@@ -207,7 +206,7 @@ const Time = styled.div`
 const PrivateContainer = styled.div`
   display: flex;
   align-items: center;
-  gap: var(--gap-4xs, 4px);
+  gap: var(--gap-4xs, 0.25rem);
 `;
 
 const PrivateLable = styled.div`
@@ -217,11 +216,11 @@ const PrivateLable = styled.div`
 
 const EmojiContainer = styled.div`
   position: relative;
-  width: 26px;
-  height: 26px;
-  padding: var(--gap-5xs, 2px);
-  border-radius: var(--radius-round, 96px);
-  border: var(--stroke-thin, 1px) solid
+  width: 1.625rem;
+  height: 1.625rem;
+  padding: var(--gap-5xs, 0.125rem);
+  border-radius: var(--radius-round, 6rem);
+  border: var(--stroke-thin, 0.0625rem) solid
     ${semantic.light.border.transparent.assistive};
   background: ${semantic.light.fill.transparent.assistive};
 `;
@@ -234,27 +233,27 @@ const Emoji = styled.p`
   transform: translate(-50%, -50%);
   color: ${semantic.light.object.transparent.alternative};
   ${TYPO.title2}
-  font-size: 20px !important;
-  line-height: 22px !important;
+  font-size: 1.25rem !important;
+  line-height: 1.375rem !important;
 `;
 
 const DiaryContent = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: var(--gap-xl, 24px);
+  gap: var(--gap-xl, 1.5rem);
   align-self: stretch;
 `;
 
 const ImageCard = styled.img`
-  height: 460px;
+  height: 28rem;
   width: 100%;
-  border-radius: var(--radius-sm, 12px);
+  border-radius: var(--radius-sm, 0.75rem);
   object-fit: cover;
 `;
 
 const ContentCard = styled.div`
-  min-height: 200px;
+  min-height: 12.5rem;
   align-self: stretch;
 
   ${TYPO.body2}
@@ -265,7 +264,7 @@ const BottomSection = styled.div`
   display: flex;
   align-items: center;
   align-content: center;
-  gap: var(--gap-sm, 12px) var(--gap-md, 16px);
+  gap: var(--gap-sm, 0.75rem) var(--gap-md, 1rem);
   align-self: stretch;
   flex-wrap: wrap;
 `;
@@ -274,32 +273,32 @@ const HashTagContainer = styled.div`
   display: flex;
   align-items: center;
   align-content: center;
-  gap: var(--gap-2xs, 8px);
+  gap: var(--gap-2xs, 0.5rem);
   flex: 1 0 0;
   flex-wrap: wrap;
 `;
 
 const HashWrap = styled.div`
   display: flex;
-  padding: var(--gap-4xs, 4px) var(--gap-xs, 10px);
+  padding: var(--gap-4xs, 0.25rem) var(--gap-xs, 0.625rem);
   justify-content: center;
   align-items: center;
-  gap: var(--gap-4xs, 4px);
+  gap: var(--gap-4xs, 0.25rem);
 
-  border-radius: var(--radius-xs, 8px);
-  border: var(--stroke-thin, 1px) solid
+  border-radius: var(--radius-xs, 0.5rem);
+  border: var(--stroke-thin, 0.0625rem) solid
     ${semantic.light.border.transparent.alternative};
   background: ${semantic.light.fill.transparent.assistive};
 `;
 
 const HashText = styled.p`
-  ${TYPO.caption1}s
+  ${TYPO.caption1}
   color: ${semantic.light.object.transparent.alternative};
 `;
 
 const Divider = styled.div`
-  width: 912px;
-  height: 1px;
+  width: 57rem;
+  height: 0.0625rem;
 
   background: ${semantic.light.border.transparent.alternative};
 `;

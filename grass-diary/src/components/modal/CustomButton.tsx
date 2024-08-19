@@ -24,14 +24,14 @@ const CustomBtn = styled.div<{ $color?: string }>`
   cursor: pointer;
   align-self: stretch;
   display: flex;
-  height: 48px;
-  padding: var(--gap-sm, 12px) var(--gap-md, 16px);
+  height: 3rem;
+  padding: var(--gap-sm, 0.75rem) var(--gap-md, 1rem);
   justify-content: center;
   align-items: center;
-  gap: var(--gap-2xs, 8px);
+  gap: var(--gap-2xs, 0.5rem);
   flex: 1 0 0;
 
-  border-radius: var(--radius-sm, 12px);
+  border-radius: var(--radius-sm, 0.75rem);
   color: ${props =>
     props.$color || semantic.light.object.transparent.alternative};
 `;

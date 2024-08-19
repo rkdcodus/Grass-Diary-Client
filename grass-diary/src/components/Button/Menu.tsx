@@ -51,16 +51,16 @@ const Menu = ({
 export default Menu;
 
 const MenuContainer = styled.div`
-  width: 160px;
+  width: 10rem;
   display: flex;
-  padding: var(--gap-md, 16px) var(--gap-lg, 20px);
+  padding: var(--gap-md, 1rem) var(--gap-lg, 1.25rem);
   align-items: center;
-  gap: var(--gap-md, 16px);
+  gap: var(--gap-md, 1rem);
   align-self: stretch;
 `;
 
 const Line = styled.div<{ height: number | undefined }>`
-  height: ${props => props.height || 1}px;
+  height: ${props => props.height || 0.0625}rem;
   align-self: stretch;
   background: ${semantic.light.border.transparent.assistive};
 `;
@@ -75,6 +75,6 @@ const MenuImg = styled.img`
   display: flex;
   justify-content: center;
   text-align: center;
-  width: 18px;
-  height: 18px;
+  width: 1.125rem;
+  height: 1.125rem;
 `;

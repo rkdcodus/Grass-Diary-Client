@@ -30,7 +30,7 @@ const CommentSetting = ({ commentId, writerId }: CommentSettingProps) => {
               onClick={editHandler}
               text={'댓글 수정'}
               svg={editIcon}
-              topRadius={16}
+              topRadius={1}
             />
           )}
           <Menu
@@ -38,7 +38,7 @@ const CommentSetting = ({ commentId, writerId }: CommentSettingProps) => {
             text={'댓글 삭제'}
             svg={deleteIcon}
             color={semantic.light.feedback.solid.negative}
-            bottomRadius={16}
+            bottomRadius={1}
           />
         </Menus>
       ) : (
@@ -48,14 +48,14 @@ const CommentSetting = ({ commentId, writerId }: CommentSettingProps) => {
               onClick={editHandler}
               text={'댓글 수정'}
               svg={editIcon}
-              topRadius={16}
+              topRadius={1}
             />
             <Menu
               onClick={() => deleteComment(commentId)}
               text={'댓글 삭제'}
               svg={deleteIcon}
               color={semantic.light.feedback.solid.negative}
-              bottomRadius={16}
+              bottomRadius={1}
             />
           </Menus>
         )
@@ -67,5 +67,5 @@ const CommentSetting = ({ commentId, writerId }: CommentSettingProps) => {
 export default CommentSetting;
 
 const SettingWrap = styled.div`
-  padding: var(--gap-4xs, 4px);
+  padding: var(--gap-4xs, 0.25rem);
 `;

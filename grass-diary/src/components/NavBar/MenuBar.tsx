@@ -28,8 +28,8 @@ const MenuBar = () => {
           link={'/mypage'}
           text={'마이페이지'}
           svg={person}
-          line={4}
-          topRadius={16}
+          line={0.25}
+          topRadius={1}
         />
         <Menu link={'/setting'} text={'설정'} svg={setting} />
         <Menu onClick={handleLogout} text={'로그아웃'} svg={logout} />
@@ -37,7 +37,7 @@ const MenuBar = () => {
           onClick={deleteAccount}
           text={'탈퇴'}
           svg={person_remove}
-          bottomRadius={16}
+          bottomRadius={1}
           color={semantic.light.feedback.solid.negative}
         />
       </Menus>

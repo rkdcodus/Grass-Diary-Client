@@ -84,13 +84,13 @@ export default CommentDisplay;
 
 const CommentWrap = styled.div<{ $isMe: boolean }>`
   display: flex;
-  padding: var(--gap-sm, 12px) var(--gap-md, 16px);
+  padding: var(--gap-sm, 0.75rem) var(--gap-md, 1rem);
   flex-direction: column;
   align-items: flex-start;
-  gap: var(--gap-sm, 12px);
+  gap: var(--gap-sm, 0.75rem);
   align-self: stretch;
 
-  border-radius: var(--radius-sm, 12px);
+  border-radius: var(--radius-sm, 0.75rem);
   border: ${props =>
     props.$isMe
       ? 'none'
@@ -104,26 +104,24 @@ const CommentWrap = styled.div<{ $isMe: boolean }>`
 const CommentTop = styled.div`
   display: flex;
   align-items: center;
-  gap: var(--gap-md, 16px);
+  gap: var(--gap-md, 1rem);
   align-self: stretch;
 `;
 
 const WriterWrap = styled.div`
   display: flex;
   align-items: center;
-  gap: var(--gap-2xs, 8px);
+  gap: var(--gap-2xs, 0.5rem);
   flex: 1 0 0;
 `;
 
 const WriterProfile = styled.img`
-  width: 24px;
-  height: 24px;
+  width: 1.5rem;
+  height: 1.5rem;
   flex-shrink: 0;
-  border-radius: var(--radius-empty, 24px);
+  border-radius: var(--radius-empty, 1.5rem);
   object-fit: cover;
-  background: url(<path-to-image>) lightgray 4.876px 7.661px / 63.924% 48.417%
-      no-repeat,
-    ${semantic.light.fill.transparent.alternative};
+  background: ${semantic.light.fill.transparent.alternative};
 `;
 
 const WriterName = styled.p<{ $isMe: boolean }>`
@@ -141,7 +139,7 @@ const CreateTime = styled.p`
 
 const CommentContent = styled.div<{ $deleted?: boolean; $isReply?: boolean }>`
   ${TYPO.body1}
-  ${props => props.$isReply && `padding-left: var(--gap-2xl, 32px);`}
+  ${props => props.$isReply && `padding-left: var(--gap-2xl, 2rem);`}
   color: ${props =>
     props.$deleted
       ? semantic.light.object.transparent.alternative
