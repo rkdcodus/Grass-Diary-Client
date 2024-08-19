@@ -5,12 +5,11 @@ import { ReactComponent as CloseSvg } from '@svg/close.svg';
 import { TYPO } from '@styles/typo';
 
 const ImageModal = ({ img, setImageModal }: ImageModalProps) => {
-  const onClick = () => {
-    setImageModal(false);
-  };
+  const close = () => setImageModal(false);
 
   useEffect(() => {
     document.body.style.overflow = 'hidden';
+
     return () => {
       document.body.style.overflow = 'auto';
     };
@@ -19,7 +18,7 @@ const ImageModal = ({ img, setImageModal }: ImageModalProps) => {
   return (
     <Background>
       <ImageWrap>
-        <CloseWrap onClick={onClick}>
+        <CloseWrap onClick={close}>
           <CloseText>닫기</CloseText>
           <CloseIcon />
         </CloseWrap>
@@ -38,8 +37,6 @@ const Background = styled.div`
   height: 100vh;
   top: 0;
   left: 0;
-  border-radius: var(--radius-empty, 0rem);
-  opacity: var(--opacity-visible, 1);
   background: ${semantic.light.bg.transparent.dimmed};
 `;
 
@@ -61,15 +58,14 @@ const CloseWrap = styled.div`
   gap: var(--gap-2xs, 0.5rem);
 
   border-radius: var(--radius-xs, 0.5rem);
-  opacity: var(--opacity-visible, 1);
   cursor: pointer;
   margin-left: auto;
 `;
 
 const CloseText = styled.span`
+  ${TYPO.label3}
   color: ${semantic.light.inverse.solid.normal};
   text-align: center;
-  ${TYPO.label3}
 `;
 
 const CloseIcon = styled(CloseSvg)`
@@ -79,5 +75,4 @@ const CloseIcon = styled(CloseSvg)`
 const Image = styled.img`
   max-width: 80vw;
   max-height: 90vh;
-  objectfit: 'contain';
 `;

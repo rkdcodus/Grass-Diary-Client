@@ -12,9 +12,7 @@ const Menus = ({ children, icon }: MenusProps) => {
   const boxRef = useRef<HTMLDivElement>(null);
   const iconRef = useRef<HTMLDivElement>(null);
 
-  const dropDown = () => {
-    setOpen(current => !current);
-  };
+  const dropDown = () => setOpen(current => !current);
 
   useEffect(() => {
     const closeMenus = (event: MouseEvent) => {
@@ -48,16 +46,12 @@ const MenusContainer = styled.div<{ $toggle: boolean }>`
   display: flex;
   width: 160px;
   height: ${props => (props.$toggle ? 'auto' : '0px')};
-  padding: var(--gap-empty, 0px);
   flex-direction: column;
   align-items: flex-start;
-  gap: var(--gap-empty, 0px);
 
   border-radius: var(--radius-md, 16px);
-  opacity: var(--opacity-visible, 1);
   background: ${semantic.light.bg.solid.normal};
 
-  /* shadow/floated */
   box-shadow: 0px 0px 2px 0px rgba(0, 0, 0, 0.06),
     0px 2px 4px 0px rgba(0, 0, 0, 0.06), 0px 4px 8px 0px rgba(0, 0, 0, 0.13);
 

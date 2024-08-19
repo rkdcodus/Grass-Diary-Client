@@ -14,15 +14,17 @@ export default Toast;
 
 const toastFadeIn = keyframes`
 30% {
- top: 90%;
+  top: 90%;
 }
+
 70% {
-opacity: 1;
-top: 90%;
+  opacity: 1;
+  top: 90%;
 }
+
 100% {
-opacity: 0;
-top: 90%;
+  opacity: 0;
+  top: 90%;
 }
 `;
 
@@ -38,13 +40,12 @@ const ToastContainer = styled.div<{ $active: boolean }>`
   border-radius: var(--radius-round, 96px);
   background: ${semantic.light.object.solid.hero};
 
-  /* shadow/floated */
   box-shadow: 0px 0px 2px 0px rgba(0, 0, 0, 0.06),
     0px 2px 4px 0px rgba(0, 0, 0, 0.06), 0px 4px 8px 0px rgba(0, 0, 0, 0.13);
 
+  ${TYPO.label2}
   color: ${semantic.light.inverse.solid.hero};
   text-align: center;
-  ${TYPO.label2}
-  transition: 1s;
   animation: ${props => props.$active && toastFadeIn} 4s 1s ease;
+  transition: 1s;
 `;

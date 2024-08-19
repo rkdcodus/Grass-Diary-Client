@@ -52,10 +52,7 @@ const ModalContainer = styled.div`
   align-items: flex-start;
 
   border-radius: var(--radius-md, 16px);
-  opacity: var(--opacity-visible, 1);
   background: ${semantic.light.bg.solid.normal};
-
-  /* shadow/overlay */
   box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.08),
     0px 3px 8px 0px rgba(0, 0, 0, 0.12), 0px 8px 16px 0px rgba(0, 0, 0, 0.16);
 `;
@@ -71,10 +68,8 @@ const TopSection = styled.div`
 
 const Title = styled.p`
   flex: 1 0 0;
-
-  color: ${semantic.light.object.solid.normal};
-
   ${TYPO.title1}
+  color: ${semantic.light.object.solid.normal};
 `;
 
 const CloseBtn = styled(Close)`
@@ -86,9 +81,8 @@ const Content = styled.p`
     var(--gap-xl, 24px);
   text-align: center;
   align-self: stretch;
-  color: ${semantic.light.object.transparent.neutral};
-
   ${TYPO.body1}
+  color: ${semantic.light.object.transparent.neutral};
 `;
 
 const Divider = styled.div`
@@ -104,5 +98,4 @@ const BottomSection = styled.div`
   align-items: flex-start;
   gap: var(--gap-2xs, 8px);
   align-self: stretch;
-  //   justify-content: space-around;
 `;

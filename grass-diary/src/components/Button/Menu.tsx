@@ -57,9 +57,6 @@ const MenuContainer = styled.div`
   align-items: center;
   gap: var(--gap-md, 16px);
   align-self: stretch;
-
-  border-radius: var(--radius-empty, 0px);
-  opacity: var(--opacity-visible, 1);
 `;
 
 const Line = styled.div<{ height: number | undefined }>`
@@ -69,11 +66,9 @@ const Line = styled.div<{ height: number | undefined }>`
 `;
 
 const MenuStr = styled.p<{ color?: string }>`
+  ${TYPO.label2};
   flex: 1 0 0;
   color: ${props => props.color || semantic.light.object.solid.normal};
-  ${TYPO.label2};
-
-  opacity: var(--opacity-visible, 1);
 `;
 
 const MenuImg = styled.img`
@@ -82,5 +77,4 @@ const MenuImg = styled.img`
   text-align: center;
   width: 18px;
   height: 18px;
-  opacity: var(--opacity-visible, 1);
 `;

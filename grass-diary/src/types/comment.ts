@@ -48,7 +48,7 @@ type CommentInputProps = {
   text: string;
   setText: React.Dispatch<React.SetStateAction<string>>;
   isReply: boolean;
-  isCancleBtn: boolean;
+  isCancelBtn: boolean;
   isPatch: boolean;
 };
 

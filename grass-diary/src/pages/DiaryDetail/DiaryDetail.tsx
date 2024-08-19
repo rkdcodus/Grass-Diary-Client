@@ -27,15 +27,11 @@ const DiaryDetail = () => {
   const { detail, writer } = useDiaryDetail(diaryId);
 
   const zoom = () => {
-    if (!imageModal) {
-      setImageModal(true);
-    }
+    if (!imageModal) setImageModal(true);
   };
 
   useEffect(() => {
-    if (detail) {
-      setLikeCount(detail.likeCount);
-    }
+    if (detail) setLikeCount(detail.likeCount);
   }, [detail]);
 
   useEffect(() => {
@@ -120,8 +116,7 @@ const DiaryDetail = () => {
               liked={detail?.isLikedByLogInMember}
             />
           </BottomSection>
-
-          <Divider></Divider>
+          <Divider />
           <Comments />
         </DiaryBox>
       </Container>
@@ -137,13 +132,9 @@ const Container = styled.div`
   width: 100vw;
   min-width: var(--vw-desktop-min, 960px);
   max-width: var(--vw-desktop-max, 2560px);
-  padding: var(--gap-empty, 0px);
   flex-direction: column;
   align-items: center;
-  gap: var(--gap-empty, 0px);
 
-  border-radius: var(--radius-empty, 0px);
-  opacity: var(--opacity-visible, 1);
   background: linear-gradient(180deg, #fff 0%, #f1f1f1 100%);
 `;
 
@@ -159,7 +150,6 @@ const DiaryBox = styled.div`
   gap: var(--gap-lg, 20px);
   align-self: stretch;
 
-  border-radius: var(--radius-empty, 0px);
   border-top: var(--stroke-empty, 0px) solid
     ${semantic.light.border.transparent.alternative};
   border-right: var(--stroke-thin, 1px) solid
@@ -174,18 +164,13 @@ const DiaryBox = styled.div`
 
 const TopSection = styled.div`
   display: flex;
-  padding: var(--gap-empty, 0px);
   align-items: center;
   gap: var(--gap-xl, 24px);
   align-self: stretch;
-
-  border-radius: var(--radius-empty, 0px);
-  opacity: var(--opacity-visible, 1);
 `;
 
 const Title = styled.div`
   display: flex;
-  padding: var(--gap-empty, 0px);
   align-items: center;
   gap: var(--gap-2xs, 8px);
   flex: 1 0 0;
@@ -193,58 +178,41 @@ const Title = styled.div`
 
 const SubTitle = styled.div`
   display: flex;
-  padding: var(--gap-empty, 0px);
   align-items: center;
   gap: var(--gap-2xs, 8px);
-
-  border-radius: var(--radius-empty, 0px);
-  opacity: var(--opacity-visible, 1);
 `;
 
 const Date = styled.div`
-  color: ${semantic.light.object.transparent.neutral};
-
   ${TYPO.title1}
-
-  opacity: var(--opacity-visible, 1);
+  color: ${semantic.light.object.transparent.neutral};
 `;
 
 const Profile = styled.img`
   width: 32px;
   height: 32px;
   border-radius: 16px;
-  objectfit: cover;
+  object-fit: cover;
 `;
 
 const Nickname = styled.div`
-  color: ${semantic.light.object.solid.normal};
-
   ${TYPO.label2}
-
-  opacity: var(--opacity-visible, 1);
+  color: ${semantic.light.object.solid.normal};
 `;
 
 const Time = styled.div`
-  color: ${semantic.light.object.transparent.assistive};
-
   ${TYPO.caption3}
-
-  opacity: var(--opacity-visible, 1);
+  color: ${semantic.light.object.transparent.assistive};
 `;
 
 const PrivateContainer = styled.div`
   display: flex;
-  padding: var(--gap-empty, 0px);
   align-items: center;
   gap: var(--gap-4xs, 4px);
-
-  border-radius: var(--radius-empty, 0px);
-  opacity: var(--opacity-visible, 1);
 `;
 
 const PrivateLable = styled.div`
-  color: ${semantic.light.object.transparent.alternative};
   ${TYPO.label1}
+  color: ${semantic.light.object.transparent.alternative};
 `;
 
 const EmojiContainer = styled.div`
@@ -255,7 +223,6 @@ const EmojiContainer = styled.div`
   border-radius: var(--radius-round, 96px);
   border: var(--stroke-thin, 1px) solid
     ${semantic.light.border.transparent.assistive};
-  opacity: var(--opacity-visible, 1);
   background: ${semantic.light.fill.transparent.assistive};
 `;
 
@@ -273,21 +240,16 @@ const Emoji = styled.p`
 
 const DiaryContent = styled.div`
   display: flex;
-  padding: var(--gap-empty, 0px);
   flex-direction: column;
   align-items: center;
   gap: var(--gap-xl, 24px);
   align-self: stretch;
-
-  border-radius: var(--radius-empty, 0px);
-  opacity: var(--opacity-visible, 1);
 `;
 
 const ImageCard = styled.img`
   height: 460px;
   width: 100%;
   border-radius: var(--radius-sm, 12px);
-  opacity: var(--opacity-visible, 1);
   object-fit: cover;
 `;
 
@@ -295,9 +257,8 @@ const ContentCard = styled.div`
   min-height: 200px;
   align-self: stretch;
 
-  color: ${semantic.light.object.solid.normal};
-
   ${TYPO.body2}
+  color: ${semantic.light.object.solid.normal};
 `;
 
 const BottomSection = styled.div`
@@ -311,15 +272,11 @@ const BottomSection = styled.div`
 
 const HashTagContainer = styled.div`
   display: flex;
-  padding: var(--gap-empty, 0px);
   align-items: center;
   align-content: center;
   gap: var(--gap-2xs, 8px);
   flex: 1 0 0;
   flex-wrap: wrap;
-
-  border-radius: var(--radius-empty, 0px);
-  opacity: var(--opacity-visible, 1);
 `;
 
 const HashWrap = styled.div`
@@ -332,19 +289,17 @@ const HashWrap = styled.div`
   border-radius: var(--radius-xs, 8px);
   border: var(--stroke-thin, 1px) solid
     ${semantic.light.border.transparent.alternative};
-  opacity: var(--opacity-visible, 1);
   background: ${semantic.light.fill.transparent.assistive};
 `;
 
 const HashText = styled.p`
+  ${TYPO.caption1}s
   color: ${semantic.light.object.transparent.alternative};
-  ${TYPO.caption1}
 `;
 
 const Divider = styled.div`
   width: 912px;
   height: 1px;
 
-  opacity: var(--opacity-visible, 1);
   background: ${semantic.light.border.transparent.alternative};
 `;

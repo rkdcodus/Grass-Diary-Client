@@ -10,13 +10,14 @@ import { useCommentActions } from '@state/comment/CommentStore';
 import { usePostComment } from '@hooks/api/comment/usePostComment';
 import { usePatchComment } from '@hooks/api/comment/usePatchComment';
 import { ReactComponent as ReplyIcon } from '@svg/subdirectory_arrow_right.svg';
+import { COMMENT } from '@constants/message';
 
 const CommentInput = ({
   submit,
   text,
   setText,
   isReply,
-  isCancleBtn,
+  isCancelBtn,
   isPatch,
 }: CommentInputProps) => {
   const { profileImageURL, nickname } = useProfile();
@@ -33,12 +34,9 @@ const CommentInput = ({
     setText(e.target.value);
   };
 
-  const cancle = () => {
-    if (isPatch) {
-      resetEditId();
-    } else {
-      resetReplyId();
-    }
+  const cancel = () => {
+    if (isPatch) resetEditId();
+    else resetReplyId();
   };
 
   return (
@@ -56,9 +54,9 @@ const CommentInput = ({
           onFocus={onFocus}
           onBlur={onBlur}
           onChange={commentHandler}
-          placeholder="댓글을 입력해주세요"
-        ></Input>
-        {isCancleBtn && <CancleBtn onClick={cancle}>취소</CancleBtn>}
+          placeholder={COMMENT.PLACEHOLDER}
+        />
+        {isCancelBtn && <CancelBtn onClick={cancel}>취소</CancelBtn>}
         <SubmitBtn type="button" onClick={submit} disabled={text === ''}>
           등록
         </SubmitBtn>
@@ -98,7 +96,7 @@ const PostInput = ({ parentId }: PostInputProps) => {
       text={text}
       setText={setText}
       isReply={parentId ? true : false}
-      isCancleBtn={parentId ? true : false}
+      isCancelBtn={parentId ? true : false}
       isPatch={false}
     />
   );
@@ -139,7 +137,7 @@ const PatchInput = ({ commentId, isReply, content }: PatchInputProps) => {
       text={text}
       setText={setText}
       isReply={isReply}
-      isCancleBtn={true}
+      isCancelBtn={true}
       isPatch={true}
     />
   );
@@ -149,23 +147,16 @@ export { PostInput, PatchInput };
 
 const CommentTop = styled.div`
   display: flex;
-  padding: var(--gap-empty, 0px);
   align-items: center;
   gap: var(--gap-md, 16px);
   align-self: stretch;
-  border-radius: var(--radius-empty, 0px);
-  opacity: var(--opacity-visible, 1);
 `;
 
 const WriterWrap = styled.div`
   display: flex;
-  padding: var(--gap-empty, 0px);
   align-items: center;
   gap: var(--gap-2xs, 8px);
   flex: 1 0 0;
-
-  border-radius: var(--radius-empty, 0px);
-  opacity: var(--opacity-visible, 1);
 `;
 
 const WriterProfile = styled.img`
@@ -173,16 +164,12 @@ const WriterProfile = styled.img`
   height: 24px;
   flex-shrink: 0;
   border-radius: var(--radius-empty, 24px);
-  opacity: var(--opacity-visible, 1);
-  background: url(<path-to-image>) lightgray 4.876px 7.661px / 63.924% 48.417%
-      no-repeat,
-    ${semantic.light.fill.transparent.alternative};
-  objectfit: cover;
+  object-fit: cover;
 `;
 
 const WriterName = styled.p`
-  color: ${semantic.light.object.solid.normal};
   ${TYPO.label2}
+  color: ${semantic.light.object.solid.normal};
 `;
 
 const InputComment = styled.div<{ $focus: boolean; $isReply: boolean }>`
@@ -194,7 +181,6 @@ const InputComment = styled.div<{ $focus: boolean; $isReply: boolean }>`
   align-self: stretch;
 
   border-radius: var(--radius-sm, 12px);
-  opacity: var(--opacity-visible, 1);
   border: var(--stroke-thin, 1px) solid
     ${props =>
       props.$focus
@@ -220,12 +206,11 @@ const Input = styled.input`
   display: flex;
   padding: var(--gap-empty, 0px) var(--gap-4xs, 4px);
   align-items: center;
-  gap: var(--gap-empty, 0px);
   flex: 1 0 0;
 
   border: none;
-  border-radius: var(--radius-empty, 0px);
-  opacity: var(--opacity-visible, 1);
+  ${TYPO.body1}
+  caret-color: ${semantic.light.accent.solid.normal};
 
   &::placeholder,
   &::-webkit-input-placeholder {
@@ -234,20 +219,16 @@ const Input = styled.input`
   &:-ms-input-placeholder {
     color: ${semantic.light.object.transparent.assistive};
   }
-
-  ${TYPO.body1}
-
-  caret-color: ${semantic.light.accent.solid.normal};
 `;
 
-const CancleBtn = styled.div`
+const CancelBtn = styled.div`
   cursor: pointer;
   padding: var(--gap-4xs, 4px) var(--gap-2xs, 8px);
   gap: var(--gap-2xs, 8px);
-
-  color: ${semantic.light.object.transparent.alternative};
   text-align: center;
+
   ${TYPO.label1}
+  color: ${semantic.light.object.transparent.alternative};
 `;
 
 const SubmitBtn = styled.button`
@@ -257,6 +238,7 @@ const SubmitBtn = styled.button`
   align-items: center;
   gap: var(--gap-2xs, 8px);
   text-align: center;
+
   ${TYPO.label1}
   color: ${semantic.light.accent.solid.normal};
 

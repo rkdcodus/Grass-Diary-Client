@@ -2,6 +2,7 @@ import { semantic } from '@styles/semantic';
 import CustomButton from '@components/modal/CustomButton';
 import Modal from '@components/modal/Modal';
 import { useDeleteDiaryDetail } from '@hooks/api/useDeleteDiaryDetail';
+import { DIARY } from '@constants/message';
 
 const ConfirmDeleteModal = ({
   diaryId,
@@ -11,16 +12,14 @@ const ConfirmDeleteModal = ({
 
   const closeModal = () => setConfirmModal(false);
 
-  const handleDelete = () => {
-    mutate();
-  };
+  const handleDelete = () => mutate();
 
   return (
     <>
       <Modal
         setClose={closeModal}
         title="일기 삭제 안내"
-        content={'일기를 삭제하시겠어요?\n삭제된 일기는 다시 되돌릴 수 없어요.'}
+        content={DIARY.DELETE_CONFIRM}
       >
         <CustomButton onClick={closeModal} text={'취소'} />
         <CustomButton

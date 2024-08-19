@@ -19,9 +19,7 @@ const CommentSetting = ({ commentId, writerId }: CommentSettingProps) => {
   const { setEditId } = useCommentActions();
   const { mutate: deleteComment } = useDeleteComment(diaryId);
 
-  const editHandler = () => {
-    setEditId(commentId);
-  };
+  const editHandler = () => setEditId(commentId);
 
   return (
     <SettingWrap>

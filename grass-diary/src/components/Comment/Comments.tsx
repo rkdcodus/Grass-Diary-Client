@@ -26,19 +26,15 @@ const Comments = () => {
 export default Comments;
 
 const CommentLable = styled.div`
+  ${TYPO.label3}
   align-self: stretch;
   color: ${semantic.light.object.transparent.neutral};
-  ${TYPO.label3}
 `;
 
 const CommentContainer = styled.div`
   display: flex;
-  padding: var(--gap-empty, 0px);
   flex-direction: column;
   align-items: flex-start;
   gap: var(--gap-xs, 10px);
   align-self: stretch;
-
-  border-radius: var(--radius-empty, 0px);
-  opacity: var(--opacity-visible, 1);
 `;

@@ -8,6 +8,7 @@ import {
 
 const ChildCommentList = ({ childs, parentId }: CommentListProps) => {
   const editId = useCommentEditId();
+
   return (
     <>
       {childs?.length
