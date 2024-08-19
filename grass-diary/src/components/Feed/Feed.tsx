@@ -78,35 +78,35 @@ const Feed = ({
 export default Feed;
 
 const CardContainer = styled.div`
-  width: 17.6875rem; /* 283px */
-  height: 28.75rem; /* 460px */
+  width: 17.6875rem;
+  height: 28.75rem;
   display: flex;
   flex-direction: column;
-  padding: var(--gap-md, 1rem); /* 16px */
-  gap: var(--gap-xl, 1.5rem); /* 24px */
+  padding: var(--gap-md, 1rem);
+  gap: var(--gap-xl, 1.5rem);
 
-  border-radius: var(--radius-md, 1rem); /* 16px */
+  border-radius: var(--radius-md, 1rem);
   border: var(--stroke-thin, 0.0625rem) solid
-    ${semantic.light.border.transparent.assistive}; /* 1px */
+    ${semantic.light.border.transparent.assistive};
   background: ${semantic.light.bg.solid.normal};
   box-shadow: 0rem 0rem 0.0625rem 0rem rgba(0, 0, 0, 0.04),
-    0rem 0.125rem 0rem 0rem rgba(0, 0, 0, 0.08); /* 0px, 1px, 2px */
+    0rem 0.125rem 0rem 0rem rgba(0, 0, 0, 0.08);
 `;
 
 const CardHeaderSection = styled.div`
   display: flex;
-  padding: var(--gap-empty, 0rem); /* 0px */
+  padding: var(--gap-empty, 0rem);
   align-items: center;
-  gap: var(--gap-sm, 0.75rem); /* 12px */
+  gap: var(--gap-sm, 0.75rem);
   align-self: stretch;
 
-  border-radius: var(--radius-empty, 0rem); /* 0px */
+  border-radius: var(--radius-empty, 0rem);
   opacity: var(--opacity-visible, 1);
 `;
 
 const CardUserImg = styled.div`
-  width: 2.5rem; /* 40px */
-  height: 2.5rem; /* 40px */
+  width: 2.5rem;
+  height: 2.5rem;
   flex-shrink: 0;
 
   opacity: var(--opacity-visible, 1);
@@ -114,14 +114,14 @@ const CardUserImg = styled.div`
 
 const CardHeaderWrap = styled.div`
   display: flex;
-  padding: var(--gap-empty, 0rem); /* 0px */
+  padding: var(--gap-empty, 0rem);
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
-  gap: var(--gap-4xs, 0.25rem); /* 4px */
+  gap: var(--gap-4xs, 0.25rem);
   flex: 1 0 0;
 
-  border-radius: var(--radius-empty, 0rem); /* 0px */
+  border-radius: var(--radius-empty, 0rem);
   opacity: var(--opacity-visible, 1);
 `;
 
@@ -129,10 +129,10 @@ const CardTime = styled.p`
   color: ${semantic.light.object.transparent.assistive};
 
   font-family: Pretendard;
-  font-size: 0.8125rem; /* 13px */
+  font-size: 0.8125rem;
   font-style: normal;
   font-weight: 400;
-  line-height: 1.25rem; /* 20px, 153.846% */
+  line-height: 1.25rem;
 
   opacity: var(--opacity-visible, 1);
 `;
@@ -141,11 +141,11 @@ const CardHeaderDate = styled.div`
   color: ${semantic.light.object.transparent.neutral};
 
   font-family: Pretendard;
-  font-size: 0.875rem; /* 14px */
+  font-size: 0.875rem;
   font-style: normal;
   font-weight: 500;
-  line-height: 1.25rem; /* 20px, 142.857% */
-  letter-spacing: -0.00525rem; /* -0.084px */
+  line-height: 1.25rem;
+  letter-spacing: -0.00525rem;
 
   opacity: var(--opacity-visible, 1);
 `;
@@ -153,22 +153,22 @@ const CardHeaderDate = styled.div`
 const CardNameWrap = styled.div`
   display: flex;
   align-items: center;
-  gap: var(--gap-2xs, 0.5rem); /* 8px */
+  gap: var(--gap-2xs, 0.5rem);
 
-  border-radius: var(--radius-empty, 0rem); /* 0px */
+  border-radius: var(--radius-empty, 0rem);
 `;
 
 const CardEmojiContainer = styled.div`
   display: flex;
-  padding: var(--gap-5xs, 0.125rem); /* 2px */
+  padding: var(--gap-5xs, 0.125rem);
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: var(--gap-empty, 0rem); /* 0px */
+  gap: var(--gap-empty, 0rem);
 
-  border-radius: var(--radius-round, 6rem); /* 96px */
+  border-radius: var(--radius-round, 6rem);
   border: var(--stroke-thin, 0.0625rem) solid
-    ${semantic.light.border.transparent.assistive}; /* 1px */
+    ${semantic.light.border.transparent.assistive};
   opacity: var(--opacity-visible, 1);
   background: ${semantic.light.fill.transparent.assistive};
 `;
@@ -176,7 +176,7 @@ const CardEmojiContainer = styled.div`
 const CardFooterSection = styled.div`
   display: flex;
   justify-content: flex-end;
-  gap: var(--gap-md, 1rem); /* 16px */
+  gap: var(--gap-md, 1rem);
   width: 100%;
 `;
 

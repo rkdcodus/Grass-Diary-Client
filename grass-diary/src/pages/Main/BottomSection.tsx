@@ -80,51 +80,50 @@ export default BottomSection;
 
 const Section = styled.div`
   display: flex;
-  padding: var(--gap-lg, 1.25rem) var(--gap-xl, 1.5rem); /* 20px, 24px */
+  padding: var(--gap-lg, 1.25rem) var(--gap-xl, 1.5rem);
   justify-content: center;
   align-items: center;
-  gap: var(--gap-xl, 1.5rem); /* 24px */
+  gap: var(--gap-xl, 1.5rem);
   align-self: stretch;
 
-  border-radius: var(--radius-empty, 0rem); /* 0px */
+  border-radius: var(--radius-empty, 0rem);
   opacity: var(--opacity-visible, 1);
 `;
 
 const Container = styled.div`
   display: flex;
-  max-width: var(--vw-desktop-min, 60rem); /* 960px */
-  padding: var(--gap-empty, 0rem); /* 0px */
+  max-width: var(--vw-desktop-min, 60rem);
+  padding: var(--gap-empty, 0rem);
   justify-content: center;
   align-items: center;
-  gap: var(--gap-xl, 1.5rem); /* 24px */
+  gap: var(--gap-xl, 1.5rem);
   flex: 1 0 0;
 
-  border-radius: var(--radius-empty, 0rem); /* 0px */
+  border-radius: var(--radius-empty, 0rem);
   opacity: var(--opacity-visible, 1);
 `;
 
 const Card = styled.div`
   display: flex;
-  padding: var(--gap-lg, 1.25rem); /* 20px */
+  padding: var(--gap-lg, 1.25rem);
   flex-direction: column;
   align-items: flex-start;
-  gap: var(--gap-md, 1rem); /* 16px */
+  gap: var(--gap-md, 1rem);
   flex: 1 0 0;
 
-  border-radius: var(--radius-md, 1rem); /* 16px */
+  border-radius: var(--radius-md, 1rem);
   border: var(--stroke-thin, 0.0625rem) solid
-    ${semantic.light.border.transparent.assistive}; /* 1px */
+    ${semantic.light.border.transparent.assistive};
   opacity: var(--opacity-visible, 1);
   background: ${semantic.light.bg.solid.normal};
 
-  /* shadow/embossed */
   box-shadow: 0rem 0rem 0.0625rem 0rem rgba(0, 0, 0, 0.04),
-    /* 1px */ 0rem 0.125rem 0.25rem 0rem rgba(0, 0, 0, 0.08); /* 2px 4px */
+    0rem 0.125rem 0.25rem 0rem rgba(0, 0, 0, 0.08);
 `;
 
 const Divider = styled.div`
-  width: 26.75rem; /* 428px */
-  height: 0.0625rem; /* 1px */
+  width: 26.75rem;
+  height: 0.0625rem;
 
   opacity: var(--opacity-visible, 1);
   background: ${semantic.light.border.transparent.alternative};
@@ -137,11 +136,11 @@ const CardText = styled.p`
 
   /* label/3 */
   font-family: Pretendard;
-  font-size: 1.125rem; /* 18px */
+  font-size: 1.125rem;
   font-style: normal;
   font-weight: 500;
-  line-height: 1.5rem; /* 24px, 133.333% */
-  letter-spacing: -0.00675rem; /* -0.108px */
+  line-height: 1.5rem;
+  letter-spacing: -0.00675rem;
 
   opacity: var(--opacity-visible, 1);
 `;
@@ -153,33 +152,33 @@ const CardSubText = styled.p`
 
   /* caption/2 */
   font-family: Pretendard;
-  font-size: 0.875rem; /* 14px */
+  font-size: 0.875rem;
   font-style: normal;
   font-weight: 400;
-  line-height: 1.375rem; /* 22px, 157.143% */
+  line-height: 1.375rem;
 
   opacity: var(--opacity-visible, 1);
 `;
 
 const Wrap = styled.div`
   display: flex;
-  padding: var(--gap-empty, 0rem); /* 0px */
+  padding: var(--gap-empty, 0rem);
   align-items: center;
-  gap: var(--gap-md, 1rem); /* 16px */
+  gap: var(--gap-md, 1rem);
   align-self: stretch;
 
-  border-radius: var(--radius-empty, 0rem); /* 0px */
+  border-radius: var(--radius-empty, 0rem);
   opacity: var(--opacity-visible, 1);
 `;
 
 const RewardContainer = styled.div`
   display: flex;
-  padding: var(--gap-empty, 0rem); /* 0px */
+  padding: var(--gap-empty, 0rem);
   align-items: center;
-  gap: var(--gap-2xs, 0.5rem); /* 8px */
+  gap: var(--gap-2xs, 0.5rem);
   flex: 1 0 0;
 
-  border-radius: var(--radius-empty, 0rem); /* 0px */
+  border-radius: var(--radius-empty, 0rem);
   opacity: var(--opacity-visible, 1);
 `;
 
@@ -190,25 +189,25 @@ const RewardPoint = styled.p`
 
   /* title/3 */
   font-family: Pretendard;
-  font-size: 1.09375rem; /* 17.5px */
+  font-size: 1.09375rem;
   font-style: normal;
   font-weight: 600;
-  line-height: 2.625rem; /* 42px, 131.25% */
-  letter-spacing: -0.0311875rem; /* -0.499px */
+  line-height: 2.625rem;
+  letter-spacing: -0.0311875rem;
 
   opacity: var(--opacity-visible, 1);
 `;
 
 const ThemeMarketBtn = styled.button`
   display: flex;
-  padding: var(--gap-xs, 0.625rem) var(--gap-md, 1rem); /* 10px, 16px */
+  padding: var(--gap-xs, 0.625rem) var(--gap-md, 1rem);
   justify-content: center;
   align-items: center;
-  gap: var(--gap-2xs, 0.5rem); /* 8px */
+  gap: var(--gap-2xs, 0.5rem);
 
-  border-radius: var(--radius-xs, 0.5rem); /* 8px */
+  border-radius: var(--radius-xs, 0.5rem);
   border: var(--stroke-thin, 0.0625rem) solid
-    ${semantic.light.accent.solid.normal}; /* 1px */
+    ${semantic.light.accent.solid.normal};
   opacity: var(--opacity-visible, 1);
   background: ${semantic.light.accent.transparent.normal};
 
@@ -221,35 +220,35 @@ const ThemeMarketText = styled.p`
 
   /* label/2 */
   font-family: Pretendard;
-  font-size: 1rem; /* 16px */
+  font-size: 1rem;
   font-style: normal;
   font-weight: 500;
-  line-height: 1.375rem; /* 22px, 137.5% */
-  letter-spacing: -0.006rem; /* -0.096px */
+  line-height: 1.375rem;
+  letter-spacing: -0.006rem;
 
   opacity: var(--opacity-visible, 1);
 `;
 
 const RetrospectContainer = styled.div`
   display: flex;
-  padding: var(--gap-empty, 0rem); /* 0px */
+  padding: var(--gap-empty, 0rem);
   justify-content: flex-end;
   align-items: center;
-  gap: var(--gap-empty, 0rem); /* 0px */
+  gap: var(--gap-empty, 0rem);
   align-self: stretch;
 
-  border-radius: var(--radius-empty, 0rem); /* 0px */
+  border-radius: var(--radius-empty, 0rem);
   opacity: var(--opacity-visible, 1);
 `;
 
 const RetrospectBtn = styled.button`
   display: flex;
-  padding: var(--gap-xs, 0.625rem) var(--gap-md, 1rem); /* 10px, 16px */
+  padding: var(--gap-xs, 0.625rem) var(--gap-md, 1rem);
   justify-content: center;
   align-items: center;
-  gap: var(--gap-2xs, 0.5rem); /* 8px */
+  gap: var(--gap-2xs, 0.5rem);
 
-  border-radius: var(--radius-xs, 0.5rem); /* 8px */
+  border-radius: var(--radius-xs, 0.5rem);
   opacity: var(--opacity-visible, 1);
 `;
 
@@ -258,11 +257,11 @@ const RetrospectText = styled.p`
 
   /* label/2 */
   font-family: Pretendard;
-  font-size: 1rem; /* 16px */
+  font-size: 1rem;
   font-style: normal;
   font-weight: 500;
-  line-height: 1.375rem; /* 22px, 137.5% */
-  letter-spacing: -0.006rem; /* -0.096px */
+  line-height: 1.375rem;
+  letter-spacing: -0.006rem;
 
   opacity: var(--opacity-visible, 1);
 `;
@@ -287,7 +286,7 @@ const SeeMoreBtn = styled.p`
   font-size: 1rem;
   font-style: normal;
   font-weight: 500;
-  line-height: 1.375rem; /* 137.5% */
+  line-height: 1.375rem;
   letter-spacing: -0.006rem;
 
   opacity: var(--opacity-visible, 1);

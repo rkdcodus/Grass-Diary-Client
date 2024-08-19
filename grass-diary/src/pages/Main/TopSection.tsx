@@ -49,13 +49,13 @@ export default TopSection;
 
 const Container = styled.div`
   display: flex;
-  max-width: 60rem; /* 960px */
-  padding: 4.5rem 1.5rem; /* 72px 24px */
+  max-width: 60rem;
+  padding: 4.5rem 1.5rem;
   flex-direction: column;
   align-items: center;
-  gap: 2rem; /* 32px */
+  gap: 2rem;
 
-  border-radius: var(--radius-empty, 0rem); /* 0px */
+  border-radius: var(--radius-empty, 0rem);
   opacity: var(--opacity-visible, 1);
 `;
 
@@ -63,11 +63,11 @@ const TodayDateText = styled.p`
   color: ${semantic.light.object.transparent.neutral};
   text-align: center;
   font-family: Pretendard;
-  font-size: 1.125rem; /* 18px */
+  font-size: 1.125rem;
   font-style: normal;
   font-weight: 500;
-  line-height: 1.5rem; /* 24px */
-  letter-spacing: -0.00675rem; /* -0.108px */
+  line-height: 1.5rem;
+  letter-spacing: -0.00675rem;
 
   opacity: var(--opacity-visible, 1);
 `;
@@ -78,33 +78,33 @@ const DailyQuestionText = styled.p`
 
   /* display/1 */
   font-family: Pretendard;
-  font-size: 2.5rem; /* 40px */
+  font-size: 2.5rem;
   font-style: normal;
   font-weight: 700;
-  line-height: 3rem; /* 48px */
-  letter-spacing: -0.045rem; /* -0.72px */
+  line-height: 3rem;
+  letter-spacing: -0.045rem;
 
   opacity: var(--opacity-visible, 1);
 `;
 
 const ButtonContainer = styled.div`
   display: flex;
-  padding: var(--gap-empty, 0rem); /* 0px */
+  padding: var(--gap-empty, 0rem);
   align-items: flex-start;
-  gap: 1rem; /* 16px */
+  gap: 1rem;
 
-  border-radius: var(--radius-empty, 0rem); /* 0px */
+  border-radius: var(--radius-empty, 0rem);
   opacity: var(--opacity-visible, 1);
 `;
 
 const CreateDiaryBtn = styled.button`
   display: flex;
-  padding: 0.75rem 1rem; /* 12px 16px */
+  padding: 0.75rem 1rem;
   justify-content: center;
   align-items: center;
-  gap: 0.5rem; /* 8px */
+  gap: 0.5rem;
 
-  border-radius: 0.75rem; /* 12px */
+  border-radius: 0.75rem;
   opacity: var(--opacity-visible, 1);
   background: ${semantic.light.accent.solid.normal};
   border: none;
@@ -116,24 +116,24 @@ const CreateDiaryText = styled.p`
 
   /* label/3 */
   font-family: Pretendard;
-  font-size: 1.125rem; /* 18px */
+  font-size: 1.125rem;
   font-style: normal;
   font-weight: 500;
-  line-height: 1.5rem; /* 24px */
-  letter-spacing: -0.00675rem; /* -0.108px */
+  line-height: 1.5rem;
+  letter-spacing: -0.00675rem;
 
   opacity: var(--opacity-visible, 1);
 `;
 
 const MydiaryBtn = styled.button`
   display: flex;
-  padding: 0.75rem 1rem; /* 12px 16px */
+  padding: 0.75rem 1rem;
   justify-content: center;
   align-items: center;
-  gap: 0.5rem; /* 8px */
+  gap: 0.5rem;
 
-  border-radius: 0.75rem; /* 12px */
-  border: 0.0625rem solid ${semantic.light.border.transparent.alternative}; /* 1px */
+  border-radius: 0.75rem;
+  border: 0.0625rem solid ${semantic.light.border.transparent.alternative};
   opacity: var(--opacity-visible, 1);
   background: ${semantic.light.bg.solid.normal};
 `;
@@ -144,11 +144,11 @@ const MydaryTxt = styled.p`
 
   /* label/3 */
   font-family: Pretendard;
-  font-size: 1.125rem; /* 18px */
+  font-size: 1.125rem;
   font-style: normal;
   font-weight: 500;
-  line-height: 1.5rem; /* 24px */
-  letter-spacing: -0.00675rem; /* -0.108px */
+  line-height: 1.5rem;
+  letter-spacing: -0.00675rem;
 
   opacity: var(--opacity-visible, 1);
 `;
