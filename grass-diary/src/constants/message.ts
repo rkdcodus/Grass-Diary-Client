@@ -1,4 +1,4 @@
-const CONSOLE_ERROR = {
+export const CONSOLE_ERROR = {
   LOGIN: {
     FALSE: '로그인되지 않은 사용자입니다.',
     FAIL: '인증 확인 중 오류가 발생했습니다.',
@@ -32,7 +32,7 @@ const CONSOLE_ERROR = {
   },
 } as const;
 
-const ERROR = {
+export const ERROR = {
   // 인증, 엑세스 토큰, 세션 만료 에러메시지
   UNAUTHORIZED: '인증이 필요합니다. 로그인 해주세요.',
   AUTHENTICATION_FAILED: '인증을 실패했습니다.',
@@ -69,13 +69,22 @@ const ERROR = {
   IMAGE_UPLOAD_FAILED: '이미지 업로드에 실패했습니다.',
 } as const;
 
-const NULL = {
+export const NULL = {
   SHARE_POPULAR_FEED: '이번 주는 공개된 일기가 아직 없어요.',
   SHARE_FEED: '공개된 일기가 아직 없어요',
 } as const;
 
-const INFO = {
-  DIARY_EDIT_INFO: '일기는 당일 00:00부터 24:00전까지 수정 가능합니다.',
+export const DIARY = {
+  EDIT_INFO: '일기는 당일 00:00부터 24:00전까지 수정 가능합니다.',
+  DELETE_CONFIRM:
+    '일기를 삭제하시겠어요?\n삭제된 일기는 다시 되돌릴 수 없어요.',
 } as const;
 
-export { CONSOLE_ERROR, ERROR, NULL, INFO };
+export const COMMENT = {
+  DELETED: '삭제된 댓글입니다',
+  PLACEHOLDER: '댓글을 입력해주세요',
+} as const;
+
+export const FOOTER = {
+  COPYRIGHT: 'Copyright © 2024 Jandi Diary. All rights reserved.',
+} as const;

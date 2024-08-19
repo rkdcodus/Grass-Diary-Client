@@ -1,6 +1,6 @@
 import Modal from '@components/modal/Modal';
 import CheckButton from '@components/modal/CheckButton';
-import { INFO } from '@constants/message';
+import { DIARY } from '@constants/message';
 
 const UnmodifyModal = ({ setter }: UnmodifyModalProps) => {
   const closeModal = () => setter(false);
@@ -9,7 +9,7 @@ const UnmodifyModal = ({ setter }: UnmodifyModalProps) => {
     <Modal
       setClose={closeModal}
       title={'일기 수정 가능 시간'}
-      content={INFO.DIARY_EDIT_INFO}
+      content={DIARY.EDIT_INFO}
     >
       <CheckButton onClick={closeModal} />
     </Modal>

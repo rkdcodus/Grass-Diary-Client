@@ -4,6 +4,7 @@ import { TYPO } from '@styles/typo';
 
 import { ReactComponent as LogoText } from '@svg/logo.svg';
 import logoIcon from '@image/sampleLogo_white.png';
+import { FOOTER } from '@constants/message';
 
 const Footer = () => {
   return (
@@ -13,9 +14,7 @@ const Footer = () => {
           <LogoIcon src={logoIcon} />
           <LogoText fill={semantic.light.base.solid.white} />
         </LogoWrap>
-        <CopyRight>
-          Copyright © 2024 Jandi Diary. All rights reserved.
-        </CopyRight>
+        <CopyRight>{FOOTER.COPYRIGHT}</CopyRight>
       </ContentWrap>
     </FooterContainer>
   );
