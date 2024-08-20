@@ -43,7 +43,6 @@ const Main = () => {
 
   return (
     <>
-      <Header />
       <Container>
         <TopSection />
         <MiddleSection />

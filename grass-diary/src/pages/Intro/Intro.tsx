@@ -10,7 +10,6 @@ import ReactFullpage from '@fullpage/react-fullpage';
 const Intro = () => {
   return (
     <>
-      <Header />
       <ReactFullpage
         scrollingSpeed={1000}
         render={({ state }) => {
