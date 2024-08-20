@@ -1,23 +1,12 @@
 import { useAuth } from '@state/auth/useAuth';
-import { Outlet, Navigate } from 'react-router-dom';
-import Header from './NavBar/Header';
-import Toast from './Toast/Toast';
-import Footer from './NavBar/Footer';
+import { Navigate } from 'react-router-dom';
+import Layout from './Layout/Layout';
 
 const ProtectedRoute = () => {
   const { isAuthenticated, isLoading } = useAuth();
   if (isLoading) return <div>Loading...</div>;
 
-  return isAuthenticated ? (
-    <>
-      <Header />
-      <Outlet />
-      <Toast />
-      <Footer />
-    </>
-  ) : (
-    <Navigate to="/" />
-  );
+  return isAuthenticated ? <Layout /> : <Navigate to="/" />;
 };
 
 export default ProtectedRoute;
