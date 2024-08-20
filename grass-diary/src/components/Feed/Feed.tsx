@@ -4,6 +4,7 @@ import { NormalLike } from '@components/index';
 import { useWriterProfile } from '@hooks/api/useWriterProfile';
 import { semantic } from '@styles/semantic';
 import { ReactComponent as Comment } from '@svg/comment.svg';
+import { TYPO } from '@styles/typo';
 import EMOJI from '@constants/emoji';
 interface IFeedProps {
   likeCount: number;
@@ -122,22 +123,13 @@ const CardHeaderWrap = styled.div`
 const CardTime = styled.p`
   color: ${semantic.light.object.transparent.assistive};
 
-  font-family: Pretendard;
-  font-size: 0.8125rem;
-  font-style: normal;
-  font-weight: 400;
-  line-height: 1.25rem;
+  ${TYPO.caption1}
 `;
 
 const CardHeaderDate = styled.div`
   color: ${semantic.light.object.transparent.neutral};
 
-  font-family: Pretendard;
-  font-size: 0.875rem;
-  font-style: normal;
-  font-weight: 500;
-  line-height: 1.25rem;
-  letter-spacing: -0.00525rem;
+  ${TYPO.label1}
 `;
 
 const CardNameWrap = styled.div`
