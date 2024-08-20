@@ -30,6 +30,9 @@ const CONSOLE_ERROR = {
   PROFILE: {
     GET: '사용자 프로필을 조회할 수 없습니다.',
   },
+  REWARD: {
+    GET: '리워드 정보를 불러올 수 없습니다.',
+  },
 } as const;
 
 const ERROR = {
