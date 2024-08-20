@@ -1,50 +1,11 @@
-import stylex from '@stylexjs/stylex';
+import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { NormalLike } from '@components/index';
 import { useWriterProfile } from '@hooks/api/useWriterProfile';
-
-const feed = stylex.create({
-  box: {
-    display: 'inline-block',
-    backgroundColor: '#F9F9F9',
-    boxShadow: `rgba(149, 157, 165, 0.2) 2px 2px 4px`,
-    borderRadius: '20px',
-    margin: '10px',
-    padding: '20px 30px',
-    width: '360px',
-    height: '440px',
-    ':hover': {
-      transform: 'scale(1.02)',
-    },
-    transition: '0.3s',
-    overflow: 'hidden',
-  },
-  header: {
-    display: 'flex',
-  },
-  img: {
-    width: '40px',
-    height: '40px',
-    objectFit: 'cover',
-    borderRadius: '50%',
-  },
-  name: {
-    lineHeight: '40px',
-    marginLeft: '10px',
-    fontSize: '13px',
-  },
-  title: {
-    fontSize: '22px',
-    fontWeight: '600',
-    margin: '18px 0',
-  },
-  content: {
-    height: '260px',
-    lineHeight: '27px',
-    overflow: 'hidden',
-  },
-});
-
+import { semantic } from '@styles/semantic';
+import { ReactComponent as Comment } from '@svg/comment.svg';
+import { TYPO } from '@styles/typo';
+import EMOJI from '@constants/emoji';
 interface IFeedProps {
   likeCount: number;
   link: string;
@@ -52,6 +13,7 @@ interface IFeedProps {
   content: string;
   name: string;
   memberId: Id;
+  transparency: number;
 }
 
 const Feed = ({
@@ -61,6 +23,7 @@ const Feed = ({
   content,
   name,
   memberId,
+  transparency,
 }: IFeedProps) => {
   const { data: writer } = useWriterProfile(memberId);
 
@@ -68,6 +31,9 @@ const Feed = ({
     `${createdAt.slice(2, 4)}년 ` +
     `${createdAt.slice(5, 7)}월 ` +
     `${createdAt.slice(8, 10)}일`;
+
+  const time = createdAt.slice(11, 16);
+  const mood = EMOJI[transparency * 10];
 
   const extractTextFromHTML = (htmlString: string) => {
     const parser = new DOMParser();
@@ -84,19 +50,116 @@ const Feed = ({
   };
 
   return (
-    <Link to={link}>
-      <article {...stylex.props(feed.box)}>
-        <NormalLike likeCount={likeCount} justifyContent={'flex-end'} />
-        <div {...stylex.props(feed.header)}>
-          <img {...stylex.props(feed.img)} src={writer?.profileImageURL}></img>
-          <div {...stylex.props(feed.name)}>{name}</div>
-        </div>
-
-        <div {...stylex.props(feed.title)}>{title}</div>
-        <div {...stylex.props(feed.content)}>{textWithoutTags()}</div>
-      </article>
-    </Link>
+    <>
+      <Link to={link}>
+        <CardContainer>
+          <CardHeaderSection>
+            <CardUserImg>
+              <img
+                src={writer?.profileImageURL}
+                style={{ borderRadius: '40px' }}
+              ></img>
+            </CardUserImg>
+            <CardHeaderWrap>
+              <CardHeaderDate>{title}</CardHeaderDate>
+              <CardNameWrap>
+                {name}
+                <CardTime>{time}</CardTime>
+              </CardNameWrap>
+            </CardHeaderWrap>
+            <CardEmojiContainer>{mood}</CardEmojiContainer>
+          </CardHeaderSection>
+          <CardContent>{textWithoutTags()}</CardContent>
+          <CardFooterSection>
+            <Comment /> 0
+            <NormalLike likeCount={likeCount} justifyContent={'flex-end'} />
+          </CardFooterSection>
+        </CardContainer>
+      </Link>
+    </>
   );
 };
 
 export default Feed;
+
+const CardContainer = styled.div`
+  width: 17.6875rem;
+  height: 28.75rem;
+  display: flex;
+  flex-direction: column;
+  padding: var(--gap-md, 1rem);
+  gap: var(--gap-xl, 1.5rem);
+
+  border-radius: var(--radius-md, 1rem);
+  border: var(--stroke-thin, 0.0625rem) solid
+    ${semantic.light.border.transparent.assistive};
+  background: ${semantic.light.bg.solid.normal};
+  box-shadow: 0rem 0rem 0.0625rem 0rem rgba(0, 0, 0, 0.04),
+    0rem 0.125rem 0rem 0rem rgba(0, 0, 0, 0.08);
+`;
+
+const CardHeaderSection = styled.div`
+  display: flex;
+  align-items: center;
+  gap: var(--gap-sm, 0.75rem);
+  align-self: stretch;
+`;
+
+const CardUserImg = styled.div`
+  width: 2.5rem;
+  height: 2.5rem;
+  flex-shrink: 0;
+`;
+
+const CardHeaderWrap = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: var(--gap-4xs, 0.25rem);
+  flex: 1 0 0;
+`;
+
+const CardTime = styled.p`
+  color: ${semantic.light.object.transparent.assistive};
+
+  ${TYPO.caption1}
+`;
+
+const CardHeaderDate = styled.div`
+  color: ${semantic.light.object.transparent.neutral};
+
+  ${TYPO.label1}
+`;
+
+const CardNameWrap = styled.div`
+  display: flex;
+  align-items: center;
+  gap: var(--gap-2xs, 0.5rem);
+`;
+
+const CardEmojiContainer = styled.div`
+  display: flex;
+  padding: var(--gap-5xs, 0rem 0.313rem 0rem 0.313rem);
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  border-radius: var(--radius-round, 6rem);
+  border: var(--stroke-thin, 0.0625rem) solid
+    ${semantic.light.border.transparent.assistive};
+
+  background: ${semantic.light.fill.transparent.assistive};
+`;
+
+const CardFooterSection = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--gap-md, 1rem);
+  width: 100%;
+`;
+
+const CardContent = styled.div`
+  flex: 1;
+  overflow-y: auto;
+`;
