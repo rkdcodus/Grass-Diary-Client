@@ -23,7 +23,7 @@ const MiddleSection = () => {
         return {
           backgroundColor: `rgb(${grassQuery?.grassInfoDTO.colorRGB})`,
           opacity: grass.transparency,
-          borderRadius: '12px',
+          borderRadius: '0.75rem',
         };
       }
       return {};
