@@ -27,9 +27,7 @@ const BottomSection = () => {
     });
   };
 
-  const handleClick = () => {
-    window.scrollTo(0, 0);
-  };
+  const handleClick = () => window.scrollTo(0, 0);
   return (
     <>
       <Section>
