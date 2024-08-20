@@ -70,7 +70,7 @@ const Feed = ({
           </CardHeaderSection>
           <CardContent>{textWithoutTags()}</CardContent>
           <CardFooterSection>
-            <Comment></Comment> 0
+            <Comment /> 0
             <NormalLike likeCount={likeCount} justifyContent={'flex-end'} />
           </CardFooterSection>
         </CardContainer>

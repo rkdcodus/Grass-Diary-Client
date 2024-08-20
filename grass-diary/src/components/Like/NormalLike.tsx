@@ -19,7 +19,7 @@ const NormalLike = ({ likeCount, justifyContent }: INormalLikeProps) => {
   return (
     <div {...stylex.props(feed.like(justifyContent))}>
       <span>
-        <Favorite></Favorite>
+        <Favorite />
       </span>
       <span>{likeCount}</span>
     </div>
