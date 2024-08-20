@@ -4,6 +4,7 @@ import { NormalLike } from '@components/index';
 import { useWriterProfile } from '@hooks/api/useWriterProfile';
 import { semantic } from '@styles/semantic';
 import { ReactComponent as Comment } from '@svg/comment.svg';
+import EMOJI from '@constants/emoji';
 interface IFeedProps {
   likeCount: number;
   link: string;
@@ -11,6 +12,7 @@ interface IFeedProps {
   content: string;
   name: string;
   memberId: Id;
+  transparency: number;
 }
 
 const Feed = ({
@@ -20,6 +22,7 @@ const Feed = ({
   content,
   name,
   memberId,
+  transparency,
 }: IFeedProps) => {
   const { data: writer } = useWriterProfile(memberId);
 
@@ -29,6 +32,7 @@ const Feed = ({
     `${createdAt.slice(8, 10)}일`;
 
   const time = createdAt.slice(11, 16);
+  const mood = EMOJI[transparency * 10];
 
   const extractTextFromHTML = (htmlString: string) => {
     const parser = new DOMParser();
@@ -62,7 +66,7 @@ const Feed = ({
                 <CardTime>{time}</CardTime>
               </CardNameWrap>
             </CardHeaderWrap>
-            <CardEmojiContainer>🔥</CardEmojiContainer>
+            <CardEmojiContainer>{mood}</CardEmojiContainer>
           </CardHeaderSection>
           <CardContent>{textWithoutTags()}</CardContent>
           <CardFooterSection>
@@ -146,7 +150,7 @@ const CardNameWrap = styled.div`
 
 const CardEmojiContainer = styled.div`
   display: flex;
-  padding: var(--gap-5xs, 0.125rem);
+  padding: var(--gap-5xs, 0rem 0.313rem 0rem 0.313rem);
   flex-direction: column;
   justify-content: center;
   align-items: center;

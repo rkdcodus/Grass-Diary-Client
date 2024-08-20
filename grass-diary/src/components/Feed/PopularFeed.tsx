@@ -1,8 +1,8 @@
+import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 
 import styled from 'styled-components';
-import Slider from 'react-slick';
 import { Feed } from '@components/index';
 import { usePopularDiaries } from '@hooks/api/usePopularDiaries';
 import { NULL } from '@constants/message';
@@ -31,6 +31,7 @@ const PopularFeed = () => {
       content={data.content}
       name={data.nickname}
       memberId={data.memberId}
+      transparency={data.transparency}
     />
   ));
 
@@ -42,7 +43,11 @@ const PopularFeed = () => {
           {top10 && top10.length > 3 ? (
             <Slider {...settings}>{feedList}</Slider>
           ) : (
-            feedList
+            <div
+              style={{ display: 'flex', justifyContent: 'center', gap: '3rem' }}
+            >
+              {feedList}
+            </div>
           )}
           {top10 && !top10.length ? <div>{NULL.SHARE_POPULAR_FEED}</div> : null}
         </div>
@@ -55,11 +60,11 @@ export default PopularFeed;
 
 const RankContainer = styled.div`
   display: flex;
-  padding: 3rem 1.5rem;
+  padding: var(--gap-4xl, 3rem) var(--gap-xl, 1.5rem);
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 2rem;
+  gap: var(--gap-2xl, 2rem);
   align-self: stretch;
 
   background: ${semantic.light.fill.transparent.alternative};
