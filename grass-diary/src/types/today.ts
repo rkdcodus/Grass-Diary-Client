@@ -7,3 +7,4 @@ interface TodayInfo {
 }
 
 type TodayDate = Omit<TodayInfo, 'question'>;
+type TodayQuestion = Pick<TodayInfo, 'question'>;

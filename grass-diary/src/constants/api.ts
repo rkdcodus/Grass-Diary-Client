@@ -6,7 +6,7 @@ export const HTTP_STATUS_CODE = {
   not_found: 404,
   request_timeout: 408,
   conflict: 409,
-  unspported_media_type: 415,
+  unsupported_media_type: 415,
   locked: 423,
   too_many_requests: 429,
   auth_session_expired: 440,
@@ -32,7 +32,8 @@ export const END_POINT = {
   share_latest: (cursorId: number) =>
     `/shared/diaries/latest?cursorId=${cursorId}&size=12`,
   total_reward: (memberId: Id) => `/member/totalReward/${memberId}`,
-  grass: (memberId: Id) => `/main/grass/${memberId}`,
+  total_grass: (memberId: Id) => `/grass/${memberId}`,
+  grass: (memberId: Id) => `/grass/main-page/${memberId}`,
   image: '/image/diary',
   comment: (id: Id) => `/comment/${id}`,
   comment_delete: (id: Id) => `/comment/${id}/delete`,

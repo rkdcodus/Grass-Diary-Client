@@ -1,75 +1,10 @@
-import stylex from '@stylexjs/stylex';
 import dayjs from 'dayjs';
-import { Link } from 'react-router-dom';
+import styled from 'styled-components';
 import { useCallback } from 'react';
-import { useQuery } from '@tanstack/react-query';
-import { Button } from '@components/index';
-import AnimateReward from './AnimateReward';
-import API from '@services/index';
-import { END_POINT } from '@constants/api';
-import { useUser } from '@state/user/useUser';
-
-const MiddleSectionStyle = stylex.create({
-  text: {
-    fontWeight: 'bold',
-    fontSize: '30px',
-  },
-
-  title: {
-    display: 'flex',
-    width: '1200px',
-    padding: '50px 0 50px 10px',
-  },
-
-  container: {
-    display: 'flex',
-    justifyContent: 'center',
-    gap: '300px',
-  },
-
-  contentWrapper: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-  },
-
-  grassContainer: {
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
-
-    gap: '15px',
-  },
-
-  rewardContainer: {
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
-
-    gap: '15px',
-  },
-
-  calendar: {
-    display: 'flex',
-    flexWrap: 'wrap',
-
-    marginBottom: '10px',
-  },
-
-  day: {
-    backgroundColor: '#e0e0e0',
-    height: '35px',
-    width: '11%',
-    padding: '2px',
-    borderRadius: '5px',
-    margin: '4px',
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-});
+import { semantic } from '@styles/semantic';
+import { useGrassRecord } from '@hooks/api/useGrassRecord';
+import { MAIN_MESSAGES } from '@constants/message';
+import { TYPO } from '@styles/typo';
 
 const MiddleSection = () => {
   // 잔디 날짜 계산
@@ -77,24 +12,7 @@ const MiddleSection = () => {
   const currentMonth = currentDate.format('M');
   const nextMonthFirstDay = currentDate.add(1, 'month').startOf('month');
   const currentMonthLastDay = nextMonthFirstDay.subtract(1, 'day');
-
-  const memberId = useUser();
-  // reward 쿼리
-  const { data: reward } = useQuery<RewardPointResponse>({
-    queryKey: ['rewardPoint'],
-    queryFn: () =>
-      API.get(END_POINT.total_reward(memberId)).then(response => response.data),
-    initialData: { rewardPoint: 0 }, // 초기 데이터 설정
-    enabled: !!memberId, // memberId가 있을 때만 쿼리를 실행
-  });
-
-  // grass 쿼리
-  const { data: grassQuery } = useQuery<GrassApiResponse>({
-    queryKey: ['grass'],
-    queryFn: () =>
-      API.get(END_POINT.grass(memberId)).then(response => response.data),
-    enabled: !!memberId, // memberId가 있을 때만 쿼리를 실행
-  });
+  const { grassQuery } = useGrassRecord();
 
   const getGrassStyle = useCallback(
     (day: number | string) => {
@@ -105,6 +23,7 @@ const MiddleSection = () => {
         return {
           backgroundColor: `rgb(${grassQuery?.grassInfoDTO.colorRGB})`,
           opacity: grass.transparency,
+          borderRadius: '0.75rem',
         };
       }
       return {};
@@ -130,86 +49,115 @@ const MiddleSection = () => {
 
   return (
     <>
-      <div {...stylex.props(MiddleSectionStyle.title)}>
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-          <h1>📫 기록 상자</h1>
-          <span>
-            총 {grassQuery?.totalCount ? grassQuery?.totalCount : 0}
-            개의 기록을 보유하고 있어요!
-          </span>
-        </div>
-      </div>
-      <div {...stylex.props(MiddleSectionStyle.container)}>
-        <div
-          className="cardSectionG"
-          {...stylex.props(MiddleSectionStyle.grassContainer)}
-        >
-          <img
-            src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Animals/Seedling.png"
-            alt="Seedling"
-            width="125"
-            height="125"
-          />
-          <section>
-            <div {...stylex.props(MiddleSectionStyle.calendar)}>
-              {daysInMonth.map(day => (
-                <div
-                  {...stylex.props(MiddleSectionStyle.day)}
-                  key={day}
-                  style={getGrassStyle(day)}
-                >
-                  {/* {day} */}
-                </div>
-              ))}
-            </div>
-          </section>
-          <h2>나의 이번달 잔디</h2>
-          <div {...stylex.props(MiddleSectionStyle.contentWrapper)}>
-            <span>
-              {currentMonth}월 일기는 현재까지 총
-              {grassQuery?.totalCount ? grassQuery?.thisMonthCount : 0}
-              개가 작성되었어요
-            </span>
+      <Container>
+        <GrassLabel>
+          <GrassLabelText>
+            {MAIN_MESSAGES.middle_section.status_label}
+          </GrassLabelText>
+        </GrassLabel>
 
-            {grassQuery?.totalCount ? (
-              <span>리워드를 확인 해보세요!</span>
-            ) : (
-              <span>일기를 쓰고 잔디를 심어보세요!</span>
-            )}
-          </div>
-        </div>
-        <div
-          className="cardSectionR"
-          {...stylex.props(MiddleSectionStyle.rewardContainer)}
-        >
-          <img
-            src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Activities/Party%20Popper.png"
-            alt="Party Popper"
-            width="170"
-            height="170"
-          />
-          <AnimateReward n={reward?.rewardPoint ?? 0} />
-          <h2>나의 리워드</h2>
-          <div {...stylex.props(MiddleSectionStyle.contentWrapper)}>
-            <span>잔디를 꾸준히 심고 리워드를 받으세요</span>
-            <span>테마 상점에서 다양한 아이템을 만날 수 있어요</span>
-          </div>
-          <Link to="/rewardpage">
-            <Button
-              text="리워드 보기"
-              width="130px"
-              defaultColor="#2d2d2d"
-              hoverColor="#FFF"
-              defaultBgColor="#FFFFFF"
-              hoverBgColor="#111111"
-              border="1px solid #929292"
-              marginTop="25px"
-            />
-          </Link>
-        </div>
-      </div>
+        <GrassBanner>
+          <GrassBannerText>
+            {currentMonth}
+            {MAIN_MESSAGES.middle_section.monthly_grass_summary}
+            <HighlightedText>
+              {grassQuery?.thisMonthCount ? grassQuery?.thisMonthCount : 0}
+            </HighlightedText>
+            {MAIN_MESSAGES.middle_section.planted_grass_count}
+          </GrassBannerText>
+          <GrassBannerTextSecond>
+            {MAIN_MESSAGES.middle_section.grass_prompt}
+          </GrassBannerTextSecond>
+        </GrassBanner>
+
+        <GrassTable>
+          {daysInMonth.map(day => (
+            <div key={day} style={getGrassStyle(day)}>
+              <DayBox></DayBox>
+            </div>
+          ))}
+        </GrassTable>
+      </Container>
     </>
   );
 };
 
 export default MiddleSection;
+
+const Container = styled.div`
+  display: flex;
+  max-width: var(--vw-desktop-min, 60rem);
+  padding: var(--gap-2xl, 2rem) var(--gap-xl, 1.5rem);
+  flex-direction: column;
+  align-items: center;
+  gap: var(--gap-2xl, 2rem);
+`;
+
+const GrassLabel = styled.div`
+  display: flex;
+  padding: var(--gap-2xs, 0.5rem) var(--gap-md, 1rem);
+  justify-content: center;
+  align-items: center;
+  gap: var(--gap-3xs, 0.375rem);
+
+  border-radius: var(--radius-sm, 0.75rem);
+  border: var(--stroke-thin, 0.0625rem) solid
+    ${semantic.light.border.transparent.alternative};
+
+  background: ${semantic.light.bg.solid.normal};
+`;
+
+const GrassLabelText = styled.p`
+  color: ${semantic.light.object.transparent.alternative};
+  text-align: center;
+
+  ${TYPO.label2}
+`;
+
+const GrassBanner = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--gap-2xs, 0.5rem);
+  align-self: stretch;
+`;
+
+const GrassBannerText = styled.p`
+  align-self: stretch;
+  color: ${semantic.light.object.transparent.alternative};
+  text-align: center;
+
+  ${TYPO.title1}
+`;
+
+const GrassBannerTextSecond = styled.p`
+  align-self: stretch;
+
+  color: ${semantic.light.object.transparent.alternative};
+  text-align: center;
+
+  ${TYPO.label2}
+`;
+
+const HighlightedText = styled.span`
+  color: ${semantic.light.accent.solid.normal};
+`;
+
+const GrassTable = styled.p`
+  display: grid;
+  grid-template-columns: repeat(7, 3.5rem);
+  grid-gap: var(--gap-xs, 0.625rem);
+  margin-bottom: 0.625rem;
+`;
+
+const DayBox = styled.div`
+  width: 3.5rem;
+  height: 3.5rem;
+
+  border-radius: var(--radius-sm, 0.75rem);
+
+  background: ${semantic.light.fill.transparent.assistive};
+
+  box-shadow: 0rem 0rem 0.0625rem 0rem rgba(0, 0, 0, 0.04),
+    0rem 0.125rem 0.25rem 0rem rgba(0, 0, 0, 0.08);
+`;

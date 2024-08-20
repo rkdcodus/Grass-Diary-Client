@@ -5,4 +5,5 @@ interface Feed {
   nickname: string;
   content: string;
   diaryLikeCount: number;
+  transparency: number;
 }

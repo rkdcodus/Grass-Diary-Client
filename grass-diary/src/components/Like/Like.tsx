@@ -47,7 +47,7 @@ const Like = ({ diaryId, likeCount, setLikeCount, liked }: ILikeProps) => {
       <LikeContainer $isPushed={isPushed}>
         <LikeCount>{likeCount}</LikeCount>
         {isPushed ? (
-          <YES onClick={() => deleteLike()} />
+          <YES onClick={() => deleteLike()} width={18} height={18} />
         ) : (
           <No onClick={() => postLike()} />
         )}
