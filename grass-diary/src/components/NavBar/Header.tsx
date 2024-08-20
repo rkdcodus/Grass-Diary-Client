@@ -55,7 +55,6 @@ const Header = () => {
 export default Header;
 
 const NavBar = styled.header`
-  width: 100vw;
   display: flex;
   padding: var(--gap-xs, 0.625rem) var(--gap-xl, 1.5rem);
   justify-content: center;

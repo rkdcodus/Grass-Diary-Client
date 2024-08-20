@@ -41,13 +41,15 @@ const Main = () => {
   }, [navigate]);
 
   return (
-    <Container>
+    <>
       <Header />
-      <TopSection />
-      <MiddleSection />
-      <BottomSection />
-      <PopularFeed />
-    </Container>
+      <Container>
+        <TopSection />
+        <MiddleSection />
+        <BottomSection />
+        <PopularFeed />
+      </Container>
+    </>
   );
 };
 

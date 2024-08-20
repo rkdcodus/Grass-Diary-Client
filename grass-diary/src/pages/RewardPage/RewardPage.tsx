@@ -1,5 +1,5 @@
 import stylex from '@stylexjs/stylex';
-import { Button, Header, Container } from '@components/index';
+import { Button, Container } from '@components/index';
 import Swal from 'sweetalert2';
 import subCharacter from '@icon/subCharacter.png';
 
@@ -97,7 +97,6 @@ const RewardPage = () => {
   return (
     <>
       <Container>
-        <Header />
         <section {...stylex.props(RewardPageStyle.titleBanner)}>
           <p
             style={{ fontSize: '30px', fontWeight: 'bold' }}

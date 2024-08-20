@@ -1,7 +1,5 @@
 import styles from './styles';
 import stylex from '@stylexjs/stylex';
-import { useEffect } from 'react';
-import { useRecoilState } from 'recoil';
 import {
   QueryClient,
   useMutation,
@@ -9,11 +7,11 @@ import {
 } from '@tanstack/react-query';
 
 import API from '@services/index';
-import { Container, Header, Profile, Button } from '@components/index';
+import { Container, Profile, Button } from '@components/index';
 import { END_POINT } from '@constants/api';
 import { CONSOLE_ERROR } from '@constants/message';
 import { useProfile } from '@state/profile/useProfile';
-import { useProfileActions } from '@state/profile/profileStore';
+import { useProfileActions } from '@state/profile/ProfileStore';
 
 interface ISettingSection {
   children: React.ReactNode;
@@ -63,7 +61,6 @@ const Setting = () => {
 
   return (
     <Container>
-      <Header />
       <div {...stylex.props(styles.contentWrap)}>
         <div {...stylex.props(styles.titleSection)}>
           <span {...stylex.props(styles.title)}>설정</span>
