@@ -40,7 +40,7 @@ const TopSection = () => {
 
           <MydiaryBtn>
             <Link to="/mypage">
-              <MydaryTxt>{MAIN_MESSAGES.TOP_SECTION.MY_DIARY}</MydaryTxt>
+              <MydiaryTxt>{MAIN_MESSAGES.TOP_SECTION.MY_DIARY}</MydiaryTxt>
             </Link>
           </MydiaryBtn>
         </ButtonContainer>
@@ -63,12 +63,8 @@ const Container = styled.div`
 const TodayDateText = styled.p`
   color: ${semantic.light.object.transparent.neutral};
   text-align: center;
-  font-family: Pretendard;
-  font-size: 1.125rem;
-  font-style: normal;
-  font-weight: 500;
-  line-height: 1.5rem;
-  letter-spacing: -0.00675rem;
+
+  ${TYPO.label3}
 `;
 
 const DailyQuestionText = styled.p`
@@ -118,7 +114,7 @@ const MydiaryBtn = styled.button`
   background: ${semantic.light.bg.solid.normal};
 `;
 
-const MydaryTxt = styled.p`
+const MydiaryTxt = styled.p`
   color: ${semantic.light.object.transparent.alternative};
   text-align: center;
 
