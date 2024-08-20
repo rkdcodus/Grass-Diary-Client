@@ -81,4 +81,31 @@ const INFO = {
   DIARY_EDIT_INFO: '일기는 당일 00:00부터 24:00전까지 수정 가능합니다.',
 } as const;
 
-export { CONSOLE_ERROR, ERROR, NULL, INFO };
+const MAIN_MESSAGES = {
+  top_section: {
+    write_diary: '일기 쓰기',
+    my_diary: '내 일기장',
+  },
+  middle_section: {
+    status_label: '이번 달 잔디 현황',
+    planted_grass_count: '개의 잔디를 심었어요.',
+    grass_prompt: '일기를 쓰고, 잔디를 더 심어보세요!',
+    monthly_grass_summary: '월에는 총 ',
+  },
+  bottom_section: {
+    my_reward: '내 잔디 리워드',
+    reward_message: '잔디를 꾸준히 심고, 리워드를 모아 봐요!',
+    theme_store: '테마 상점',
+    monthly_diary_review: '한 달 일기 회고',
+    review_description:
+      '지난 한 달 간의 내 시간과 경험들을 돌아보며 회고해봐요.',
+    go_to_review: '회고하러 가기',
+    see_more: '더 보러가기',
+  },
+  banner: {
+    future_content_message:
+      '잔디 일기에는 앞으로 더 매력적인 콘텐츠들이 추가될 예정이에요!',
+  },
+} as const;
+
+export { CONSOLE_ERROR, ERROR, NULL, INFO, MAIN_MESSAGES };

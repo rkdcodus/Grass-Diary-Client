@@ -1,26 +1,13 @@
-import stylex from '@stylexjs/stylex';
+import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
-import Slider from 'react-slick';
 
+import styled from 'styled-components';
 import { Feed } from '@components/index';
 import { usePopularDiaries } from '@hooks/api/usePopularDiaries';
 import { NULL } from '@constants/message';
-
-const styles = stylex.create({
-  slider: {
-    margin: 'auto',
-    width: {
-      default: '1140px',
-      '@media (max-width: 1139px)': '100vw',
-    },
-  },
-  noFeed: {
-    height: '400px',
-    textAlign: 'center',
-    lineHeight: '400px',
-  },
-});
+import { semantic } from '@styles/semantic';
+import { TYPO } from '@styles/typo';
 
 const PopularFeed = () => {
   const { data: top10 } = usePopularDiaries();
@@ -44,21 +31,52 @@ const PopularFeed = () => {
       content={data.content}
       name={data.nickname}
       memberId={data.memberId}
+      transparency={data.transparency}
     />
   ));
 
   return (
-    <div className="slider-container" {...stylex.props(styles.slider)}>
-      {top10 && top10.length > 3 ? (
-        <Slider {...settings}>{feedList}</Slider>
-      ) : (
-        feedList
-      )}
-      {top10 && !top10.length ? (
-        <div {...stylex.props(styles.noFeed)}>{NULL.SHARE_POPULAR_FEED}</div>
-      ) : null}
-    </div>
+    <RankContainer>
+      <RankText>이번 주 Top 10</RankText>
+      <RankCardContainer>
+        <div className="slider-container">
+          {top10 && top10.length > 3 ? (
+            <Slider {...settings}>{feedList}</Slider>
+          ) : (
+            <div
+              style={{ display: 'flex', justifyContent: 'center', gap: '3rem' }}
+            >
+              {feedList}
+            </div>
+          )}
+          {top10 && !top10.length ? <div>{NULL.SHARE_POPULAR_FEED}</div> : null}
+        </div>
+      </RankCardContainer>
+    </RankContainer>
   );
 };
 
 export default PopularFeed;
+
+const RankContainer = styled.div`
+  display: flex;
+  padding: var(--gap-4xl, 3rem) var(--gap-xl, 1.5rem);
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: var(--gap-2xl, 2rem);
+  align-self: stretch;
+
+  background: ${semantic.light.fill.transparent.alternative};
+`;
+
+const RankText = styled.p`
+  color: ${semantic.light.object.transparent.neutral};
+  text-align: center;
+
+  ${TYPO.title2}
+`;
+
+const RankCardContainer = styled.div`
+  width: 60rem;
+`;

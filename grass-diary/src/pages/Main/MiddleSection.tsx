@@ -1,8 +1,10 @@
 import dayjs from 'dayjs';
+import styled from 'styled-components';
 import { useCallback } from 'react';
 import { semantic } from '@styles/semantic';
-import styled from 'styled-components';
 import { useGrassRecord } from '@hooks/api/useGrassRecord';
+import { MAIN_MESSAGES } from '@constants/message';
+import { TYPO } from '@styles/typo';
 
 const MiddleSection = () => {
   // 잔디 날짜 계산
@@ -21,7 +23,7 @@ const MiddleSection = () => {
         return {
           backgroundColor: `rgb(${grassQuery?.grassInfoDTO.colorRGB})`,
           opacity: grass.transparency,
-          borderRadius: '12px',
+          borderRadius: '0.75rem',
         };
       }
       return {};
@@ -49,26 +51,29 @@ const MiddleSection = () => {
     <>
       <Container>
         <GrassLabel>
-          <GrassLabelText>이번 달 잔디 현황</GrassLabelText>
+          <GrassLabelText>
+            {MAIN_MESSAGES.middle_section.status_label}
+          </GrassLabelText>
         </GrassLabel>
 
         <GrassBanner>
           <GrassBannerText>
-            {currentMonth}월에는 총{' '}
+            {currentMonth}
+            {MAIN_MESSAGES.middle_section.monthly_grass_summary}
             <HighlightedText>
-              {grassQuery?.thisMonthCount ? grassQuery?.thisMonthCount : 0}개
+              {grassQuery?.thisMonthCount ? grassQuery?.thisMonthCount : 0}
             </HighlightedText>
-            의 잔디를 심었어요.
+            {MAIN_MESSAGES.middle_section.planted_grass_count}
           </GrassBannerText>
           <GrassBannerTextSecond>
-            일기를 쓰고, 잔디를 더 심어보세요!
+            {MAIN_MESSAGES.middle_section.grass_prompt}
           </GrassBannerTextSecond>
         </GrassBanner>
 
         <GrassTable>
           {daysInMonth.map(day => (
             <div key={day} style={getGrassStyle(day)}>
-              <DayBox>{/* {day} */}</DayBox>
+              <DayBox></DayBox>
             </div>
           ))}
         </GrassTable>
@@ -81,27 +86,24 @@ export default MiddleSection;
 
 const Container = styled.div`
   display: flex;
-  max-width: var(--vw-desktop-min, 960px);
-  padding: var(--gap-2xl, 32px) var(--gap-xl, 24px);
+  max-width: var(--vw-desktop-min, 60rem);
+  padding: var(--gap-2xl, 2rem) var(--gap-xl, 1.5rem);
   flex-direction: column;
   align-items: center;
-  gap: var(--gap-2xl, 32px);
-
-  border-radius: var(--radius-empty, 0px);
-  opacity: var(--opacity-visible, 1);
+  gap: var(--gap-2xl, 2rem);
 `;
 
 const GrassLabel = styled.div`
   display: flex;
-  padding: var(--gap-2xs, 8px) var(--gap-md, 16px);
+  padding: var(--gap-2xs, 0.5rem) var(--gap-md, 1rem);
   justify-content: center;
   align-items: center;
-  gap: var(--gap-3xs, 6px);
+  gap: var(--gap-3xs, 0.375rem);
 
-  border-radius: var(--radius-sm, 12px);
-  border: var(--stroke-thin, 1px) solid
+  border-radius: var(--radius-sm, 0.75rem);
+  border: var(--stroke-thin, 0.0625rem) solid
     ${semantic.light.border.transparent.alternative};
-  opacity: var(--opacity-visible, 1);
+
   background: ${semantic.light.bg.solid.normal};
 `;
 
@@ -109,27 +111,15 @@ const GrassLabelText = styled.p`
   color: ${semantic.light.object.transparent.alternative};
   text-align: center;
 
-  /* label/2 */
-  font-family: Pretendard;
-  font-size: 16px;
-  font-style: normal;
-  font-weight: 500;
-  line-height: 22px; /* 137.5% */
-  letter-spacing: -0.096px;
-
-  opacity: var(--opacity-visible, 1);
+  ${TYPO.label2}
 `;
 
 const GrassBanner = styled.div`
   display: flex;
-  padding: var(--gap-empty, 0px);
   flex-direction: column;
   align-items: center;
-  gap: var(--gap-2xs, 8px);
+  gap: var(--gap-2xs, 0.5rem);
   align-self: stretch;
-
-  border-radius: var(--radius-empty, 0px);
-  opacity: var(--opacity-visible, 1);
 `;
 
 const GrassBannerText = styled.p`
@@ -137,15 +127,7 @@ const GrassBannerText = styled.p`
   color: ${semantic.light.object.transparent.alternative};
   text-align: center;
 
-  /* title/1 */
-  font-family: Pretendard;
-  font-size: 20px;
-  font-style: normal;
-  font-weight: 600;
-  line-height: 28px; /* 140% */
-  letter-spacing: -0.312px;
-
-  opacity: var(--opacity-visible, 1);
+  ${TYPO.title1}
 `;
 
 const GrassBannerTextSecond = styled.p`
@@ -154,15 +136,7 @@ const GrassBannerTextSecond = styled.p`
   color: ${semantic.light.object.transparent.alternative};
   text-align: center;
 
-  /* label/2 */
-  font-family: Pretendard;
-  font-size: 16px;
-  font-style: normal;
-  font-weight: 500;
-  line-height: 22px; /* 137.5% */
-  letter-spacing: -0.096px;
-
-  opacity: var(--opacity-visible, 1);
+  ${TYPO.label2}
 `;
 
 const HighlightedText = styled.span`
@@ -171,19 +145,19 @@ const HighlightedText = styled.span`
 
 const GrassTable = styled.p`
   display: grid;
-  grid-template-columns: repeat(7, 56px); /* 한 행에 7개의 박스를 고정 */
-  grid-gap: var(--gap-xs, 10px); /* 박스 간의 간격 설정 */
-  margin-bottom: 10px;
+  grid-template-columns: repeat(7, 3.5rem);
+  grid-gap: var(--gap-xs, 0.625rem);
+  margin-bottom: 0.625rem;
 `;
 
 const DayBox = styled.div`
-  width: 56px;
-  height: 56px;
+  width: 3.5rem;
+  height: 3.5rem;
 
-  border-radius: var(--radius-sm, 12px);
-  opacity: var(--opacity-visible, 1);
+  border-radius: var(--radius-sm, 0.75rem);
 
-  /* shadow/embossed */
-  box-shadow: 0px 0px 1px 0px rgba(0, 0, 0, 0.04),
-    0px 2px 4px 0px rgba(0, 0, 0, 0.08);
+  background: ${semantic.light.fill.transparent.assistive};
+
+  box-shadow: 0rem 0rem 0.0625rem 0rem rgba(0, 0, 0, 0.04),
+    0rem 0.125rem 0.25rem 0rem rgba(0, 0, 0, 0.08);
 `;

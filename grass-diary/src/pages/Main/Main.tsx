@@ -6,6 +6,7 @@ import { PopularFeed, Header, Container } from '@components/index';
 import TopSection from './TopSection';
 import MiddleSection from './MiddleSection';
 import BottomSection from './BottomSection';
+import Banner from './Banner';
 import { useAuthActions } from '@state/auth/authStore';
 
 const Main = () => {
@@ -47,6 +48,7 @@ const Main = () => {
       <MiddleSection />
       <BottomSection />
       <PopularFeed />
+      <Banner />
     </Container>
   );
 };
