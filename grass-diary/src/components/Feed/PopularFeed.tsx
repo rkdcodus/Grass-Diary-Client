@@ -55,7 +55,7 @@ const PopularFeed = () => {
         feedList
       )}
       {top10 && !top10.length ? (
-        <div {...stylex.props(styles.noFeed)}>{NULL.SHARE_POPULAR_FEED}</div>
+        <div {...stylex.props(styles.noFeed)}>{NULL.share_popular_feed}</div>
       ) : null}
     </div>
   );

@@ -6,7 +6,7 @@ export const usePatchComment = (diaryId: Id) => {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: (request: PatchRequest) => {
-      return API.patch(END_POINT.COMMENT(request.commentId), request.content);
+      return API.patch(END_POINT.comment(request.commentId), request.content);
     },
     onSuccess() {
       queryClient.invalidateQueries({ queryKey: ['comment', diaryId] });

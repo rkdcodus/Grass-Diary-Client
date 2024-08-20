@@ -5,7 +5,7 @@ import { useQuery } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 
 const fetchAxios = async (): Promise<TodayDate> => {
-  const res = await API.get(END_POINT.TODAY_DATE);
+  const res = await API.get(END_POINT.today_date);
 
   return res.data;
 };
@@ -20,7 +20,7 @@ export const useTodayDate = () => {
     queryFn: fetchAxios,
   });
 
-  if (isError) console.error(CONSOLE_ERROR.DATE.GET + error.message);
+  if (isError) console.error(CONSOLE_ERROR.date.get + error.message);
 
   return { date };
 };

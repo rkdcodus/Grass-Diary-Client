@@ -6,7 +6,7 @@ export const useCreateDiary = (memberId: number) => {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: (request: DiaryRequest) =>
-      API.post(END_POINT.DIARY(memberId), request),
+      API.post(END_POINT.diary(memberId), request),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['diaries'] });
     },

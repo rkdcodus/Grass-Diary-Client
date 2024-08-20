@@ -14,7 +14,7 @@ const Footer = () => {
           <LogoIcon src={logoIcon} />
           <LogoText fill={semantic.light.base.solid.white} />
         </LogoWrap>
-        <CopyRight>{FOOTER.COPYRIGHT}</CopyRight>
+        <CopyRight>{FOOTER.copyright}</CopyRight>
       </ContentWrap>
     </FooterContainer>
   );

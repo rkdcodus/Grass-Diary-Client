@@ -9,7 +9,7 @@ const UnmodifyModal = ({ setter }: UnmodifyModalProps) => {
     <Modal
       setClose={closeModal}
       title={'일기 수정 가능 시간'}
-      content={DIARY.EDIT_INFO}
+      content={DIARY.edit_info}
     >
       <CheckButton onClick={closeModal} />
     </Modal>

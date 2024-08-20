@@ -9,11 +9,11 @@ interface IApiProps {
 }
 
 const postLikeApi = ({ diaryId, memberId }: IApiProps) => {
-  return API.post(END_POINT.LIKE(diaryId, memberId));
+  return API.post(END_POINT.like(diaryId, memberId));
 };
 
 const deleteLikeApi = ({ diaryId, memberId }: IApiProps) => {
-  return API.delete(END_POINT.LIKE(diaryId, memberId));
+  return API.delete(END_POINT.like(diaryId, memberId));
 };
 
 export const useCountLike = ({ diaryId, memberId }: IApiProps) => {
@@ -22,7 +22,7 @@ export const useCountLike = ({ diaryId, memberId }: IApiProps) => {
       return postLikeApi({ diaryId, memberId });
     },
     onError: error => {
-      console.error(CONSOLE_ERROR.LIKE.POST + error);
+      console.error(CONSOLE_ERROR.like.post + error);
     },
   });
 
@@ -31,7 +31,7 @@ export const useCountLike = ({ diaryId, memberId }: IApiProps) => {
       return deleteLikeApi({ diaryId, memberId });
     },
     onError: error => {
-      console.error(CONSOLE_ERROR.LIKE.DELETE + error);
+      console.error(CONSOLE_ERROR.like.delete + error);
     },
   });
 

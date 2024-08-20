@@ -42,7 +42,7 @@ const CommentDisplay = ({ comment, parentId }: CommentDisplayProps) => {
       <WriterWrap>
         {comment.depth ? <ReplyIcon /> : null}
         <CommentContent $deleted={comment.deleted}>
-          {COMMENT.DELETED}
+          {COMMENT.deleted}
         </CommentContent>
       </WriterWrap>
     </CommentWrap>

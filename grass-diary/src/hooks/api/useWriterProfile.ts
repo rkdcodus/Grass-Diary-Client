@@ -4,7 +4,7 @@ import { END_POINT } from '@constants/api';
 import { AxiosError } from 'axios';
 
 const fetchUserProfiles = (memberId: Id) => {
-  return API.get(END_POINT.MEMBER_PROFILE(memberId));
+  return API.get(END_POINT.member_profile(memberId));
 };
 
 export const useWriterProfile = (writerId: Id) => {

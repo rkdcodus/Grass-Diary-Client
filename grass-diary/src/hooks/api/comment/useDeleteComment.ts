@@ -6,7 +6,7 @@ export const useDeleteComment = (diaryId: Id) => {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: (commentId: Id) =>
-      API.patch(END_POINT.COMMENT_DELETE(commentId)),
+      API.patch(END_POINT.comment_delete(commentId)),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['comment', diaryId] });
     },

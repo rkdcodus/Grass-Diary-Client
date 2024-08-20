@@ -6,7 +6,7 @@ export const usePostComment = (diaryId: Id) => {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: async (request: PostRequest) =>
-      API.post(END_POINT.COMMENT(diaryId), request),
+      API.post(END_POINT.comment(diaryId), request),
     onSuccess() {
       queryClient.invalidateQueries({ queryKey: ['comment', diaryId] });
     },

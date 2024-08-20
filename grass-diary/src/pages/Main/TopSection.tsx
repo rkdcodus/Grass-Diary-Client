@@ -106,7 +106,7 @@ const TopSection = () => {
   const { data: question } = useQuery<TodayInfo>({
     queryKey: ['todayQuestion'],
     queryFn: () =>
-      API.get(END_POINT.TODAY_QUESTION).then(response => response.data),
+      API.get(END_POINT.today_question).then(response => response.data),
   });
 
   // 날짜 데이터를 가져오는 쿼리

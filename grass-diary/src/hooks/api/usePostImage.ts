@@ -4,7 +4,7 @@ import { END_POINT } from '@constants/api';
 
 export const usePostImage = () => {
   return useMutation({
-    mutationFn: (formData: FormData) => API.post(END_POINT.IMAGE, formData),
+    mutationFn: (formData: FormData) => API.post(END_POINT.image, formData),
     onError: error => {
       console.error(error.message);
     },

@@ -6,7 +6,7 @@ export const useGetComment = (diaryId: Id) => {
   return useQuery({
     queryKey: ['comment', diaryId],
     queryFn: async () => {
-      const res = await API.get(END_POINT.COMMENT(diaryId));
+      const res = await API.get(END_POINT.comment(diaryId));
       return res.data;
     },
   });

@@ -54,7 +54,7 @@ const CommentInput = ({
           onFocus={onFocus}
           onBlur={onBlur}
           onChange={commentHandler}
-          placeholder={COMMENT.PLACEHOLDER}
+          placeholder={COMMENT.placeholder}
         />
         {isCancelBtn && <CancelBtn onClick={cancel}>취소</CancelBtn>}
         <SubmitBtn type="button" onClick={submit} disabled={text === ''}>

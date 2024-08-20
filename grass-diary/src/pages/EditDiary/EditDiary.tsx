@@ -186,7 +186,7 @@ const EditDiary = () => {
 
     if (!quillContent || !quillContent.trim()) {
       Swal.fire({
-        title: ERROR.DIARY_NOT_WRITE,
+        title: ERROR.diary_not_write,
         icon: 'warning',
         showCancelButton: false,
         confirmButtonColor: '#28CA3B',

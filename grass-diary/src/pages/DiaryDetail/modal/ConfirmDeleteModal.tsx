@@ -19,7 +19,7 @@ const ConfirmDeleteModal = ({
       <Modal
         setClose={closeModal}
         title="일기 삭제 안내"
-        content={DIARY.DELETE_CONFIRM}
+        content={DIARY.delete_confirm}
       >
         <CustomButton onClick={closeModal} text={'취소'} />
         <CustomButton

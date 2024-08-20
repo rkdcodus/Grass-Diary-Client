@@ -23,7 +23,7 @@ const NonExistentDiary = () => {
       <div {...stylex.props(styles.wrap)}>
         <BackButton goBackTo={'/main'} />
         <div {...stylex.props(styles.content)}>
-          <p>{ERROR.DIARY_NOT_FOUND_ERR}</p>
+          <p>{ERROR.diary_not_found_err}</p>
         </div>
       </div>
     </Container>
