@@ -68,7 +68,7 @@ export const ERROR = {
   account_locked: '사용자 계정이 잠겼습니다. 관리자에게 문의하세요.',
   // 서버 에러메시지
   server_err: '서버 내부 오류가 발생했습니다. 잠시 후 다시 시도해주세요.',
-  reward_history_save_falied: '일기 히스토리 저장에 실패했습니다.',
+  reward_history_save_failed: '일기 히스토리 저장에 실패했습니다.',
   image_upload_failed: '이미지 업로드에 실패했습니다.',
 } as const;
 
@@ -88,7 +88,11 @@ export const COMMENT = {
   placeholder: '댓글을 입력해주세요',
 } as const;
 
-const MAIN_MESSAGES = {
+export const FOOTER = {
+  copyright: 'Copyright © 2024 Jandi Diary. All rights reserved.',
+} as const;
+
+export const MAIN_MESSAGES = {
   top_section: {
     write_diary: '일기 쓰기',
     my_diary: '내 일기장',
@@ -114,5 +118,3 @@ const MAIN_MESSAGES = {
       '잔디 일기에는 앞으로 더 매력적인 콘텐츠들이 추가될 예정이에요!',
   },
 } as const;
-
-export { CONSOLE_ERROR, ERROR, NULL, INFO, MAIN_MESSAGES };

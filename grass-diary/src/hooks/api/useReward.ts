@@ -9,7 +9,7 @@ export const useReward = () => {
   const memberId = useUser();
 
   const fetchUseReward = async (): Promise<RewardPointResponse> => {
-    const res = await API.get(END_POINT.TOTAL_REWARD(memberId));
+    const res = await API.get(END_POINT.total_reward(memberId));
     return res.data;
   };
 
@@ -29,7 +29,7 @@ export const useReward = () => {
     enabled: !!memberId,
   });
 
-  if (isError) console.error(CONSOLE_ERROR.REWARD.GET + error.message);
+  if (isError) console.error(CONSOLE_ERROR.reward.get + error.message);
 
   return { reward };
 };

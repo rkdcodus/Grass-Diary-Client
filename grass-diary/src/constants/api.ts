@@ -32,7 +32,8 @@ export const END_POINT = {
   share_latest: (cursorId: number) =>
     `/shared/diaries/latest?cursorId=${cursorId}&size=12`,
   total_reward: (memberId: Id) => `/member/totalReward/${memberId}`,
-  grass: (memberId: Id) => `/main/grass/${memberId}`,
+  total_grass: (memberId: Id) => `/grass/${memberId}`,
+  grass: (memberId: Id) => `/grass/main-page/${memberId}`,
   image: '/image/diary',
   comment: (id: Id) => `/comment/${id}`,
   comment_delete: (id: Id) => `/comment/${id}/delete`,

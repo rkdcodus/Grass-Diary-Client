@@ -1,3 +1,4 @@
+import { semantic } from '@styles/semantic';
 import stylex from '@stylexjs/stylex';
 import { ReactComponent as Favorite } from '@svg/favorite.svg';
 
@@ -19,7 +20,11 @@ const NormalLike = ({ likeCount, justifyContent }: INormalLikeProps) => {
   return (
     <div {...stylex.props(feed.like(justifyContent))}>
       <span>
-        <Favorite />
+        <Favorite
+          width={22}
+          height={22}
+          fill={semantic.light.object.transparent.assistive}
+        />
       </span>
       <span>{likeCount}</span>
     </div>
