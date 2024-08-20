@@ -76,7 +76,6 @@ const DailyQuestionText = styled.p`
 
 const ButtonContainer = styled.div`
   display: flex;
-  padding: var(--gap-empty, 0rem);
   align-items: flex-start;
   gap: 1rem;
 `;

@@ -99,7 +99,6 @@ const CardContainer = styled.div`
 
 const CardHeaderSection = styled.div`
   display: flex;
-  padding: var(--gap-empty, 0rem);
   align-items: center;
   gap: var(--gap-sm, 0.75rem);
   align-self: stretch;
@@ -113,7 +112,6 @@ const CardUserImg = styled.div`
 
 const CardHeaderWrap = styled.div`
   display: flex;
-  padding: var(--gap-empty, 0rem);
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
@@ -154,7 +152,6 @@ const CardEmojiContainer = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: var(--gap-empty, 0rem);
 
   border-radius: var(--radius-round, 6rem);
   border: var(--stroke-thin, 0.0625rem) solid

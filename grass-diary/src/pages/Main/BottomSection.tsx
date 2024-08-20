@@ -98,7 +98,6 @@ const Section = styled.div`
 const Container = styled.div`
   display: flex;
   max-width: var(--vw-desktop-min, 60rem);
-  padding: var(--gap-empty, 0rem);
   justify-content: center;
   align-items: center;
   gap: var(--gap-xl, 1.5rem);
@@ -148,7 +147,6 @@ const CardSubText = styled.p`
 
 const Wrap = styled.div`
   display: flex;
-  padding: var(--gap-empty, 0rem);
   align-items: center;
   gap: var(--gap-md, 1rem);
   align-self: stretch;
@@ -156,7 +154,6 @@ const Wrap = styled.div`
 
 const RewardContainer = styled.div`
   display: flex;
-  padding: var(--gap-empty, 0rem);
   align-items: center;
   gap: var(--gap-2xs, 0.5rem);
   flex: 1 0 0;
@@ -193,10 +190,8 @@ const ThemeMarketText = styled.p`
 
 const RetrospectContainer = styled.div`
   display: flex;
-  padding: var(--gap-empty, 0rem);
   justify-content: flex-end;
   align-items: center;
-  gap: var(--gap-empty, 0rem);
   align-self: stretch;
 `;
 

@@ -25,7 +25,6 @@ const Section = styled.div`
   padding: var(--gap-4xl, 3rem) var(--gap-xl, 1.5rem);
   justify-content: center;
   align-items: center;
-  gap: var(--gap-empty, 0rem);
 `;
 
 const Container = styled.div`

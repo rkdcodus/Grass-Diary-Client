@@ -116,7 +116,6 @@ const GrassLabelText = styled.p`
 
 const GrassBanner = styled.div`
   display: flex;
-  padding: var(--gap-empty, 0rem);
   flex-direction: column;
   align-items: center;
   gap: var(--gap-2xs, 0.5rem);
