@@ -33,14 +33,14 @@ const TopSection = () => {
           <CreateDiaryBtn>
             <Link to="/creatediary">
               <CreateDiaryText>
-                {MAIN_MESSAGES.TOP_SECTION.WRITE_DIARY}
+                {MAIN_MESSAGES.top_section.write_diary}
               </CreateDiaryText>
             </Link>
           </CreateDiaryBtn>
 
           <MydiaryBtn>
             <Link to="/mypage">
-              <MydiaryTxt>{MAIN_MESSAGES.TOP_SECTION.MY_DIARY}</MydiaryTxt>
+              <MydiaryTxt>{MAIN_MESSAGES.top_section.my_diary}</MydiaryTxt>
             </Link>
           </MydiaryBtn>
         </ButtonContainer>

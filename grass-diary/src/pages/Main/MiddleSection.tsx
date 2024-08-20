@@ -52,21 +52,21 @@ const MiddleSection = () => {
       <Container>
         <GrassLabel>
           <GrassLabelText>
-            {MAIN_MESSAGES.MIDDLE_SECTION.STATUS_LABEL}
+            {MAIN_MESSAGES.middle_section.status_label}
           </GrassLabelText>
         </GrassLabel>
 
         <GrassBanner>
           <GrassBannerText>
             {currentMonth}
-            {MAIN_MESSAGES.MIDDLE_SECTION.MONTHLY_GRASS_SUMMARY}
+            {MAIN_MESSAGES.middle_section.monthly_grass_summary}
             <HighlightedText>
               {grassQuery?.thisMonthCount ? grassQuery?.thisMonthCount : 0}
             </HighlightedText>
-            {MAIN_MESSAGES.MIDDLE_SECTION.PLANTED_GRASS_COUNT}
+            {MAIN_MESSAGES.middle_section.planted_grass_count}
           </GrassBannerText>
           <GrassBannerTextSecond>
-            {MAIN_MESSAGES.MIDDLE_SECTION.GRASS_PROMPT}
+            {MAIN_MESSAGES.middle_section.grass_prompt}
           </GrassBannerTextSecond>
         </GrassBanner>
 

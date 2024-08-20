@@ -82,30 +82,28 @@ const INFO = {
 } as const;
 
 const MAIN_MESSAGES = {
-  TOP_SECTION: {
-    WRITE_DIARY: '일기 쓰기',
-    MY_DIARY: '내 일기장',
+  top_section: {
+    write_diary: '일기 쓰기',
+    my_diary: '내 일기장',
   },
-  MIDDLE_SECTION: {
-    STATUS_LABEL: '이번 달 잔디 현황',
-    PLANTED_GRASS_COUNT: '개의 잔디를 심었어요.',
-    GRASS_PROMPT: '일기를 쓰고, 잔디를 더 심어보세요!',
-    MONTHLY_GRASS_SUMMARY: `월에는 총 `,
+  middle_section: {
+    status_label: '이번 달 잔디 현황',
+    planted_grass_count: '개의 잔디를 심었어요.',
+    grass_prompt: '일기를 쓰고, 잔디를 더 심어보세요!',
+    monthly_grass_summary: '월에는 총 ',
   },
-
-  BOTTOM_SECTION: {
-    MY_REWARD: '내 잔디 리워드',
-    REWARD_MESSAGE: '잔디를 꾸준히 심고, 리워드를 모아 봐요!',
-    THEME_STORE: '테마 상점',
-    MONTHLY_DIARY_REVIEW: '한 달 일기 회고',
-    REVIEW_DESCRIPTION:
+  bottom_section: {
+    my_reward: '내 잔디 리워드',
+    reward_message: '잔디를 꾸준히 심고, 리워드를 모아 봐요!',
+    theme_store: '테마 상점',
+    monthly_diary_review: '한 달 일기 회고',
+    review_description:
       '지난 한 달 간의 내 시간과 경험들을 돌아보며 회고해봐요.',
-    GO_TO_REVIEW: '회고하러 가기',
-    SEE_MORE: '더 보러가기',
+    go_to_review: '회고하러 가기',
+    see_more: '더 보러가기',
   },
-
-  BANNER: {
-    FUTURE_CONTENT_MESSAGE:
+  banner: {
+    future_content_message:
       '잔디 일기에는 앞으로 더 매력적인 콘텐츠들이 추가될 예정이에요!',
   },
 } as const;

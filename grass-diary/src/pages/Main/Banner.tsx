@@ -10,7 +10,7 @@ const Banner = () => {
       <Section>
         <Container>
           <Info />
-          <Text>{MAIN_MESSAGES.BANNER.FUTURE_CONTENT_MESSAGE}</Text>
+          <Text>{MAIN_MESSAGES.banner.future_content_message}</Text>
         </Container>
       </Section>
     </>

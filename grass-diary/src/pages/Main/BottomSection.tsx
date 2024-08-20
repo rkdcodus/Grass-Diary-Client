@@ -33,9 +33,9 @@ const BottomSection = () => {
       <Section>
         <Container>
           <Card>
-            <CardText>{MAIN_MESSAGES.BOTTOM_SECTION.MY_REWARD}</CardText>
+            <CardText>{MAIN_MESSAGES.bottom_section.my_reward}</CardText>
             <CardSubText>
-              {MAIN_MESSAGES.BOTTOM_SECTION.REWARD_MESSAGE}
+              {MAIN_MESSAGES.bottom_section.reward_message}
             </CardSubText>
             <Divider></Divider>
             <Wrap>
@@ -47,7 +47,7 @@ const BottomSection = () => {
               </RewardContainer>
               <ThemeMarketBtn>
                 <ThemeMarketText onClick={modal}>
-                  {MAIN_MESSAGES.BOTTOM_SECTION.THEME_STORE}
+                  {MAIN_MESSAGES.bottom_section.theme_store}
                 </ThemeMarketText>
                 <Arrow></Arrow>
               </ThemeMarketBtn>
@@ -55,17 +55,17 @@ const BottomSection = () => {
           </Card>
           <Card>
             <CardText>
-              {MAIN_MESSAGES.BOTTOM_SECTION.MONTHLY_DIARY_REVIEW}
+              {MAIN_MESSAGES.bottom_section.monthly_diary_review}
             </CardText>
             <CardSubText>
-              {MAIN_MESSAGES.BOTTOM_SECTION.REVIEW_DESCRIPTION}
+              {MAIN_MESSAGES.bottom_section.review_description}
             </CardSubText>
             <Divider></Divider>
             <RetrospectContainer>
               <RetrospectBtn>
                 <Link to="/mypage" onClick={handleClick}>
                   <RetrospectText>
-                    {MAIN_MESSAGES.BOTTOM_SECTION.GO_TO_REVIEW}
+                    {MAIN_MESSAGES.bottom_section.go_to_review}
                   </RetrospectText>
                 </Link>
                 <ArrowBlack></ArrowBlack>
@@ -76,7 +76,7 @@ const BottomSection = () => {
       </Section>
       <Link to="/share" onClick={handleClick}>
         <SeeMoreContainer>
-          <SeeMoreBtn>{MAIN_MESSAGES.BOTTOM_SECTION.SEE_MORE}</SeeMoreBtn>
+          <SeeMoreBtn>{MAIN_MESSAGES.bottom_section.see_more}</SeeMoreBtn>
           <ArrowBlack></ArrowBlack>
         </SeeMoreContainer>
       </Link>
