@@ -42,14 +42,12 @@ const Main = () => {
   }, [navigate]);
 
   return (
-    <>
-      <Container>
-        <TopSection />
-        <MiddleSection />
-        <BottomSection />
-        <PopularFeed />
-      </Container>
-    </>
+    <Container>
+      <TopSection />
+      <MiddleSection />
+      <BottomSection />
+      <PopularFeed />
+    </Container>
   );
 };
 
