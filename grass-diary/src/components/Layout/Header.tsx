@@ -6,8 +6,8 @@ import { ReactComponent as LogoSVG } from '@svg/logo.svg';
 
 import Interaction1 from '@components/Interactions/Interaction1';
 import ButtonWrapper from '@components/Button/ButtonWrapper';
-import MenuBar from '@components/NavBar/MenuBar';
 import { Profile } from '@components/index';
+import MenuBar from './MenuBar';
 
 import { Link } from 'react-router-dom';
 import { useUser } from '@state/user/useUser';
