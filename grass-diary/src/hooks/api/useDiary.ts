@@ -13,7 +13,7 @@ const useDiary = ({ memberId, currentPage, sortOrder }: IUseDiaryProps) => {
   const queryKey = ['diaryList', { memberId, currentPage, sortOrder }];
 
   const queryFn = async (): Promise<IDiaryResponse> => {
-    let apiUrl = END_POINT.MY_DIARIES(memberId, currentPage);
+    let apiUrl = END_POINT.my_diaries(memberId, currentPage);
 
     if (sortOrder === 'oldest') apiUrl += `&sort=createdAt,ASC`;
     const response = await API.get(apiUrl);
@@ -30,7 +30,7 @@ const useDiary = ({ memberId, currentPage, sortOrder }: IUseDiaryProps) => {
     queryKey,
     queryFn,
     enabled: !!memberId,
-    onError: error => console.error(CONSOLE_ERROR.DIARY.GET + error),
+    onError: error => console.error(CONSOLE_ERROR.diary.get + error),
   });
 
   const diaryList: IDiary[] = diary?.content || [];

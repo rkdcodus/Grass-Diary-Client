@@ -15,6 +15,7 @@ interface MenuProps {
   line?: number;
   topRadius?: number;
   bottomRadius?: number;
+  color?: string;
 }
 
 const Menu = ({
@@ -25,6 +26,7 @@ const Menu = ({
   line,
   topRadius,
   bottomRadius,
+  color,
 }: MenuProps) => {
   return (
     <>
@@ -36,7 +38,7 @@ const Menu = ({
             bottomRadius={bottomRadius}
           />
           <MenuContainer>
-            <MenuStr>{text}</MenuStr>
+            <MenuStr color={color}>{text}</MenuStr>
             <MenuImg src={svg} alt={text} />
           </MenuContainer>
         </ButtonWrapper>
@@ -49,36 +51,30 @@ const Menu = ({
 export default Menu;
 
 const MenuContainer = styled.div`
-  width: 160px;
+  width: 10rem;
   display: flex;
-  padding: var(--gap-md, 16px) var(--gap-lg, 20px);
+  padding: var(--gap-md, 1rem) var(--gap-lg, 1.25rem);
   align-items: center;
-  gap: var(--gap-md, 16px);
+  gap: var(--gap-md, 1rem);
   align-self: stretch;
-
-  border-radius: var(--radius-empty, 0px);
-  opacity: var(--opacity-visible, 1);
 `;
 
 const Line = styled.div<{ height: number | undefined }>`
-  height: ${props => props.height || 1}px;
+  height: ${props => props.height || 0.0625}rem;
   align-self: stretch;
   background: ${semantic.light.border.transparent.assistive};
 `;
 
-const MenuStr = styled.p`
-  flex: 1 0 0;
-  color: ${semantic.light.object.solid.normal};
+const MenuStr = styled.p<{ color?: string }>`
   ${TYPO.label2};
-
-  opacity: var(--opacity-visible, 1);
+  flex: 1 0 0;
+  color: ${props => props.color || semantic.light.object.solid.normal};
 `;
 
 const MenuImg = styled.img`
   display: flex;
   justify-content: center;
   text-align: center;
-  width: 18px;
-  height: 18px;
-  opacity: var(--opacity-visible, 1);
+  width: 1.125rem;
+  height: 1.125rem;
 `;

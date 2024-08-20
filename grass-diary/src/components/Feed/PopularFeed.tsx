@@ -49,7 +49,7 @@ const PopularFeed = () => {
               {feedList}
             </div>
           )}
-          {top10 && !top10.length ? <div>{NULL.SHARE_POPULAR_FEED}</div> : null}
+          {top10 && !top10.length ? <div>{NULL.share_popular_feed}</div> : null}
         </div>
       </RankCardContainer>
     </RankContainer>

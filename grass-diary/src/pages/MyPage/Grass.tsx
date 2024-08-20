@@ -68,11 +68,11 @@ const Grass = ({ setSelectedDiary }: IGrass) => {
   >({
     queryKey: ['selectedDiary', memberId, selectedDate],
     queryFn: () =>
-      API.get(END_POINT.SEARCH_DATE(memberId, selectedDate)).then(
+      API.get(END_POINT.search_date(memberId, selectedDate)).then(
         ({ data }) => data,
       ),
     enabled: !!selectedGrass && !!memberId,
-    onError: error => console.error(CONSOLE_ERROR.SEARCH_DATE.GET + error),
+    onError: error => console.error(CONSOLE_ERROR.search_date.get + error),
   });
 
   useEffect(() => {

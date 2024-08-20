@@ -6,7 +6,7 @@ import API from '@services/index';
 import { END_POINT } from '@constants/api';
 
 const fetchAxios = async () => {
-  const res = await API.get(END_POINT.MEMBER_INFO);
+  const res = await API.get(END_POINT.member_info);
   return res.data.memberId;
 };
 

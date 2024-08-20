@@ -4,7 +4,7 @@ import { useQuery } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 
 const fetchPopularDiary = () => {
-  return API.get(END_POINT.SHARE_POPULAR);
+  return API.get(END_POINT.share_popular);
 };
 
 export const usePopularDiaries = () => {

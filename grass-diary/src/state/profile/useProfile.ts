@@ -9,10 +9,10 @@ import {
   useProfileActions,
   useProfileImageURL,
   useProfileIntro,
-} from './profileStore';
+} from './ProfileStore';
 
 const fetchAxios = async (memberId: Id) => {
-  const res = await API.get(END_POINT.MEMBER_PROFILE(memberId));
+  const res = await API.get(END_POINT.member_profile(memberId));
   return res.data;
 };
 
@@ -31,7 +31,7 @@ export const useProfile = () => {
   });
 
   useEffect(() => {
-    if (isError) console.error(CONSOLE_ERROR.PROFILE.GET + error);
+    if (isError) console.error(CONSOLE_ERROR.profile.get + error);
     if (isSuccess) {
       setProfileImageURL(data.profileImageURL);
       setNickName(data.nickname);

@@ -189,7 +189,7 @@ const CreateDiary = () => {
 
     if (!checkWritingPermission()) {
       Swal.fire({
-        title: ERROR.DIARY_ALREADY_EXISTS,
+        title: ERROR.diary_already_exists,
         icon: 'warning',
         showCancelButton: false,
         confirmButtonColor: '#28CA3B',
@@ -200,7 +200,7 @@ const CreateDiary = () => {
 
     if (!diaryInfo.quillContent || !diaryInfo.quillContent.trim()) {
       Swal.fire({
-        title: ERROR.DIARY_NOT_WRITE,
+        title: ERROR.diary_not_write,
         icon: 'warning',
         showCancelButton: false,
         confirmButtonColor: '#28CA3B',

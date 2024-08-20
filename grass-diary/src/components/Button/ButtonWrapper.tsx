@@ -12,6 +12,7 @@ const ButtonWrapper = ({ children }: ButtonWrapperProps) => {
 export default ButtonWrapper;
 
 const Btn = styled.div`
+  flex: 1;
   position: relative;
   display: inline-flex;
   white-space: nowrap;

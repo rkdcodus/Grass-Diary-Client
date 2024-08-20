@@ -9,7 +9,7 @@ interface PatchAxiosProps {
 }
 
 const fetchAxios = ({ diaryId, request }: PatchAxiosProps) => {
-  return API.patch(END_POINT.DIARY(diaryId), request);
+  return API.patch(END_POINT.diary(diaryId), request);
 };
 
 export const usePatchDiary = (diaryId: Id) => {
