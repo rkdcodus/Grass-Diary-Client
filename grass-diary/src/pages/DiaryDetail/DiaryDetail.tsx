@@ -117,6 +117,7 @@ const DiaryDetail = () => {
             />
           </BottomSection>
           <Divider />
+          <CommentLable>{`댓글 ${detail?.commentCount}`}</CommentLable>
           <Comments />
         </DiaryBox>
       </Container>
@@ -301,4 +302,10 @@ const Divider = styled.div`
   height: 0.0625rem;
 
   background: ${semantic.light.border.transparent.alternative};
+`;
+
+const CommentLable = styled.div`
+  ${TYPO.label3}
+  align-self: stretch;
+  color: ${semantic.light.object.transparent.neutral};
 `;
