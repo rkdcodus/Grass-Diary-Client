@@ -53,17 +53,11 @@ const Setting = ({ diaryId, createdDate }: SettingProps) => {
   return (
     <>
       <Menus icon={more}>
-        <Menu
-          onClick={linkToModify}
-          text={'일기 수정'}
-          svg={editIcon}
-          topRadius={1}
-        />
+        <Menu onClick={linkToModify} text={'일기 수정'} svg={editIcon} />
         <Menu
           onClick={showConfirmModal}
           text={'일기 삭제'}
           svg={deleteIcon}
-          bottomRadius={1}
           color={semantic.light.feedback.solid.negative}
         />
       </Menus>

@@ -8,8 +8,10 @@ import useLogout from '@hooks/useLogout';
 import { useQueryClient } from '@tanstack/react-query';
 import Menus from '@components/Button/Menus';
 import { semantic } from '@styles/semantic';
+import { useNavigate } from 'react-router-dom';
 
 const MenuBar = () => {
+  const navigate = useNavigate();
   const clearAuth = useLogout();
   const queryClient = useQueryClient();
   const handleLogout = () => {
@@ -25,19 +27,25 @@ const MenuBar = () => {
     <div>
       <Menus icon={arrow}>
         <Menu
-          link={'/mypage'}
+          onClick={() => {
+            navigate('/mypage');
+          }}
           text={'마이페이지'}
           svg={person}
           line={0.25}
-          topRadius={1}
         />
-        <Menu link={'/setting'} text={'설정'} svg={setting} />
+        <Menu
+          onClick={() => {
+            navigate('/setting');
+          }}
+          text={'설정'}
+          svg={setting}
+        />
         <Menu onClick={handleLogout} text={'로그아웃'} svg={logout} />
         <Menu
           onClick={deleteAccount}
           text={'탈퇴'}
           svg={person_remove}
-          bottomRadius={1}
           color={semantic.light.feedback.solid.negative}
         />
       </Menus>
