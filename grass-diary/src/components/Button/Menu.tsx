@@ -2,10 +2,8 @@ import styled from 'styled-components';
 import { semantic } from '@styles/semantic';
 import { TYPO } from '@styles/typo';
 
-import Interaction1 from '@components/Interactions/Interaction1';
-import ButtonWrapper from '@components/Button/ButtonWrapper';
-
 import { Link } from 'react-router-dom';
+import { INTERACTION } from '@styles/interaction';
 
 interface MenuProps {
   text: string;
@@ -17,6 +15,11 @@ interface MenuProps {
   bottomRadius?: number;
   color?: string;
 }
+
+type MenuContainerProps = {
+  $topRadius?: number;
+  $bottomRadius?: number;
+};
 
 const Menu = ({
   link,
@@ -31,17 +34,14 @@ const Menu = ({
   return (
     <>
       <Link to={link || ''}>
-        <ButtonWrapper>
-          <Interaction1
-            onClick={onClick}
-            topRadius={topRadius}
-            bottomRadius={bottomRadius}
-          />
-          <MenuContainer>
-            <MenuStr color={color}>{text}</MenuStr>
-            <MenuImg src={svg} alt={text} />
-          </MenuContainer>
-        </ButtonWrapper>
+        <MenuContainer
+          onClick={onClick}
+          $topRadius={topRadius}
+          $bottomRadius={bottomRadius}
+        >
+          <MenuStr color={color}>{text}</MenuStr>
+          <MenuImg src={svg} alt={text} />
+        </MenuContainer>
       </Link>
       <Line height={line} />
     </>
@@ -50,13 +50,17 @@ const Menu = ({
 
 export default Menu;
 
-const MenuContainer = styled.div`
+const MenuContainer = styled.button<MenuContainerProps>`
   width: 10rem;
   display: flex;
   padding: var(--gap-md, 1rem) var(--gap-lg, 1.25rem);
   align-items: center;
   gap: var(--gap-md, 1rem);
-  align-self: stretch;
+  border-top-left-radius: ${props => props.$topRadius || 0}rem;
+  border-top-right-radius: ${props => props.$topRadius || 0}rem;
+  border-bottom-left-radius: ${props => props.$bottomRadius || 0}rem;
+  border-bottom-right-radius: ${props => props.$bottomRadius || 0}rem;
+  ${INTERACTION.default.normal()}
 `;
 
 const Line = styled.div<{ height: number | undefined }>`
@@ -69,6 +73,7 @@ const MenuStr = styled.p<{ color?: string }>`
   ${TYPO.label2};
   flex: 1 0 0;
   color: ${props => props.color || semantic.light.object.solid.normal};
+  text-align: left;
 `;
 
 const MenuImg = styled.img`

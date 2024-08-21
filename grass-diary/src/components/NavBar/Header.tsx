@@ -4,13 +4,12 @@ import { semantic } from '@styles/semantic';
 import sampleLogo from '@image/sampleLogo.png';
 import { ReactComponent as LogoSVG } from '@svg/logo.svg';
 
-import Interaction1 from '@components/Interactions/Interaction1';
-import ButtonWrapper from '@components/Button/ButtonWrapper';
 import MenuBar from '@components/NavBar/MenuBar';
 import { Profile } from '@components/index';
 
 import { Link } from 'react-router-dom';
 import { useUser } from '@state/user/useUser';
+import { INTERACTION } from '@styles/interaction';
 
 const Header = () => {
   const memberId = useUser();
@@ -35,16 +34,7 @@ const Header = () => {
               </IconBtn>
             </RightContent>
           ) : (
-            <div>
-              <ButtonWrapper>
-                <Interaction1
-                  onClick={() => console.log('로그인')}
-                  topRadius={8}
-                  bottomRadius={8}
-                />
-                <LoginBtn>로그인</LoginBtn>
-              </ButtonWrapper>
-            </div>
+            <LoginBtn onClick={() => console.log('로그인')}>로그인</LoginBtn>
           )}
         </ContentWrap>
       </NavBar>
@@ -117,7 +107,7 @@ const IconBtn = styled.div`
   cursor: pointer;
 `;
 
-const LoginBtn = styled.div`
+const LoginBtn = styled.button`
   display: flex;
   background: none;
   padding: var(--gap-xs, 0.625rem) var(--gap-md, 1rem);
@@ -128,4 +118,6 @@ const LoginBtn = styled.div`
   color: ${semantic.light.base.solid.white};
   border-radius: var(--radius-xs, 0.5rem);
   background: ${semantic.light.accent.solid.normal};
+
+  ${INTERACTION.default.normal(semantic.light.accent.solid.normal)}
 `;
