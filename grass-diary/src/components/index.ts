@@ -11,3 +11,4 @@ export { default as Container } from './Container';
 export { EllipsisIcon, EllipsisBox } from './Ellipsis';
 export { default as Comments } from './Comment/Comments';
 export { default as Layout } from './Layout/Layout';
+export { default as Divider } from './Divider';
