@@ -94,17 +94,6 @@ const RightContent = styled.div`
   gap: var(--gap-2xs, 0.5rem);
 `;
 
-const IconBtn = styled.button`
-  display: flex;
-  padding: var(--gap-4xs, 0.25rem);
-  justify-content: center;
-  align-items: center;
-  gap: var(--gap-md, 1rem);
-
-  border-radius: var(--radius-2xs, 0.25rem);
-  cursor: pointer;
-`;
-
 const LoginBtn = styled.button`
   display: flex;
   background: none;
