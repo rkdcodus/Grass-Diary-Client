@@ -9,8 +9,7 @@ import ConfirmDeleteModal from './modal/ConfirmDeleteModal';
 import more from '@svg/more_horiz.svg';
 import editIcon from '@svg/mode_edit.svg';
 import deleteIcon from '@svg/delete_forever.svg';
-import Menus from '@components/Button/Menus';
-import Menu from '@components/Button/Menu';
+import { Menus, Menu } from '@components/index';
 
 type SettingProps = {
   diaryId: Id;

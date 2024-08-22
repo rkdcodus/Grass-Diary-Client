@@ -1,5 +1,4 @@
-import Modal from '@components/modal/Modal';
-import CheckButton from '@components/modal/CheckButton';
+import { Modal, CheckButton } from '@components/index';
 import { DIARY } from '@constants/message';
 
 const UnmodifyModal = ({ setter }: UnmodifyModalProps) => {
