@@ -7,31 +7,28 @@ import { ReactComponent as LogoSVG } from '@svg/logo.svg';
 import MenuBar from '@components/NavBar/MenuBar';
 import { Profile } from '@components/index';
 
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useUser } from '@state/user/useUser';
 import { INTERACTION } from '@styles/interaction';
 
 const Header = () => {
   const memberId = useUser();
+  const navigate = useNavigate();
 
   return (
     <div>
       <NavBar>
         <ContentWrap>
           <LogoContainer>
-            <Link to="/main">
-              <Logo>
-                <LogoImg />
-                <LogoStr />
-              </Logo>
-            </Link>
+            <Logo onClick={() => navigate('/main')}>
+              <LogoImg />
+              <LogoStr />
+            </Logo>
           </LogoContainer>
           {memberId ? (
             <RightContent>
               <Profile width="2rem" height="2rem" />
-              <IconBtn>
-                <MenuBar />
-              </IconBtn>
+              <MenuBar />
             </RightContent>
           ) : (
             <LoginBtn onClick={() => console.log('로그인')}>로그인</LoginBtn>
@@ -70,7 +67,8 @@ const LogoContainer = styled.div`
   flex: 1 0 0;
 `;
 
-const Logo = styled.div`
+const Logo = styled.button`
+  cursor: pointer;
   display: flex;
   align-items: center;
   gap: var(--gap-xs, 0.625rem);
@@ -96,7 +94,7 @@ const RightContent = styled.div`
   gap: var(--gap-2xs, 0.5rem);
 `;
 
-const IconBtn = styled.div`
+const IconBtn = styled.button`
   display: flex;
   padding: var(--gap-4xs, 0.25rem);
   justify-content: center;

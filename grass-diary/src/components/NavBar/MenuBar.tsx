@@ -2,13 +2,12 @@ import person from '@svg/person.svg';
 import setting from '@svg/settings.svg';
 import logout from '@svg/logout.svg';
 import person_remove from '@svg/person_remove.svg';
-import Menu from '@components/Button/Menu';
 import arrow from '@svg/arrow_drop_down.svg';
 import useLogout from '@hooks/useLogout';
 import { useQueryClient } from '@tanstack/react-query';
-import Menus from '@components/Button/Menus';
 import { semantic } from '@styles/semantic';
 import { useNavigate } from 'react-router-dom';
+import { Menus, Menu } from '@components/index';
 
 const MenuBar = () => {
   const navigate = useNavigate();
@@ -27,17 +26,13 @@ const MenuBar = () => {
     <div>
       <Menus icon={arrow}>
         <Menu
-          onClick={() => {
-            navigate('/mypage');
-          }}
+          onClick={() => navigate('/mypage')}
           text={'마이페이지'}
           svg={person}
           line={0.25}
         />
         <Menu
-          onClick={() => {
-            navigate('/setting');
-          }}
+          onClick={() => navigate('/setting')}
           text={'설정'}
           svg={setting}
         />
