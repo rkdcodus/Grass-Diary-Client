@@ -186,7 +186,7 @@ const EditDiary = () => {
 
     if (!quillContent || !quillContent.trim()) {
       Swal.fire({
-        title: ERROR.DIARY_NOT_WRITE,
+        title: ERROR.diary_not_write,
         icon: 'warning',
         showCancelButton: false,
         confirmButtonColor: '#28CA3B',
@@ -245,7 +245,7 @@ const EditDiary = () => {
         <Header />
       </header>
       <main {...stylex.props(CreateDiaryStyle.container)}>
-        <BackButton goBackTo={'/main'} />
+        <BackButton />
         <section {...stylex.props(CreateDiaryStyle.title)}>
           <h2>
             {diaryInfo.month}월 {diaryInfo.date}일 {diaryInfo.day}요일

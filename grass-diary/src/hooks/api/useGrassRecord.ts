@@ -9,7 +9,7 @@ export const useGrassRecord = () => {
   const memberId = useUser();
 
   const fetchUseGrassRecord = async (): Promise<GrassApiResponse> => {
-    const res = await API.get(END_POINT.GRASS(memberId));
+    const res = await API.get(END_POINT.grass(memberId));
     return res.data;
   };
 
@@ -28,7 +28,7 @@ export const useGrassRecord = () => {
     enabled: !!memberId,
   });
 
-  if (isError) console.error(CONSOLE_ERROR.GRASS.GET + error.message);
+  if (isError) console.error(CONSOLE_ERROR.grass.get + error.message);
 
   return { grassQuery };
 };

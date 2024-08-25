@@ -1,6 +1,8 @@
 import styled from 'styled-components';
+import { MAIN_MESSAGES } from '@constants/message';
 import { semantic } from '@styles/semantic';
 import { ReactComponent as Info } from '@svg/info.svg';
+import { TYPO } from '@styles/typo';
 
 const Banner = () => {
   return (
@@ -8,9 +10,7 @@ const Banner = () => {
       <Section>
         <Container>
           <Info />
-          <Text>
-            잔디 일기에는 앞으로 더 매력적인 콘텐츠들이 추가될 예정이에요!
-          </Text>
+          <Text>{MAIN_MESSAGES.banner.future_content_message}</Text>
         </Container>
       </Section>
     </>
@@ -21,27 +21,23 @@ export default Banner;
 
 const Section = styled.div`
   display: flex;
-  max-width: var(--vw-desktop-min, 60rem); /* 960px */
-  padding: var(--gap-4xl, 3rem) var(--gap-xl, 1.5rem); /* 48px, 24px */
+  max-width: var(--vw-desktop-min, 60rem);
+  padding: var(--gap-4xl, 3rem) var(--gap-xl, 1.5rem);
   justify-content: center;
   align-items: center;
-  gap: var(--gap-empty, 0rem); /* 0px */
-
-  border-radius: var(--radius-empty, 0rem); /* 0px */
-  opacity: var(--opacity-visible, 1);
 `;
 
 const Container = styled.div`
   display: flex;
-  width: 26.25rem; /* 420px */
-  padding: var(--gap-3xs, 0.375rem) var(--gap-sm, 0.75rem); /* 6px, 12px */
+  width: 26.25rem;
+  padding: var(--gap-3xs, 0.375rem) var(--gap-sm, 0.75rem);
   align-items: flex-start;
-  gap: var(--gap-2xs, 0.5rem); /* 8px */
+  gap: var(--gap-2xs, 0.5rem);
 
-  border-radius: var(--radius-xs, 0.5rem); /* 8px */
+  border-radius: var(--radius-xs, 0.5rem);
   border: var(--stroke-thin, 0.0625rem) solid
-    ${semantic.light.border.transparent.alternative}; /* 1px */
-  opacity: var(--opacity-visible, 1);
+    ${semantic.light.border.transparent.alternative};
+
   background: ${semantic.light.fill.transparent.assistive};
 `;
 
@@ -50,12 +46,5 @@ const Text = styled.p`
 
   color: ${semantic.light.object.transparent.alternative};
 
-  /* caption/2 */
-  font-family: Pretendard;
-  font-size: 0.875rem; /* 14px */
-  font-style: normal;
-  font-weight: 400;
-  line-height: 1.375rem; /* 22px */
-
-  opacity: var(--opacity-visible, 1);
+  ${TYPO.caption2}
 `;

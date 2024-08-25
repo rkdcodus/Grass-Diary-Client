@@ -54,11 +54,11 @@ const Setting = () => {
     omitProfileImageURL
   >({
     mutationFn: profileInfo =>
-      API.patch(END_POINT.EDIT_MEMBER_INFO, profileInfo),
+      API.patch(END_POINT.edit_member_info, profileInfo),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['profileInfo'] });
     },
-    onError: error => console.error(CONSOLE_ERROR.MEMBER.PATCH + error),
+    onError: error => console.error(CONSOLE_ERROR.member.patch + error),
   });
 
   return (

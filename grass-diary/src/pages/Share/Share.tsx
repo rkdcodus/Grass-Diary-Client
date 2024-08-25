@@ -105,7 +105,7 @@ const Share = () => {
           <div {...stylex.props(styles.latestFeed)}>
             {feedList}
             {!latest ? (
-              <div {...stylex.props(styles.noFeed)}>{NULL.SHARE_FEED}</div>
+              <div {...stylex.props(styles.noFeed)}>{NULL.share_feed}</div>
             ) : null}
           </div>
           <div ref={target} {...stylex.props(styles.observer)}></div>

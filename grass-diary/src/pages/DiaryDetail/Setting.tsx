@@ -1,9 +1,16 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { EllipsisIcon, EllipsisBox } from '@components/index';
+
+import { semantic } from '@styles/semantic';
+import { useTodayDate } from '@hooks/api/useTodayDate';
 import UnmodifyModal from './modal/UnmodifyModal';
 import ConfirmDeleteModal from './modal/ConfirmDeleteModal';
-import { useTodayDate } from '@hooks/api/useTodayDate';
+
+import more from '@svg/more_horiz.svg';
+import editIcon from '@svg/mode_edit.svg';
+import deleteIcon from '@svg/delete_forever.svg';
+import Menus from '@components/Button/Menus';
+import Menu from '@components/Button/Menu';
 
 type SettingProps = {
   diaryId: Id;
@@ -45,10 +52,21 @@ const Setting = ({ diaryId, createdDate }: SettingProps) => {
 
   return (
     <>
-      <EllipsisIcon width="136" translateValue="115px">
-        <EllipsisBox onClick={linkToModify} text="수정" />
-        <EllipsisBox onClick={showConfirmModal} text="삭제" />
-      </EllipsisIcon>
+      <Menus icon={more}>
+        <Menu
+          onClick={linkToModify}
+          text={'일기 수정'}
+          svg={editIcon}
+          topRadius={1}
+        />
+        <Menu
+          onClick={showConfirmModal}
+          text={'일기 삭제'}
+          svg={deleteIcon}
+          bottomRadius={1}
+          color={semantic.light.feedback.solid.negative}
+        />
+      </Menus>
 
       {editModal && <UnmodifyModal setter={setEditModal} />}
       {confirmModal && (

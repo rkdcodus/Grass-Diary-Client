@@ -60,12 +60,12 @@ const QuillEditor = ({
   };
 
   useEffect(() => {
-    API.get<QuestionResponse>(END_POINT.TODAY_QUESTION)
+    API.get<QuestionResponse>(END_POINT.today_question)
       .then(response => {
         setTodayQuestion(response.data.question);
       })
       .catch(error => {
-        console.error(CONSOLE_ERROR.QUESTION.GET + error);
+        console.error(CONSOLE_ERROR.question.get + error);
       });
   }, []);
 

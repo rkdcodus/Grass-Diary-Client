@@ -58,12 +58,18 @@ const CreateDiary = () => {
     if (e.key === 'Enter' || e.key === ' ') {
       e.preventDefault();
       const inputText = (e.target as HTMLInputElement).value.trim();
-      const validCharsPattern = /[가-힣A-Za-z0-9]+/g;
+      const validCharsPattern =
+        /[가-힣A-Za-z0-9\u3040-\u309F\u30A0-\u30FF\u4E00-\u9FAF]+/g;
 
       const matches = inputText.match(validCharsPattern);
       if (matches && matches.length > 0 && diaryInfo.hashArr.length < 15) {
         const hashtagText = matches.join('');
-        setDiaryField({ hashArr: [...diaryInfo.hashArr, hashtagText] });
+        // 중복 체크
+        if (!diaryInfo.hashArr.includes(hashtagText)) {
+          setDiaryField({ hashArr: [...diaryInfo.hashArr, hashtagText] });
+        } else {
+          alert('이미 존재하는 해시태그입니다.'); // 작성 페이지 UI 변경 시 수정
+        }
         setHashtag('');
       }
     }
@@ -99,7 +105,7 @@ const CreateDiary = () => {
 
     if (!checkWritingPermission()) {
       Swal.fire({
-        title: ERROR.DIARY_ALREADY_EXISTS,
+        title: ERROR.diary_already_exists,
         icon: 'warning',
         showCancelButton: false,
         confirmButtonColor: '#28CA3B',
@@ -110,7 +116,7 @@ const CreateDiary = () => {
 
     if (!diaryInfo.quillContent || !diaryInfo.quillContent.trim()) {
       Swal.fire({
-        title: ERROR.DIARY_NOT_WRITE,
+        title: ERROR.diary_not_write,
         icon: 'warning',
         showCancelButton: false,
         confirmButtonColor: '#28CA3B',

@@ -36,7 +36,7 @@ const useGrass = (memberId: Id) => {
         return updatedGrassColor;
       }),
     enabled: !!memberId,
-    onError: error => console.error(CONSOLE_ERROR.GRASS.GET + error),
+    onError: error => console.error(CONSOLE_ERROR.grass.get + error),
   });
 
   return grass;

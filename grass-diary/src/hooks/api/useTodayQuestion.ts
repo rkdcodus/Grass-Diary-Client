@@ -5,7 +5,7 @@ import { AxiosError } from 'axios';
 import { CONSOLE_ERROR } from '@constants/message';
 
 const fetchTodayQuestion = async (): Promise<TodayQuestion> => {
-  const res = await API.get(END_POINT.TODAY_QUESTION);
+  const res = await API.get(END_POINT.today_question);
   return res.data;
 };
 
@@ -19,7 +19,7 @@ export const useTodayQuestion = () => {
     queryFn: fetchTodayQuestion,
   });
 
-  if (isError) console.error(CONSOLE_ERROR.QUESTION.GET + error.message);
+  if (isError) console.error(CONSOLE_ERROR.question.get + error.message);
 
   return { question };
 };

@@ -1,13 +1,15 @@
 import AnimateReward from './AnimateReward';
 import styled from 'styled-components';
+import subCharacter from '@icon/subCharacter.png';
+import Swal from 'sweetalert2';
 import { semantic } from '@styles/semantic';
 import { useReward } from '@hooks/api/useReward';
 import { Link } from 'react-router-dom';
-import subCharacter from '@icon/subCharacter.png';
-import Swal from 'sweetalert2';
+import { MAIN_MESSAGES } from '@constants/message';
 import { ReactComponent as Avatar } from '@svg/avatarBg.svg';
 import { ReactComponent as Arrow } from '@svg/chevron_right.svg';
 import { ReactComponent as ArrowBlack } from '@svg/chevron_right_black.svg';
+import { TYPO } from '@styles/typo';
 
 const BottomSection = () => {
   const { reward } = useReward();
@@ -25,16 +27,16 @@ const BottomSection = () => {
     });
   };
 
-  const handleClick = () => {
-    window.scrollTo(0, 0);
-  };
+  const handleClick = () => window.scrollTo(0, 0);
   return (
     <>
       <Section>
         <Container>
           <Card>
-            <CardText>내 잔디 리워드</CardText>
-            <CardSubText>잔디를 꾸준히 심고, 리워드를 모아봐요!</CardSubText>
+            <CardText>{MAIN_MESSAGES.bottom_section.my_reward}</CardText>
+            <CardSubText>
+              {MAIN_MESSAGES.bottom_section.reward_message}
+            </CardSubText>
             <Divider></Divider>
             <Wrap>
               <RewardContainer>
@@ -44,21 +46,27 @@ const BottomSection = () => {
                 </RewardPoint>
               </RewardContainer>
               <ThemeMarketBtn>
-                <ThemeMarketText onClick={modal}>테마 상점</ThemeMarketText>
+                <ThemeMarketText onClick={modal}>
+                  {MAIN_MESSAGES.bottom_section.theme_store}
+                </ThemeMarketText>
                 <Arrow></Arrow>
               </ThemeMarketBtn>
             </Wrap>
           </Card>
           <Card>
-            <CardText>한 달 일기 회고</CardText>
+            <CardText>
+              {MAIN_MESSAGES.bottom_section.monthly_diary_review}
+            </CardText>
             <CardSubText>
-              지난 한 달 간의 내 시간과 경험들을 돌아보며 회고해봐요.
+              {MAIN_MESSAGES.bottom_section.review_description}
             </CardSubText>
             <Divider></Divider>
             <RetrospectContainer>
               <RetrospectBtn>
                 <Link to="/mypage" onClick={handleClick}>
-                  <RetrospectText>회고하러 가기</RetrospectText>
+                  <RetrospectText>
+                    {MAIN_MESSAGES.bottom_section.go_to_review}
+                  </RetrospectText>
                 </Link>
                 <ArrowBlack></ArrowBlack>
               </RetrospectBtn>
@@ -68,7 +76,7 @@ const BottomSection = () => {
       </Section>
       <Link to="/share" onClick={handleClick}>
         <SeeMoreContainer>
-          <SeeMoreBtn>더 보러가기</SeeMoreBtn>
+          <SeeMoreBtn>{MAIN_MESSAGES.bottom_section.see_more}</SeeMoreBtn>
           <ArrowBlack></ArrowBlack>
         </SeeMoreContainer>
       </Link>
@@ -80,53 +88,44 @@ export default BottomSection;
 
 const Section = styled.div`
   display: flex;
-  padding: var(--gap-lg, 1.25rem) var(--gap-xl, 1.5rem); /* 20px, 24px */
+  padding: var(--gap-lg, 1.25rem) var(--gap-xl, 1.5rem);
   justify-content: center;
   align-items: center;
-  gap: var(--gap-xl, 1.5rem); /* 24px */
+  gap: var(--gap-xl, 1.5rem);
   align-self: stretch;
-
-  border-radius: var(--radius-empty, 0rem); /* 0px */
-  opacity: var(--opacity-visible, 1);
 `;
 
 const Container = styled.div`
   display: flex;
-  max-width: var(--vw-desktop-min, 60rem); /* 960px */
-  padding: var(--gap-empty, 0rem); /* 0px */
+  max-width: var(--vw-desktop-min, 60rem);
   justify-content: center;
   align-items: center;
-  gap: var(--gap-xl, 1.5rem); /* 24px */
+  gap: var(--gap-xl, 1.5rem);
   flex: 1 0 0;
-
-  border-radius: var(--radius-empty, 0rem); /* 0px */
-  opacity: var(--opacity-visible, 1);
 `;
 
 const Card = styled.div`
   display: flex;
-  padding: var(--gap-lg, 1.25rem); /* 20px */
+  padding: var(--gap-lg, 1.25rem);
   flex-direction: column;
   align-items: flex-start;
-  gap: var(--gap-md, 1rem); /* 16px */
+  gap: var(--gap-md, 1rem);
   flex: 1 0 0;
 
-  border-radius: var(--radius-md, 1rem); /* 16px */
+  border-radius: var(--radius-md, 1rem);
   border: var(--stroke-thin, 0.0625rem) solid
-    ${semantic.light.border.transparent.assistive}; /* 1px */
-  opacity: var(--opacity-visible, 1);
+    ${semantic.light.border.transparent.assistive};
+
   background: ${semantic.light.bg.solid.normal};
 
-  /* shadow/embossed */
   box-shadow: 0rem 0rem 0.0625rem 0rem rgba(0, 0, 0, 0.04),
-    /* 1px */ 0rem 0.125rem 0.25rem 0rem rgba(0, 0, 0, 0.08); /* 2px 4px */
+    0rem 0.125rem 0.25rem 0rem rgba(0, 0, 0, 0.08);
 `;
 
 const Divider = styled.div`
-  width: 26.75rem; /* 428px */
-  height: 0.0625rem; /* 1px */
+  width: 26.75rem;
+  height: 0.0625rem;
 
-  opacity: var(--opacity-visible, 1);
   background: ${semantic.light.border.transparent.alternative};
 `;
 
@@ -135,15 +134,7 @@ const CardText = styled.p`
 
   color: ${semantic.light.object.transparent.neutral};
 
-  /* label/3 */
-  font-family: Pretendard;
-  font-size: 1.125rem; /* 18px */
-  font-style: normal;
-  font-weight: 500;
-  line-height: 1.5rem; /* 24px, 133.333% */
-  letter-spacing: -0.00675rem; /* -0.108px */
-
-  opacity: var(--opacity-visible, 1);
+  ${TYPO.label3}
 `;
 
 const CardSubText = styled.p`
@@ -151,65 +142,40 @@ const CardSubText = styled.p`
 
   color: ${semantic.light.object.transparent.neutral};
 
-  /* caption/2 */
-  font-family: Pretendard;
-  font-size: 0.875rem; /* 14px */
-  font-style: normal;
-  font-weight: 400;
-  line-height: 1.375rem; /* 22px, 157.143% */
-
-  opacity: var(--opacity-visible, 1);
+  ${TYPO.caption2}
 `;
 
 const Wrap = styled.div`
   display: flex;
-  padding: var(--gap-empty, 0rem); /* 0px */
   align-items: center;
-  gap: var(--gap-md, 1rem); /* 16px */
+  gap: var(--gap-md, 1rem);
   align-self: stretch;
-
-  border-radius: var(--radius-empty, 0rem); /* 0px */
-  opacity: var(--opacity-visible, 1);
 `;
 
 const RewardContainer = styled.div`
   display: flex;
-  padding: var(--gap-empty, 0rem); /* 0px */
   align-items: center;
-  gap: var(--gap-2xs, 0.5rem); /* 8px */
+  gap: var(--gap-2xs, 0.5rem);
   flex: 1 0 0;
-
-  border-radius: var(--radius-empty, 0rem); /* 0px */
-  opacity: var(--opacity-visible, 1);
 `;
 
 const RewardPoint = styled.p`
   flex: 1 0 0;
 
   color: ${semantic.light.accent.solid.normal};
-
-  /* title/3 */
-  font-family: Pretendard;
-  font-size: 1.09375rem; /* 17.5px */
-  font-style: normal;
-  font-weight: 600;
-  line-height: 2.625rem; /* 42px, 131.25% */
-  letter-spacing: -0.0311875rem; /* -0.499px */
-
-  opacity: var(--opacity-visible, 1);
 `;
 
 const ThemeMarketBtn = styled.button`
   display: flex;
-  padding: var(--gap-xs, 0.625rem) var(--gap-md, 1rem); /* 10px, 16px */
+  padding: var(--gap-xs, 0.625rem) var(--gap-md, 1rem);
   justify-content: center;
   align-items: center;
-  gap: var(--gap-2xs, 0.5rem); /* 8px */
+  gap: var(--gap-2xs, 0.5rem);
 
-  border-radius: var(--radius-xs, 0.5rem); /* 8px */
+  border-radius: var(--radius-xs, 0.5rem);
   border: var(--stroke-thin, 0.0625rem) solid
-    ${semantic.light.accent.solid.normal}; /* 1px */
-  opacity: var(--opacity-visible, 1);
+    ${semantic.light.accent.solid.normal};
+
   background: ${semantic.light.accent.transparent.normal};
 
   cursor: pointer;
@@ -219,52 +185,30 @@ const ThemeMarketText = styled.p`
   color: ${semantic.light.accent.solid.hero};
   text-align: center;
 
-  /* label/2 */
-  font-family: Pretendard;
-  font-size: 1rem; /* 16px */
-  font-style: normal;
-  font-weight: 500;
-  line-height: 1.375rem; /* 22px, 137.5% */
-  letter-spacing: -0.006rem; /* -0.096px */
-
-  opacity: var(--opacity-visible, 1);
+  ${TYPO.label2}
 `;
 
 const RetrospectContainer = styled.div`
   display: flex;
-  padding: var(--gap-empty, 0rem); /* 0px */
   justify-content: flex-end;
   align-items: center;
-  gap: var(--gap-empty, 0rem); /* 0px */
   align-self: stretch;
-
-  border-radius: var(--radius-empty, 0rem); /* 0px */
-  opacity: var(--opacity-visible, 1);
 `;
 
 const RetrospectBtn = styled.button`
   display: flex;
-  padding: var(--gap-xs, 0.625rem) var(--gap-md, 1rem); /* 10px, 16px */
+  padding: var(--gap-xs, 0.625rem) var(--gap-md, 1rem);
   justify-content: center;
   align-items: center;
-  gap: var(--gap-2xs, 0.5rem); /* 8px */
+  gap: var(--gap-2xs, 0.5rem);
 
-  border-radius: var(--radius-xs, 0.5rem); /* 8px */
-  opacity: var(--opacity-visible, 1);
+  border-radius: var(--radius-xs, 0.5rem);
 `;
 
 const RetrospectText = styled.p`
   text-align: center;
 
-  /* label/2 */
-  font-family: Pretendard;
-  font-size: 1rem; /* 16px */
-  font-style: normal;
-  font-weight: 500;
-  line-height: 1.375rem; /* 22px, 137.5% */
-  letter-spacing: -0.006rem; /* -0.096px */
-
-  opacity: var(--opacity-visible, 1);
+  ${TYPO.label2}
 `;
 
 const SeeMoreContainer = styled.div`
@@ -275,20 +219,11 @@ const SeeMoreContainer = styled.div`
   gap: var(--gap-2xs, 0.5rem);
 
   border-radius: var(--radius-xs, 0.5rem);
-  opacity: var(--opacity-visible, 1);
 `;
 
 const SeeMoreBtn = styled.p`
   color: ${semantic.light.object.transparent.alternative};
   text-align: center;
 
-  /* label/2 */
-  font-family: Pretendard;
-  font-size: 1rem;
-  font-style: normal;
-  font-weight: 500;
-  line-height: 1.375rem; /* 137.5% */
-  letter-spacing: -0.006rem;
-
-  opacity: var(--opacity-visible, 1);
+  ${TYPO.label2}
 `;
