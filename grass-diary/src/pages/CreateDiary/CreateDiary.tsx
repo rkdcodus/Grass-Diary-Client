@@ -1,18 +1,21 @@
-import stylex from '@stylexjs/stylex';
-import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import styled from 'styled-components';
 import Swal from 'sweetalert2';
 import QuillEditor from './QuillEditor';
+import EMOJI from '@constants/emoji';
 import 'dayjs/locale/ko';
 
-import { Header, BackButton, Button, Container } from '@components/index';
-import EMOJI from '@constants/emoji';
+import { semantic } from '@styles/semantic';
+import { Header, BackButton, Button } from '@components/index';
+import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { ERROR } from '@constants/message';
 import { useCreateDiary } from '@hooks/api/useCreateDiary';
-import 'dayjs/locale/ko';
 import { useTodayDate } from '@hooks/api/useTodayDate';
 import { usePostImage } from '@hooks/api/usePostImage';
 import { useUser } from '@state/user/useUser';
+import { TYPO } from '@styles/typo';
+import { ReactComponent as Publish } from '@svg/publish.svg';
+import { ReactComponent as Close } from '@svg/close.svg';
 
 const CreateDiary = () => {
   const navigate = useNavigate();
@@ -39,6 +42,13 @@ const CreateDiary = () => {
   const [image, setImage] = useState<DiaryImage>({
     imageId: 0,
     imageURL: '',
+  });
+
+  // 이미지 정보 state
+  const [imageInfo, setImageInfo] = useState({
+    name: '',
+    size: '',
+    extension: '',
   });
 
   // 상태 업데이트 함수
@@ -91,6 +101,7 @@ const CreateDiary = () => {
       imageId: 0,
       imageURL: '',
     });
+    setImageInfo({ name: '', size: '', extension: '' });
   };
 
   const handleSave = async () => {
@@ -177,105 +188,388 @@ const CreateDiary = () => {
     }
   }, [date]);
 
+  const handleImageChange = (file: File) => {
+    const fileName = file.name;
+    const fileSize = (file.size / 1024).toFixed(2); // KB 단위로 변환
+    const fileExtension = fileName.split('.').pop() || '';
+
+    setImageInfo({
+      name: fileName,
+      size: fileSize,
+      extension: fileExtension,
+    });
+  };
+
   return (
-    <Container>
-      <header>
-        <Header />
-      </header>
-      <main>
-        <BackButton goBackTo={'/main'} />
-        <section>
-          <h2>
+    <>
+      <Header />
+      <Container>
+        <SaveWrap>
+          <SaveWrapContainer>
+            <BackButton goBackTo={'/main'} />
+            <SaveWrapText>일기 쓰기</SaveWrapText>
+          </SaveWrapContainer>
+          <SaveWrapTime>
             {diaryInfo.month}월 {diaryInfo.date}일 {diaryInfo.day}요일
-          </h2>
-        </section>
-        <section>
-          <article>
-            <label>
-              <input
-                type="radio"
-                value="private"
-                checked={diaryInfo.isPrivate}
-                onChange={handlePrivateChange}
-              />
-              비공개
-              <input
-                type="radio"
-                value="public"
-                checked={!diaryInfo.isPrivate}
-                onChange={handlePublicChange}
-              />
-              공개
-            </label>
-            <div>
-              <div style={{ fontSize: '30px' }}>
-                {EMOJI[diaryInfo.moodValue]}
-              </div>
-              <div>오늘의 기분</div>
-              <input
-                type="range"
-                name="todayMood"
-                min="1"
-                max="9"
-                list="values"
-                value={diaryInfo.moodValue}
-                onChange={handleMoodChange}
-              />
-              <datalist id="values">
-                <option value="0" label="0"></option>
-                <option value="2" label="2"></option>
-                <option value="4" label="4"></option>
-                <option value="6" label="6"></option>
-                <option value="8" label="8"></option>
-                <option value="10" label="10"></option>
-              </datalist>
-            </div>
-          </article>
-        </section>
-        {image.imageURL ? (
-          <>
-            <img src={image.imageURL} alt="image file" />
-            <button onClick={removeImage}>삭제</button>
-          </>
-        ) : null}
+          </SaveWrapTime>
+          <SaveBtnContainer>
+            <SavePrevBtn>
+              <SavePrevBtnText>임시저장(Ctrl+S)</SavePrevBtnText>
+            </SavePrevBtn>
+            <SaveBtn>
+              <SaveBtnText>저장하기</SaveBtnText>
+              <Publish />
+            </SaveBtn>
+          </SaveBtnContainer>
+        </SaveWrap>
+        <DiaryModeSelector>
+          <DailyQuestionBox>
+            <input type="radio" />
+            <ModeBoxContainer>
+              <DiaryModeSelectorText>오늘의 질문에 대해</DiaryModeSelectorText>
+              <DiaryModeSelectorSubText>
+                오늘의 질문을 주제로 한 일기를 작성해보세요
+              </DiaryModeSelectorSubText>
+            </ModeBoxContainer>
+          </DailyQuestionBox>
+          <CustomEntryBox>
+            <input type="radio" />
+            <ModeBoxContainer>
+              <DiaryModeSelectorText>나만의 일기</DiaryModeSelectorText>
+              <DiaryModeSelectorSubText>
+                나의 오늘 하루에 대해 자유롭게 작성해보세요
+              </DiaryModeSelectorSubText>
+            </ModeBoxContainer>
+          </CustomEntryBox>
+        </DiaryModeSelector>
+        <Divider>
+          <DividerLine />
+        </Divider>
+        <ImageLayout>
+          <ImageContainer>
+            {image.imageURL ? (
+              <>
+                <Image>
+                  <img src={image.imageURL} alt="image file" />
+                </Image>
+                <ImageName>{imageInfo.name}</ImageName>
+                <ImageData>{imageInfo.size} KB</ImageData>
+                <button onClick={removeImage}>
+                  <ImageDelete>
+                    <Close />
+                  </ImageDelete>
+                </button>
+              </>
+            ) : null}
+          </ImageContainer>
+        </ImageLayout>
         <QuillEditor
           onContentChange={content => setDiaryField({ quillContent: content })}
           quillContent={diaryInfo.quillContent}
           setImage={setImage}
           setFile={setFile}
+          handleImageChange={handleImageChange} // 이미지 선택 시 정보 업데이트
         />
-        <section>
-          <article>
-            <input
-              type="text"
-              value={hashtag}
-              onChange={onChangeHashtag}
-              onKeyUp={addHashtag}
-              placeholder={hashtag ? '' : '#해시태그'}
-            />
-            <Button
-              text="저장"
-              width="120px"
-              defaultColor="#2d2d2d"
-              hoverColor="#FFF"
-              defaultBgColor="#FFFFFF"
-              hoverBgColor="#111111"
-              border="1px solid #bfbfbf"
-              onClick={handleSave}
-            />
-          </article>
-          <div>
-            {diaryInfo.hashArr.map((tag, index) => (
-              <span key={index}>
-                {tag}
-                <button onClick={() => removeHashtag(index)}>X</button>
-              </span>
-            ))}
-          </div>
-        </section>
-      </main>
-    </Container>
+        <div>
+          <div style={{ fontSize: '30px' }}>{EMOJI[diaryInfo.moodValue]}</div>
+          <div>오늘의 기분</div>
+          <input
+            type="range"
+            name="todayMood"
+            min="1"
+            max="9"
+            list="values"
+            value={diaryInfo.moodValue}
+            onChange={handleMoodChange}
+          />
+          <datalist id="values">
+            <option value="0" label="0"></option>
+            <option value="2" label="2"></option>
+            <option value="4" label="4"></option>
+            <option value="6" label="6"></option>
+            <option value="8" label="8"></option>
+            <option value="10" label="10"></option>
+          </datalist>
+        </div>
+        <input
+          type="radio"
+          value="private"
+          checked={diaryInfo.isPrivate}
+          onChange={handlePrivateChange}
+        />
+        비공개
+        <input
+          type="radio"
+          value="public"
+          checked={!diaryInfo.isPrivate}
+          onChange={handlePublicChange}
+        />
+        공개
+        <input
+          type="text"
+          value={hashtag}
+          onChange={onChangeHashtag}
+          onKeyUp={addHashtag}
+          placeholder={hashtag ? '' : '#해시태그'}
+        />
+        <Button
+          text="저장"
+          width="120px"
+          defaultColor="#2d2d2d"
+          hoverColor="#FFF"
+          defaultBgColor="#FFFFFF"
+          hoverBgColor="#111111"
+          border="1px solid #bfbfbf"
+          onClick={handleSave}
+        />
+        <div>
+          {diaryInfo.hashArr.map((tag, index) => (
+            <span key={index}>
+              {tag}
+              <button onClick={() => removeHashtag(index)}>X</button>
+            </span>
+          ))}
+        </div>
+      </Container>
+    </>
   );
 };
 
 export default CreateDiary;
+
+const Container = styled.div`
+  display: flex;
+  margin: 0 auto;
+  max-width: var(--vw-desktop-min, 60rem);
+  padding: var(--gap-xl, 1.5rem) var(--gap-9xl, 8.5rem) var(--gap-4xl, 3rem)
+    var(--gap-9xl, 8.5rem);
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--gap-lg, 1.25rem);
+  flex: 1 0 0;
+  align-self: stretch;
+
+  border-radius: var(--radius-empty, 0rem);
+  border-top: var(--stroke-empty, 0px) solid
+    ${semantic.light.border.transparent.alternative};
+  border-right: var(--stroke-thin, 1px) solid
+    ${semantic.light.border.transparent.alternative};
+  border-bottom: var(--stroke-empty, 0px) solid
+    ${semantic.light.border.transparent.alternative};
+  border-left: var(--stroke-thin, 1px) solid
+    ${semantic.light.border.transparent.alternative};
+  opacity: var(--opacity-visible, 1);
+  background: ${semantic.light.bg.solid.subtlest};
+`;
+
+const SaveWrap = styled.div`
+  display: flex;
+  padding: var(--gap-empty, 0rem);
+  align-items: center;
+  gap: var(--gap-xl, 1.5rem);
+  align-self: stretch;
+
+  border-radius: var(--radius-empty, 0rem);
+  opacity: var(--opacity-visible, 1);
+`;
+
+const SaveWrapContainer = styled.div`
+  display: flex;
+  padding: var(--gap-empty, 0rem);
+  align-items: center;
+  gap: var(--gap-2xs, 0.5rem);
+
+  border-radius: var(--radius-empty, 0rem);
+  opacity: var(--opacity-visible, 1);
+`;
+
+const SaveWrapText = styled.p`
+  color: ${semantic.light.object.transparent.neutral};
+
+  ${TYPO.title1};
+
+  opacity: var(--opacity-visible, 1);
+`;
+
+const SaveWrapTime = styled.p`
+  flex: 1 0 0;
+
+  color: ${semantic.light.object.transparent.alternative};
+
+  ${TYPO.label1}
+`;
+
+const SaveBtnContainer = styled.div`
+  display: flex;
+  padding: var(--gap-empty, 0rem);
+  align-items: center;
+  gap: var(--gap-md, 1rem);
+
+  border-radius: var(--radius-empty, 0rem);
+  opacity: var(--opacity-visible, 1);
+`;
+
+const SavePrevBtn = styled.button`
+  display: flex;
+  padding: var(--gap-xs, 0.625rem) var(--gap-md, 1rem);
+  justify-content: center;
+  align-items: center;
+  gap: var(--gap-2xs, 0.5rem);
+
+  border-radius: var(--radius-xs, 0.5rem);
+  border: var(--stroke-thin, 1px) solid
+    ${semantic.light.border.transparent.alternative};
+  opacity: var(--opacity-visible, 1);
+  background: ${semantic.light.bg.solid.normal};
+`;
+
+const SavePrevBtnText = styled.p`
+  color: ${semantic.light.object.transparent.alternative};
+  text-align: center;
+
+  ${TYPO.label2}
+`;
+
+const SaveBtn = styled.button`
+  display: flex;
+  padding: var(--gap-xs, 0.625rem) var(--gap-md, 1rem);
+  justify-content: center;
+  align-items: center;
+  gap: var(--gap-2xs, 0.5rem);
+
+  border-radius: var(--radius-xs, 0.5rem);
+  opacity: var(--opacity-visible, 1);
+  background: ${semantic.light.interactive.solid.disabled};
+`;
+
+const SaveBtnText = styled.p`
+  color: ${semantic.light.object.transparent.disabled};
+  text-align: center;
+
+  ${TYPO.label2}
+`;
+
+const DiaryModeSelector = styled.div`
+  display: flex;
+  padding: var(--gap-empty, 0rem);
+  align-items: center;
+  gap: var(--gap-md, 1rem);
+  align-self: stretch;
+
+  border-radius: var(--radius-empty, 0rem);
+  opacity: var(--opacity-visible, 1);
+`;
+
+const ModeBoxContainer = styled.div`
+  display: flex;
+  padding: var(--gap-empty, 0rem);
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--gap-4xs, 0.25rem);
+  flex: 1 0 0;
+
+  border-radius: var(--radius-empty, 0rem);
+  opacity: var(--opacity-visible, 1);
+`;
+
+const DiaryModeSelectorText = styled.p`
+  align-self: stretch;
+
+  color: ${semantic.light.object.transparent.neutral};
+
+  ${TYPO.label2}
+`;
+
+const DiaryModeSelectorSubText = styled.p`
+  align-self: stretch;
+
+  color: ${semantic.light.object.transparent.alternative};
+
+  ${TYPO.caption1}
+`;
+
+const DailyQuestionBox = styled.div`
+  display: flex;
+  padding: var(--gap-md, 1rem) var(--gap-lg, 1.25rem);
+  align-items: center;
+  gap: var(--gap-lg, 1.25rem);
+  flex: 1 0 0;
+
+  border-radius: var(--radius-sm, 0.75rem);
+  border: var(--stroke-thin, 1px) solid ${semantic.light.accent.solid.hero};
+  opacity: var(--opacity-visible, 1);
+  background: ${semantic.light.accent.transparent.alternative};
+`;
+
+const CustomEntryBox = styled.div`
+  display: flex;
+  padding: var(--gap-md, 1rem) var(--gap-lg, 1.25rem);
+  align-items: center;
+  gap: var(--gap-lg, 1.25rem);
+  flex: 1 0 0;
+
+  border-radius: var(--radius-sm, 0.75rem);
+  border: var(--stroke-thin, 1px) solid
+    ${semantic.light.border.transparent.alternative};
+  opacity: var(--opacity-visible, 1);
+  background: ${semantic.light.bg.solid.normal};
+`;
+
+const Divider = styled.span`
+  display: flex;
+  height: 0rem;
+  justify-content: center;
+  align-items: center;
+  align-self: stretch;
+`;
+
+const DividerLine = styled.span`
+  width: 43rem;
+  height: 0.0625rem;
+
+  opacity: var(--opacity-visible, 1);
+  background: ${semantic.light.border.transparent.alternative};
+`;
+
+const ImageLayout = styled.div`
+  display: flex;
+  padding: var(--gap-empty, 0rem) var(--gap-4xs, 0.25rem);
+  align-items: center;
+  gap: var(--gap-md, 1rem);
+  align-self: stretch;
+`;
+
+const ImageContainer = styled.div`
+  display: flex;
+  align-items: center;
+  gap: var(--gap-2xs, 0.5rem);
+`;
+
+const Image = styled.div`
+  width: 1.25rem;
+  height: 1.25rem;
+
+  background: url(<path-to-image>) lightgray 50% / cover no-repeat;
+`;
+
+const ImageName = styled.p`
+  color: ${semantic.light.object.transparent.neutral};
+
+  ${TYPO.caption1}
+`;
+
+const ImageData = styled.p`
+  color: ${semantic.light.object.transparent.assistive};
+
+  ${TYPO.caption1}
+`;
+
+const ImageDelete = styled.div`
+  display: flex;
+  padding: var(--gap-4xs, 0.25rem);
+  justify-content: center;
+  align-items: center;
+  gap: var(--gap-md, 1rem);
+
+  border-radius: var(--radius-2xs, 0.25rem);
+`;

@@ -7,6 +7,7 @@ import { CONSOLE_ERROR } from '@constants/message';
 
 type QuillEditorProps = {
   onContentChange: (content: string) => void;
+  handleImageChange: (file: File) => void;
   quillContent: string;
   setImage: React.Dispatch<React.SetStateAction<DiaryImage>>;
   setFile: React.Dispatch<React.SetStateAction<FormData | undefined>>;
@@ -21,6 +22,7 @@ const QuillEditor = ({
   quillContent,
   setImage,
   setFile,
+  handleImageChange,
 }: QuillEditorProps) => {
   const handleChange = (
     content: string,
@@ -46,6 +48,8 @@ const QuillEditor = ({
         const formData = new FormData();
         formData.append('image', file);
         setFile(formData);
+
+        handleImageChange(file);
 
         const reader = new FileReader();
         reader.readAsDataURL(file);
@@ -111,11 +115,9 @@ const QuillEditor = ({
 
   return (
     <>
-      <h4>{todayQuestion ? todayQuestion : 'Loading...'}</h4>
-      <br></br>
       <ReactQuill
         theme="snow"
-        placeholder={todayQuestion ? todayQuestion : '일기를 작성 해보세요!'}
+        placeholder={todayQuestion ? todayQuestion : 'todayQuestion Loading...'}
         modules={modules}
         formats={formats}
         onChange={handleChange}
