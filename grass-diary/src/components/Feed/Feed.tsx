@@ -1,39 +1,28 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import { NormalLike } from '@components/index';
+
 import { useWriterProfile } from '@hooks/api/useWriterProfile';
 import { semantic } from '@styles/semantic';
-import { ReactComponent as Comment } from '@svg/comment.svg';
+import { ReactComponent as CommentIcon } from '@svg/comment.svg';
 import { TYPO } from '@styles/typo';
 import EMOJI from '@constants/emoji';
+import { ReactComponent as Favorite } from '@svg/favorite.svg';
+
 interface IFeedProps {
-  likeCount: number;
-  link: string;
-  createdAt: string;
-  content: string;
-  name: string;
-  memberId: Id;
-  transparency: number;
+  feed: Feed;
+  isTop: boolean;
 }
 
-const Feed = ({
-  likeCount,
-  link,
-  createdAt,
-  content,
-  name,
-  memberId,
-  transparency,
-}: IFeedProps) => {
-  const { data: writer } = useWriterProfile(memberId);
+const Feed = ({ feed, isTop }: IFeedProps) => {
+  const { data: writer } = useWriterProfile(feed.memberId);
 
   const title =
-    `${createdAt.slice(2, 4)}년 ` +
-    `${createdAt.slice(5, 7)}월 ` +
-    `${createdAt.slice(8, 10)}일`;
+    `${feed.createdAt.slice(2, 4)}년 ` +
+    `${feed.createdAt.slice(5, 7)}월 ` +
+    `${feed.createdAt.slice(8, 10)}일`;
 
-  const time = createdAt.slice(11, 16);
-  const mood = EMOJI[transparency * 10];
+  const time = feed.createdAt.slice(11, 16);
+  const mood = EMOJI[feed.transparency * 10];
 
   const extractTextFromHTML = (htmlString: string) => {
     const parser = new DOMParser();
@@ -42,53 +31,58 @@ const Feed = ({
     return doc.body.textContent || '';
   };
 
-  const textWithoutTags = () => {
-    if (content && content.length > 210) {
-      return `${extractTextFromHTML(content).slice(0, 210)}...`;
-    }
-    return extractTextFromHTML(content);
-  };
-
   return (
     <>
-      <Link to={link}>
-        <CardContainer>
-          <CardHeaderSection>
-            <CardUserImg>
-              <img
-                src={writer?.profileImageURL}
-                style={{ borderRadius: '40px' }}
-              ></img>
-            </CardUserImg>
-            <CardHeaderWrap>
-              <CardHeaderDate>{title}</CardHeaderDate>
-              <CardNameWrap>
-                {name}
-                <CardTime>{time}</CardTime>
-              </CardNameWrap>
-            </CardHeaderWrap>
-            <CardEmojiContainer>{mood}</CardEmojiContainer>
-          </CardHeaderSection>
-          <CardContent>{textWithoutTags()}</CardContent>
-          <CardFooterSection>
-            <Comment /> 0
-            <NormalLike likeCount={likeCount} justifyContent={'flex-end'} />
-          </CardFooterSection>
-        </CardContainer>
-      </Link>
+      <CardContainer $isTop={isTop}>
+        <CardHeaderSection>
+          <CardUserImg src={writer?.profileImageURL} />
+          <CardHeaderWrap>
+            <CardHeaderDate>{title}</CardHeaderDate>
+            <CardNameWrap>
+              {feed.nickname}
+              <CardTime>{time}</CardTime>
+            </CardNameWrap>
+          </CardHeaderWrap>
+          <CardEmojiContainer>{mood}</CardEmojiContainer>
+        </CardHeaderSection>
+
+        <ContentWrap>
+          <Link to={`/diary/${feed.diaryId}`}>
+            {/* <ImageContent $isTop={isTop} /> */}
+            <CardContent $isTop={isTop}>
+              {extractTextFromHTML(feed.content)}
+            </CardContent>
+          </Link>
+        </ContentWrap>
+
+        <CardFooterSection>
+          <IconWrap>
+            <CommentIcon />
+            {feed.commentCount}
+          </IconWrap>
+          <IconWrap>
+            <Favorite
+              width={22}
+              height={22}
+              fill={semantic.light.object.transparent.assistive}
+            />
+            {feed.diaryLikeCount}
+          </IconWrap>
+        </CardFooterSection>
+      </CardContainer>
     </>
   );
 };
 
 export default Feed;
 
-const CardContainer = styled.div`
-  width: 17.6875rem;
-  height: 28.75rem;
+const CardContainer = styled.li<{ $isTop: boolean }>`
   display: flex;
-  flex-direction: column;
   padding: var(--gap-md, 1rem);
+  flex-direction: column;
+  align-items: flex-start;
   gap: var(--gap-xl, 1.5rem);
+  width: ${props => (props.$isTop ? `17.7rem` : `27.75rem`)};
 
   border-radius: var(--radius-md, 1rem);
   border: var(--stroke-thin, 0.0625rem) solid
@@ -105,10 +99,13 @@ const CardHeaderSection = styled.div`
   align-self: stretch;
 `;
 
-const CardUserImg = styled.div`
+const CardUserImg = styled.img`
   width: 2.5rem;
   height: 2.5rem;
-  flex-shrink: 0;
+
+  border-radius: var(--radius-empty, 2.5rem);
+  background: ${semantic.light.fill.transparent.alternative};
+  object-fit: cover;
 `;
 
 const CardHeaderWrap = styled.div`
@@ -136,11 +133,14 @@ const CardNameWrap = styled.div`
   display: flex;
   align-items: center;
   gap: var(--gap-2xs, 0.5rem);
+
+  color: ${semantic.light.object.transparent.neutral};
+  ${TYPO.label1}
 `;
 
 const CardEmojiContainer = styled.div`
   display: flex;
-  padding: var(--gap-5xs, 0rem 0.313rem 0rem 0.313rem);
+  padding: var(--gap-5xs, 0.125rem);
   flex-direction: column;
   justify-content: center;
   align-items: center;
@@ -159,7 +159,43 @@ const CardFooterSection = styled.div`
   width: 100%;
 `;
 
-const CardContent = styled.div`
+const CardContent = styled.div<{ $isTop: boolean }>`
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+
+  // 이미지 있을 경우
+  // -webkit-line-clamp: 3;
+  // min-height: 5.25rem;
+
+  // 이미지 없을 경우
+  -webkit-line-clamp: 10;
+  min-height: ${props => (props.$isTop ? `17.75rem` : `27.75rem`)};
+
+  overflow: hidden;
+  color: ${semantic.light.object.solid.normal};
+  text-overflow: ellipsis;
+
+  ${TYPO.body2}
+`;
+
+const ImageContent = styled.div<{ $isTop: boolean }>`
+  height: ${props => (props.$isTop ? `12.5rem` : `22.5rem`)};
+
+  border-radius: var(--radius-sm, 0.75rem);
+  margin-bottom: 1rem;
+  object-fit: cover;
+`;
+
+const ContentWrap = styled.div`
   flex: 1;
-  overflow-y: auto;
+  align-self: stretch;
+`;
+
+const IconWrap = styled.div`
+  display: flex;
+  padding: var(--gap-5xs, 0.125rem) var(--gap-empty, 0rem);
+  align-items: center;
+  gap: var(--gap-2xs, 0.5rem);
+  color: ${semantic.light.object.transparent.assistive};
+  ${TYPO.label3}
 `;

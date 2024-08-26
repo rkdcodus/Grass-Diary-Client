@@ -6,4 +6,5 @@ interface Feed {
   content: string;
   diaryLikeCount: number;
   transparency: number;
+  commentCount: number;
 }

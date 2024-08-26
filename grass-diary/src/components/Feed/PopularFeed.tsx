@@ -23,16 +23,7 @@ const PopularFeed = () => {
   };
 
   const feedList = top10?.map(data => (
-    <Feed
-      key={data.diaryId}
-      likeCount={data.diaryLikeCount}
-      link={`/diary/${data.diaryId}`}
-      createdAt={data.createdAt}
-      content={data.content}
-      name={data.nickname}
-      memberId={data.memberId}
-      transparency={data.transparency}
-    />
+    <Feed key={data.diaryId} feed={data} isTop={true} />
   ));
 
   return (
@@ -44,7 +35,7 @@ const PopularFeed = () => {
             <Slider {...settings}>{feedList}</Slider>
           ) : (
             <div
-              style={{ display: 'flex', justifyContent: 'center', gap: '3rem' }}
+              style={{ display: 'flex', justifyContent: 'center', gap: '1rem' }}
             >
               {feedList}
             </div>
@@ -58,7 +49,7 @@ const PopularFeed = () => {
 
 export default PopularFeed;
 
-const RankContainer = styled.div`
+const RankContainer = styled.section`
   display: flex;
   padding: var(--gap-4xl, 3rem) var(--gap-xl, 1.5rem);
   flex-direction: column;
