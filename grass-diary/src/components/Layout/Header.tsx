@@ -16,39 +16,37 @@ const Header = () => {
   const memberId = useUser();
 
   return (
-    <div>
-      <NavBar>
-        <ContentWrap>
-          <LogoContainer>
-            <Link to="/main">
-              <Logo>
-                <LogoImg />
-                <LogoStr />
-              </Logo>
-            </Link>
-          </LogoContainer>
-          {memberId ? (
-            <RightContent>
-              <Profile width="2rem" height="2rem" />
-              <IconBtn>
-                <MenuBar />
-              </IconBtn>
-            </RightContent>
-          ) : (
-            <div>
-              <ButtonWrapper>
-                <Interaction1
-                  onClick={() => console.log('로그인')}
-                  topRadius={8}
-                  bottomRadius={8}
-                />
-                <LoginBtn>로그인</LoginBtn>
-              </ButtonWrapper>
-            </div>
-          )}
-        </ContentWrap>
-      </NavBar>
-    </div>
+    <NavBar>
+      <ContentWrap>
+        <LogoContainer>
+          <Link to="/main">
+            <Logo>
+              <LogoImg />
+              <LogoStr />
+            </Logo>
+          </Link>
+        </LogoContainer>
+        {memberId ? (
+          <RightContent>
+            <Profile width="2rem" height="2rem" />
+            <IconBtn>
+              <MenuBar />
+            </IconBtn>
+          </RightContent>
+        ) : (
+          <div>
+            <ButtonWrapper>
+              <Interaction1
+                onClick={() => console.log('로그인')}
+                topRadius={8}
+                bottomRadius={8}
+              />
+              <LoginBtn>로그인</LoginBtn>
+            </ButtonWrapper>
+          </div>
+        )}
+      </ContentWrap>
+    </NavBar>
   );
 };
 
