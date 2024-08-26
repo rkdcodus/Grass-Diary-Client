@@ -1,8 +1,10 @@
-import { useState, useEffect, useMemo } from 'react';
+import styled from 'styled-components';
 import API from '@services/index';
-import { END_POINT } from '@constants/api';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
+import { semantic } from '@styles/semantic';
+import { useState, useEffect, useMemo } from 'react';
+import { END_POINT } from '@constants/api';
 import { CONSOLE_ERROR } from '@constants/message';
 
 type QuillEditorProps = {
@@ -114,18 +116,27 @@ const QuillEditor = ({
   }, []);
 
   return (
-    <>
-      <ReactQuill
-        theme="snow"
-        placeholder={todayQuestion ? todayQuestion : 'todayQuestion Loading...'}
-        modules={modules}
-        formats={formats}
-        onChange={handleChange}
-        value={quillContent}
-        style={{ height: '70vh' }}
-      />
-    </>
+    <ReactQuill
+      theme="snow"
+      placeholder={todayQuestion ? todayQuestion : 'todayQuestion Loading...'}
+      modules={modules}
+      formats={formats}
+      onChange={handleChange}
+      value={quillContent}
+    />
   );
 };
 
 export default QuillEditor;
+
+const QuillWrap = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  flex: 1 0 0;
+  align-self: stretch;
+
+  border-radius: var(--radius-sm, 0.75rem);
+  border: var(--stroke-thin, 1px) solid
+    ${semantic.light.border.transparent.alternative};
+`;

@@ -203,7 +203,7 @@ const CreateDiary = () => {
   return (
     <>
       <Header />
-      <Container>
+      <Layout>
         <SaveWrap>
           <SaveWrapContainer>
             <BackButton goBackTo={'/main'} />
@@ -263,81 +263,86 @@ const CreateDiary = () => {
             ) : null}
           </ImageContainer>
         </ImageLayout>
-        <QuillEditor
-          onContentChange={content => setDiaryField({ quillContent: content })}
-          quillContent={diaryInfo.quillContent}
-          setImage={setImage}
-          setFile={setFile}
-          handleImageChange={handleImageChange} // 이미지 선택 시 정보 업데이트
-        />
-        <div>
-          <div style={{ fontSize: '30px' }}>{EMOJI[diaryInfo.moodValue]}</div>
-          <div>오늘의 기분</div>
-          <input
-            type="range"
-            name="todayMood"
-            min="1"
-            max="9"
-            list="values"
-            value={diaryInfo.moodValue}
-            onChange={handleMoodChange}
+        <MainContainer>
+          <QuillEditor
+            onContentChange={content =>
+              setDiaryField({ quillContent: content })
+            }
+            quillContent={diaryInfo.quillContent}
+            setImage={setImage}
+            setFile={setFile}
+            handleImageChange={handleImageChange}
           />
-          <datalist id="values">
-            <option value="0" label="0"></option>
-            <option value="2" label="2"></option>
-            <option value="4" label="4"></option>
-            <option value="6" label="6"></option>
-            <option value="8" label="8"></option>
-            <option value="10" label="10"></option>
-          </datalist>
-        </div>
+        </MainContainer>
+      </Layout>
+      <div>
+        <div style={{ fontSize: '30px' }}>{EMOJI[diaryInfo.moodValue]}</div>
+        <div>오늘의 기분</div>
         <input
-          type="radio"
-          value="private"
-          checked={diaryInfo.isPrivate}
-          onChange={handlePrivateChange}
+          type="range"
+          name="todayMood"
+          min="1"
+          max="9"
+          list="values"
+          value={diaryInfo.moodValue}
+          onChange={handleMoodChange}
         />
-        비공개
-        <input
-          type="radio"
-          value="public"
-          checked={!diaryInfo.isPrivate}
-          onChange={handlePublicChange}
-        />
-        공개
-        <input
-          type="text"
-          value={hashtag}
-          onChange={onChangeHashtag}
-          onKeyUp={addHashtag}
-          placeholder={hashtag ? '' : '#해시태그'}
-        />
-        <Button
-          text="저장"
-          width="120px"
-          defaultColor="#2d2d2d"
-          hoverColor="#FFF"
-          defaultBgColor="#FFFFFF"
-          hoverBgColor="#111111"
-          border="1px solid #bfbfbf"
-          onClick={handleSave}
-        />
-        <div>
-          {diaryInfo.hashArr.map((tag, index) => (
-            <span key={index}>
-              {tag}
-              <button onClick={() => removeHashtag(index)}>X</button>
-            </span>
-          ))}
-        </div>
-      </Container>
+
+        <datalist id="values">
+          <option value="0" label="0"></option>
+          <option value="2" label="2"></option>
+          <option value="4" label="4"></option>
+          <option value="6" label="6"></option>
+          <option value="8" label="8"></option>
+          <option value="10" label="10"></option>
+        </datalist>
+      </div>
+      <input
+        type="radio"
+        value="private"
+        checked={diaryInfo.isPrivate}
+        onChange={handlePrivateChange}
+      />
+      비공개
+      <input
+        type="radio"
+        value="public"
+        checked={!diaryInfo.isPrivate}
+        onChange={handlePublicChange}
+      />
+      공개
+      <input
+        type="text"
+        value={hashtag}
+        onChange={onChangeHashtag}
+        onKeyUp={addHashtag}
+        placeholder={hashtag ? '' : '#해시태그'}
+      />
+      <Button
+        text="저장"
+        width="120px"
+        defaultColor="#2d2d2d"
+        hoverColor="#FFF"
+        defaultBgColor="#FFFFFF"
+        hoverBgColor="#111111"
+        border="1px solid #bfbfbf"
+        onClick={handleSave}
+      />
+      <div>
+        {diaryInfo.hashArr.map((tag, index) => (
+          <span key={index}>
+            {tag}
+            <button onClick={() => removeHashtag(index)}>X</button>
+          </span>
+        ))}
+      </div>
     </>
   );
 };
 
 export default CreateDiary;
 
-const Container = styled.div`
+const Layout = styled.div`
   display: flex;
   margin: 0 auto;
   max-width: var(--vw-desktop-min, 60rem);
@@ -572,4 +577,13 @@ const ImageDelete = styled.div`
   gap: var(--gap-md, 1rem);
 
   border-radius: var(--radius-2xs, 0.25rem);
+`;
+
+const MainContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--gap-md, 1rem);
+  flex: 1 0 0;
+  align-self: stretch;
 `;
