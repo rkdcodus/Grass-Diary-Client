@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { ReactComponent as LeftArrow } from '@svg/chevron_left.svg';
+import { semantic } from '@styles/semantic';
 
 interface IBackButtonProps {
   goBackTo?: string;
@@ -24,5 +25,8 @@ const BackButton = ({ goBackTo }: IBackButtonProps) => {
 export default BackButton;
 
 const ArrowButton = styled(LeftArrow)`
+  width: 24px;
+  height: 24px;
+  fill: ${semantic.light.object.transparent.neutral};
   cursor: pointer;
 `;

@@ -32,7 +32,7 @@ const Feed = ({ feed, isTop }: IFeedProps) => {
   };
 
   return (
-    <>
+    <FeedWrap>
       <CardContainer $isTop={isTop}>
         <CardHeaderSection>
           <CardUserImg src={writer?.profileImageURL} />
@@ -70,11 +70,17 @@ const Feed = ({ feed, isTop }: IFeedProps) => {
           </IconWrap>
         </CardFooterSection>
       </CardContainer>
-    </>
+    </FeedWrap>
   );
 };
 
 export default Feed;
+
+const FeedWrap = styled.div`
+  display: flex;
+  justify-content: center;
+  margin-bottom: 4px;
+`;
 
 const CardContainer = styled.li<{ $isTop: boolean }>`
   display: flex;
@@ -88,8 +94,8 @@ const CardContainer = styled.li<{ $isTop: boolean }>`
   border: var(--stroke-thin, 0.0625rem) solid
     ${semantic.light.border.transparent.assistive};
   background: ${semantic.light.bg.solid.normal};
-  box-shadow: 0rem 0rem 0.0625rem 0rem rgba(0, 0, 0, 0.04),
-    0rem 0.125rem 0rem 0rem rgba(0, 0, 0, 0.08);
+  box-shadow: 0px 0px 1px 0px rgba(0, 0, 0, 0.04),
+    0px 2px 4px 0px rgba(0, 0, 0, 0.08);
 `;
 
 const CardHeaderSection = styled.div`

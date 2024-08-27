@@ -49,7 +49,11 @@ const BottomSection = () => {
                 <ThemeMarketText onClick={modal}>
                   {MAIN_MESSAGES.bottom_section.theme_store}
                 </ThemeMarketText>
-                <Arrow></Arrow>
+                <Arrow
+                  width={18}
+                  height={18}
+                  fill={semantic.light.accent.solid.hero}
+                ></Arrow>
               </ThemeMarketBtn>
             </Wrap>
           </Card>
@@ -74,12 +78,6 @@ const BottomSection = () => {
           </Card>
         </Container>
       </Section>
-      <Link to="/share" onClick={handleClick}>
-        <SeeMoreContainer>
-          <SeeMoreBtn>{MAIN_MESSAGES.bottom_section.see_more}</SeeMoreBtn>
-          <ArrowBlack></ArrowBlack>
-        </SeeMoreContainer>
-      </Link>
     </>
   );
 };
@@ -206,23 +204,6 @@ const RetrospectBtn = styled.button`
 `;
 
 const RetrospectText = styled.p`
-  text-align: center;
-
-  ${TYPO.label2}
-`;
-
-const SeeMoreContainer = styled.div`
-  display: flex;
-  padding: var(--gap-4xs, 0.25rem) var(--gap-2xs, 0.5rem);
-  justify-content: center;
-  align-items: center;
-  gap: var(--gap-2xs, 0.5rem);
-
-  border-radius: var(--radius-xs, 0.5rem);
-`;
-
-const SeeMoreBtn = styled.p`
-  color: ${semantic.light.object.transparent.alternative};
   text-align: center;
 
   ${TYPO.label2}
