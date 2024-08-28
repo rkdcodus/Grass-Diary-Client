@@ -16,6 +16,9 @@ import { useUser } from '@state/user/useUser';
 import { TYPO } from '@styles/typo';
 import { ReactComponent as Publish } from '@svg/publish.svg';
 import { ReactComponent as Close } from '@svg/close.svg';
+import { ReactComponent as Tag } from '@svg/tag.svg';
+import { ReactComponent as Lock } from '@svg/lock.svg';
+import { ReactComponent as LockOpen } from '@svg/lock_open.svg';
 
 const CreateDiary = () => {
   const navigate = useNavigate();
@@ -274,6 +277,57 @@ const CreateDiary = () => {
             handleImageChange={handleImageChange}
           />
         </MainContainer>
+        <HashtagContainer>
+          <HashtagTitleBox>
+            <HashtagTitle>해시태그</HashtagTitle>
+          </HashtagTitleBox>
+          <HashtagBox>
+            <HashtagContent>
+              <Tag />
+              <HashtagPlaceholder>일상, 친구, 점심 등</HashtagPlaceholder>
+            </HashtagContent>
+          </HashtagBox>
+          <CaptionBox>
+            <CaptionText>
+              태그명을 입력하고, 스페이스바를 누르면 저장돼요
+            </CaptionText>
+          </CaptionBox>
+        </HashtagContainer>
+        <SelectableContainer>
+          <SelectablePublicBox>
+            <SelectablePublicText>일기 공개 여부</SelectablePublicText>
+            <SelectableSection>
+              <RadioBox>
+                <RadioBtn>
+                  <input
+                    id="radio-btn-public"
+                    type="radio"
+                    value="public"
+                    checked={!diaryInfo.isPrivate}
+                    onChange={handlePublicChange}
+                  />
+                  <label htmlFor="radio-btn-public"></label>
+                </RadioBtn>
+                <LockOpen />
+                <RadioText>공개</RadioText>
+              </RadioBox>
+              <RadioBox>
+                <RadioBtn>
+                  <input
+                    id="radio-btn-private"
+                    type="radio"
+                    value="private"
+                    checked={diaryInfo.isPrivate}
+                    onChange={handlePrivateChange}
+                  />
+                  <label htmlFor="radio-btn-private"></label>
+                </RadioBtn>
+                <Lock />
+                <RadioText>비공개</RadioText>
+              </RadioBox>
+            </SelectableSection>
+          </SelectablePublicBox>
+        </SelectableContainer>
       </Layout>
       <div>
         <div style={{ fontSize: '30px' }}>{EMOJI[diaryInfo.moodValue]}</div>
@@ -297,20 +351,7 @@ const CreateDiary = () => {
           <option value="10" label="10"></option>
         </datalist>
       </div>
-      <input
-        type="radio"
-        value="private"
-        checked={diaryInfo.isPrivate}
-        onChange={handlePrivateChange}
-      />
-      비공개
-      <input
-        type="radio"
-        value="public"
-        checked={!diaryInfo.isPrivate}
-        onChange={handlePublicChange}
-      />
-      공개
+
       <input
         type="text"
         value={hashtag}
@@ -586,4 +627,136 @@ const MainContainer = styled.div`
   gap: var(--gap-md, 1rem);
   flex: 1 0 0;
   align-self: stretch;
+`;
+
+const HashtagContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding-top: 2.5rem;
+  align-items: flex-start;
+  gap: var(--gap-2xs, 0.5rem);
+  align-self: stretch;
+`;
+
+const HashtagTitleBox = styled.div`
+  display: flex;
+  padding: var(--gap-empty, 0rem) var(--gap-4xs, 0.25rem);
+  align-items: flex-start;
+  align-self: stretch;
+`;
+
+const HashtagTitle = styled.p`
+  color: ${semantic.light.object.transparent.alternative};
+
+  ${TYPO.label1}
+`;
+
+const HashtagBox = styled.div`
+  display: flex;
+  padding: var(--gap-xs, 0.625rem) var(--gap-md, 1rem);
+  align-items: center;
+  gap: var(--gap-sm, 0.75rem);
+  align-self: stretch;
+
+  border-radius: var(--radius-xs, 0.5rem);
+  border: var(--stroke-thin, 1px) solid
+    ${semantic.light.border.transparent.alternative};
+  background: ${semantic.light.bg.solid.normal};
+`;
+
+const HashtagContent = styled.div`
+  display: flex;
+  align-items: center;
+  gap: var(--gap-sm, 0.75rem);
+  flex: 1 0 0;
+`;
+
+const HashtagPlaceholder = styled.p`
+  color: ${semantic.light.object.transparent.assistive};
+  ${TYPO.body1}
+`;
+
+const CaptionBox = styled.div`
+  display: flex;
+  padding: var(--gap-empty, 0rem) var(--gap-md, 1rem);
+  align-items: flex-start;
+  align-self: stretch;
+`;
+
+const CaptionText = styled.p`
+  color: ${semantic.light.object.transparent.assistive};
+  ${TYPO.caption1}
+`;
+
+const SelectableContainer = styled.div`
+  display: flex;
+  align-items: center;
+  gap: var(--gap-md, 1rem);
+  align-self: stretch;
+`;
+
+const SelectablePublicBox = styled.div`
+  display: flex;
+  padding: var(--gap-sm, 0.75rem) var(--gap-md, 1rem);
+  align-items: center;
+  gap: var(--gap-lg, 1.25rem);
+
+  border-radius: var(--radius-xs, 0.5rem);
+  border: var(--stroke-thin, 1px) solid
+    ${semantic.light.border.transparent.alternative};
+  background: ${semantic.light.bg.solid.normal};
+`;
+
+const SelectablePublicText = styled.p`
+  color: ${semantic.light.object.transparent.neutral};
+  ${TYPO.label1}
+`;
+
+const SelectableSection = styled.div`
+  display: flex;
+  padding: var(--gap-3xs, 0.375rem) var(--gap-empty, 0rem);
+  align-items: center;
+  gap: var(--gap-lg, 1.25rem);
+`;
+
+const RadioBox = styled.div`
+  display: flex;
+  align-items: center;
+  gap: var(--gap-2xs, 0.5rem);
+`;
+
+const RadioBtn = styled.div`
+  [type='radio'] {
+    display: none;
+  }
+
+  label {
+    display: flex;
+    width: 1.25rem;
+    height: 1.25rem;
+    justify-content: center;
+    align-items: center;
+    border-radius: var(--radius-lg, 1.5rem);
+    border: var(--stroke-thick, 0.125rem) solid
+      ${semantic.light.border.transparent.normal};
+    background: ${semantic.light.fill.transparent.assistive};
+    cursor: pointer;
+    transition: border 0.2s ease-in-out, border-color 0.2s ease-in-out;
+
+    &:hover {
+      box-shadow: 0 0 0 0.2rem lightgray;
+    }
+  }
+
+  [type='radio']:checked + label {
+    background: ${semantic.light.accent.transparent.hero};
+    border: var(--stroke-thicker, 0.25rem) solid
+      ${semantic.light.accent.solid.hero};
+  }
+`;
+
+const RadioText = styled.p`
+  color: ${semantic.light.object.transparent.alternative};
+
+  ${TYPO.label1}
 `;
