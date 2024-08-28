@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import Swal from 'sweetalert2';
 import QuillEditor from '../CreateDiary/QuillEditor';
 
-import { Header, BackButton, Button, Container } from '@components/index';
+import { BackButton, Button, Container } from '@components/index';
 import EMOJI from '@constants/emoji';
 import 'dayjs/locale/ko';
 import { ERROR } from '@constants/message';
@@ -241,9 +241,6 @@ const EditDiary = () => {
 
   return (
     <Container>
-      <header>
-        <Header />
-      </header>
       <main {...stylex.props(CreateDiaryStyle.container)}>
         <BackButton />
         <section {...stylex.props(CreateDiaryStyle.title)}>

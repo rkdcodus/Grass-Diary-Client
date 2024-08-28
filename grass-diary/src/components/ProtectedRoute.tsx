@@ -1,11 +1,12 @@
 import { useAuth } from '@state/auth/useAuth';
-import { Outlet, Navigate } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
+import Layout from './Layout/Layout';
 
 const ProtectedRoute = () => {
   const { isAuthenticated, isLoading } = useAuth();
   if (isLoading) return <div>Loading...</div>;
 
-  return isAuthenticated ? <Outlet /> : <Navigate to="/" />;
+  return isAuthenticated ? <Layout /> : <Navigate to="/" />;
 };
 
 export default ProtectedRoute;

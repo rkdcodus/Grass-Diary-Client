@@ -6,8 +6,8 @@ import { ReactComponent as LogoSVG } from '@svg/logo.svg';
 
 import Interaction1 from '@components/Interactions/Interaction1';
 import ButtonWrapper from '@components/Button/ButtonWrapper';
-import MenuBar from '@components/NavBar/MenuBar';
 import { Profile } from '@components/index';
+import MenuBar from './MenuBar';
 
 import { Link } from 'react-router-dom';
 import { useUser } from '@state/user/useUser';
@@ -55,7 +55,6 @@ const Header = () => {
 export default Header;
 
 const NavBar = styled.header`
-  width: 100vw;
   display: flex;
   padding: var(--gap-xs, 0.625rem) var(--gap-xl, 1.5rem);
   justify-content: center;

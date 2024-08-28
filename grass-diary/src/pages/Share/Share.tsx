@@ -1,12 +1,12 @@
 import stylex from '@stylexjs/stylex';
 import { Fragment, useEffect, useRef } from 'react';
-import { Container, Feed, Header, PopularFeed } from '@components/index';
+import { Feed, PopularFeed } from '@components/index';
 import { useLatestDiaries } from '@hooks/api/useLatestDiaries';
 import { NULL } from '@constants/message';
 
 const styles = stylex.create({
   container: {
-    height: '100vh',
+    minHeight: '100vh',
     margin: 'auto',
     width: {
       default: '1140px',
@@ -90,8 +90,7 @@ const Share = () => {
   }, [latest]);
 
   return (
-    <Container>
-      <Header />
+    <>
       <div {...stylex.props(styles.container)}>
         <section>
           <div {...stylex.props(styles.top10Title)}>🏆 이번 주 TOP 10</div>
@@ -111,7 +110,7 @@ const Share = () => {
           <div ref={target} {...stylex.props(styles.observer)}></div>
         </div>
       </div>
-    </Container>
+    </>
   );
 };
 
