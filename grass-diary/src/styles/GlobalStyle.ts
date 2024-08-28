@@ -1,4 +1,6 @@
 import { createGlobalStyle } from 'styled-components';
+import { TYPO } from './typo';
+import { semantic } from './semantic';
 
 export const GlobalStyle = createGlobalStyle`
   @font-face {
@@ -143,9 +145,12 @@ export const GlobalStyle = createGlobalStyle`
   }
 
   .ql-editor {
-
     height: 50vh;
     width: 42.5rem;
+
+    color: ${semantic.light.object.solid.hero};
+    ${TYPO.body2}
+
   }
 
 
