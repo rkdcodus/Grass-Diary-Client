@@ -11,25 +11,16 @@ const Comments = () => {
   const { data: comments } = useGetComment(diaryId);
 
   return (
-    <>
-      <CommentLable>{`댓글 ${comments?.length}`}</CommentLable>
-      <CommentContainer>
-        {comments?.map((comment: CommentResponse) => (
-          <Comment key={comment.commentId} comment={comment} />
-        ))}
-        <PostInput parentId={null} />
-      </CommentContainer>
-    </>
+    <CommentContainer>
+      {comments?.map((comment: CommentResponse) => (
+        <Comment key={comment.commentId} comment={comment} />
+      ))}
+      <PostInput parentId={null} />
+    </CommentContainer>
   );
 };
 
 export default Comments;
-
-const CommentLable = styled.div`
-  ${TYPO.label3}
-  align-self: stretch;
-  color: ${semantic.light.object.transparent.neutral};
-`;
 
 const CommentContainer = styled.div`
   display: flex;
