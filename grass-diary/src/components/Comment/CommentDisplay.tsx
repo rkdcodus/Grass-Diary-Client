@@ -17,7 +17,6 @@ const CommentDisplay = ({ comment, parentId }: CommentDisplayProps) => {
   const { date } = useTodayDate();
   const setting = useRef<HTMLDivElement>(null);
   const [isToday, setIsToday] = useState(false);
-  const [rows, setRows] = useState(1);
 
   const reply = (e: React.MouseEvent<HTMLElement, MouseEvent>) => {
     if (setting.current) {
@@ -37,12 +36,6 @@ const CommentDisplay = ({ comment, parentId }: CommentDisplayProps) => {
       }
     }
   }, [date, comment.createdDate]);
-
-  useEffect(() => {
-    if (comment.content) {
-      setRows(comment.content.split('\n').length);
-    }
-  }, [comment.content]);
 
   return comment.deleted ? (
     <CommentWrap $isMe={memberId === comment.memberId}>
@@ -75,12 +68,9 @@ const CommentDisplay = ({ comment, parentId }: CommentDisplayProps) => {
           />
         </div>
       </CommentTop>
-      <CommentContent
-        $isReply={comment.depth ? true : false}
-        rows={rows}
-        value={comment.content}
-        readOnly
-      />
+      <CommentContent $isReply={comment.depth ? true : false}>
+        {comment.content}
+      </CommentContent>
     </CommentWrap>
   );
 };
@@ -142,21 +132,13 @@ const CreateTime = styled.p`
   color: ${semantic.light.object.transparent.assistive};
 `;
 
-const CommentContent = styled.textarea<{
+const CommentContent = styled.div<{
   $isReply?: boolean;
 }>`
-  width: 100%;
-  resize: none;
-  background: none;
-  border: none;
-
-  &:focus {
-    outline: none;
-  }
-
   ${TYPO.body1}
   ${props => props.$isReply && `padding-left: var(--gap-2xl, 2rem);`}
   color: ${semantic.light.object.solid.normal};
+  white-space: pre;
 `;
 
 const DeletedContent = styled.p`
