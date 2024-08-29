@@ -23,6 +23,7 @@ const CommentInput = ({
   const { profileImageURL, nickname } = useProfile();
   const { resetEditId, resetReplyId } = useCommentActions();
   const [focus, setFocus] = useState(false);
+  const [rows, setRows] = useState(1);
 
   // focus 될 때
   const onFocus = () => setFocus(true);
@@ -30,14 +31,26 @@ const CommentInput = ({
   // focus 해지될 때
   const onBlur = () => setFocus(false);
 
-  const commentHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const commentHandler = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setText(e.target.value);
+    setRows(e.target.value.split('\n').length);
   };
 
   const cancel = () => {
     if (isPatch) resetEditId();
     else resetReplyId();
   };
+
+  const submitBtn = (e: React.MouseEvent<HTMLElement, MouseEvent>) => {
+    submit(e);
+    setRows(1);
+  };
+
+  useEffect(() => {
+    if (text) {
+      setRows(text.split('\n').length);
+    }
+  }, [text]);
 
   return (
     <InputComment $focus={focus} $isReply={isReply}>
@@ -50,14 +63,15 @@ const CommentInput = ({
       </CommentTop>
       <InputWrap>
         <Input
+          rows={rows}
           value={text}
           onFocus={onFocus}
           onBlur={onBlur}
-          onChange={commentHandler}
+          onInput={commentHandler}
           placeholder={COMMENT.placeholder}
         />
         {isCancelBtn && <CancelBtn onClick={cancel}>취소</CancelBtn>}
-        <SubmitBtn type="button" onClick={submit} disabled={text === ''}>
+        <SubmitBtn type="button" onClick={submitBtn} disabled={text === ''}>
           등록
         </SubmitBtn>
       </InputWrap>
@@ -200,9 +214,18 @@ const InputWrap = styled.div`
   align-items: center;
   gap: var(--gap-md, 1rem);
   align-self: stretch;
+  align-items: flex-end;
 `;
 
-const Input = styled.input`
+const Input = styled.textarea`
+  resize: none;
+  background: inherit;
+  height: auto;
+
+  &:focus {
+    outline: none;
+  }
+
   display: flex;
   padding: var(--gap-empty, 0rem) var(--gap-4xs, 0.25rem);
   align-items: center;

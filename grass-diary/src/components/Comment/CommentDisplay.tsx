@@ -17,6 +17,7 @@ const CommentDisplay = ({ comment, parentId }: CommentDisplayProps) => {
   const { date } = useTodayDate();
   const setting = useRef<HTMLDivElement>(null);
   const [isToday, setIsToday] = useState(false);
+  const [rows, setRows] = useState(1);
 
   const reply = (e: React.MouseEvent<HTMLElement, MouseEvent>) => {
     if (setting.current) {
@@ -37,13 +38,17 @@ const CommentDisplay = ({ comment, parentId }: CommentDisplayProps) => {
     }
   }, [date, comment.createdDate]);
 
+  useEffect(() => {
+    if (comment.content) {
+      setRows(comment.content.split('\n').length);
+    }
+  }, [comment.content]);
+
   return comment.deleted ? (
     <CommentWrap $isMe={memberId === comment.memberId}>
       <WriterWrap>
         {comment.depth ? <ReplyIcon /> : null}
-        <CommentContent $deleted={comment.deleted}>
-          {COMMENT.deleted}
-        </CommentContent>
+        <DeletedContent>{COMMENT.deleted}</DeletedContent>
       </WriterWrap>
     </CommentWrap>
   ) : (
@@ -71,11 +76,11 @@ const CommentDisplay = ({ comment, parentId }: CommentDisplayProps) => {
         </div>
       </CommentTop>
       <CommentContent
-        $deleted={comment.deleted}
         $isReply={comment.depth ? true : false}
-      >
-        {comment.content}
-      </CommentContent>
+        rows={rows}
+        value={comment.content}
+        readOnly
+      />
     </CommentWrap>
   );
 };
@@ -137,11 +142,24 @@ const CreateTime = styled.p`
   color: ${semantic.light.object.transparent.assistive};
 `;
 
-const CommentContent = styled.div<{ $deleted?: boolean; $isReply?: boolean }>`
+const CommentContent = styled.textarea<{
+  $isReply?: boolean;
+}>`
+  width: 100%;
+  resize: none;
+  background: none;
+  border: none;
+
+  &:focus {
+    outline: none;
+  }
+
   ${TYPO.body1}
   ${props => props.$isReply && `padding-left: var(--gap-2xl, 2rem);`}
-  color: ${props =>
-    props.$deleted
-      ? semantic.light.object.transparent.alternative
-      : semantic.light.object.solid.normal};
+  color: ${semantic.light.object.solid.normal};
+`;
+
+const DeletedContent = styled.p`
+  ${TYPO.body1}
+  color: ${semantic.light.object.transparent.alternative};
 `;
