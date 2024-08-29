@@ -38,9 +38,15 @@ const FooterContainer = styled.div`
 const ContentWrap = styled.div`
   display: flex;
   max-width: var(--vw-desktop-min, 60rem);
+  min-width: 20rem;
   align-items: center;
   align-self: stretch;
   flex: 1;
+
+  @media screen and (max-width: 959px) {
+    flex-direction: column;
+    gap: var(--gap-md, 1rem);
+  }
 `;
 
 const LogoWrap = styled.div`
