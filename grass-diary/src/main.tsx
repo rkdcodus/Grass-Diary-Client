@@ -6,7 +6,6 @@ import router from './router';
 import { GlobalStyle } from './styles/GlobalStyle';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
-import Toast from '@components/Toast/Toast';
 
 const queryClient = new QueryClient();
 
@@ -17,7 +16,6 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
       <RecoilRoot>
         <GlobalStyle />
         <RouterProvider router={router} />
-        <Toast />
       </RecoilRoot>
     </QueryClientProvider>
   </React.StrictMode>,

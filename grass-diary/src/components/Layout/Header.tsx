@@ -4,7 +4,7 @@ import { semantic } from '@styles/semantic';
 import sampleLogo from '@image/sampleLogo.png';
 import { ReactComponent as LogoSVG } from '@svg/logo.svg';
 
-import MenuBar from '@components/NavBar/MenuBar';
+import MenuBar from './MenuBar';
 import { Profile } from '@components/index';
 
 import { useNavigate } from 'react-router-dom';
@@ -42,7 +42,6 @@ const Header = () => {
 export default Header;
 
 const NavBar = styled.header`
-  width: 100vw;
   display: flex;
   padding: var(--gap-xs, 0.625rem) var(--gap-xl, 1.5rem);
   justify-content: center;

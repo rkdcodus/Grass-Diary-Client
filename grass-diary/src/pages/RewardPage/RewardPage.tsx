@@ -1,5 +1,5 @@
 import stylex from '@stylexjs/stylex';
-import { Button, Header, Container } from '@components/index';
+import { Button, Container } from '@components/index';
 import Swal from 'sweetalert2';
 import subCharacter from '@icon/subCharacter.png';
 
@@ -95,102 +95,99 @@ const RewardPage = () => {
   };
 
   return (
-    <>
-      <Container>
-        <Header />
-        <section {...stylex.props(RewardPageStyle.titleBanner)}>
-          <p
-            style={{ fontSize: '30px', fontWeight: 'bold' }}
-            {...stylex.props(RewardPageStyle.title)}
-          >
-            리워드 내역
-          </p>
-          <p {...stylex.props(RewardPageStyle.title)}>
-            내가 쌓은 포인트를 확인 할 수 있어요
-          </p>
-        </section>
-        <section {...stylex.props(RewardPageStyle.rewardInfoContainer)}>
-          <article {...stylex.props(RewardPageStyle.rewardInfoItem)}>
-            <div>
-              <p>잔디</p>
-              <div
-                style={{
-                  display: 'flex',
-                  fontWeight: 'bold',
-                  fontSize: '20px',
-                  paddingTop: '5px',
-                }}
-              >
-                <img
-                  src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Animals/Seedling.png"
-                  alt="Seedling"
-                  width="20"
-                  height="20"
-                />
-                <p>55</p>
-              </div>
+    <Container>
+      <section {...stylex.props(RewardPageStyle.titleBanner)}>
+        <p
+          style={{ fontSize: '30px', fontWeight: 'bold' }}
+          {...stylex.props(RewardPageStyle.title)}
+        >
+          리워드 내역
+        </p>
+        <p {...stylex.props(RewardPageStyle.title)}>
+          내가 쌓은 포인트를 확인 할 수 있어요
+        </p>
+      </section>
+      <section {...stylex.props(RewardPageStyle.rewardInfoContainer)}>
+        <article {...stylex.props(RewardPageStyle.rewardInfoItem)}>
+          <div>
+            <p>잔디</p>
+            <div
+              style={{
+                display: 'flex',
+                fontWeight: 'bold',
+                fontSize: '20px',
+                paddingTop: '5px',
+              }}
+            >
+              <img
+                src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Animals/Seedling.png"
+                alt="Seedling"
+                width="20"
+                height="20"
+              />
+              <p>55</p>
             </div>
-            <div>
-              <p>리워드</p>
-              <div
-                style={{
-                  display: 'flex',
-                  fontWeight: 'bold',
-                  fontSize: '20px',
-                  paddingTop: '5px',
-                }}
-              >
-                <img
-                  src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Activities/Party%20Popper.png"
-                  alt="Party Popper"
-                  width="20"
-                  height="20"
-                />
-                <p>123</p>
-              </div>
-            </div>
-          </article>
-          <Button
-            text="테마 상점"
-            width="110px"
-            defaultColor="#2d2d2d"
-            hoverColor="#FFF"
-            defaultBgColor="#FFFFFF"
-            hoverBgColor="#111111"
-            border="1px solid #929292"
-            onClick={modal}
-          />
-        </section>
-        <span {...stylex.props(RewardPageStyle.line)}></span>
-        <section {...stylex.props(RewardPageStyle.rewardListContainer)}>
-          <p {...stylex.props(RewardPageStyle.rewardListMonth)}>2024 5월</p>
-
-          <div {...stylex.props(RewardPageStyle.rewardListBox)}>
-            <div {...stylex.props(RewardPageStyle.rewardListContent)}>
-              <p {...stylex.props(RewardPageStyle.rewardListDate)}>5월 15일</p>
-              <p {...stylex.props(RewardPageStyle.rewardListPoint)}>🔥 +10</p>
-            </div>
-            <span {...stylex.props(RewardPageStyle.rewardListLine)}></span>
           </div>
-
-          <div {...stylex.props(RewardPageStyle.rewardListBox)}>
-            <div {...stylex.props(RewardPageStyle.rewardListContent)}>
-              <p {...stylex.props(RewardPageStyle.rewardListDate)}>5월 15일</p>
-              <p {...stylex.props(RewardPageStyle.rewardListPoint)}>🔥 +10</p>
+          <div>
+            <p>리워드</p>
+            <div
+              style={{
+                display: 'flex',
+                fontWeight: 'bold',
+                fontSize: '20px',
+                paddingTop: '5px',
+              }}
+            >
+              <img
+                src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Activities/Party%20Popper.png"
+                alt="Party Popper"
+                width="20"
+                height="20"
+              />
+              <p>123</p>
             </div>
-            <span {...stylex.props(RewardPageStyle.rewardListLine)}></span>
           </div>
+        </article>
+        <Button
+          text="테마 상점"
+          width="110px"
+          defaultColor="#2d2d2d"
+          hoverColor="#FFF"
+          defaultBgColor="#FFFFFF"
+          hoverBgColor="#111111"
+          border="1px solid #929292"
+          onClick={modal}
+        />
+      </section>
+      <span {...stylex.props(RewardPageStyle.line)}></span>
+      <section {...stylex.props(RewardPageStyle.rewardListContainer)}>
+        <p {...stylex.props(RewardPageStyle.rewardListMonth)}>2024 5월</p>
 
-          <div {...stylex.props(RewardPageStyle.rewardListBox)}>
-            <div {...stylex.props(RewardPageStyle.rewardListContent)}>
-              <p {...stylex.props(RewardPageStyle.rewardListDate)}>5월 15일</p>
-              <p {...stylex.props(RewardPageStyle.rewardListPoint)}>🔥 +10</p>
-            </div>
-            <span {...stylex.props(RewardPageStyle.rewardListLine)}></span>
+        <div {...stylex.props(RewardPageStyle.rewardListBox)}>
+          <div {...stylex.props(RewardPageStyle.rewardListContent)}>
+            <p {...stylex.props(RewardPageStyle.rewardListDate)}>5월 15일</p>
+            <p {...stylex.props(RewardPageStyle.rewardListPoint)}>🔥 +10</p>
           </div>
-        </section>
-      </Container>
-    </>
+          <span {...stylex.props(RewardPageStyle.rewardListLine)}></span>
+        </div>
+
+        <div {...stylex.props(RewardPageStyle.rewardListBox)}>
+          <div {...stylex.props(RewardPageStyle.rewardListContent)}>
+            <p {...stylex.props(RewardPageStyle.rewardListDate)}>5월 15일</p>
+            <p {...stylex.props(RewardPageStyle.rewardListPoint)}>🔥 +10</p>
+          </div>
+          <span {...stylex.props(RewardPageStyle.rewardListLine)}></span>
+        </div>
+
+        <div {...stylex.props(RewardPageStyle.rewardListBox)}>
+          <div {...stylex.props(RewardPageStyle.rewardListContent)}>
+            <p {...stylex.props(RewardPageStyle.rewardListDate)}>5월 15일</p>
+            <p {...stylex.props(RewardPageStyle.rewardListPoint)}>🔥 +10</p>
+          </div>
+          <span {...stylex.props(RewardPageStyle.rewardListLine)}></span>
+        </div>
+      </section>
+    </Container>
   );
 };
 

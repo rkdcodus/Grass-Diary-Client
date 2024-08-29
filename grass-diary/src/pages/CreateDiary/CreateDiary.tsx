@@ -5,7 +5,7 @@ import Swal from 'sweetalert2';
 import QuillEditor from './QuillEditor';
 import 'dayjs/locale/ko';
 
-import { Header, BackButton, Button, Container } from '@components/index';
+import { BackButton, Button, Container } from '@components/index';
 import EMOJI from '@constants/emoji';
 import { ERROR } from '@constants/message';
 import { useCreateDiary } from '@hooks/api/useCreateDiary';
@@ -263,9 +263,6 @@ const CreateDiary = () => {
 
   return (
     <Container>
-      <header>
-        <Header />
-      </header>
       <main {...stylex.props(CreateDiaryStyle.container)}>
         <BackButton goBackTo={'/main'} />
         <section {...stylex.props(CreateDiaryStyle.title)}>

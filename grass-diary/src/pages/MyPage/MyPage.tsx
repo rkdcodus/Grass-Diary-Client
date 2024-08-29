@@ -1,10 +1,9 @@
-import { Header, Container } from '@components/index';
+import { Container } from '@components/index';
 import { MainContainer } from './myComponents';
 
 const MyPage = () => {
   return (
     <Container>
-      <Header />
       <MainContainer />
     </Container>
   );
