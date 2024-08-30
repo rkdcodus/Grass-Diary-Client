@@ -4,46 +4,33 @@ import { semantic } from '@styles/semantic';
 import sampleLogo from '@image/sampleLogo.png';
 import { ReactComponent as LogoSVG } from '@svg/logo.svg';
 
-import Interaction1 from '@components/Interactions/Interaction1';
-import ButtonWrapper from '@components/Button/ButtonWrapper';
-import { Profile } from '@components/index';
 import MenuBar from './MenuBar';
+import { Profile } from '@components/index';
 
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useUser } from '@state/user/useUser';
+import { INTERACTION } from '@styles/interaction';
 
 const Header = () => {
   const memberId = useUser();
+  const navigate = useNavigate();
 
   return (
     <NavBar>
       <ContentWrap>
         <LogoContainer>
-          <Link to="/main">
-            <Logo>
-              <LogoImg />
-              <LogoStr />
-            </Logo>
-          </Link>
+          <Logo onClick={() => navigate('/main')}>
+            <LogoImg />
+            <LogoStr />
+          </Logo>
         </LogoContainer>
         {memberId ? (
           <RightContent>
             <Profile width="2rem" height="2rem" />
-            <IconBtn>
-              <MenuBar />
-            </IconBtn>
+            <MenuBar />
           </RightContent>
         ) : (
-          <div>
-            <ButtonWrapper>
-              <Interaction1
-                onClick={() => console.log('로그인')}
-                topRadius={8}
-                bottomRadius={8}
-              />
-              <LoginBtn>로그인</LoginBtn>
-            </ButtonWrapper>
-          </div>
+          <LoginBtn onClick={() => console.log('로그인')}>로그인</LoginBtn>
         )}
       </ContentWrap>
     </NavBar>
@@ -77,7 +64,8 @@ const LogoContainer = styled.div`
   flex: 1 0 0;
 `;
 
-const Logo = styled.div`
+const Logo = styled.button`
+  cursor: pointer;
   display: flex;
   align-items: center;
   gap: var(--gap-xs, 0.625rem);
@@ -103,18 +91,7 @@ const RightContent = styled.div`
   gap: var(--gap-2xs, 0.5rem);
 `;
 
-const IconBtn = styled.div`
-  display: flex;
-  padding: var(--gap-4xs, 0.25rem);
-  justify-content: center;
-  align-items: center;
-  gap: var(--gap-md, 1rem);
-
-  border-radius: var(--radius-2xs, 0.25rem);
-  cursor: pointer;
-`;
-
-const LoginBtn = styled.div`
+const LoginBtn = styled.button`
   display: flex;
   background: none;
   padding: var(--gap-xs, 0.625rem) var(--gap-md, 1rem);
@@ -125,4 +102,6 @@ const LoginBtn = styled.div`
   color: ${semantic.light.base.solid.white};
   border-radius: var(--radius-xs, 0.5rem);
   background: ${semantic.light.accent.solid.normal};
+
+  ${INTERACTION.default.normal(semantic.light.accent.solid.normal)}
 `;

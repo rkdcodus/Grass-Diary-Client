@@ -1,5 +1,4 @@
-import ButtonWrapper from '@components/Button/ButtonWrapper';
-import Interaction4 from '@components/Interactions/Interaction4';
+import { INTERACTION } from '@styles/interaction';
 import { semantic } from '@styles/semantic';
 import styled from 'styled-components';
 
@@ -8,17 +7,12 @@ type CheckButtonProps = {
 };
 
 const CheckButton = ({ onClick }: CheckButtonProps) => {
-  return (
-    <ButtonWrapper>
-      <Interaction4 onClick={onClick} topRadius={12} bottomRadius={12} />
-      <CheckBtn>확인</CheckBtn>
-    </ButtonWrapper>
-  );
+  return <CheckBtn onClick={onClick}>확인</CheckBtn>;
 };
 
 export default CheckButton;
 
-const CheckBtn = styled.div`
+const CheckBtn = styled.button`
   cursor: pointer;
   display: flex;
   height: 3rem;
@@ -30,4 +24,5 @@ const CheckBtn = styled.div`
   flex: 1 0 0;
   border-radius: var(--radius-sm, 0.75rem);
   color: ${semantic.light.accent.solid.hero};
+  ${INTERACTION.accent.subtle()}
 `;
