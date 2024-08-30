@@ -42,12 +42,13 @@ const Setting = ({ diaryId, createdDate }: SettingProps) => {
         +createdDate.slice(8, 10) === date.date
       ) {
         setCanEdit(true);
+        console.log('true');
       } else {
         // 그 외 시간 : 수정 불가능
         setCanEdit(false);
       }
     }
-  }, []);
+  }, [createdDate, date]);
 
   return (
     <>
