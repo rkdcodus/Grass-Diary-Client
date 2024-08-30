@@ -203,10 +203,6 @@ const InputComment = styled.div<{ $focus: boolean; $isReply: boolean }>`
   ${props =>
     props.$isReply &&
     `box-shadow: 0px 0px 2px 0px rgba(0, 0, 0, 0.06), 0px 3px 6px 0px rgba(0, 0, 0, 0.11);`}
-
-  &:hover {
-    background: rgba(59, 59, 59, 0.05);
-  }
 `;
 
 const InputWrap = styled.div`

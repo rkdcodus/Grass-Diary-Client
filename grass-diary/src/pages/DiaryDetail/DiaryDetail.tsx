@@ -18,6 +18,7 @@ import { ReactComponent as AvatarBg } from '@svg/avatarBg.svg';
 import { ReactComponent as LockOpen } from '@svg/lock_open.svg';
 import { ReactComponent as Lock } from '@svg/lock.svg';
 import { ReactComponent as Tag } from '@svg/tag.svg';
+import { INTERACTION } from '@styles/interaction';
 
 const DiaryDetail = () => {
   const diaryId = useParamsId();
@@ -120,6 +121,7 @@ const DiaryDetail = () => {
           />
         </BottomSection>
         <Divider />
+        <CommentLable>{`댓글 ${detail?.commentCount}`}</CommentLable>
         <Comments />
       </DiaryBox>
     </Container>
@@ -324,6 +326,7 @@ const HashWrap = styled.div`
   border: var(--stroke-thin, 0.0625rem) solid
     ${semantic.light.border.transparent.alternative};
   background: ${semantic.light.fill.transparent.assistive};
+  ${INTERACTION.default.subtle(semantic.light.fill.transparent.assistive)}
 `;
 
 const HashText = styled.p`
@@ -336,4 +339,10 @@ const Divider = styled.div`
   height: 0.0625rem;
 
   background: ${semantic.light.border.transparent.alternative};
+`;
+
+const CommentLable = styled.div`
+  ${TYPO.label3}
+  align-self: stretch;
+  color: ${semantic.light.object.transparent.neutral};
 `;

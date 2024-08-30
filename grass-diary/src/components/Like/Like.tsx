@@ -8,6 +8,7 @@ import { useUser } from '@state/user/useUser';
 
 import { ReactComponent as LikeBorder } from '@svg/favorite_border.svg';
 import { ReactComponent as LikeIcon } from '@svg/favorite.svg';
+import { INTERACTION } from '@styles/interaction';
 
 interface ILikeProps {
   diaryId: Id;
@@ -23,6 +24,11 @@ const Like = ({ diaryId, likeCount, setLikeCount, liked }: ILikeProps) => {
     diaryId,
     memberId,
   });
+
+  const likeHandler = () => {
+    if (isPushed) deleteLike();
+    else postLike();
+  };
 
   useEffect(() => {
     if (postSuccess) {
@@ -44,13 +50,9 @@ const Like = ({ diaryId, likeCount, setLikeCount, liked }: ILikeProps) => {
 
   return (
     <>
-      <LikeContainer $isPushed={isPushed}>
+      <LikeContainer $isPushed={isPushed} onClick={likeHandler}>
         <LikeCount>{likeCount}</LikeCount>
-        {isPushed ? (
-          <YES onClick={() => deleteLike()} width={18} height={18} />
-        ) : (
-          <No onClick={() => postLike()} />
-        )}
+        {isPushed ? <YES width={18} height={18} /> : <No />}
       </LikeContainer>
     </>
   );
@@ -58,7 +60,7 @@ const Like = ({ diaryId, likeCount, setLikeCount, liked }: ILikeProps) => {
 
 export default Like;
 
-const LikeContainer = styled.div<{ $isPushed: boolean }>`
+const LikeContainer = styled.button<{ $isPushed: boolean }>`
   margin-left: auto;
   display: flex;
   justify-content: center;
@@ -82,6 +84,11 @@ const LikeContainer = styled.div<{ $isPushed: boolean }>`
     props.$isPushed
       ? semantic.light.accent.solid.hero
       : semantic.light.object.transparent.alternative};
+
+  ${props =>
+    props.$isPushed
+      ? INTERACTION.default.normal(semantic.light.accent.transparent.normal)
+      : INTERACTION.default.normal(semantic.light.bg.solid.normal)}
 `;
 
 const LikeCount = styled.p`
