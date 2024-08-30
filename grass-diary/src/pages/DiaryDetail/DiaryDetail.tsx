@@ -284,6 +284,7 @@ const ImageCard = styled.img`
 `;
 
 const ContentCard = styled.div`
+  word-break: break-all;
   min-height: 12.5rem;
   align-self: stretch;
 
