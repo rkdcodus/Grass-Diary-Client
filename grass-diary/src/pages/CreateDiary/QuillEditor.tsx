@@ -2,14 +2,17 @@ import styled from 'styled-components';
 import API from '@services/index';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
+
 import { semantic } from '@styles/semantic';
 import { useState, useEffect, useMemo } from 'react';
 import { END_POINT } from '@constants/api';
 import { CONSOLE_ERROR } from '@constants/message';
+import { TYPO } from '@styles/typo';
 
 type QuillEditorProps = {
   onContentChange: (content: string) => void;
   handleImageChange: (file: File) => void;
+  selectedMode: string;
   quillContent: string;
   setImage: React.Dispatch<React.SetStateAction<DiaryImage>>;
   setFile: React.Dispatch<React.SetStateAction<FormData | undefined>>;
@@ -25,6 +28,7 @@ const QuillEditor = ({
   setImage,
   setFile,
   handleImageChange,
+  selectedMode,
 }: QuillEditorProps) => {
   const handleChange = (
     content: string,
@@ -36,6 +40,11 @@ const QuillEditor = ({
   };
 
   const [todayQuestion, setTodayQuestion] = useState<string>();
+
+  const placeholderText =
+    selectedMode === `customEntry`
+      ? '오늘은 무엇을 하고, 누구를 만나고, 어떤 음식을 드셨나요?'
+      : todayQuestion || 'todayQuestion Loading...';
 
   const ImageHandler = () => {
     const input = document.createElement('input');
@@ -116,27 +125,25 @@ const QuillEditor = ({
   }, []);
 
   return (
-    <ReactQuill
-      theme="snow"
-      placeholder={todayQuestion ? todayQuestion : 'todayQuestion Loading...'}
-      modules={modules}
-      formats={formats}
-      onChange={handleChange}
-      value={quillContent}
-    />
+    <>
+      <Title>{placeholderText}</Title>
+      <ReactQuill
+        theme="snow"
+        placeholder="일기를 작성 해보세요!
+        "
+        modules={modules}
+        formats={formats}
+        onChange={handleChange}
+        value={quillContent}
+      />
+    </>
   );
 };
 
 export default QuillEditor;
 
-const QuillWrap = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  flex: 1 0 0;
-  align-self: stretch;
+const Title = styled.p`
+  color: ${semantic.light.object.transparent.assistive};
 
-  border-radius: var(--radius-sm, 0.75rem);
-  border: var(--stroke-thin, 1px) solid
-    ${semantic.light.border.transparent.alternative};
+  ${TYPO.body2}
 `;

@@ -37,6 +37,9 @@ const CreateDiary = () => {
     day: null,
   });
 
+  // 오늘의 질문, 나만의 일기 state
+  const [selectedMode, setSelectedMode] = useState('dailyQuestion');
+
   // 해시태그 state
   const [hashtag, setHashtag] = useState<string>('');
 
@@ -59,6 +62,7 @@ const CreateDiary = () => {
     setDiaryInfo(prev => ({ ...prev, ...field }));
   };
 
+  const handleModeChange = mode => setSelectedMode(mode);
   const handlePrivateChange = () => setDiaryField({ isPrivate: true });
   const handlePublicChange = () => setDiaryField({ isPrivate: false });
   const handleMoodChange = (e: React.ChangeEvent<HTMLInputElement>) =>
@@ -226,8 +230,16 @@ const CreateDiary = () => {
           </SaveBtnContainer>
         </SaveWrap>
         <DiaryModeSelector>
-          <DailyQuestionBox>
-            <input type="radio" />
+          <DailyQuestionBox isSelected={selectedMode === 'dailyQuestion'}>
+            <ModeBtn>
+              <input
+                id="mode-btn-question"
+                type="radio"
+                checked={selectedMode === 'dailyQuestion'}
+                onChange={() => handleModeChange('dailyQuestion')}
+              />
+              <label htmlFor="mode-btn-question"></label>
+            </ModeBtn>
             <ModeBoxContainer>
               <DiaryModeSelectorText>오늘의 질문에 대해</DiaryModeSelectorText>
               <DiaryModeSelectorSubText>
@@ -235,8 +247,16 @@ const CreateDiary = () => {
               </DiaryModeSelectorSubText>
             </ModeBoxContainer>
           </DailyQuestionBox>
-          <CustomEntryBox>
-            <input type="radio" />
+          <CustomEntryBox isSelected={selectedMode === 'customEntry'}>
+            <ModeBtn>
+              <input
+                id="mode-btn-custom"
+                type="radio"
+                checked={selectedMode === 'customEntry'}
+                onChange={() => handleModeChange('customEntry')}
+              />
+              <label htmlFor="mode-btn-custom"></label>
+            </ModeBtn>
             <ModeBoxContainer>
               <DiaryModeSelectorText>나만의 일기</DiaryModeSelectorText>
               <DiaryModeSelectorSubText>
@@ -275,6 +295,7 @@ const CreateDiary = () => {
             setImage={setImage}
             setFile={setFile}
             handleImageChange={handleImageChange}
+            selectedMode={selectedMode}
           />
         </MainContainer>
         <HashtagContainer>
@@ -515,68 +536,95 @@ const SaveBtnText = styled.p`
 
 const DiaryModeSelector = styled.div`
   display: flex;
-  padding: var(--gap-empty, 0rem);
   align-items: center;
   gap: var(--gap-md, 1rem);
   align-self: stretch;
-
-  border-radius: var(--radius-empty, 0rem);
-  opacity: var(--opacity-visible, 1);
 `;
 
 const ModeBoxContainer = styled.div`
   display: flex;
-  padding: var(--gap-empty, 0rem);
   flex-direction: column;
   align-items: flex-start;
   gap: var(--gap-4xs, 0.25rem);
   flex: 1 0 0;
-
-  border-radius: var(--radius-empty, 0rem);
-  opacity: var(--opacity-visible, 1);
 `;
 
 const DiaryModeSelectorText = styled.p`
   align-self: stretch;
-
   color: ${semantic.light.object.transparent.neutral};
-
   ${TYPO.label2}
 `;
 
 const DiaryModeSelectorSubText = styled.p`
   align-self: stretch;
-
   color: ${semantic.light.object.transparent.alternative};
-
   ${TYPO.caption1}
 `;
 
-const DailyQuestionBox = styled.div`
+const DailyQuestionBox = styled.div<DiaryQuestionBox>`
   display: flex;
   padding: var(--gap-md, 1rem) var(--gap-lg, 1.25rem);
   align-items: center;
   gap: var(--gap-lg, 1.25rem);
   flex: 1 0 0;
-
-  border-radius: var(--radius-sm, 0.75rem);
-  border: var(--stroke-thin, 1px) solid ${semantic.light.accent.solid.hero};
-  opacity: var(--opacity-visible, 1);
-  background: ${semantic.light.accent.transparent.alternative};
-`;
-
-const CustomEntryBox = styled.div`
-  display: flex;
-  padding: var(--gap-md, 1rem) var(--gap-lg, 1.25rem);
-  align-items: center;
-  gap: var(--gap-lg, 1.25rem);
-  flex: 1 0 0;
-
   border-radius: var(--radius-sm, 0.75rem);
   border: var(--stroke-thin, 1px) solid
-    ${semantic.light.border.transparent.alternative};
-  opacity: var(--opacity-visible, 1);
-  background: ${semantic.light.bg.solid.normal};
+    ${({ isSelected }) =>
+      isSelected
+        ? semantic.light.accent.solid.hero
+        : semantic.light.border.transparent.alternative};
+  background: ${({ isSelected }) =>
+    isSelected
+      ? semantic.light.accent.transparent.alternative
+      : semantic.light.bg.solid.normal};
+`;
+
+const CustomEntryBox = styled.div<DiaryQuestionBox>`
+  display: flex;
+  padding: var(--gap-md, 1rem) var(--gap-lg, 1.25rem);
+  align-items: center;
+  gap: var(--gap-lg, 1.25rem);
+  flex: 1 0 0;
+  border-radius: var(--radius-sm, 0.75rem);
+  border: var(--stroke-thin, 1px) solid
+    ${({ isSelected }) =>
+      isSelected
+        ? semantic.light.accent.solid.hero
+        : semantic.light.border.transparent.alternative};
+  background: ${({ isSelected }) =>
+    isSelected
+      ? semantic.light.accent.transparent.alternative
+      : semantic.light.bg.solid.normal};
+`;
+
+const ModeBtn = styled.div`
+  [type='radio'] {
+    display: none;
+  }
+
+  label {
+    display: flex;
+    width: 1.25rem;
+    height: 1.25rem;
+    justify-content: center;
+    align-items: center;
+    border-radius: var(--radius-lg, 1.5rem);
+    border: var(--stroke-thick, 0.125rem) solid
+      ${semantic.light.border.transparent.normal};
+    background: ${semantic.light.fill.transparent.assistive};
+    cursor: pointer;
+    transition: border 0.2s ease-in-out, border-color 0.2s ease-in-out;
+
+    &:hover {
+      box-shadow: 0 0 0 0.1rem lightgray;
+    }
+  }
+
+  [type='radio']:checked + label {
+    background: ${semantic.light.accent.transparent.hero};
+    border: var(--stroke-thicker, 0.25rem) solid
+      ${semantic.light.accent.solid.hero};
+  }
 `;
 
 const Divider = styled.span`
@@ -809,8 +857,6 @@ const EmojiSelectableBox = styled.div`
   justify-content: center;
   align-items: center;
 
-  /* padding: 0rem 0.2rem 0rem 0.2rem; */
-
   border: var(--stroke-thin, 0.06rem) solid
     ${semantic.light.border.transparent.normal};
   border-radius: var(--radius-xs, 0.5rem);
@@ -827,10 +873,6 @@ const EmojiLabel = styled.label`
   border-radius: var(--radius-xs, 0.5rem);
 
   transition: all 0.2s ease-in-out;
-
-  /* &:hover {
-    box-shadow: 0 0 0 0.1rem lightgray;
-  } */
 
   ${EmojiInput}:checked + & {
     padding: 0rem 0.2rem 0rem 0.2rem;

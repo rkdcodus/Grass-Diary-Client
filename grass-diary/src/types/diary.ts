@@ -67,6 +67,10 @@ interface IDiaryInfo {
   isPrivate: boolean;
 }
 
+interface DiaryQuestionBox {
+  isSelected: boolean;
+}
+
 interface DiaryImage {
   imageId: number;
   imageURL: string;
