@@ -28,7 +28,7 @@ const CreateDiary = () => {
   const { date } = useTodayDate();
   const [diaryInfo, setDiaryInfo] = useState<IDiaryInfo>({
     hashArr: [],
-    moodValue: 5,
+    moodValue: 3,
     quillContent: '',
     isPrivate: true,
     year: null,
@@ -327,6 +327,24 @@ const CreateDiary = () => {
               </RadioBox>
             </SelectableSection>
           </SelectablePublicBox>
+          <EmotionBox>
+            <EmotionText>오늘의 기분</EmotionText>
+            <EmojiBox>
+              {Object.entries(EMOJI).map(([index, emoji]) => (
+                <EmojiSelectableBox key={index}>
+                  <EmojiInput
+                    type="radio"
+                    id={`emoji-${index}`}
+                    name="mood"
+                    value={index}
+                    checked={diaryInfo.moodValue.toString() === index}
+                    onChange={handleMoodChange}
+                  />
+                  <EmojiLabel htmlFor={`emoji-${index}`}>{emoji}</EmojiLabel>
+                </EmojiSelectableBox>
+              ))}
+            </EmojiBox>
+          </EmotionBox>
         </SelectableContainer>
       </Layout>
       <div>
@@ -744,7 +762,7 @@ const RadioBtn = styled.div`
     transition: border 0.2s ease-in-out, border-color 0.2s ease-in-out;
 
     &:hover {
-      box-shadow: 0 0 0 0.2rem lightgray;
+      box-shadow: 0 0 0 0.1rem lightgray;
     }
   }
 
@@ -759,4 +777,65 @@ const RadioText = styled.p`
   color: ${semantic.light.object.transparent.alternative};
 
   ${TYPO.label1}
+`;
+
+const EmotionBox = styled.div`
+  display: flex;
+  padding: var(--gap-sm, 0.75rem) var(--gap-md, 1rem);
+  align-items: center;
+  gap: var(--gap-lg, 1.25rem);
+
+  border-radius: var(--radius-xs, 0.5rem);
+  border: var(--stroke-thin, 1px) solid
+    ${semantic.light.border.transparent.alternative};
+  background: ${semantic.light.bg.solid.normal};
+`;
+
+const EmotionText = styled.p`
+  color: ${semantic.light.object.transparent.neutral};
+
+  ${TYPO.label1}
+`;
+
+const EmojiBox = styled.div`
+  display: flex;
+  align-items: center;
+  gap: var(--gap-xs, 0.625rem);
+`;
+
+const EmojiSelectableBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  /* padding: 0rem 0.2rem 0rem 0.2rem; */
+
+  border: var(--stroke-thin, 0.06rem) solid
+    ${semantic.light.border.transparent.normal};
+  border-radius: var(--radius-xs, 0.5rem);
+  background: ${semantic.light.fill.transparent.alternative};
+`;
+
+const EmojiInput = styled.input`
+  display: none;
+`;
+
+const EmojiLabel = styled.label`
+  cursor: pointer;
+  font-size: 1.3rem;
+  border-radius: var(--radius-xs, 0.5rem);
+
+  transition: all 0.2s ease-in-out;
+
+  /* &:hover {
+    box-shadow: 0 0 0 0.1rem lightgray;
+  } */
+
+  ${EmojiInput}:checked + & {
+    padding: 0rem 0.2rem 0rem 0.2rem;
+    background: ${semantic.light.accent.transparent.hero};
+    border: var(--stroke-thicker, 0.1rem) solid
+      ${semantic.light.accent.solid.hero};
+  }
 `;
