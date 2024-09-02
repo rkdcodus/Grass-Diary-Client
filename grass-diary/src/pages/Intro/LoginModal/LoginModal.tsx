@@ -6,13 +6,6 @@ const styles = stylex.create({
   container: {
     display: 'flex',
     justifyContent: 'center',
-
-    position: 'absolute',
-    top: '0',
-    left: '0',
-
-    width: '100vw',
-    height: '300vh',
   },
 
   background: {
