@@ -5,7 +5,7 @@ import EMOJI from '@constants/emoji';
 import 'dayjs/locale/ko';
 
 import { semantic } from '@styles/semantic';
-import { Header, BackButton, Button } from '@components/index';
+import { Header, BackButton } from '@components/index';
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ERROR } from '@constants/message';
@@ -42,6 +42,12 @@ const CreateDiary = () => {
 
   // 해시태그 state
   const [hashtag, setHashtag] = useState<string>('');
+  const [captionMessage, setCaptionMessage] = useState<string>(
+    '태그명을 입력하고, 스페이스바를 누르면 저장돼요',
+  );
+  const [captionColor, setCaptionColor] = useState<string>(
+    semantic.light.object.transparent.assistive,
+  );
 
   // 이미지 state
   const [file, setFile] = useState<FormData>();
@@ -67,29 +73,68 @@ const CreateDiary = () => {
   const handlePublicChange = () => setDiaryField({ isPrivate: false });
   const handleMoodChange = (e: React.ChangeEvent<HTMLInputElement>) =>
     setDiaryField({ moodValue: parseInt(e.target.value) });
-  const onChangeHashtag = (e: React.ChangeEvent<HTMLInputElement>) =>
+  const onChangeHashtag = (e: React.ChangeEvent<HTMLInputElement>) => {
     setHashtag(e.target.value);
+
+    if (e.target.value === '') {
+      setCaptionMessage('태그명을 입력하고, 스페이스바를 누르면 저장돼요');
+      setCaptionColor(semantic.light.object.transparent.assistive);
+    }
+  };
 
   // 해시태그 로직 함수
   const addHashtag = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter' || e.key === ' ') {
-      e.preventDefault();
-      const inputText = (e.target as HTMLInputElement).value.trim();
-      const validCharsPattern =
-        /[가-힣A-Za-z0-9\u3040-\u309F\u30A0-\u30FF\u4E00-\u9FAF]+/g;
-
-      const matches = inputText.match(validCharsPattern);
-      if (matches && matches.length > 0 && diaryInfo.hashArr.length < 15) {
-        const hashtagText = matches.join('');
-        // 중복 체크
-        if (!diaryInfo.hashArr.includes(hashtagText)) {
-          setDiaryField({ hashArr: [...diaryInfo.hashArr, hashtagText] });
-        } else {
-          alert('이미 존재하는 해시태그입니다.'); // 작성 페이지 UI 변경 시 수정
-        }
-        setHashtag('');
-      }
+    if (e.key !== 'Enter' && e.key !== ' ') {
+      return; // 'Enter'나 'Space'가 아닌 경우 즉시 종료
     }
+
+    e.preventDefault();
+    const inputText = (e.target as HTMLInputElement).value.trim();
+
+    if (inputText === '') {
+      return; // 빈 문자열이면 즉시 종료
+    }
+
+    const specialCharsPattern = /[!@#$%^&*()_+={}\[\]|\\:;'"<>,.?/~`]/;
+    const invalidKoreanPattern = /[ㄱ-ㅎㅏ-ㅣ]/;
+    const validCharsPattern =
+      /[가-힣A-Za-z0-9\u3040-\u309F\u30A0-\u30FF\u4E00-\u9FAF]+/g;
+
+    if (specialCharsPattern.test(inputText)) {
+      setCaptionMessage('태그에 특수문자는 넣을 수 없어요');
+      setCaptionColor(semantic.light.feedback.solid.negative);
+      return setHashtag(''); // 특수문자 포함 시 즉시 종료
+    }
+
+    if (invalidKoreanPattern.test(inputText)) {
+      setCaptionMessage('올바른 한글을 입력해주세요');
+      setCaptionColor(semantic.light.feedback.solid.negative);
+      return setHashtag(''); // 잘못된 한글 포함 시 즉시 종료
+    }
+
+    if (!validCharsPattern.test(inputText)) {
+      return; // 유효한 문자가 없으면 즉시 종료
+    }
+
+    const hashtagText = inputText.match(validCharsPattern)!.join('');
+
+    if (diaryInfo.hashArr.includes(hashtagText)) {
+      setCaptionMessage('이미 존재하는 해시태그입니다.');
+      setCaptionColor(semantic.light.feedback.solid.negative);
+      return setHashtag(''); // 중복된 해시태그일 때 즉시 종료
+    }
+
+    if (diaryInfo.hashArr.length >= 15) {
+      setCaptionMessage('해시태그는 15개까지 입력 가능합니다.');
+      setCaptionColor(semantic.light.feedback.solid.negative);
+      return setHashtag(''); // 해시태그 최대 개수 초과 시 즉시 종료
+    }
+
+    // 모든 조건을 통과한 경우에만 해시태그 추가
+    setDiaryField({ hashArr: [...diaryInfo.hashArr, hashtagText] });
+    setCaptionMessage('태그명을 입력하고, 스페이스바를 누르면 저장돼요');
+    setCaptionColor(semantic.light.object.transparent.assistive);
+    setHashtag('');
   };
 
   // 해시태그를 배열에서 제거하는 함수
@@ -223,7 +268,7 @@ const CreateDiary = () => {
             <SavePrevBtn>
               <SavePrevBtnText>임시저장(Ctrl+S)</SavePrevBtnText>
             </SavePrevBtn>
-            <SaveBtn>
+            <SaveBtn onClick={handleSave}>
               <SaveBtnText>저장하기</SaveBtnText>
               <Publish />
             </SaveBtn>
@@ -305,13 +350,36 @@ const CreateDiary = () => {
           <HashtagBox>
             <HashtagContent>
               <Tag />
-              <HashtagPlaceholder>일상, 친구, 점심 등</HashtagPlaceholder>
+              <HashtagArrTitle>
+                {diaryInfo.hashArr.map((tag, index) => (
+                  <span key={index}>
+                    {tag}
+                    <button
+                      style={{
+                        color: 'rgba(71, 71, 71, 0.63)',
+                        fontSize: '0.675rem',
+                        fontStyle: 'normal',
+                        fontWeight: '700',
+                        lineHeight: '1.625rem',
+                      }}
+                      onClick={() => removeHashtag(index)}
+                    >
+                      X
+                    </button>
+                  </span>
+                ))}
+              </HashtagArrTitle>
+              <HashtagInput
+                type="text"
+                value={hashtag}
+                onChange={onChangeHashtag}
+                onKeyUp={addHashtag}
+                placeholder={hashtag ? '' : '일상, 친구, 점심 등'}
+              />
             </HashtagContent>
           </HashtagBox>
           <CaptionBox>
-            <CaptionText>
-              태그명을 입력하고, 스페이스바를 누르면 저장돼요
-            </CaptionText>
+            <CaptionText color={captionColor}>{captionMessage}</CaptionText>
           </CaptionBox>
         </HashtagContainer>
         <SelectableContainer>
@@ -368,54 +436,6 @@ const CreateDiary = () => {
           </EmotionBox>
         </SelectableContainer>
       </Layout>
-      <div>
-        <div style={{ fontSize: '30px' }}>{EMOJI[diaryInfo.moodValue]}</div>
-        <div>오늘의 기분</div>
-        <input
-          type="range"
-          name="todayMood"
-          min="1"
-          max="9"
-          list="values"
-          value={diaryInfo.moodValue}
-          onChange={handleMoodChange}
-        />
-
-        <datalist id="values">
-          <option value="0" label="0"></option>
-          <option value="2" label="2"></option>
-          <option value="4" label="4"></option>
-          <option value="6" label="6"></option>
-          <option value="8" label="8"></option>
-          <option value="10" label="10"></option>
-        </datalist>
-      </div>
-
-      <input
-        type="text"
-        value={hashtag}
-        onChange={onChangeHashtag}
-        onKeyUp={addHashtag}
-        placeholder={hashtag ? '' : '#해시태그'}
-      />
-      <Button
-        text="저장"
-        width="120px"
-        defaultColor="#2d2d2d"
-        hoverColor="#FFF"
-        defaultBgColor="#FFFFFF"
-        hoverBgColor="#111111"
-        border="1px solid #bfbfbf"
-        onClick={handleSave}
-      />
-      <div>
-        {diaryInfo.hashArr.map((tag, index) => (
-          <span key={index}>
-            {tag}
-            <button onClick={() => removeHashtag(index)}>X</button>
-          </span>
-        ))}
-      </div>
     </>
   );
 };
@@ -523,7 +543,6 @@ const SaveBtn = styled.button`
   gap: var(--gap-2xs, 0.5rem);
 
   border-radius: var(--radius-xs, 0.5rem);
-  opacity: var(--opacity-visible, 1);
   background: ${semantic.light.interactive.solid.disabled};
 `;
 
@@ -737,9 +756,25 @@ const HashtagContent = styled.div`
   flex: 1 0 0;
 `;
 
-const HashtagPlaceholder = styled.p`
-  color: ${semantic.light.object.transparent.assistive};
+const HashtagInput = styled.input`
+  flex: 1;
+  border: none;
+  outline: none;
+  background: transparent;
   ${TYPO.body1}
+
+  &::placeholder {
+    color: ${semantic.light.object.transparent.assistive};
+  }
+`;
+
+const HashtagArrTitle = styled.p`
+  color: ${semantic.light.accent.solid.hero};
+
+  font-size: 0.875rem;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 1.625rem;
 `;
 
 const CaptionBox = styled.div`
@@ -749,8 +784,8 @@ const CaptionBox = styled.div`
   align-self: stretch;
 `;
 
-const CaptionText = styled.p`
-  color: ${semantic.light.object.transparent.assistive};
+const CaptionText = styled.p<{ color: string }>`
+  color: ${props => props.color};
   ${TYPO.caption1}
 `;
 
