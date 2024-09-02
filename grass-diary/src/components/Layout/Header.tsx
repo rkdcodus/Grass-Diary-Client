@@ -10,39 +10,53 @@ import { Profile } from '@components/index';
 import { useNavigate } from 'react-router-dom';
 import { useUser } from '@state/user/useUser';
 import { INTERACTION } from '@styles/interaction';
+import { TYPO } from '@styles/typo';
 
 const Header = () => {
   const memberId = useUser();
   const navigate = useNavigate();
 
   return (
-    <div>
-      <NavBar>
-        <ContentWrap>
-          <LogoContainer>
-            <Logo onClick={() => navigate('/main')}>
-              <LogoImg />
-              <LogoStr />
-            </Logo>
-          </LogoContainer>
-          {memberId ? (
-            <RightContent>
-              <Profile width="2rem" height="2rem" />
-              <MenuBar />
-            </RightContent>
-          ) : (
-            <LoginBtn onClick={() => console.log('로그인')}>로그인</LoginBtn>
-          )}
-        </ContentWrap>
-      </NavBar>
-    </div>
+    <NavBar>
+      <ContentWrap>
+        <LogoContainer>
+          <Logo onClick={() => navigate('/main')}>
+            <LogoImg />
+            <LogoStr />
+          </Logo>
+        </LogoContainer>
+        <FeedButton onClick={() => navigate('/share')}>피드</FeedButton>
+        {memberId ? (
+          <RightContent>
+            <Profile width="2rem" height="2rem" />
+            <MenuBar />
+          </RightContent>
+        ) : (
+          <LoginBtn onClick={() => console.log('로그인')}>로그인</LoginBtn>
+        )}
+      </ContentWrap>
+    </NavBar>
   );
 };
 
 export default Header;
 
+const FeedButton = styled.button`
+  cursor: pointer;
+  display: flex;
+  padding: var(--gap-5xs, 0.125rem) var(--gap-sm, 0.75rem);
+  justify-content: center;
+  align-items: center;
+  border-radius: var(--radius-xs, 0.5rem);
+  color: ${semantic.light.object.solid.normal};
+  text-align: center;
+  white-space: nowrap;
+  ${TYPO.title1}
+
+  ${INTERACTION.default.normal()}
+`;
+
 const NavBar = styled.header`
-  min-width: 20rem;
   display: flex;
   padding: var(--gap-xs, 0.625rem) var(--gap-xl, 1.5rem);
   justify-content: center;
