@@ -145,7 +145,7 @@ const Item = styled.section`
     margin-left: 1.5rem;
   }
 
-  @media screen and (max-width: 959px) {
+  @media screen and (max-width: 60em) {
     &:nth-child(2) {
       order: 3;
       flex-basis: 100%;
@@ -188,12 +188,11 @@ const DiaryBox = styled.div`
     ${semantic.light.border.transparent.alternative};
   background: ${semantic.light.bg.solid.subtlest};
 
-  @media screen and (min-width: 960px) {
-    width: 60rem;
-  }
+  width: 60rem;
 
-  @media screen and (max-width: 959px) {
-    min-width: 20rem;
+  @media screen and (max-width: 60em) {
+    width: 100%;
+    min-width: 20em;
     padding: var(--gap-xl, 1.5rem) var(--gap-md, 1rem) var(--gap-2xl, 2rem)
       var(--gap-md, 1rem);
   }
@@ -302,7 +301,7 @@ const BottomSection = styled.div`
   align-self: stretch;
   flex-wrap: wrap;
 
-  @media screen and (max-width: 959px) {
+  @media screen and (max-width: 60em) {
     flex-direction: column;
     align-items: normal;
     align-content: normal;

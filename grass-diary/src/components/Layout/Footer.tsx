@@ -43,7 +43,7 @@ const ContentWrap = styled.div`
   align-self: stretch;
   flex: 1;
 
-  @media screen and (max-width: 959px) {
+  @media screen and (max-width: 60em) {
     flex-direction: column;
     gap: var(--gap-md, 1rem);
   }

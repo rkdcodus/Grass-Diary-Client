@@ -66,8 +66,8 @@ const NavBar = styled.header`
     ${semantic.light.border.transparent.alternative};
   background: ${semantic.light.bg.solid.subtlest};
 
-  @media screen and (max-width: 959px) {
-    min-width: 20rem;
+  @media screen and (max-width: 60em) {
+    min-width: 20em;
   }
 `;
 
