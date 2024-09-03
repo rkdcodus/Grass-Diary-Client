@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css, keyframes } from 'styled-components';
 import Swal from 'sweetalert2';
 import QuillEditor from './QuillEditor';
 import EMOJI from '@constants/emoji';
@@ -818,9 +818,23 @@ const CaptionBox = styled.div`
   align-self: stretch;
 `;
 
+const CaptionTextShake = keyframes`
+  0% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  50% { transform: translateX(5px); }
+  75% { transform: translateX(-5px); }
+  100% { transform: translateX(0); }
+`;
+
 const CaptionText = styled.p<{ color: string }>`
   color: ${props => props.color};
   ${TYPO.caption1}
+
+  ${props =>
+    props.color === semantic.light.feedback.solid.negative &&
+    css`
+      animation: ${CaptionTextShake} 0.3s ease;
+    `}
 `;
 
 const SelectableContainer = styled.div`
