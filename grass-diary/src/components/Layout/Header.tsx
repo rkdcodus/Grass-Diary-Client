@@ -16,26 +16,24 @@ const Header = () => {
   const navigate = useNavigate();
 
   return (
-    <div>
-      <NavBar>
-        <ContentWrap>
-          <LogoContainer>
-            <Logo onClick={() => navigate('/main')}>
-              <LogoImg />
-              <LogoStr />
-            </Logo>
-          </LogoContainer>
-          {memberId ? (
-            <RightContent>
-              <Profile width="2rem" height="2rem" />
-              <MenuBar />
-            </RightContent>
-          ) : (
-            <LoginBtn onClick={() => console.log('로그인')}>로그인</LoginBtn>
-          )}
-        </ContentWrap>
-      </NavBar>
-    </div>
+    <NavBar>
+      <ContentWrap>
+        <LogoContainer>
+          <Logo onClick={() => navigate('/main')}>
+            <LogoImg />
+            <LogoStr />
+          </Logo>
+        </LogoContainer>
+        {memberId ? (
+          <RightContent>
+            <Profile width="2rem" height="2rem" />
+            <MenuBar />
+          </RightContent>
+        ) : (
+          <LoginBtn onClick={() => console.log('로그인')}>로그인</LoginBtn>
+        )}
+      </ContentWrap>
+    </NavBar>
   );
 };
 

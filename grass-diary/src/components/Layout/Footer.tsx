@@ -22,7 +22,7 @@ const Footer = () => {
 
 export default Footer;
 
-const FooterContainer = styled.div`
+const FooterContainer = styled.footer`
   align-self: stretch;
   display: flex;
   padding: var(--gap-xl, 1.5rem);
