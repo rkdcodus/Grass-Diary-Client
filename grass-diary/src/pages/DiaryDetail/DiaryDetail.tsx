@@ -171,8 +171,8 @@ const DiaryBox = styled.div`
   margin: auto;
   min-height: 100vh;
   display: flex;
-  padding: var(--gap-xl, 1.5rem) var(--gap-xl, 1.5rem) var(--gap-2xl, 2rem)
-    var(--gap-xl, 1.5rem);
+  padding: var(--gap-4xl, 3rem) var(--gap-9xl, 8.5rem) var(--gap-7xl, 4.5rem)
+    var(--gap-9xl, 8.5rem);
   flex-direction: column;
   align-items: flex-start;
   gap: var(--gap-lg, 1.25rem);
@@ -194,6 +194,8 @@ const DiaryBox = styled.div`
 
   @media screen and (max-width: 959px) {
     min-width: 20rem;
+    padding: var(--gap-xl, 1.5rem) var(--gap-md, 1rem) var(--gap-2xl, 2rem)
+      var(--gap-md, 1rem);
   }
 `;
 
