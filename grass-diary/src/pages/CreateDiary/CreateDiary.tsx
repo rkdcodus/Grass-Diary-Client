@@ -29,7 +29,7 @@ const CreateDiary = () => {
   const { date } = useTodayDate();
   const [diaryInfo, setDiaryInfo] = useState<IDiaryInfo>({
     hashArr: [],
-    moodValue: 3,
+    moodValue: 5,
     quillContent: '',
     isPrivate: true,
     year: null,
@@ -85,6 +85,12 @@ const CreateDiary = () => {
     if (e.target.value === '') {
       setCaptionMessage('태그명을 입력하고, 스페이스바를 누르면 저장돼요');
       setCaptionColor(semantic.light.object.transparent.assistive);
+    }
+
+    if (e.target.value.length > 10) {
+      setCaptionMessage('해시태그 길이가 너무 깁니다.');
+      setCaptionColor(semantic.light.feedback.solid.negative);
+      return setHashtag('');
     }
   };
 
@@ -143,9 +149,18 @@ const CreateDiary = () => {
     setHashtag('');
   };
 
-  // 해시태그를 배열에서 제거하는 함수
-  const removeHashtag = (index: number) => {
-    setDiaryField({ hashArr: diaryInfo.hashArr.filter((_, i) => i !== index) });
+  // 해시태그 제거 핸들러
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Backspace' && hashtag === '') {
+      const lastHashtag = diaryInfo.hashArr[diaryInfo.hashArr.length - 1];
+
+      if (lastHashtag) {
+        setDiaryField({
+          hashArr: diaryInfo.hashArr.slice(0, -1),
+        });
+        setHashtag(lastHashtag);
+      }
+    }
   };
 
   const checkWritingPermission = () => {
@@ -163,7 +178,7 @@ const CreateDiary = () => {
   };
 
   const handleSave = async () => {
-    if (isContentEmpty) return; // 일기 내용이 비어 있으면 실행하지 않음
+    if (isContentEmpty) return; // 일기 내용이 비어 있으면 저장 요청 불가
 
     const { quillContent, isPrivate, hashArr, moodValue } = diaryInfo;
     const request = {
@@ -366,18 +381,7 @@ const CreateDiary = () => {
                 {diaryInfo.hashArr.map((tag, index) => (
                   <span key={index}>
                     {tag}
-                    <button
-                      style={{
-                        color: 'rgba(71, 71, 71, 0.63)',
-                        fontSize: '0.675rem',
-                        fontStyle: 'normal',
-                        fontWeight: '700',
-                        lineHeight: '1.625rem',
-                      }}
-                      onClick={() => removeHashtag(index)}
-                    >
-                      X
-                    </button>
+                    {`  `}
                   </span>
                 ))}
               </HashtagArrTitle>
@@ -386,7 +390,12 @@ const CreateDiary = () => {
                 value={hashtag}
                 onChange={onChangeHashtag}
                 onKeyUp={addHashtag}
-                placeholder={hashtag ? '' : '일상, 친구, 점심 등'}
+                onKeyDown={handleKeyDown}
+                placeholder={
+                  diaryInfo.hashArr.length > 0
+                    ? '태그명을 작성해주세요...'
+                    : '일상, 친구, 점심 등'
+                }
               />
             </HashtagContent>
           </HashtagBox>
