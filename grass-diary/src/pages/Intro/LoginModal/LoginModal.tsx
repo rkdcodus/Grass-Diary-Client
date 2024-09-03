@@ -1,90 +1,9 @@
-import stylex from '@stylexjs/stylex';
-import googleButton from '@icon/googleButton.png';
+import { semantic } from '@styles/semantic';
 import { API_URI } from '@services/index';
+import Divider from '@components/Divider';
+import * as S from '@styles/Intro/LoginModal';
 
-const styles = stylex.create({
-  container: {
-    display: 'flex',
-    justifyContent: 'center',
-  },
-
-  background: {
-    width: '100%',
-    height: '100%',
-    backgroundColor: '#ffffff78',
-  },
-
-  modal: (top: string) => ({
-    display: 'flex',
-    flexDirection: 'column',
-    position: 'fixed',
-
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-
-    width: '31.5rem',
-    height: '18.5rem',
-
-    borderRadius: '0.3rem',
-
-    boxShadow: '0 2px 12px 0 rgba(9, 8, 8, 0.1)',
-    backgroundColor: '#FFF',
-
-    gap: '0.6rem',
-
-    top,
-  }),
-
-  modalHeader: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-
-    height: '3.75rem',
-    padding: '1.2rem',
-
-    borderBottom: '1px solid #d1d1d1',
-  },
-
-  xButton: {
-    fontSize: '1.8rem',
-    cursor: 'pointer',
-
-    border: 'none',
-    backgroundColor: 'transparent',
-  },
-
-  modalContent: {
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
-
-    height: 'calc(100% - 6.5rem)',
-  },
-
-  button: {
-    border: 'none',
-    backgroundColor: 'transparent',
-
-    cursor: 'pointer',
-  },
-
-  buttonImage: {
-    width: '21.5rem',
-    height: '4.35rem',
-
-    borderRadius: '0.6rem',
-    objectFit: 'cover',
-  },
-
-  switchText: {
-    display: 'flex',
-    justifyContent: 'center',
-  },
-});
-
-const LoginModal = ({ top, isOpen, isClose }: ILoginModalProps) => {
+const LoginModal = ({ isOpen, isClose }: ILoginModalProps) => {
   if (!isOpen) return null;
 
   const handleGoogleLogin: TGoogleLogin = () => {
@@ -92,22 +11,27 @@ const LoginModal = ({ top, isOpen, isClose }: ILoginModalProps) => {
   };
 
   return (
-    <div {...stylex.props(styles.container)}>
-      <div {...stylex.props(styles.background)} onClick={isClose}></div>
-      <div {...stylex.props(styles.modal(top))}>
-        <div {...stylex.props(styles.modalHeader)}>
-          <span>회원가입 및 로그인</span>
-          <button {...stylex.props(styles.xButton)} onClick={isClose}>
-            <i className="fa-solid fa-xmark"></i>
-          </button>
-        </div>
-        <div {...stylex.props(styles.modalContent)}>
-          <button {...stylex.props(styles.button)} onClick={handleGoogleLogin}>
-            <img {...stylex.props(styles.buttonImage)} src={googleButton}></img>
-          </button>
-        </div>
-      </div>
-    </div>
+    <S.ModalBox>
+      <S.ModalHeader>
+        <S.ModalTitleText>회원가입 및 로그인</S.ModalTitleText>
+        <S.CloseButton onClick={isClose}>
+          <S.CloseImg src="/assets/icons/dialog-icon-btn-close.svg" />
+        </S.CloseButton>
+      </S.ModalHeader>
+      <Divider
+        width="22.5rem"
+        color={semantic.light.border.transparent.alternative}
+      />
+      <S.ButtonBox>
+        <button onClick={handleGoogleLogin}>
+          <img src="/assets/img/googleLogin.png" />
+        </button>
+        <S.TermText>
+          로그인 시, <S.TermAnchor href="#">서비스 이용약관</S.TermAnchor>에
+          동의하는 것으로 간주됩니다.
+        </S.TermText>
+      </S.ButtonBox>
+    </S.ModalBox>
   );
 };
 

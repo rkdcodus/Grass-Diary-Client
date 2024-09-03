@@ -1,4 +1,4 @@
-import * as S from '../../styles/Intro/IntroStyles';
+import * as S from '@styles/Intro/IntroStyles';
 import {
   FirstSection,
   LastSection,
