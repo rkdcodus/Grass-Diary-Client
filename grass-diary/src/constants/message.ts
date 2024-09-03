@@ -123,15 +123,14 @@ export const INTRO_MESSAGES = {
   firstSection: {
     serviceName: '잔디 일기',
     serviceIntroduction: '일상 속의 잔디, 나의 이야기를 키우다',
-
     scrollMessage: '아래로 스크롤을 내려 잔디 일기에 대해 더 알아보세요!',
   },
   secondSection: {
-    secondTitle: '기록하고 성장시키는\n나만의 잔디 일기장',
+    secondTitle: '시키는\n나만의 잔디 일기장',
     secondIntroduction: '일기를 작성하면 파릇파릇한 잔디밭이 만들어져요!',
   },
   thirdSection: {
-    thirdTitle: '다른 사람들의 일기를\n구경하고 소통해요',
+    thirdTitle: '다른 사람들의 일기를\n',
     thirdIntroduction: '다양한 생각, 기억들을 둘러보며 이야기를 나눠요.',
   },
   lastSection: {

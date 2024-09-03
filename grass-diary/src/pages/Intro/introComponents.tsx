@@ -80,12 +80,15 @@ const SecondSection = () => {
       <S.CommonArticle>
         <S.CommonTitleContainer>
           <S.CommonTitle>
+            <S.HighlightText>기록</S.HighlightText>하고
+            <S.HighlightText> 성장</S.HighlightText>
             {INTRO_MESSAGES.secondSection.secondTitle}
           </S.CommonTitle>
           <S.CommonIntroductionText>
             {INTRO_MESSAGES.secondSection.secondIntroduction}
           </S.CommonIntroductionText>
         </S.CommonTitleContainer>
+        <img src="/assets/img/banner:record.svg" />
       </S.CommonArticle>
     </S.CommonSection>
   );
@@ -95,9 +98,12 @@ const ThirdSection = () => {
   return (
     <S.CommonSection>
       <S.CommonArticle>
+        <img src="/assets/img/card:publicDiary.svg" />
         <S.CommonTitleContainer>
           <S.CommonTitle>
             {INTRO_MESSAGES.thirdSection.thirdTitle}
+            <S.HighlightText>구경</S.HighlightText>하고
+            <S.HighlightText> 소통</S.HighlightText>해요
           </S.CommonTitle>
           <S.CommonIntroductionText>
             {INTRO_MESSAGES.thirdSection.thirdIntroduction}

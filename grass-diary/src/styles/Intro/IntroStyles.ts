@@ -17,6 +17,8 @@ const CommonSection = styled.section`
   align-self: stretch;
   justify-content: center;
 
+  position: relative;
+
   width: 100%;
   height: 56.75rem;
 
@@ -31,6 +33,12 @@ const MainBox = styled.div`
   align-self: stretch;
   flex-direction: column;
   justify-content: center;
+
+  position: absolute;
+
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 
   gap: 1.5rem;
   max-width: 60rem;
@@ -135,13 +143,14 @@ const CommonArticle = styled.article`
 
 const CommonTitleContainer = styled.div`
   display: flex;
-  align-self: stretch;
-  align-items: center;
   flex-direction: column;
   justify-content: center;
+  align-self: stretch;
+  align-items: center;
+
+  width: 29.5rem;
 
   gap: 1.5rem;
-  flex: 1 0 0;
 `;
 
 const CommonTitle = styled.h1`
@@ -156,6 +165,13 @@ const CommonIntroductionText = styled.small`
 
   ${TYPO.label3}
   color: ${semantic.light.object.transparent.alternative};
+`;
+
+const HighlightText = styled.span`
+  text-align: center;
+
+  ${TYPO.title3};
+  color: ${semantic.light.accent.solid.normal};
 `;
 
 export {
@@ -176,4 +192,5 @@ export {
   CommonTitleContainer,
   CommonTitle,
   CommonIntroductionText,
+  HighlightText,
 };
