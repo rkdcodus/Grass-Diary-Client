@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { ReactComponent as LeftArrow } from '@svg/chevron_left.svg';
 import { INTERACTION } from '@styles/interaction';
+import { semantic } from '@styles/semantic';
 
 interface IBackButtonProps {
   goBackTo?: string;
@@ -21,7 +22,7 @@ const BackButton = ({ goBackTo }: IBackButtonProps) => {
   };
   return (
     <ArrowButton onClick={goBack}>
-      <LeftArrow />
+      <ArrowIcon />
     </ArrowButton>
   );
 };
@@ -33,4 +34,11 @@ const ArrowButton = styled.button`
   padding: var(--gap-4xs, 0.25rem);
   border-radius: var(--radius-2xs, 0.25rem);
   ${INTERACTION.default.normal()}
+`;
+
+const ArrowIcon = styled(LeftArrow)`
+  width: 24px;
+  height: 24px;
+  fill: ${semantic.light.object.transparent.neutral};
+  cursor: pointer;
 `;
