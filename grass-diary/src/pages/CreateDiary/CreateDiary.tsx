@@ -15,6 +15,7 @@ import { usePostImage } from '@hooks/api/usePostImage';
 import { useUser } from '@state/user/useUser';
 import { TYPO } from '@styles/typo';
 import { ReactComponent as Publish } from '@svg/publish.svg';
+import { ReactComponent as PublishOn } from '@svg/publish_on.svg';
 import { ReactComponent as Close } from '@svg/close.svg';
 import { ReactComponent as Tag } from '@svg/tag.svg';
 import { ReactComponent as Lock } from '@svg/lock.svg';
@@ -39,6 +40,9 @@ const CreateDiary = () => {
 
   // 오늘의 질문, 나만의 일기 state
   const [selectedMode, setSelectedMode] = useState('dailyQuestion');
+
+  // 저장 버튼 활성화 state
+  const [isContentEmpty, setIsContentEmpty] = useState(true);
 
   // 해시태그 state
   const [hashtag, setHashtag] = useState<string>('');
@@ -68,11 +72,13 @@ const CreateDiary = () => {
     setDiaryInfo(prev => ({ ...prev, ...field }));
   };
 
-  const handleModeChange = mode => setSelectedMode(mode);
+  const handleModeChange = (mode: string) => setSelectedMode(mode);
   const handlePrivateChange = () => setDiaryField({ isPrivate: true });
   const handlePublicChange = () => setDiaryField({ isPrivate: false });
+
   const handleMoodChange = (e: React.ChangeEvent<HTMLInputElement>) =>
     setDiaryField({ moodValue: parseInt(e.target.value) });
+
   const onChangeHashtag = (e: React.ChangeEvent<HTMLInputElement>) => {
     setHashtag(e.target.value);
 
@@ -157,6 +163,8 @@ const CreateDiary = () => {
   };
 
   const handleSave = async () => {
+    if (isContentEmpty) return; // 일기 내용이 비어 있으면 실행하지 않음
+
     const { quillContent, isPrivate, hashArr, moodValue } = diaryInfo;
     const request = {
       content: quillContent,
@@ -252,6 +260,12 @@ const CreateDiary = () => {
     });
   };
 
+  const handleContentChange = (content: string) => {
+    setDiaryField({ quillContent: content });
+    const checkText = content.replace(/<\/?[^>]+(>|$)/g, '');
+    setIsContentEmpty(checkText.trim().length === 0);
+  };
+
   return (
     <>
       <Header />
@@ -268,9 +282,9 @@ const CreateDiary = () => {
             <SavePrevBtn>
               <SavePrevBtnText>임시저장(Ctrl+S)</SavePrevBtnText>
             </SavePrevBtn>
-            <SaveBtn onClick={handleSave}>
-              <SaveBtnText>저장하기</SaveBtnText>
-              <Publish />
+            <SaveBtn onClick={handleSave} disabled={isContentEmpty}>
+              <SaveBtnText disabled={isContentEmpty}>저장하기</SaveBtnText>
+              {isContentEmpty ? <Publish /> : <PublishOn />}
             </SaveBtn>
           </SaveBtnContainer>
         </SaveWrap>
@@ -333,9 +347,7 @@ const CreateDiary = () => {
         </ImageLayout>
         <MainContainer>
           <QuillEditor
-            onContentChange={content =>
-              setDiaryField({ quillContent: content })
-            }
+            onContentChange={handleContentChange}
             quillContent={diaryInfo.quillContent}
             setImage={setImage}
             setFile={setFile}
@@ -511,7 +523,6 @@ const SaveBtnContainer = styled.div`
   gap: var(--gap-md, 1rem);
 
   border-radius: var(--radius-empty, 0rem);
-  opacity: var(--opacity-visible, 1);
 `;
 
 const SavePrevBtn = styled.button`
@@ -524,7 +535,6 @@ const SavePrevBtn = styled.button`
   border-radius: var(--radius-xs, 0.5rem);
   border: var(--stroke-thin, 1px) solid
     ${semantic.light.border.transparent.alternative};
-  opacity: var(--opacity-visible, 1);
   background: ${semantic.light.bg.solid.normal};
 `;
 
@@ -535,7 +545,7 @@ const SavePrevBtnText = styled.p`
   ${TYPO.label2}
 `;
 
-const SaveBtn = styled.button`
+const SaveBtn = styled.button<{ disabled: boolean }>`
   display: flex;
   padding: var(--gap-xs, 0.625rem) var(--gap-md, 1rem);
   justify-content: center;
@@ -543,11 +553,26 @@ const SaveBtn = styled.button`
   gap: var(--gap-2xs, 0.5rem);
 
   border-radius: var(--radius-xs, 0.5rem);
-  background: ${semantic.light.interactive.solid.disabled};
+  background: ${({ disabled }) =>
+    disabled
+      ? semantic.light.interactive.solid.disabled
+      : semantic.light.accent.solid.normal};
+  cursor: ${({ disabled }) => (disabled ? 'not-allowed' : 'pointer')};
+
+  &:hover {
+    background: ${({ disabled }) =>
+      disabled
+        ? semantic.light.interactive.solid.disabled
+        : semantic.light.accent.solid.hero};
+  }
+  transition: all 0.2s ease-in;
 `;
 
-const SaveBtnText = styled.p`
-  color: ${semantic.light.object.transparent.disabled};
+const SaveBtnText = styled.p<{ disabled: boolean }>`
+  color: ${({ disabled }) =>
+    disabled
+      ? semantic.light.object.transparent.disabled
+      : semantic.light.base.solid.white};
   text-align: center;
 
   ${TYPO.label2}
