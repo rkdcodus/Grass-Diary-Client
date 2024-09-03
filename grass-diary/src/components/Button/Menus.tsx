@@ -32,21 +32,24 @@ const Menus = ({ children, icon }: MenusProps) => {
   }, [open]);
 
   return (
-    <div ref={iconRef}>
+    <Temp ref={iconRef}>
       <BarBtn onClick={dropDown}>
         <Icon src={icon} />
-        <MenusContainer $toggle={open} ref={boxRef}>
-          {children}
-        </MenusContainer>
       </BarBtn>
-    </div>
+      <MenusContainer $toggle={open} ref={boxRef}>
+        {children}
+      </MenusContainer>
+    </Temp>
   );
 };
 
 export default Menus;
 
-const BarBtn = styled.button`
+const Temp = styled.div`
   position: relative;
+`;
+
+const BarBtn = styled.button`
   display: flex;
   padding: var(--gap-4xs, 0.25rem);
   justify-content: center;
