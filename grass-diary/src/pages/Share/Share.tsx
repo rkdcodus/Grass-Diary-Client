@@ -5,7 +5,7 @@ import { NULL } from '@constants/message';
 import styled from 'styled-components';
 import { semantic } from '@styles/semantic';
 
-import Masonry from 'react-responsive-masonry';
+import Masonry, { ResponsiveMasonry } from 'react-responsive-masonry';
 
 const Share = () => {
   const target = useRef<HTMLDivElement>(null);
@@ -22,7 +22,6 @@ const Share = () => {
     if (latest?.length === 0) {
       window.scrollTo(0, 0);
     }
-    console.log(latest);
     const observer = new IntersectionObserver(callback, { threshold: 0.3 });
     const { current } = target;
 
@@ -43,13 +42,17 @@ const Share = () => {
       <Background>
         <FeedContainer>
           {latest ? (
-            <Masonry columnsCount={2}>
-              {latest.map(page =>
-                page?.map(data => {
-                  return <Feed key={data.diaryId} feed={data} isTop={false} />;
-                }),
-              )}
-            </Masonry>
+            <ResponsiveMasonry columnsCountBreakPoints={{ 350: 1, 960: 2 }}>
+              <Masonry columnsCount={2}>
+                {latest.map(page =>
+                  page?.map(data => {
+                    return (
+                      <Feed key={data.diaryId} feed={data} isTop={false} />
+                    );
+                  }),
+                )}
+              </Masonry>
+            </ResponsiveMasonry>
           ) : (
             <FeedNull>{NULL.share_feed}</FeedNull>
           )}
