@@ -79,7 +79,11 @@ const PopularFeed = () => {
 
       {top10 && top10.length > 3 ? (
         <SliderWrap>
-          <CustomSlider {...settings}>{feedList}</CustomSlider>
+          <CustomSlider {...settings} className="Slider">
+            {top10?.map(data => (
+              <Feed key={data.diaryId} feed={data} isTop={true} />
+            ))}
+          </CustomSlider>
         </SliderWrap>
       ) : (
         <FeedListWrap>{feedList}</FeedListWrap>
@@ -156,7 +160,6 @@ const CustomSlider = styled(Slider)`
   align-items: center;
   gap: var(--gap-md, 0.6rem);
   flex: 1 0 0;
-  padding-bottom: 1.25rem;
 `;
 
 const RankContainer = styled.section`

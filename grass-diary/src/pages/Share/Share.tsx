@@ -1,23 +1,15 @@
-import stylex from '@stylexjs/stylex';
-import { Fragment, useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { Feed, PopularFeed } from '@components/index';
 import { useLatestDiaries } from '@hooks/api/useLatestDiaries';
 import { NULL } from '@constants/message';
 import styled from 'styled-components';
 import { semantic } from '@styles/semantic';
 
+import Masonry from 'react-responsive-masonry';
+
 const Share = () => {
   const target = useRef<HTMLDivElement>(null);
   const { latest, fetchNextPage } = useLatestDiaries();
-
-  const feedList = latest?.map((group, i) => (
-    <Fragment key={i}>
-      {group &&
-        group?.map(data => {
-          return <Feed key={data.diaryId} feed={data} isTop={false} />;
-        })}
-    </Fragment>
-  ));
 
   const callback: IntersectionObserverCallback = async ([entry]) => {
     if (entry.isIntersecting) {
@@ -30,7 +22,7 @@ const Share = () => {
     if (latest?.length === 0) {
       window.scrollTo(0, 0);
     }
-
+    console.log(latest);
     const observer = new IntersectionObserver(callback, { threshold: 0.3 });
     const { current } = target;
 
@@ -51,7 +43,13 @@ const Share = () => {
       <Background>
         <FeedContainer>
           {latest ? (
-            <CardContainer>{feedList}</CardContainer>
+            <Masonry columnsCount={2}>
+              {latest.map(page =>
+                page?.map(data => {
+                  return <Feed key={data.diaryId} feed={data} isTop={false} />;
+                }),
+              )}
+            </Masonry>
           ) : (
             <FeedNull>{NULL.share_feed}</FeedNull>
           )}
@@ -76,21 +74,9 @@ const Background = styled.section`
 `;
 
 const FeedContainer = styled.div`
-  display: flex;
   max-width: 60rem;
   padding: var(--gap-7xl, 4.5rem) var(--gap-xl, 1.5rem);
-  flex-direction: column;
-  align-items: flex-start;
   margin: auto;
-`;
-
-const CardContainer = styled.ul`
-  display: flex;
-  align-items: flex-start;
-  align-content: flex-start;
-  gap: 1rem var(--gap-md, 1rem);
-  align-self: stretch;
-  flex-wrap: wrap;
 `;
 
 const Observe = styled.div`

@@ -79,7 +79,6 @@ export default Feed;
 const FeedWrap = styled.div`
   display: flex;
   justify-content: center;
-  margin-bottom: 4px;
 `;
 
 const CardContainer = styled.li<{ $isTop: boolean }>`
@@ -91,6 +90,7 @@ const CardContainer = styled.li<{ $isTop: boolean }>`
 
   width: ${props => (props.$isTop ? `17.7rem` : `27.75rem`)};
   max-height: 39.25rem;
+  margin-bottom: 1rem;
 
   border-radius: var(--radius-md, 1rem);
   border: var(--stroke-thin, 0.0625rem) solid
@@ -168,17 +168,15 @@ const CardFooterSection = styled.div`
 `;
 
 const CardContent = styled.div<{ $isTop: boolean }>`
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 3;
+  min-height: 5.25rem;
+  word-break: break-all;
 
-  overflow: hidden;
   color: ${semantic.light.object.solid.normal};
-  text-overflow: ellipsis;
 
   ${TYPO.body2}
 `;
 
+// 이미지 추가 시 사용할 예정
 const ImageContent = styled.div<{ $isTop: boolean }>`
   height: ${props => (props.$isTop ? `12.5rem` : `22.5rem`)};
   background: red;
