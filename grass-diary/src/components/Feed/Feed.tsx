@@ -88,7 +88,9 @@ const CardContainer = styled.li<{ $isTop: boolean }>`
   flex-direction: column;
   align-items: flex-start;
   gap: var(--gap-xl, 1.5rem);
+
   width: ${props => (props.$isTop ? `17.7rem` : `27.75rem`)};
+  max-height: 39.25rem;
 
   border-radius: var(--radius-md, 1rem);
   border: var(--stroke-thin, 0.0625rem) solid
@@ -168,14 +170,7 @@ const CardFooterSection = styled.div`
 const CardContent = styled.div<{ $isTop: boolean }>`
   display: -webkit-box;
   -webkit-box-orient: vertical;
-
-  // 이미지 있을 경우
-  // -webkit-line-clamp: 3;
-  // min-height: 5.25rem;
-
-  // 이미지 없을 경우
-  -webkit-line-clamp: 10;
-  min-height: ${props => (props.$isTop ? `17.75rem` : `27.75rem`)};
+  -webkit-line-clamp: 3;
 
   overflow: hidden;
   color: ${semantic.light.object.solid.normal};
@@ -186,7 +181,7 @@ const CardContent = styled.div<{ $isTop: boolean }>`
 
 const ImageContent = styled.div<{ $isTop: boolean }>`
   height: ${props => (props.$isTop ? `12.5rem` : `22.5rem`)};
-
+  background: red;
   border-radius: var(--radius-sm, 0.75rem);
   margin-bottom: 1rem;
   object-fit: cover;
