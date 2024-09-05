@@ -12,3 +12,8 @@ export { EllipsisIcon, EllipsisBox } from './Ellipsis';
 export { default as Comments } from './Comment/Comments';
 export { default as Layout } from './Layout/Layout';
 export { default as Divider } from './Divider';
+export { default as Menus } from './Button/Menus';
+export { default as Menu } from './Button/Menu';
+export { default as Modal } from './modal/Modal';
+export { default as CheckButton } from './modal/CheckButton';
+export { default as CustomButton } from './modal/CustomButton';
