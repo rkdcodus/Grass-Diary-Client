@@ -12,6 +12,7 @@ import { MAIN_MESSAGES, NULL } from '@constants/message';
 import { Feed } from '@components/index';
 import { usePopularDiaries } from '@hooks/api/usePopularDiaries';
 import { Link, useLocation } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 
 const PrevArrow = (props: CustomArrowProps) => {
   return (
@@ -40,15 +41,17 @@ const NextArrow = (props: CustomArrowProps) => {
 const PopularFeed = () => {
   const { data: top10 } = usePopularDiaries();
   const location = useLocation();
+  const [mobileSize, setMobileSize] = useState(false);
 
   const settings = {
     dots: true,
     infinite: true,
-    slidesToShow: 3,
-    slidesToScroll: 3,
+    slidesToShow: mobileSize ? 1 : 3,
+    slidesToScroll: mobileSize ? 1 : 3,
     autoplay: true,
-    autoplaySpeed: 4000,
+    autoplaySpeed: 5000,
     pauseOnHover: true,
+    arrows: mobileSize ? false : true,
     nextArrow: <NextArrow />,
     prevArrow: <PrevArrow />,
   };
@@ -58,6 +61,16 @@ const PopularFeed = () => {
   ));
 
   const handleClick = () => window.scrollTo(0, 0);
+
+  useEffect(() => {
+    const media = window.matchMedia('(max-width: 60em)');
+    const resizeHandler = () => setMobileSize(media.matches);
+
+    if (media.matches !== mobileSize) setMobileSize(media.matches);
+    window.addEventListener('resize', resizeHandler);
+
+    return () => window.removeEventListener('resize', resizeHandler);
+  }, [mobileSize]);
 
   return (
     <RankContainer>
@@ -160,6 +173,10 @@ const CustomSlider = styled(Slider)`
   align-items: center;
   gap: var(--gap-md, 0.6rem);
   flex: 1 0 0;
+
+  @media screen and (max-width: 60em) {
+    width: 22rem;
+  }
 `;
 
 const RankContainer = styled.section`
@@ -170,8 +187,13 @@ const RankContainer = styled.section`
   align-items: center;
   gap: var(--gap-2xl, 2rem);
   align-self: stretch;
-
+  overflow: hidden;
   background: ${semantic.light.fill.transparent.alternative};
+
+  @media screen and (max-width: 60em) {
+    min-width: 20em;
+    padding: var(--gap-4xl, 3rem) var(--gap-md, 1rem);
+  }
 `;
 
 const RankText = styled.span`

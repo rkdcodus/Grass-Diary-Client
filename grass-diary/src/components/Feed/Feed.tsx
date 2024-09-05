@@ -100,6 +100,11 @@ const CardContainer = styled.li<{ $isTop: boolean }>`
   background: ${semantic.light.bg.solid.normal};
   box-shadow: 0px 0px 1px 0px rgba(0, 0, 0, 0.04),
     0px 2px 4px 0px rgba(0, 0, 0, 0.08);
+
+  @media screen and (max-width: 60rem) {
+    padding: var(--gap-md, 1rem);
+    width: 20rem;
+  }
 `;
 
 const CardHeaderSection = styled.div`
