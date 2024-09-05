@@ -123,6 +123,6 @@ const LoginBtn = styled.button`
   color: ${semantic.light.base.solid.white};
   border-radius: var(--radius-xs, 0.5rem);
   background: ${semantic.light.accent.solid.normal};
-
+  white-space: nowrap;
   ${INTERACTION.default.normal(semantic.light.accent.solid.normal)}
 `;
