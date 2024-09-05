@@ -48,8 +48,10 @@ const Feed = ({ feed, isTop }: IFeedProps) => {
 
         <ContentWrap>
           <Link to={`/diary/${feed.diaryId}`}>
-            {/* <ImageContent $isTop={isTop} /> */}
-            <CardContent $isTop={isTop}>
+            {feed.image[0] && (
+              <ImageContent $isTop={isTop} src={feed.image[0].imageURL} />
+            )}
+            <CardContent $isTop={isTop} $hasImage={feed.image.length > 0}>
               {extractTextFromHTML(feed.content)}
             </CardContent>
           </Link>
@@ -83,9 +85,9 @@ const FeedWrap = styled.div`
 
 const CardContainer = styled.li<{ $isTop: boolean }>`
   display: flex;
-  padding: var(--gap-md, 1rem);
+  padding: var(--gap-md, 1.25rem);
   flex-direction: column;
-  align-items: flex-start;
+  align-items: flex-end;
   gap: var(--gap-xl, 1.5rem);
 
   width: ${props => (props.$isTop ? `17.7rem` : `27.75rem`)};
@@ -167,19 +169,25 @@ const CardFooterSection = styled.div`
   width: 100%;
 `;
 
-const CardContent = styled.div<{ $isTop: boolean }>`
-  min-height: 5.25rem;
+const CardContent = styled.div<{ $isTop: boolean; $hasImage: boolean }>`
+  ${props =>
+    props.$hasImage &&
+    `display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+  `}
+
+  align-self: stretch;
   word-break: break-all;
-
   color: ${semantic.light.object.solid.normal};
-
   ${TYPO.body2}
+  overflow: hidden;
 `;
 
-// 이미지 추가 시 사용할 예정
-const ImageContent = styled.div<{ $isTop: boolean }>`
+const ImageContent = styled.img<{ $isTop: boolean }>`
+  width: 100%;
   height: ${props => (props.$isTop ? `12.5rem` : `22.5rem`)};
-  background: red;
+
   border-radius: var(--radius-sm, 0.75rem);
   margin-bottom: 1rem;
   object-fit: cover;
