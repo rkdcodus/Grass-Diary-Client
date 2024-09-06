@@ -338,7 +338,7 @@ const CreateDiary = () => {
           </SaveBtnContainer>
         </SaveWrap>
         <DiaryModeSelector>
-          <DailyQuestionBox isSelected={selectedMode === 'dailyQuestion'}>
+          <DailyQuestionBox $isSelected={selectedMode === 'dailyQuestion'}>
             <ModeBtn>
               <input
                 id="mode-btn-question"
@@ -355,7 +355,7 @@ const CreateDiary = () => {
               </DiaryModeSelectorSubText>
             </ModeBoxContainer>
           </DailyQuestionBox>
-          <CustomEntryBox isSelected={selectedMode === 'customEntry'}>
+          <CustomEntryBox $isSelected={selectedMode === 'customEntry'}>
             <ModeBtn>
               <input
                 id="mode-btn-custom"
@@ -661,7 +661,7 @@ const DiaryModeSelectorSubText = styled.p`
   ${TYPO.caption1}
 `;
 
-const DailyQuestionBox = styled.div<DiaryQuestionBox>`
+const DailyQuestionBox = styled.div<{ $isSelected: boolean }>`
   display: flex;
   padding: var(--gap-md, 1rem) var(--gap-lg, 1.25rem);
   align-items: center;
@@ -669,17 +669,17 @@ const DailyQuestionBox = styled.div<DiaryQuestionBox>`
   flex: 1 0 0;
   border-radius: var(--radius-sm, 0.75rem);
   border: var(--stroke-thin, 1px) solid
-    ${({ isSelected }) =>
-      isSelected
+    ${props =>
+      props.$isSelected
         ? semantic.light.accent.solid.hero
         : semantic.light.border.transparent.alternative};
-  background: ${({ isSelected }) =>
-    isSelected
+  background: ${props =>
+    props.$isSelected
       ? semantic.light.accent.transparent.alternative
       : semantic.light.bg.solid.normal};
 `;
 
-const CustomEntryBox = styled.div<DiaryQuestionBox>`
+const CustomEntryBox = styled.div<{ $isSelected: boolean }>`
   display: flex;
   padding: var(--gap-md, 1rem) var(--gap-lg, 1.25rem);
   align-items: center;
@@ -687,12 +687,12 @@ const CustomEntryBox = styled.div<DiaryQuestionBox>`
   flex: 1 0 0;
   border-radius: var(--radius-sm, 0.75rem);
   border: var(--stroke-thin, 1px) solid
-    ${({ isSelected }) =>
-      isSelected
+    ${props =>
+      props.$isSelected
         ? semantic.light.accent.solid.hero
         : semantic.light.border.transparent.alternative};
-  background: ${({ isSelected }) =>
-    isSelected
+  background: ${props =>
+    props.$isSelected
       ? semantic.light.accent.transparent.alternative
       : semantic.light.bg.solid.normal};
 `;
