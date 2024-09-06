@@ -41,9 +41,9 @@ const BottomSection = () => {
             <Wrap>
               <RewardContainer>
                 <Avatar></Avatar>
-                <RewardPoint>
+                <RewardPointBox>
                   <AnimateReward n={reward?.rewardPoint ?? 0} />
-                </RewardPoint>
+                </RewardPointBox>
               </RewardContainer>
               <ThemeMarketBtn>
                 <ThemeMarketText onClick={modal}>
@@ -157,7 +157,7 @@ const RewardContainer = styled.div`
   flex: 1 0 0;
 `;
 
-const RewardPoint = styled.p`
+const RewardPointBox = styled.div`
   flex: 1 0 0;
 
   color: ${semantic.light.accent.solid.normal};
