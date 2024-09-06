@@ -13,6 +13,7 @@ import { useCreateDiary } from '@hooks/api/useCreateDiary';
 import { useTodayDate } from '@hooks/api/useTodayDate';
 import { usePostImage } from '@hooks/api/usePostImage';
 import { useUser } from '@state/user/useUser';
+import { useToast } from '@state/toast/useToast';
 import { TYPO } from '@styles/typo';
 import { ReactComponent as Publish } from '@svg/publish.svg';
 import { ReactComponent as PublishOn } from '@svg/publish_on.svg';
@@ -27,6 +28,7 @@ const CreateDiary = () => {
   const { mutate: createDiary } = useCreateDiary(memberId);
   const { mutate: postImage } = usePostImage();
   const { date } = useTodayDate();
+  const { toast } = useToast();
   const [diaryInfo, setDiaryInfo] = useState<IDiaryInfo>({
     hashArr: [],
     moodValue: 5,
@@ -292,7 +294,7 @@ const CreateDiary = () => {
 
   const handleSaveDraft = () => {
     localStorage.setItem('diary_draft', JSON.stringify(diaryInfo));
-    alert('임시 저장');
+    toast('작성 중인 일기 내용을 임시저장했어요');
   };
 
   useEffect(() => {
