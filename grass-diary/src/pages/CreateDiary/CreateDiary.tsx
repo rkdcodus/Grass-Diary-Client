@@ -5,7 +5,7 @@ import EMOJI from '@constants/emoji';
 import 'dayjs/locale/ko';
 
 import { semantic } from '@styles/semantic';
-import { Header, BackButton } from '@components/index';
+import { BackButton } from '@components/index';
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ERROR } from '@constants/message';
@@ -312,7 +312,6 @@ const CreateDiary = () => {
 
   return (
     <>
-      <Header />
       <Layout>
         <SaveWrap>
           <SaveWrapContainer>
