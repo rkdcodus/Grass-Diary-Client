@@ -1,11 +1,16 @@
 import { semantic } from '@styles/semantic';
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import { ReactComponent as CloseSvg } from '@svg/close.svg';
 import { TYPO } from '@styles/typo';
 
 const ImageModal = ({ img, setImageModal }: ImageModalProps) => {
-  const close = () => setImageModal(false);
+  const imageRef = useRef(null);
+
+  const close = (e: React.MouseEvent<HTMLElement, MouseEvent>) => {
+    if (e.target === imageRef.current) return;
+    setImageModal(false);
+  };
 
   useEffect(() => {
     document.body.style.overflow = 'hidden';
@@ -16,13 +21,13 @@ const ImageModal = ({ img, setImageModal }: ImageModalProps) => {
   }, []);
 
   return (
-    <Background>
+    <Background onClick={close}>
       <ImageWrap>
         <CloseWrap onClick={close}>
           <CloseText>닫기</CloseText>
           <CloseIcon />
         </CloseWrap>
-        <Image src={img} />
+        <Image src={img} ref={imageRef} />
       </ImageWrap>
     </Background>
   );
