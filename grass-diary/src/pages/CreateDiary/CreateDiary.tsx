@@ -281,6 +281,35 @@ const CreateDiary = () => {
     setIsContentEmpty(checkText.trim().length === 0);
   };
 
+  // 로컬 스토리지 임시 저장
+
+  useEffect(() => {
+    const savedDraft = localStorage.getItem('diary_draft');
+    if (savedDraft) {
+      setDiaryInfo(JSON.parse(savedDraft));
+    }
+  }, []);
+
+  const handleSaveDraft = () => {
+    localStorage.setItem('diary_draft', JSON.stringify(diaryInfo));
+    alert('임시 저장');
+  };
+
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if ((event.metaKey || event.ctrlKey) && event.key === 's') {
+        event.preventDefault();
+        handleSaveDraft();
+      }
+    };
+
+    document.addEventListener('keydown', handleKeyDown);
+
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [diaryInfo]);
+
   return (
     <>
       <Header />
@@ -294,8 +323,10 @@ const CreateDiary = () => {
             {diaryInfo.month}월 {diaryInfo.date}일 {diaryInfo.day}요일
           </SaveWrapTime>
           <SaveBtnContainer>
-            <SavePrevBtn>
-              <SavePrevBtnText>임시저장(Ctrl+S)</SavePrevBtnText>
+            <SavePrevBtn disabled={isContentEmpty}>
+              <SavePrevBtnText onClick={handleSaveDraft}>
+                임시저장(Ctrl+S)
+              </SavePrevBtnText>
             </SavePrevBtn>
             <SaveBtn onClick={handleSave} disabled={isContentEmpty}>
               <SaveBtnText disabled={isContentEmpty}>저장하기</SaveBtnText>
@@ -534,7 +565,7 @@ const SaveBtnContainer = styled.div`
   border-radius: var(--radius-empty, 0rem);
 `;
 
-const SavePrevBtn = styled.button`
+const SavePrevBtn = styled.button<{ disabled: boolean }>`
   display: flex;
   padding: var(--gap-xs, 0.625rem) var(--gap-md, 1rem);
   justify-content: center;
@@ -544,7 +575,19 @@ const SavePrevBtn = styled.button`
   border-radius: var(--radius-xs, 0.5rem);
   border: var(--stroke-thin, 1px) solid
     ${semantic.light.border.transparent.alternative};
+
   background: ${semantic.light.bg.solid.normal};
+
+  &:hover {
+    background: ${({ disabled }) =>
+      disabled
+        ? semantic.light.bg.solid.normal
+        : semantic.light.bg.solid.subtlest};
+  }
+
+  cursor: ${({ disabled }) => (disabled ? 'not-allowed' : 'pointer')};
+
+  transition: all 0.2s ease-in;
 `;
 
 const SavePrevBtnText = styled.p`
@@ -574,6 +617,7 @@ const SaveBtn = styled.button<{ disabled: boolean }>`
         ? semantic.light.interactive.solid.disabled
         : semantic.light.accent.solid.hero};
   }
+
   transition: all 0.2s ease-in;
 `;
 
