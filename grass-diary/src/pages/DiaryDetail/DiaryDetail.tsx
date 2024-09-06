@@ -5,7 +5,7 @@ import { TYPO } from '@styles/typo';
 import { useState, useEffect } from 'react';
 import DOMPurify from 'dompurify';
 
-import { Header, Footer, BackButton, Like, Comments } from '@components/index';
+import { BackButton, Like, Comments } from '@components/index';
 import EMOJI from '@constants/emoji';
 import ImageModal from './modal/ImageModal';
 import Setting from './Setting';
@@ -18,6 +18,7 @@ import { ReactComponent as AvatarBg } from '@svg/avatarBg.svg';
 import { ReactComponent as LockOpen } from '@svg/lock_open.svg';
 import { ReactComponent as Lock } from '@svg/lock.svg';
 import { ReactComponent as Tag } from '@svg/tag.svg';
+import { INTERACTION } from '@styles/interaction';
 
 const DiaryDetail = () => {
   const diaryId = useParamsId();
@@ -43,85 +44,78 @@ const DiaryDetail = () => {
   };
 
   return (
-    <>
-      <Header />
-      <Container>
-        {imageModal && detail?.image.length && (
-          <ImageModal
-            img={detail?.image[0].imageURL}
-            setImageModal={setImageModal}
-          />
-        )}
+    <Container>
+      {imageModal && detail?.image.length && (
+        <ImageModal
+          img={detail?.image[0].imageURL}
+          setImageModal={setImageModal}
+        />
+      )}
 
-        <DiaryBox>
-          <TopSection>
-            <Title>
-              <BackButton />
-              <Date>{detail?.createdDate}</Date>
-              <SubTitle>
-                {writer ? (
-                  <Profile src={writer.profileImageURL} />
-                ) : (
-                  <AvatarBg />
-                )}
-                <Nickname>{writer?.nickname}</Nickname>
-                <Time>{detail?.createdAt}</Time>
-              </SubTitle>
-            </Title>
-            <PrivateContainer>
-              {detail && (
-                <>
-                  {detail.isPrivate ? <Lock /> : <LockOpen />}
-                  <PrivateLable>
-                    {detail.isPrivate ? '비공개' : '공개'}
-                  </PrivateLable>
-                </>
-              )}
-            </PrivateContainer>
-            <EmojiContainer>
-              <Emoji>{detail && EMOJI[detail.transparency * 10]}</Emoji>
-            </EmojiContainer>
-            {memberId === detail?.memberId && (
-              <Setting diaryId={diaryId} createdDate={detail?.createdDate} />
+      <DiaryBox>
+        <TopSection>
+          <Title>
+            <BackButton />
+            <Date>{detail?.createdDate}</Date>
+            <SubTitle>
+              {writer ? <Profile src={writer.profileImageURL} /> : <AvatarBg />}
+              <Nickname>{writer?.nickname}</Nickname>
+              <Time>{detail?.createdAt}</Time>
+            </SubTitle>
+          </Title>
+          <PrivateContainer>
+            {detail && (
+              <>
+                {detail.isPrivate ? <Lock /> : <LockOpen />}
+                <PrivateLable>
+                  {detail.isPrivate ? '비공개' : '공개'}
+                </PrivateLable>
+              </>
             )}
-          </TopSection>
+          </PrivateContainer>
+          <EmojiContainer>
+            <Emoji>{detail && EMOJI[detail.transparency * 10]}</Emoji>
+          </EmojiContainer>
+          {memberId === detail?.memberId && (
+            <Setting diaryId={diaryId} createdDate={detail?.createdDate} />
+          )}
+        </TopSection>
 
-          <DiaryContent>
-            {detail?.image.length ? (
-              <ImageCard
-                src={detail?.image[0].imageURL}
-                onClick={zoom}
-              ></ImageCard>
-            ) : null}
-            <ContentCard
-              dangerouslySetInnerHTML={createMarkup(detail?.content)}
-            />
-          </DiaryContent>
+        <DiaryContent>
+          {detail?.image.length ? (
+            <ImageCard
+              src={detail?.image[0].imageURL}
+              onClick={zoom}
+            ></ImageCard>
+          ) : null}
+          <ContentCard
+            dangerouslySetInnerHTML={createMarkup(detail?.content)}
+          />
+        </DiaryContent>
 
-          <BottomSection>
-            <HashTagContainer>
-              {detail?.tags?.map(tag => {
-                return (
-                  <HashWrap key={tag.id}>
-                    <Tag />
-                    <HashText>{tag.tag}</HashText>
-                  </HashWrap>
-                );
-              })}
-            </HashTagContainer>
-            <Like
-              diaryId={diaryId}
-              likeCount={likeCount}
-              setLikeCount={setLikeCount}
-              liked={detail?.isLikedByLogInMember}
-            />
-          </BottomSection>
-          <Divider />
-          <Comments />
-        </DiaryBox>
-      </Container>
-      <Footer />
-    </>
+        <BottomSection>
+          <HashTagContainer>
+            {detail?.tags?.map(tag => {
+              return (
+                <HashWrap key={tag.id}>
+                  <Tag />
+                  <HashText>{tag.tag}</HashText>
+                </HashWrap>
+              );
+            })}
+          </HashTagContainer>
+          <Like
+            diaryId={diaryId}
+            likeCount={likeCount}
+            setLikeCount={setLikeCount}
+            liked={detail?.isLikedByLogInMember}
+          />
+        </BottomSection>
+        <Divider />
+        <CommentLable>{`댓글 ${detail?.commentCount}`}</CommentLable>
+        <Comments />
+      </DiaryBox>
+    </Container>
   );
 };
 
@@ -129,7 +123,6 @@ export default DiaryDetail;
 
 const Container = styled.div`
   display: flex;
-  width: 100vw;
   min-width: var(--vw-desktop-min, 60rem);
   max-width: var(--vw-desktop-max, 160rem);
   flex-direction: column;
@@ -289,6 +282,7 @@ const HashWrap = styled.div`
   border: var(--stroke-thin, 0.0625rem) solid
     ${semantic.light.border.transparent.alternative};
   background: ${semantic.light.fill.transparent.assistive};
+  ${INTERACTION.default.subtle(semantic.light.fill.transparent.assistive)}
 `;
 
 const HashText = styled.p`
@@ -301,4 +295,10 @@ const Divider = styled.div`
   height: 0.0625rem;
 
   background: ${semantic.light.border.transparent.alternative};
+`;
+
+const CommentLable = styled.div`
+  ${TYPO.label3}
+  align-self: stretch;
+  color: ${semantic.light.object.transparent.neutral};
 `;

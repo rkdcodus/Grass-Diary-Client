@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { semantic } from '@styles/semantic';
 import { ReactNode, useEffect, useRef, useState } from 'react';
+import { INTERACTION } from '@styles/interaction';
 
 interface MenusProps {
   children: ReactNode;
@@ -31,16 +32,30 @@ const Menus = ({ children, icon }: MenusProps) => {
   }, [open]);
 
   return (
-    <div onClick={dropDown} ref={iconRef}>
-      <Icon src={icon} />
-      <MenusContainer $toggle={open} ref={boxRef}>
-        {children}
-      </MenusContainer>
+    <div ref={iconRef}>
+      <BarBtn onClick={dropDown}>
+        <Icon src={icon} />
+        <MenusContainer $toggle={open} ref={boxRef}>
+          {children}
+        </MenusContainer>
+      </BarBtn>
     </div>
   );
 };
 
 export default Menus;
+
+const BarBtn = styled.button`
+  position: relative;
+  display: flex;
+  padding: var(--gap-4xs, 0.25rem);
+  justify-content: center;
+  align-items: center;
+  gap: var(--gap-md, 1rem);
+
+  border-radius: var(--radius-2xs, 0.25rem);
+  ${INTERACTION.default.normal()}
+`;
 
 const MenusContainer = styled.div<{ $toggle: boolean }>`
   display: flex;
@@ -56,7 +71,9 @@ const MenusContainer = styled.div<{ $toggle: boolean }>`
     0px 2px 4px 0px rgba(0, 0, 0, 0.06), 0px 4px 8px 0px rgba(0, 0, 0, 0.13);
 
   position: absolute;
-  transform: translate(-8.25rem, 1rem);
+  top: 0;
+  right: 0;
+  transform: translateY(2.6rem);
   overflow: hidden;
   z-index: 998;
 `;

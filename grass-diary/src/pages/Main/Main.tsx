@@ -43,12 +43,10 @@ const Main = () => {
 
   return (
     <Container>
-      <Header />
       <TopSection />
       <MiddleSection />
       <BottomSection />
       <PopularFeed />
-      <Banner />
     </Container>
   );
 };

@@ -1,6 +1,5 @@
 import { semantic } from '@styles/semantic';
-import CustomButton from '@components/modal/CustomButton';
-import Modal from '@components/modal/Modal';
+import { Modal, CustomButton } from '@components/index';
 import { useDeleteDiaryDetail } from '@hooks/api/useDeleteDiaryDetail';
 import { DIARY } from '@constants/message';
 

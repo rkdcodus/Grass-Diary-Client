@@ -80,6 +80,7 @@ interface DiaryImage {
 interface IDiaryDetail extends IDiary {
   memberId: Id;
   isLikedByLogInMember: boolean;
+  commentCount: number;
   image: DiaryImage[];
 }
 

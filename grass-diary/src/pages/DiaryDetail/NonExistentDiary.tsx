@@ -1,5 +1,5 @@
 import stylex from '@stylexjs/stylex';
-import { Header, BackButton, Container } from '@components/index';
+import { BackButton, Container } from '@components/index';
 import { ERROR } from '@constants/message';
 
 const styles = stylex.create({
@@ -18,8 +18,6 @@ const styles = stylex.create({
 const NonExistentDiary = () => {
   return (
     <Container>
-      <Header />
-
       <div {...stylex.props(styles.wrap)}>
         <BackButton goBackTo={'/main'} />
         <div {...stylex.props(styles.content)}>

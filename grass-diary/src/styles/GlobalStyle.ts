@@ -104,10 +104,6 @@ export const GlobalStyle = createGlobalStyle`
     scroll-margin-block: 5ex;
   }
 
-  li:hover {
-    background-color: #e2e2e2;
-  }
-
   p {
     white-space: pre-wrap;
     word-wrap: break-word; /* IE 5.5-7 */
@@ -163,4 +159,8 @@ export const GlobalStyle = createGlobalStyle`
     background-color: transparent; /* 배경색을 투명하게 설정 */
 }
 
+  ul {
+    padding: 0;
+    margin: 0;
+  }
 `;
