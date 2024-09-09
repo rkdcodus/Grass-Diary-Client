@@ -2,26 +2,51 @@ import styled from 'styled-components';
 import { semantic } from '@styles/semantic';
 import { TYPO } from '@styles/typo';
 import { ReactComponent as Close } from '@svg/close.svg';
-import { ReactNode } from 'react';
+import CustomButton from './CustomButton';
+import {
+  uesModalContent,
+  useModalActions,
+  useModalActive,
+  useModalTitle,
+} from '@state/modal/ModalStore';
+import {
+  useModalButton1,
+  useModalButton2,
+} from '@state/modal/ModalButtonStore';
 
-type ModalProps = {
-  setClose: () => void;
-  title: string;
-  content: string;
-  children: ReactNode;
-};
+const Modal = () => {
+  const title = useModalTitle();
+  const content = uesModalContent();
+  const active = useModalActive();
+  const button1 = useModalButton1();
+  const button2 = useModalButton2();
+  const { setActive } = useModalActions();
 
-const Modal = ({ setClose, title, content, children }: ModalProps) => {
   return (
-    <Background>
+    <Background $active={active}>
       <ModalContainer>
         <TopSection>
           <Title>{title}</Title>
-          <CloseBtn onClick={setClose} />
+          <CloseBtn onClick={() => setActive(false)} />
         </TopSection>
         <Content>{content}</Content>
         <Divider />
-        <BottomSection>{children}</BottomSection>
+        <BottomSection>
+          <CustomButton
+            text={button1.text}
+            onClick={() => setActive(false)}
+            color={button1.color}
+            interaction={button1.interaction}
+          />
+          {button2.active && (
+            <CustomButton
+              text={button2.text}
+              onClick={button2.onClick}
+              color={button2.color}
+              interaction={button2.interaction}
+            />
+          )}
+        </BottomSection>
       </ModalContainer>
     </Background>
   );
@@ -29,7 +54,8 @@ const Modal = ({ setClose, title, content, children }: ModalProps) => {
 
 export default Modal;
 
-const Background = styled.div`
+const Background = styled.div<{ $active: boolean }>`
+  display: ${props => (props.$active ? 'block' : 'none')};
   z-index: 1;
   position: fixed;
   top: 0;
