@@ -3,13 +3,15 @@ import { useNavigate } from 'react-router-dom';
 
 import { semantic } from '@styles/semantic';
 import { useTodayDate } from '@hooks/api/useTodayDate';
-import UnmodifyModal from './modal/UnmodifyModal';
-import ConfirmDeleteModal from './modal/ConfirmDeleteModal';
 
 import more from '@svg/more_horiz.svg';
 import editIcon from '@svg/mode_edit.svg';
 import deleteIcon from '@svg/delete_forever.svg';
 import { Menus, Menu } from '@components/index';
+import { useModal } from '@state/modal/useModal';
+import { DIARY } from '@constants/message';
+import { INTERACTION } from '@styles/interaction';
+import { useDeleteDiaryDetail } from '@hooks/api/useDeleteDiaryDetail';
 
 type SettingProps = {
   diaryId: Id;
@@ -18,19 +20,36 @@ type SettingProps = {
 
 const Setting = ({ diaryId, createdDate }: SettingProps) => {
   const navigate = useNavigate();
+  const { modal } = useModal();
   const { date } = useTodayDate();
   const [canEdit, setCanEdit] = useState(false);
-  const [editModal, setEditModal] = useState(false);
-  const [confirmModal, setConfirmModal] = useState(false);
+  const { mutate } = useDeleteDiaryDetail(diaryId);
 
-  const showConfirmModal = () => setConfirmModal(true);
+  const editModal = () => {
+    const settings = {
+      button1: true,
+      button2: false,
+      text1: '확인',
+      color1: semantic.light.accent.solid.hero,
+      interaction1: INTERACTION.accent.subtle(),
+    };
 
-  const linkToModify = () => {
-    if (!canEdit && !editModal) {
-      setEditModal(true);
-      return;
+    if (!canEdit) {
+      return modal('일기 수정 가능 시간', DIARY.edit_info, settings);
     }
     navigate(`/editdiary/${diaryId}`);
+  };
+
+  const deleteModal = () => {
+    const settings = {
+      button1: true,
+      button2: true,
+      text1: '취소',
+      text2: '삭제하기',
+      onClick2: mutate,
+      color2: semantic.light.feedback.solid.negative,
+    };
+    modal('일기 삭제 안내', DIARY.delete_confirm, settings);
   };
 
   useEffect(() => {
@@ -50,25 +69,15 @@ const Setting = ({ diaryId, createdDate }: SettingProps) => {
   }, [createdDate, date]);
 
   return (
-    <>
-      <Menus icon={more}>
-        <Menu onClick={linkToModify} text={'일기 수정'} svg={editIcon} />
-        <Menu
-          onClick={showConfirmModal}
-          text={'일기 삭제'}
-          svg={deleteIcon}
-          color={semantic.light.feedback.solid.negative}
-        />
-      </Menus>
-
-      {editModal && <UnmodifyModal setter={setEditModal} />}
-      {confirmModal && (
-        <ConfirmDeleteModal
-          diaryId={diaryId!}
-          setConfirmModal={setConfirmModal}
-        />
-      )}
-    </>
+    <Menus icon={more}>
+      <Menu onClick={editModal} text={'일기 수정'} svg={editIcon} />
+      <Menu
+        onClick={deleteModal}
+        text={'일기 삭제'}
+        svg={deleteIcon}
+        color={semantic.light.feedback.solid.negative}
+      />
+    </Menus>
   );
 };
 

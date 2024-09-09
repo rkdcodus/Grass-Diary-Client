@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import { useWriterProfile } from '@hooks/api/useWriterProfile';
 import { semantic } from '@styles/semantic';
@@ -7,6 +7,9 @@ import { ReactComponent as CommentIcon } from '@svg/comment.svg';
 import { TYPO } from '@styles/typo';
 import EMOJI from '@constants/emoji';
 import { ReactComponent as Favorite } from '@svg/favorite.svg';
+import { useAuth } from '@state/auth/useAuth';
+import { useModal } from '@state/modal/useModal';
+import { INTERACTION } from '@styles/interaction';
 
 interface IFeedProps {
   feed: Feed;
@@ -14,7 +17,10 @@ interface IFeedProps {
 }
 
 const Feed = ({ feed, isTop }: IFeedProps) => {
+  const navigate = useNavigate();
+  const { isAuthenticated } = useAuth();
   const { data: writer } = useWriterProfile(feed.memberId);
+  const { modal } = useModal();
 
   const title =
     `${feed.createdAt.slice(2, 4)}년 ` +
@@ -29,6 +35,33 @@ const Feed = ({ feed, isTop }: IFeedProps) => {
     const doc = parser.parseFromString(htmlString, 'text/html');
 
     return doc.body.textContent || '';
+  };
+
+  const handleGoogleLogin: TGoogleLogin = () => {
+    window.open(`http://localhost:8080/api/auth/google`, '_self');
+  };
+
+  const FeedClickHandler = () => {
+    const settings = {
+      button1: true,
+      button2: true,
+      text1: '취소',
+      text2: '로그인하기',
+      onClick2: handleGoogleLogin,
+      color2: semantic.light.accent.solid.hero,
+      interaction2: INTERACTION.accent.subtle(),
+    };
+
+    if (!isAuthenticated) {
+      modal(
+        '로그인 필요',
+        '다른 사람이 작성한 일기를 읽고 싶다면 로그인하세요.',
+        settings,
+      );
+      return;
+    }
+
+    navigate(`/diary/${feed.diaryId}`);
   };
 
   return (
@@ -46,15 +79,13 @@ const Feed = ({ feed, isTop }: IFeedProps) => {
           <CardEmojiContainer>{mood}</CardEmojiContainer>
         </CardHeaderSection>
 
-        <ContentWrap>
-          <Link to={`/diary/${feed.diaryId}`}>
-            {feed.image[0] && (
-              <ImageContent $isTop={isTop} src={feed.image[0].imageURL} />
-            )}
-            <CardContent $isTop={isTop} $hasImage={feed.image.length > 0}>
-              {extractTextFromHTML(feed.content)}
-            </CardContent>
-          </Link>
+        <ContentWrap onClick={FeedClickHandler}>
+          {feed.image[0] && (
+            <ImageContent $isTop={isTop} src={feed.image[0].imageURL} />
+          )}
+          <CardContent $isTop={isTop} $hasImage={feed.image.length > 0}>
+            {extractTextFromHTML(feed.content)}
+          </CardContent>
         </ContentWrap>
 
         <CardFooterSection>
@@ -201,6 +232,7 @@ const ImageContent = styled.img<{ $isTop: boolean }>`
 const ContentWrap = styled.div`
   flex: 1;
   align-self: stretch;
+  cursor: pointer;
 `;
 
 const IconWrap = styled.div`

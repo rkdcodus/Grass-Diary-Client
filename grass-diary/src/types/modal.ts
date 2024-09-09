@@ -14,16 +14,7 @@ interface ILoginModalProps {
 type TGoogleLogin = () => void;
 
 // DiaryDetail Modal Type
-type ConfirmDeleteModalProps = {
-  diaryId: Id;
-  setConfirmModal: React.Dispatch<React.SetStateAction<boolean>>;
-};
-
 type ImageModalProps = {
   img: string;
   setImageModal: React.Dispatch<React.SetStateAction<boolean>>;
-};
-
-type UnmodifyModalProps = {
-  setter: React.Dispatch<React.SetStateAction<boolean>>;
 };
