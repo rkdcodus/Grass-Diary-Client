@@ -42,22 +42,26 @@ const Feed = ({ feed, isTop }: IFeedProps) => {
   };
 
   const FeedClickHandler = () => {
-    const settings = {
-      button1: true,
-      button2: true,
-      text1: '취소',
-      text2: '로그인하기',
-      onClick2: handleGoogleLogin,
-      color2: semantic.light.accent.solid.hero,
-      interaction2: INTERACTION.accent.subtle(),
+    const setting = {
+      title: '로그인 필요',
+      content: '다른 사람이 작성한 일기를 읽고 싶다면 로그인하세요.',
+    };
+
+    const button1 = {
+      active: true,
+      text: '취소',
+    };
+
+    const button2 = {
+      active: true,
+      text: '로그인하기',
+      clickHandler: handleGoogleLogin,
+      color: semantic.light.accent.solid.hero,
+      interaction: INTERACTION.accent.subtle(),
     };
 
     if (!isAuthenticated) {
-      modal(
-        '로그인 필요',
-        '다른 사람이 작성한 일기를 읽고 싶다면 로그인하세요.',
-        settings,
-      );
+      modal(setting, button1, button2);
       return;
     }
 

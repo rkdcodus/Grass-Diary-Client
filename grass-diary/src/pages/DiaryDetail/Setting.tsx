@@ -26,30 +26,41 @@ const Setting = ({ diaryId, createdDate }: SettingProps) => {
   const { mutate } = useDeleteDiaryDetail(diaryId);
 
   const editModal = () => {
-    const settings = {
-      button1: true,
-      button2: false,
-      text1: '확인',
-      color1: semantic.light.accent.solid.hero,
-      interaction1: INTERACTION.accent.subtle(),
+    const setting = {
+      title: '일기 수정 가능 시간',
+      content: DIARY.edit_info,
     };
 
-    if (!canEdit) {
-      return modal('일기 수정 가능 시간', DIARY.edit_info, settings);
-    }
+    const button1 = {
+      active: true,
+      text: '확인',
+      color: semantic.light.accent.solid.hero,
+      interactions: INTERACTION.accent.subtle(),
+    };
+
+    if (!canEdit) return modal(setting, button1);
     navigate(`/editdiary/${diaryId}`);
   };
 
   const deleteModal = () => {
-    const settings = {
-      button1: true,
-      button2: true,
-      text1: '취소',
-      text2: '삭제하기',
-      onClick2: mutate,
-      color2: semantic.light.feedback.solid.negative,
+    const setting = {
+      title: '일기 삭제 안내',
+      content: DIARY.delete_confirm,
     };
-    modal('일기 삭제 안내', DIARY.delete_confirm, settings);
+
+    const button1 = {
+      active: true,
+      text: '취소',
+    };
+
+    const button2 = {
+      active: true,
+      text: '삭제하기',
+      clickHandler: mutate,
+      color: semantic.light.feedback.solid.negative,
+    };
+
+    modal(setting, button1, button2);
   };
 
   useEffect(() => {
