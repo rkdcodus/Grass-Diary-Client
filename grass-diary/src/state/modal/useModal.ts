@@ -20,10 +20,10 @@ export const useModal = () => {
   const { setActive, setSetting } = useModalActions();
   const { setResetActive, setButton1, setButton2 } = useModalButtonActions();
 
-  const modal = (setting: Setting, button1: Button1, button2?: Button2) => {
+  const modal = (setting: Setting, button1?: Button1, button2?: Button2) => {
     setResetActive();
     setSetting(setting);
-    setButton1(button1);
+    if (button1) setButton1(button1);
     if (button2) setButton2(button2);
     setActive(true);
   };
