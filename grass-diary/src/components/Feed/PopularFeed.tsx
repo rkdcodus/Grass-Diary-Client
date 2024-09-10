@@ -44,14 +44,14 @@ const PopularFeed = () => {
   const [mobileSize, setMobileSize] = useState(false);
 
   const settings = {
-    dots: true,
+    dots: mobileSize ? true : top10 && top10.length < 4 ? false : true,
     infinite: true,
-    slidesToShow: mobileSize ? 1 : 3,
-    slidesToScroll: mobileSize ? 1 : 3,
-    autoplay: true,
+    slidesToShow: mobileSize ? 1 : top10?.length === 2 ? 2 : 3,
+    slidesToScroll: mobileSize ? 1 : top10?.length === 2 ? 2 : 3,
+    autoplay: mobileSize ? true : top10 && top10.length < 4 ? false : true,
     autoplaySpeed: 5000,
     pauseOnHover: true,
-    arrows: mobileSize ? false : true,
+    arrows: mobileSize ? false : top10 && top10?.length < 4 ? false : true,
     nextArrow: <NextArrow />,
     prevArrow: <PrevArrow />,
   };
@@ -75,7 +75,7 @@ const PopularFeed = () => {
   return (
     <RankContainer>
       <RankText>
-        이번 주 Top {top10 && top10.length}
+        이번 주 인기 일기
         {location.pathname === '/main' && (
           <Link to="/share" onClick={handleClick}>
             <SeeMoreContainer>
@@ -90,16 +90,20 @@ const PopularFeed = () => {
         )}
       </RankText>
 
-      {top10 && top10.length > 3 ? (
+      {top10 && top10.length > 1 ? (
         <SliderWrap>
-          <CustomSlider {...settings} className="Slider">
+          <CustomSlider
+            {...settings}
+            className="Slider"
+            $lessFeed={top10.length === 2 ? true : false}
+          >
             {top10?.map(data => (
               <Feed key={data.diaryId} feed={data} isTop={true} />
             ))}
           </CustomSlider>
         </SliderWrap>
       ) : (
-        <FeedListWrap>{feedList}</FeedListWrap>
+        <FeedBox>{feedList}</FeedBox>
       )}
       {top10 && !top10.length ? <div>{NULL.share_popular_feed}</div> : null}
     </RankContainer>
@@ -125,7 +129,7 @@ const SeeMoreBtn = styled.button`
   ${TYPO.label2}
 `;
 
-const FeedListWrap = styled.div`
+const FeedBox = styled.div`
   display: flex;
   justify-content: center;
   gap: 1rem;
@@ -156,6 +160,11 @@ const SliderWrap = styled.div`
   }
 
   .slick-dots button {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
     width: 12px;
     height: 12px;
     border-radius: 6px;
@@ -167,8 +176,8 @@ const SliderWrap = styled.div`
   }
 `;
 
-const CustomSlider = styled(Slider)`
-  width: 60rem;
+const CustomSlider = styled(Slider)<{ $lessFeed: boolean }>`
+  width: ${props => (props.$lessFeed ? 38 : 60)}rem;
   display: flex;
   align-items: center;
   gap: var(--gap-md, 0.6rem);
