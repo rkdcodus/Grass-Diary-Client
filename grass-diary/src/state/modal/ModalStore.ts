@@ -1,30 +1,33 @@
 import { create } from 'zustand';
 
-type Actions = {
-  setTitle: (title: string) => void;
-  setContent: (content: string) => void;
-  setActive: (active: boolean) => void;
-};
-
-interface ModalState {
+type Setting = {
   title: string;
   content: string;
+};
+
+type Actions = {
+  setActive: (active: boolean) => void;
+  setSetting: ({ title, content }: Setting) => void;
+};
+
+type ModalState = {
   active: boolean;
+  setting: Setting;
   actions: Actions;
-}
+};
 
 const useModalStore = create<ModalState>(set => ({
-  title: '',
-  content: '',
   active: false,
+  setting: {
+    title: '',
+    content: '',
+  },
   actions: {
-    setTitle: title => set({ title }),
-    setContent: content => set({ content }),
     setActive: active => set({ active }),
+    setSetting: setting => set({ setting }),
   },
 }));
 
-export const useModalTitle = () => useModalStore(state => state.title);
-export const uesModalContent = () => useModalStore(state => state.content);
+export const useModalSetting = () => useModalStore(state => state.setting);
 export const useModalActive = () => useModalStore(state => state.active);
 export const useModalActions = () => useModalStore(state => state.actions);

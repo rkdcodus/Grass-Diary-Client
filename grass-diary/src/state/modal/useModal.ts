@@ -1,45 +1,31 @@
 import { useModalButtonActions } from './ModalButtonStore';
 import { useModalActions } from './ModalStore';
 
-interface Settings {
-  button1: boolean;
-  button2: boolean;
-  text1: string;
-  text2?: string;
-  onClick2?: () => void;
-  color1?: string;
-  color2?: string;
-  interaction1?: string;
-  interaction2?: string;
-}
+type Setting = {
+  title: string;
+  content: string;
+};
+
+type Button2 = {
+  active: boolean;
+  text: string;
+  color?: string;
+  interaction?: string;
+  clickHandler: () => void;
+};
+
+type Button1 = Pick<Button2, 'active' | 'text' | 'color' | 'interaction'>;
 
 export const useModal = () => {
-  const { setActive, setTitle, setContent } = useModalActions();
-  const { setButton1, setButton2 } = useModalButtonActions();
+  const { setActive, setSetting } = useModalActions();
+  const { setResetActive, setButton1, setButton2 } = useModalButtonActions();
 
-  const modal = (title: string, content: string, settings: Settings) => {
-    const onClick2 = () => {
-      if (settings.onClick2) settings.onClick2();
-      setActive(false);
-    };
-
-    setTitle(title);
-    setContent(content);
+  const modal = (setting: Setting, button1: Button1, button2?: Button2) => {
+    setResetActive();
+    setSetting(setting);
+    setButton1(button1);
+    if (button2) setButton2(button2);
     setActive(true);
-
-    setButton1(
-      settings.button1,
-      settings.text1,
-      settings.color1,
-      settings.interaction1,
-    );
-    setButton2(
-      settings.button2,
-      settings.text2,
-      onClick2,
-      settings.color2,
-      settings.interaction2,
-    );
   };
 
   return { modal };

@@ -4,10 +4,9 @@ import { TYPO } from '@styles/typo';
 import { ReactComponent as Close } from '@svg/close.svg';
 import CustomButton from './CustomButton';
 import {
-  uesModalContent,
   useModalActions,
   useModalActive,
-  useModalTitle,
+  useModalSetting,
 } from '@state/modal/ModalStore';
 import {
   useModalButton1,
@@ -15,8 +14,7 @@ import {
 } from '@state/modal/ModalButtonStore';
 
 const Modal = () => {
-  const title = useModalTitle();
-  const content = uesModalContent();
+  const setting = useModalSetting();
   const active = useModalActive();
   const button1 = useModalButton1();
   const button2 = useModalButton2();
@@ -26,10 +24,10 @@ const Modal = () => {
     <Background $active={active}>
       <ModalContainer>
         <TopSection>
-          <Title>{title}</Title>
+          <Title>{setting.title}</Title>
           <CloseBtn onClick={() => setActive(false)} />
         </TopSection>
-        <Content>{content}</Content>
+        <Content>{setting.content}</Content>
         <Divider />
         <BottomSection>
           <CustomButton
@@ -41,7 +39,11 @@ const Modal = () => {
           {button2.active && (
             <CustomButton
               text={button2.text}
-              onClick={button2.onClick}
+              onClick={() => {
+                console.log(button2.clickHandler);
+                if (button2.clickHandler) button2.clickHandler();
+                setActive(false);
+              }}
               color={button2.color}
               interaction={button2.interaction}
             />
