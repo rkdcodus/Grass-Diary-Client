@@ -28,14 +28,16 @@ const Modal = () => {
           <CloseBtn onClick={() => setActive(false)} />
         </TopSection>
         <Content>{setting.content}</Content>
-        <Divider />
+        {(button1.active || button2.active) && <Divider />}
         <BottomSection>
-          <CustomButton
-            text={button1.text}
-            onClick={() => setActive(false)}
-            color={button1.color}
-            interaction={button1.interaction}
-          />
+          {button1.active && (
+            <CustomButton
+              text={button1.text}
+              onClick={() => setActive(false)}
+              color={button1.color}
+              interaction={button1.interaction}
+            />
+          )}
           {button2.active && (
             <CustomButton
               text={button2.text}
