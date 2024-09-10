@@ -10,6 +10,7 @@ import { ReactComponent as Favorite } from '@svg/favorite.svg';
 import { useAuth } from '@state/auth/useAuth';
 import { useModal } from '@state/modal/useModal';
 import { INTERACTION } from '@styles/interaction';
+import { MODAL } from '@constants/message';
 
 interface IFeedProps {
   feed: Feed;
@@ -43,18 +44,18 @@ const Feed = ({ feed, isTop }: IFeedProps) => {
 
   const FeedClickHandler = () => {
     const setting = {
-      title: '로그인 필요',
-      content: '다른 사람이 작성한 일기를 읽고 싶다면 로그인하세요.',
+      title: MODAL.login_induce.title,
+      content: MODAL.login_induce.content,
     };
 
     const button1 = {
       active: true,
-      text: '취소',
+      text: MODAL.cancel,
     };
 
     const button2 = {
       active: true,
-      text: '로그인하기',
+      text: MODAL.login_induce.button,
       clickHandler: handleGoogleLogin,
       color: semantic.light.accent.solid.hero,
       interaction: INTERACTION.accent.subtle(),
@@ -69,7 +70,7 @@ const Feed = ({ feed, isTop }: IFeedProps) => {
   };
 
   return (
-    <FeedWrap>
+    <FeedWrap className="Feed">
       <CardContainer $isTop={isTop}>
         <CardHeaderSection>
           <CardUserImg src={writer?.profileImageURL} />
@@ -125,7 +126,8 @@ const CardContainer = styled.li<{ $isTop: boolean }>`
   align-items: flex-end;
   gap: var(--gap-xl, 1.5rem);
 
-  width: ${props => (props.$isTop ? `17.7rem` : `27.75rem`)};
+  width: ${props => (props.$isTop ? `17.7` : `27.75`)}rem;
+  height: ${props => (props.$isTop ? `28.75` : 'auto')}rem;
   max-height: 39.25rem;
   margin-bottom: 1rem;
 

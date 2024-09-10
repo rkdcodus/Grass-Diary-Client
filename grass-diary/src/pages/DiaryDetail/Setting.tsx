@@ -9,7 +9,7 @@ import editIcon from '@svg/mode_edit.svg';
 import deleteIcon from '@svg/delete_forever.svg';
 import { Menus, Menu } from '@components/index';
 import { useModal } from '@state/modal/useModal';
-import { DIARY } from '@constants/message';
+import { MODAL } from '@constants/message';
 import { INTERACTION } from '@styles/interaction';
 import { useDeleteDiaryDetail } from '@hooks/api/useDeleteDiaryDetail';
 
@@ -27,13 +27,13 @@ const Setting = ({ diaryId, createdDate }: SettingProps) => {
 
   const editModal = () => {
     const setting = {
-      title: '일기 수정 가능 시간',
-      content: DIARY.edit_info,
+      title: MODAL.edit_diary.title,
+      content: MODAL.edit_diary.content,
     };
 
     const button1 = {
       active: true,
-      text: '확인',
+      text: MODAL.confirm,
       color: semantic.light.accent.solid.hero,
       interactions: INTERACTION.accent.subtle(),
     };
@@ -44,18 +44,18 @@ const Setting = ({ diaryId, createdDate }: SettingProps) => {
 
   const deleteModal = () => {
     const setting = {
-      title: '일기 삭제 안내',
-      content: DIARY.delete_confirm,
+      title: MODAL.delete_diary.title,
+      content: MODAL.delete_diary.content,
     };
 
     const button1 = {
       active: true,
-      text: '취소',
+      text: MODAL.cancel,
     };
 
     const button2 = {
       active: true,
-      text: '삭제하기',
+      text: MODAL.delete_diary.button,
       clickHandler: mutate,
       color: semantic.light.feedback.solid.negative,
     };
