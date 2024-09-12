@@ -131,3 +131,8 @@ export const MODAL = {
     button: '삭제하기',
   },
 } as const;
+
+export const TOAST = {
+  delete_diary: '일기가 삭제되었습니다',
+  image_capacity_limit: '5MB를 초과하는 이미지 파일은 업로드 할 수 없어요.',
+} as const;

@@ -3,7 +3,8 @@ import API from '@services/index';
 import { END_POINT } from '@constants/api';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
-import { CONSOLE_ERROR } from '@constants/message';
+import { CONSOLE_ERROR, TOAST } from '@constants/message';
+import { useToast } from '@state/toast/useToast';
 
 type QuillEditorProps = {
   onContentChange: (content: string) => void;
@@ -32,6 +33,7 @@ const QuillEditor = ({
   };
 
   const [todayQuestion, setTodayQuestion] = useState<string>();
+  const { redToast } = useToast();
 
   const ImageHandler = () => {
     const input = document.createElement('input');
@@ -41,6 +43,12 @@ const QuillEditor = ({
 
     input.onchange = () => {
       const file = input.files ? input.files[0] : null;
+      const maxSize = 5 * 1024 * 1024;
+
+      if (file && file.size > maxSize) {
+        redToast(TOAST.image_capacity_limit);
+        return;
+      }
 
       if (file) {
         const formData = new FormData();
