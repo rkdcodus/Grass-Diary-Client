@@ -29,7 +29,8 @@ const Setting = () => {
   const handleChangeProfileIntro = (
     event: React.ChangeEvent<HTMLTextAreaElement>,
   ) => {
-    setProfileIntro(event.target.value);
+    const value = event.target.value;
+    if (value.length <= 150) setProfileIntro(value);
   };
 
   const updateProfile = useMutation<
@@ -80,7 +81,9 @@ const Setting = () => {
                 </S.UserIntroductionContainer>
               </S.ProfileRightContainer>
             </S.ProfileContainer>
-            <S.IntroductionCountText>0/150자</S.IntroductionCountText>
+            <S.IntroductionCountText>
+              {profileIntro.length}/150자
+            </S.IntroductionCountText>
           </S.ProfileArticle>
         </S.ProfileSection>
         <S.DetailSettingSection>
