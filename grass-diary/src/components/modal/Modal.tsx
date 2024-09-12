@@ -118,7 +118,6 @@ const Content = styled.p`
 
 const Divider = styled.div`
   align-self: stretch;
-  // width: 22.5rem;
   height: 0.0625rem;
 
   background: ${semantic.light.border.transparent.assistive};
