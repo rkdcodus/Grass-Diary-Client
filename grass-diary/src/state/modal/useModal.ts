@@ -17,7 +17,7 @@ type Button2 = {
 type Button1 = Pick<Button2, 'active' | 'text' | 'color' | 'interaction'>;
 
 export const useModal = () => {
-  const { setActive, setSetting } = useModalActions();
+  const { setLogin, setActive, setSetting } = useModalActions();
   const { setResetActive, setButton1, setButton2 } = useModalButtonActions();
 
   const modal = (setting: Setting, button1?: Button1, button2?: Button2) => {
@@ -28,5 +28,16 @@ export const useModal = () => {
     setActive(true);
   };
 
-  return { modal };
+  const loginModal = () => {
+    const setting = {
+      title: '회원가입 및 로그인',
+      content: '',
+    };
+
+    setActive(true);
+    setLogin(true);
+    setSetting(setting);
+  };
+
+  return { modal, loginModal };
 };

@@ -6,6 +6,7 @@ import CustomButton from './CustomButton';
 import {
   useModalActions,
   useModalActive,
+  useModalLogin,
   useModalSetting,
 } from '@state/modal/ModalStore';
 import {
@@ -14,43 +15,71 @@ import {
 } from '@state/modal/ModalButtonStore';
 
 const Modal = () => {
+  const login = useModalLogin();
   const setting = useModalSetting();
   const active = useModalActive();
   const button1 = useModalButton1();
   const button2 = useModalButton2();
-  const { setActive } = useModalActions();
+  const { setLogin, setActive } = useModalActions();
+
+  const handleGoogleLogin: TGoogleLogin = () => {
+    window.open(`http://localhost:8080/api/auth/google`, '_self');
+  };
 
   return (
     <Background $active={active}>
       <ModalContainer>
         <TopSection>
           <Title>{setting.title}</Title>
-          <CloseBtn onClick={() => setActive(false)} />
+          <CloseBtn
+            onClick={() => {
+              setActive(false);
+              setLogin(false);
+            }}
+          />
         </TopSection>
-        <Content>{setting.content}</Content>
-        {(button1.active || button2.active) && <Divider />}
-        <BottomSection>
-          {button1.active && (
-            <CustomButton
-              text={button1.text}
-              onClick={() => setActive(false)}
-              color={button1.color}
-              interaction={button1.interaction}
-            />
-          )}
-          {button2.active && (
-            <CustomButton
-              text={button2.text}
+        {setting.content !== '' && <Content>{setting.content}</Content>}
+        <Divider />
+        {login ? (
+          <LoginBox>
+            <button
               onClick={() => {
-                console.log(button2.clickHandler);
-                if (button2.clickHandler) button2.clickHandler();
+                handleGoogleLogin();
+                setLogin(false);
                 setActive(false);
               }}
-              color={button2.color}
-              interaction={button2.interaction}
-            />
-          )}
-        </BottomSection>
+            >
+              <img src="/assets/img/googleLogin.png" />
+            </button>
+            <TermText>
+              로그인 시, <TermAnchor href="#">서비스 이용약관</TermAnchor>에
+              동의하는 것으로 간주됩니다.
+            </TermText>
+          </LoginBox>
+        ) : (
+          <BottomSection>
+            {button1.active && (
+              <CustomButton
+                text={button1.text}
+                onClick={() => setActive(false)}
+                color={button1.color}
+                interaction={button1.interaction}
+              />
+            )}
+            {button2.active && (
+              <CustomButton
+                text={button2.text}
+                onClick={() => {
+                  console.log(button2.clickHandler);
+                  if (button2.clickHandler) button2.clickHandler();
+                  setActive(false);
+                }}
+                color={button2.color}
+                interaction={button2.interaction}
+              />
+            )}
+          </BottomSection>
+        )}
       </ModalContainer>
     </Background>
   );
@@ -129,4 +158,26 @@ const BottomSection = styled.div`
   align-items: flex-start;
   gap: var(--gap-2xs, 0.5rem);
   align-self: stretch;
+`;
+
+const LoginBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  align-self: stretch;
+  gap: 1rem;
+  padding: 1.5rem;
+`;
+
+const TermText = styled.span`
+  align-self: stretch;
+  text-align: center;
+  ${TYPO.caption1}
+  color: ${semantic.light.object.transparent.assistive};
+`;
+
+const TermAnchor = styled.a`
+  text-decoration: underline;
+  ${TYPO.caption1};
+  color: ${semantic.light.accent.solid.hero};
 `;
