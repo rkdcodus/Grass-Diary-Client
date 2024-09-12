@@ -190,7 +190,7 @@ const CreateDiary = () => {
     };
 
     if (!checkWritingPermission()) {
-      // 모달
+      toast('오늘 이미 작성한 일기가 있어요.');
       return;
     }
 
@@ -287,7 +287,7 @@ const CreateDiary = () => {
     if (isContentEmpty) return; // 일기 내용이 비어 있으면 저장 요청 불가
 
     localStorage.setItem('diary_draft', JSON.stringify(diaryInfo));
-    toast('작성 중인 일기 내용을 임시저장했어요');
+    toast('작성 중인 일기 내용을 임시저장했어요.');
   };
 
   useEffect(() => {
