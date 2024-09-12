@@ -38,8 +38,8 @@ export default ImageModal;
 const Background = styled.div`
   z-index: 1;
   position: fixed;
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
+  height: 100%;
   top: 0;
   left: 0;
   background: ${semantic.light.bg.transparent.dimmed};
@@ -79,5 +79,5 @@ const CloseIcon = styled(CloseSvg)`
 
 const Image = styled.img`
   max-width: 80vw;
-  max-height: 90vh;
+  max-height: 80vh;
 `;
