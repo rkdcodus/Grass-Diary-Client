@@ -118,3 +118,31 @@ export const MAIN_MESSAGES = {
       '잔디 일기에는 앞으로 더 매력적인 콘텐츠들이 추가될 예정이에요!',
   },
 } as const;
+
+export const SETTING_MESSAGES = {
+  button: {
+    image: (type: string) => `이미지 ${type}`,
+    save: '저장',
+    amend: '수정',
+    withdraw: '회원 탈퇴',
+    apply: '적용하기',
+    navigate: '잔디 테마 설정 페이지로 이동하기',
+  },
+  placeholder: {
+    introduction: '소개글을 작성해 보세요. 150자까지만 쓸 수 있어요!',
+  },
+  label: {
+    nickname: '닉네임',
+    email: '이메일 주소',
+    theme: '테마',
+    withdraw: '회원 탈퇴',
+  },
+  message: {
+    nickname:
+      '마이페이지의 최상단에 나타나는 닉네임을 8글자 이내로 설정할 수 있습니다.',
+    email: '회원 인증 및 메일 발송에 사용되는 이메일 주소입니다.',
+    theme: '기본 모드와 나이트 모드를 선택할 수 있습니다.',
+    withdraw:
+      '회원 탈퇴 시 작성한 포스트 및 댓글은 모두 삭제되며 복구되지 않습니다.',
+  },
+};

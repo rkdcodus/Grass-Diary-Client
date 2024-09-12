@@ -9,7 +9,7 @@ import * as S from './styles';
 import API from '@services/index';
 import { Profile } from '@components/index';
 import { END_POINT } from '@constants/api';
-import { CONSOLE_ERROR } from '@constants/message';
+import { CONSOLE_ERROR, SETTING_MESSAGES } from '@constants/message';
 import { useProfile } from '@state/profile/useProfile';
 import { useProfileActions } from '@state/profile/ProfileStore';
 
@@ -61,8 +61,12 @@ const Setting = () => {
                     <S.UserNameText>{nickname}</S.UserNameText>
                   </S.AvatarImageBox>
                   <S.ProfileButtonBox>
-                    <S.ImageUploadButton>이미지 업로드</S.ImageUploadButton>
-                    <S.ImageDeleteButton>이미지 삭제</S.ImageDeleteButton>
+                    <S.ImageUploadButton>
+                      {SETTING_MESSAGES.button.image('업로드')}
+                    </S.ImageUploadButton>
+                    <S.ImageDeleteButton>
+                      {SETTING_MESSAGES.button.image('삭제')}
+                    </S.ImageDeleteButton>
                   </S.ProfileButtonBox>
                 </S.AvatarContainer>
               </S.ProfileLeftContainer>
@@ -73,7 +77,7 @@ const Setting = () => {
                       name="profileIntro"
                       value={profileIntro || ''}
                       onChange={handleChangeProfileIntro}
-                      placeholder="소개글을 작성해 보세요. 150자까지만 쓸 수 있어요!"
+                      placeholder={SETTING_MESSAGES.placeholder.introduction}
                       onFocus={() => setIsFocused(true)}
                       onBlur={() => setIsFocused(false)}
                     />
@@ -90,7 +94,9 @@ const Setting = () => {
           <S.DetailSettingArticle>
             <S.SettingBox>
               <S.SettingLeftBox>
-                <S.SettingLabel>닉네임</S.SettingLabel>
+                <S.SettingLabel>
+                  {SETTING_MESSAGES.label.nickname}
+                </S.SettingLabel>
                 {isEditingNickname ? (
                   <S.NicknameInput
                     placeholder={nickname}
@@ -111,29 +117,28 @@ const Setting = () => {
                     })
                   }
                 >
-                  저장
+                  {SETTING_MESSAGES.button.save}
                 </S.SaveButton>
               ) : (
                 <S.AmendButton onClick={() => setIsEditingNickname(true)}>
-                  수정
+                  {SETTING_MESSAGES.button.amend}
                 </S.AmendButton>
               )}
             </S.SettingBox>
             <S.SettingMessage>
-              마이페이지의 최상단에 나타나는 닉네임을 8글자 이내로 설정할 수
-              있습니다.
+              {SETTING_MESSAGES.message.nickname}
             </S.SettingMessage>
             <S.DividerLine />
           </S.DetailSettingArticle>
           <S.DetailSettingArticle>
             <S.SettingBox>
               <S.SettingLeftBox $variant="email">
-                <S.SettingLabel>이메일 주소</S.SettingLabel>
+                <S.SettingLabel>{SETTING_MESSAGES.label.email}</S.SettingLabel>
                 <S.SettingText>username@gmail.com</S.SettingText>
               </S.SettingLeftBox>
             </S.SettingBox>
             <S.SettingMessage>
-              회원 인증 및 메일 발송에 사용되는 이메일 주소입니다.
+              {SETTING_MESSAGES.message.email}
             </S.SettingMessage>
           </S.DetailSettingArticle>
           {/* <S.DividerLine />
@@ -141,9 +146,9 @@ const Setting = () => {
           <S.DividerLine />
           <S.ThemeContainer>
             <S.ThemeMessageBox>
-              <S.SettingLabel>잔디 일기 테마</S.SettingLabel>
+              <S.SettingLabel>{SETTING_MESSAGES.label.theme}</S.SettingLabel>
               <S.SettingMessage>
-                기본 모드와 나이트 모드를 선택할 수 있습니다.
+                {SETTING_MESSAGES.message.theme}
               </S.SettingMessage>
             </S.ThemeMessageBox>
             <S.ThemeSelectBox>
@@ -154,12 +159,13 @@ const Setting = () => {
           <S.DividerLine />
           <S.WithdrawBoxArticle>
             <S.WithdrawBox>
-              <S.SettingLabel>회원 탈퇴</S.SettingLabel>
-              <S.WithdrawButton>회원 탈퇴</S.WithdrawButton>
+              <S.SettingLabel>{SETTING_MESSAGES.label.withdraw}</S.SettingLabel>
+              <S.WithdrawButton>
+                {SETTING_MESSAGES.button.withdraw}
+              </S.WithdrawButton>
             </S.WithdrawBox>
             <S.SettingMessage>
-              회원 탈퇴 시 작성한 포스트 및 댓글은 모두 삭제되며 복구되지
-              않습니다.
+              {SETTING_MESSAGES.message.withdraw}
             </S.SettingMessage>
           </S.WithdrawBoxArticle>
           <S.BottomSection>
@@ -171,10 +177,10 @@ const Setting = () => {
                 })
               }
             >
-              적용하기
+              {SETTING_MESSAGES.button.apply}
             </S.ApplyButton>
             <S.NavigateButton>
-              잔디 테마 설정 페이지로 이동하기
+              {SETTING_MESSAGES.button.navigate}
               <img src="/assets/icons/button-outlined-chevron-right.svg" />
             </S.NavigateButton>
           </S.BottomSection>
