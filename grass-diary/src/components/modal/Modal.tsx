@@ -59,23 +59,24 @@ const Modal = () => {
 export default Modal;
 
 const Background = styled.div<{ $active: boolean }>`
-  display: ${props => (props.$active ? 'block' : 'none')};
+  display: ${props => (props.$active ? 'flex' : 'none')};
+  justify-content: center;
+  align-items: center;
+
   z-index: 1;
   position: fixed;
   top: 0;
   left: 0;
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
+  height: 100%;
   overflow: hidden;
+  padding: 0rem 1rem;
+
   background: ${semantic.light.bg.transparent.dimmed};
   cursor: auto;
 `;
 
 const ModalContainer = styled.div`
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
   display: flex;
   width: 22.5rem;
   flex-direction: column;
@@ -116,7 +117,8 @@ const Content = styled.p`
 `;
 
 const Divider = styled.div`
-  width: 22.5rem;
+  align-self: stretch;
+  // width: 22.5rem;
   height: 0.0625rem;
 
   background: ${semantic.light.border.transparent.assistive};
