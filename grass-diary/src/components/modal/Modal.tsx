@@ -104,6 +104,8 @@ const Title = styled.p`
 `;
 
 const CloseBtn = styled(Close)`
+  width: 20px;
+  height: 20px;
   cursor: pointer;
 `;
 

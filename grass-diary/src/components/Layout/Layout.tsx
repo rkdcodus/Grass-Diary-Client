@@ -3,6 +3,7 @@ import Header from './Header';
 import Footer from './Footer';
 import Toast from './Toast';
 import Modal from '@components/modal/Modal';
+import SnackBar from './SnackBar';
 
 const Layout = () => {
   return (
@@ -11,6 +12,7 @@ const Layout = () => {
       <Outlet />
       <Toast />
       <Modal />
+      <SnackBar />
       <Footer />
     </>
   );
