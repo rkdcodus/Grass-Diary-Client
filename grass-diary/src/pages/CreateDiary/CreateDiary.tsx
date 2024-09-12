@@ -1,5 +1,4 @@
-import styled, { css, keyframes } from 'styled-components';
-import Swal from 'sweetalert2';
+import * as S from '@styles/CreateDiary/CreateDiary.style';
 import QuillEditor from './QuillEditor';
 import EMOJI from '@constants/emoji';
 import 'dayjs/locale/ko';
@@ -8,13 +7,12 @@ import { semantic } from '@styles/semantic';
 import { BackButton } from '@components/index';
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ERROR } from '@constants/message';
+
 import { useCreateDiary } from '@hooks/api/useCreateDiary';
 import { useTodayDate } from '@hooks/api/useTodayDate';
 import { usePostImage } from '@hooks/api/usePostImage';
 import { useUser } from '@state/user/useUser';
 import { useToast } from '@state/toast/useToast';
-import { TYPO } from '@styles/typo';
 import { ReactComponent as Publish } from '@svg/publish.svg';
 import { ReactComponent as PublishOn } from '@svg/publish_on.svg';
 import { ReactComponent as Close } from '@svg/close.svg';
@@ -192,24 +190,7 @@ const CreateDiary = () => {
     };
 
     if (!checkWritingPermission()) {
-      Swal.fire({
-        title: ERROR.diary_already_exists,
-        icon: 'warning',
-        showCancelButton: false,
-        confirmButtonColor: '#28CA3B',
-        confirmButtonText: '확인',
-      });
-      return;
-    }
-
-    if (!diaryInfo.quillContent || !diaryInfo.quillContent.trim()) {
-      Swal.fire({
-        title: ERROR.diary_not_write,
-        icon: 'warning',
-        showCancelButton: false,
-        confirmButtonColor: '#28CA3B',
-        confirmButtonText: '확인',
-      });
+      // 모달
       return;
     }
 
@@ -229,6 +210,9 @@ const CreateDiary = () => {
             onSuccess: response => {
               const newDiaryId = response.data.diaryId;
               navigate(`/diary/${newDiaryId}`, { replace: true });
+
+              localStorage.removeItem('diary_draft');
+
               const currentDate = `${diaryInfo.year}년/${diaryInfo.month}월/${diaryInfo.date}일`;
               localStorage.setItem('lastWritingDate', currentDate);
             },
@@ -245,6 +229,9 @@ const CreateDiary = () => {
       onSuccess: response => {
         const newDiaryId = response.data.diaryId;
         navigate(`/diary/${newDiaryId}`, { replace: true });
+
+        localStorage.removeItem('diary_draft');
+
         const currentDate = `${diaryInfo.year}년/${diaryInfo.month}월/${diaryInfo.date}일`;
         localStorage.setItem('lastWritingDate', currentDate);
       },
@@ -288,7 +275,11 @@ const CreateDiary = () => {
   useEffect(() => {
     const savedDraft = localStorage.getItem('diary_draft');
     if (savedDraft) {
-      setDiaryInfo(JSON.parse(savedDraft));
+      const parsedDraft = JSON.parse(savedDraft);
+      setDiaryInfo(parsedDraft);
+
+      const checkText = parsedDraft.quillContent.replace(/<\/?[^>]+(>|$)/g, '');
+      setIsContentEmpty(checkText.trim().length === 0);
     }
   }, []);
 
@@ -316,30 +307,30 @@ const CreateDiary = () => {
 
   return (
     <>
-      <Layout>
-        <SaveWrap>
-          <SaveWrapContainer>
+      <S.Layout>
+        <S.SaveWrap>
+          <S.SaveWrapContainer>
             <BackButton goBackTo={'/main'} />
-            <SaveWrapText>일기 쓰기</SaveWrapText>
-          </SaveWrapContainer>
-          <SaveWrapTime>
+            <S.SaveWrapText>일기 쓰기</S.SaveWrapText>
+          </S.SaveWrapContainer>
+          <S.SaveWrapTime>
             {diaryInfo.month}월 {diaryInfo.date}일 {diaryInfo.day}요일
-          </SaveWrapTime>
-          <SaveBtnContainer>
-            <SavePrevBtn disabled={isContentEmpty}>
-              <SavePrevBtnText onClick={handleSaveDraft}>
+          </S.SaveWrapTime>
+          <S.SaveBtnContainer>
+            <S.SavePrevBtn disabled={isContentEmpty}>
+              <S.SavePrevBtnText onClick={handleSaveDraft}>
                 임시저장(Ctrl+S)
-              </SavePrevBtnText>
-            </SavePrevBtn>
-            <SaveBtn onClick={handleSave} disabled={isContentEmpty}>
-              <SaveBtnText disabled={isContentEmpty}>저장하기</SaveBtnText>
+              </S.SavePrevBtnText>
+            </S.SavePrevBtn>
+            <S.SaveBtn onClick={handleSave} disabled={isContentEmpty}>
+              <S.SaveBtnText disabled={isContentEmpty}>저장하기</S.SaveBtnText>
               {isContentEmpty ? <Publish /> : <PublishOn />}
-            </SaveBtn>
-          </SaveBtnContainer>
-        </SaveWrap>
-        <DiaryModeSelector>
-          <DailyQuestionBox $isSelected={selectedMode === 'dailyQuestion'}>
-            <ModeBtn>
+            </S.SaveBtn>
+          </S.SaveBtnContainer>
+        </S.SaveWrap>
+        <S.DiaryModeSelector>
+          <S.DailyQuestionBox $isSelected={selectedMode === 'dailyQuestion'}>
+            <S.ModeBtn>
               <input
                 id="mode-btn-question"
                 type="radio"
@@ -347,16 +338,18 @@ const CreateDiary = () => {
                 onChange={() => handleModeChange('dailyQuestion')}
               />
               <label htmlFor="mode-btn-question"></label>
-            </ModeBtn>
-            <ModeBoxContainer>
-              <DiaryModeSelectorText>오늘의 질문에 대해</DiaryModeSelectorText>
-              <DiaryModeSelectorSubText>
+            </S.ModeBtn>
+            <S.ModeBoxContainer>
+              <S.DiaryModeSelectorText>
+                오늘의 질문에 대해
+              </S.DiaryModeSelectorText>
+              <S.DiaryModeSelectorSubText>
                 오늘의 질문을 주제로 한 일기를 작성해보세요
-              </DiaryModeSelectorSubText>
-            </ModeBoxContainer>
-          </DailyQuestionBox>
-          <CustomEntryBox $isSelected={selectedMode === 'customEntry'}>
-            <ModeBtn>
+              </S.DiaryModeSelectorSubText>
+            </S.ModeBoxContainer>
+          </S.DailyQuestionBox>
+          <S.CustomEntryBox $isSelected={selectedMode === 'customEntry'}>
+            <S.ModeBtn>
               <input
                 id="mode-btn-custom"
                 type="radio"
@@ -364,37 +357,37 @@ const CreateDiary = () => {
                 onChange={() => handleModeChange('customEntry')}
               />
               <label htmlFor="mode-btn-custom"></label>
-            </ModeBtn>
-            <ModeBoxContainer>
-              <DiaryModeSelectorText>나만의 일기</DiaryModeSelectorText>
-              <DiaryModeSelectorSubText>
+            </S.ModeBtn>
+            <S.ModeBoxContainer>
+              <S.DiaryModeSelectorText>나만의 일기</S.DiaryModeSelectorText>
+              <S.DiaryModeSelectorSubText>
                 나의 오늘 하루에 대해 자유롭게 작성해보세요
-              </DiaryModeSelectorSubText>
-            </ModeBoxContainer>
-          </CustomEntryBox>
-        </DiaryModeSelector>
-        <Divider>
-          <DividerLine />
-        </Divider>
-        <ImageLayout>
-          <ImageContainer>
+              </S.DiaryModeSelectorSubText>
+            </S.ModeBoxContainer>
+          </S.CustomEntryBox>
+        </S.DiaryModeSelector>
+        <S.Divider>
+          <S.DividerLine />
+        </S.Divider>
+        <S.ImageLayout>
+          <S.ImageContainer>
             {image.imageURL ? (
               <>
-                <Image>
+                <S.Image>
                   <img src={image.imageURL} alt="image file" />
-                </Image>
-                <ImageName>{imageInfo.name}</ImageName>
-                <ImageData>{imageInfo.size} KB</ImageData>
+                </S.Image>
+                <S.ImageName>{imageInfo.name}</S.ImageName>
+                <S.ImageData>{imageInfo.size} KB</S.ImageData>
                 <button onClick={removeImage}>
-                  <ImageDelete>
+                  <S.ImageDelete>
                     <Close />
-                  </ImageDelete>
+                  </S.ImageDelete>
                 </button>
               </>
             ) : null}
-          </ImageContainer>
-        </ImageLayout>
-        <MainContainer>
+          </S.ImageContainer>
+        </S.ImageLayout>
+        <S.MainContainer>
           <QuillEditor
             onContentChange={handleContentChange}
             quillContent={diaryInfo.quillContent}
@@ -403,23 +396,23 @@ const CreateDiary = () => {
             handleImageChange={handleImageChange}
             selectedMode={selectedMode}
           />
-        </MainContainer>
-        <HashtagContainer>
-          <HashtagTitleBox>
-            <HashtagTitle>해시태그</HashtagTitle>
-          </HashtagTitleBox>
-          <HashtagBox>
-            <HashtagContent>
+        </S.MainContainer>
+        <S.HashtagContainer>
+          <S.HashtagTitleBox>
+            <S.HashtagTitle>해시태그</S.HashtagTitle>
+          </S.HashtagTitleBox>
+          <S.HashtagBox>
+            <S.HashtagContent>
               <Tag />
-              <HashtagArrTitle>
+              <S.HashtagArrTitle>
                 {diaryInfo.hashArr.map((tag, index) => (
                   <span key={index}>
                     {tag}
                     {`  `}
                   </span>
                 ))}
-              </HashtagArrTitle>
-              <HashtagInput
+              </S.HashtagArrTitle>
+              <S.HashtagInput
                 type="text"
                 value={hashtag}
                 onChange={onChangeHashtag}
@@ -431,18 +424,18 @@ const CreateDiary = () => {
                     : '일상, 친구, 점심 등'
                 }
               />
-            </HashtagContent>
-          </HashtagBox>
-          <CaptionBox>
-            <CaptionText color={captionColor}>{captionMessage}</CaptionText>
-          </CaptionBox>
-        </HashtagContainer>
-        <SelectableContainer>
-          <SelectablePublicBox>
-            <SelectablePublicText>일기 공개 여부</SelectablePublicText>
-            <SelectableSection>
-              <RadioBox>
-                <RadioBtn>
+            </S.HashtagContent>
+          </S.HashtagBox>
+          <S.CaptionBox>
+            <S.CaptionText color={captionColor}>{captionMessage}</S.CaptionText>
+          </S.CaptionBox>
+        </S.HashtagContainer>
+        <S.SelectableContainer>
+          <S.SelectablePublicBox>
+            <S.SelectablePublicText>일기 공개 여부</S.SelectablePublicText>
+            <S.SelectableSection>
+              <S.RadioBox>
+                <S.RadioBtn>
                   <input
                     id="radio-btn-public"
                     type="radio"
@@ -451,12 +444,12 @@ const CreateDiary = () => {
                     onChange={handlePublicChange}
                   />
                   <label htmlFor="radio-btn-public"></label>
-                </RadioBtn>
+                </S.RadioBtn>
                 <LockOpen />
-                <RadioText>공개</RadioText>
-              </RadioBox>
-              <RadioBox>
-                <RadioBtn>
+                <S.RadioText>공개</S.RadioText>
+              </S.RadioBox>
+              <S.RadioBox>
+                <S.RadioBtn>
                   <input
                     id="radio-btn-private"
                     type="radio"
@@ -465,18 +458,18 @@ const CreateDiary = () => {
                     onChange={handlePrivateChange}
                   />
                   <label htmlFor="radio-btn-private"></label>
-                </RadioBtn>
+                </S.RadioBtn>
                 <Lock />
-                <RadioText>비공개</RadioText>
-              </RadioBox>
-            </SelectableSection>
-          </SelectablePublicBox>
-          <EmotionBox>
-            <EmotionText>오늘의 기분</EmotionText>
-            <EmojiBox>
+                <S.RadioText>비공개</S.RadioText>
+              </S.RadioBox>
+            </S.SelectableSection>
+          </S.SelectablePublicBox>
+          <S.EmotionBox>
+            <S.EmotionText>오늘의 기분</S.EmotionText>
+            <S.EmojiBox>
               {Object.entries(EMOJI).map(([index, emoji]) => (
-                <EmojiSelectableBox key={index}>
-                  <EmojiInput
+                <S.EmojiSelectableBox key={index}>
+                  <S.EmojiInput
                     type="radio"
                     id={`emoji-${index}`}
                     name="mood"
@@ -484,530 +477,17 @@ const CreateDiary = () => {
                     checked={diaryInfo.moodValue.toString() === index}
                     onChange={handleMoodChange}
                   />
-                  <EmojiLabel htmlFor={`emoji-${index}`}>{emoji}</EmojiLabel>
-                </EmojiSelectableBox>
+                  <S.EmojiLabel htmlFor={`emoji-${index}`}>
+                    {emoji}
+                  </S.EmojiLabel>
+                </S.EmojiSelectableBox>
               ))}
-            </EmojiBox>
-          </EmotionBox>
-        </SelectableContainer>
-      </Layout>
+            </S.EmojiBox>
+          </S.EmotionBox>
+        </S.SelectableContainer>
+      </S.Layout>
     </>
   );
 };
 
 export default CreateDiary;
-
-const Layout = styled.div`
-  display: flex;
-  margin: 0 auto;
-  max-width: var(--vw-desktop-min, 60rem);
-  padding: var(--gap-xl, 1.5rem) var(--gap-9xl, 8.5rem) var(--gap-4xl, 3rem)
-    var(--gap-9xl, 8.5rem);
-  flex-direction: column;
-  align-items: flex-start;
-  gap: var(--gap-lg, 1.25rem);
-  flex: 1 0 0;
-  align-self: stretch;
-
-  border-radius: var(--radius-empty, 0rem);
-  border-top: var(--stroke-empty, 0px) solid
-    ${semantic.light.border.transparent.alternative};
-  border-right: var(--stroke-thin, 1px) solid
-    ${semantic.light.border.transparent.alternative};
-  border-bottom: var(--stroke-empty, 0px) solid
-    ${semantic.light.border.transparent.alternative};
-  border-left: var(--stroke-thin, 1px) solid
-    ${semantic.light.border.transparent.alternative};
-  opacity: var(--opacity-visible, 1);
-  background: ${semantic.light.bg.solid.subtlest};
-`;
-
-const SaveWrap = styled.div`
-  display: flex;
-  padding: var(--gap-empty, 0rem);
-  align-items: center;
-  gap: var(--gap-xl, 1.5rem);
-  align-self: stretch;
-
-  border-radius: var(--radius-empty, 0rem);
-  opacity: var(--opacity-visible, 1);
-`;
-
-const SaveWrapContainer = styled.div`
-  display: flex;
-  padding: var(--gap-empty, 0rem);
-  align-items: center;
-  gap: var(--gap-2xs, 0.5rem);
-
-  border-radius: var(--radius-empty, 0rem);
-  opacity: var(--opacity-visible, 1);
-`;
-
-const SaveWrapText = styled.p`
-  color: ${semantic.light.object.transparent.neutral};
-
-  ${TYPO.title1};
-
-  opacity: var(--opacity-visible, 1);
-`;
-
-const SaveWrapTime = styled.p`
-  flex: 1 0 0;
-
-  color: ${semantic.light.object.transparent.alternative};
-
-  ${TYPO.label1}
-`;
-
-const SaveBtnContainer = styled.div`
-  display: flex;
-  padding: var(--gap-empty, 0rem);
-  align-items: center;
-  gap: var(--gap-md, 1rem);
-
-  border-radius: var(--radius-empty, 0rem);
-`;
-
-const SavePrevBtn = styled.button<{ disabled: boolean }>`
-  display: flex;
-  padding: var(--gap-xs, 0.625rem) var(--gap-md, 1rem);
-  justify-content: center;
-  align-items: center;
-  gap: var(--gap-2xs, 0.5rem);
-
-  border-radius: var(--radius-xs, 0.5rem);
-  border: var(--stroke-thin, 1px) solid
-    ${semantic.light.border.transparent.alternative};
-
-  background: ${semantic.light.bg.solid.normal};
-
-  &:hover {
-    background: ${({ disabled }) =>
-      disabled
-        ? semantic.light.bg.solid.normal
-        : semantic.light.bg.solid.subtlest};
-  }
-
-  cursor: ${({ disabled }) => (disabled ? 'not-allowed' : 'pointer')};
-
-  transition: all 0.2s ease-in;
-`;
-
-const SavePrevBtnText = styled.p`
-  color: ${semantic.light.object.transparent.alternative};
-  text-align: center;
-
-  ${TYPO.label2}
-`;
-
-const SaveBtn = styled.button<{ disabled: boolean }>`
-  display: flex;
-  padding: var(--gap-xs, 0.625rem) var(--gap-md, 1rem);
-  justify-content: center;
-  align-items: center;
-  gap: var(--gap-2xs, 0.5rem);
-
-  border-radius: var(--radius-xs, 0.5rem);
-  background: ${({ disabled }) =>
-    disabled
-      ? semantic.light.interactive.solid.disabled
-      : semantic.light.accent.solid.normal};
-  cursor: ${({ disabled }) => (disabled ? 'not-allowed' : 'pointer')};
-
-  &:hover {
-    background: ${({ disabled }) =>
-      disabled
-        ? semantic.light.interactive.solid.disabled
-        : semantic.light.accent.solid.hero};
-  }
-
-  transition: all 0.2s ease-in;
-`;
-
-const SaveBtnText = styled.p<{ disabled: boolean }>`
-  color: ${({ disabled }) =>
-    disabled
-      ? semantic.light.object.transparent.disabled
-      : semantic.light.base.solid.white};
-  text-align: center;
-
-  ${TYPO.label2}
-`;
-
-const DiaryModeSelector = styled.div`
-  display: flex;
-  align-items: center;
-  gap: var(--gap-md, 1rem);
-  align-self: stretch;
-`;
-
-const ModeBoxContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: var(--gap-4xs, 0.25rem);
-  flex: 1 0 0;
-`;
-
-const DiaryModeSelectorText = styled.p`
-  align-self: stretch;
-  color: ${semantic.light.object.transparent.neutral};
-  ${TYPO.label2}
-`;
-
-const DiaryModeSelectorSubText = styled.p`
-  align-self: stretch;
-  color: ${semantic.light.object.transparent.alternative};
-  ${TYPO.caption1}
-`;
-
-const DailyQuestionBox = styled.div<{ $isSelected: boolean }>`
-  display: flex;
-  padding: var(--gap-md, 1rem) var(--gap-lg, 1.25rem);
-  align-items: center;
-  gap: var(--gap-lg, 1.25rem);
-  flex: 1 0 0;
-  border-radius: var(--radius-sm, 0.75rem);
-  border: var(--stroke-thin, 1px) solid
-    ${props =>
-      props.$isSelected
-        ? semantic.light.accent.solid.hero
-        : semantic.light.border.transparent.alternative};
-  background: ${props =>
-    props.$isSelected
-      ? semantic.light.accent.transparent.alternative
-      : semantic.light.bg.solid.normal};
-`;
-
-const CustomEntryBox = styled.div<{ $isSelected: boolean }>`
-  display: flex;
-  padding: var(--gap-md, 1rem) var(--gap-lg, 1.25rem);
-  align-items: center;
-  gap: var(--gap-lg, 1.25rem);
-  flex: 1 0 0;
-  border-radius: var(--radius-sm, 0.75rem);
-  border: var(--stroke-thin, 1px) solid
-    ${props =>
-      props.$isSelected
-        ? semantic.light.accent.solid.hero
-        : semantic.light.border.transparent.alternative};
-  background: ${props =>
-    props.$isSelected
-      ? semantic.light.accent.transparent.alternative
-      : semantic.light.bg.solid.normal};
-`;
-
-const ModeBtn = styled.div`
-  [type='radio'] {
-    display: none;
-  }
-
-  label {
-    display: flex;
-    width: 1.25rem;
-    height: 1.25rem;
-    justify-content: center;
-    align-items: center;
-    border-radius: var(--radius-lg, 1.5rem);
-    border: var(--stroke-thick, 0.125rem) solid
-      ${semantic.light.border.transparent.normal};
-    background: ${semantic.light.fill.transparent.assistive};
-    cursor: pointer;
-    transition: border 0.2s ease-in-out, border-color 0.2s ease-in-out;
-
-    &:hover {
-      box-shadow: 0 0 0 0.1rem lightgray;
-    }
-  }
-
-  [type='radio']:checked + label {
-    background: ${semantic.light.accent.transparent.hero};
-    border: var(--stroke-thicker, 0.25rem) solid
-      ${semantic.light.accent.solid.hero};
-  }
-`;
-
-const Divider = styled.span`
-  display: flex;
-  height: 0rem;
-  justify-content: center;
-  align-items: center;
-  align-self: stretch;
-`;
-
-const DividerLine = styled.span`
-  width: 43rem;
-  height: 0.0625rem;
-
-  opacity: var(--opacity-visible, 1);
-  background: ${semantic.light.border.transparent.alternative};
-`;
-
-const ImageLayout = styled.div`
-  display: flex;
-  padding: var(--gap-empty, 0rem) var(--gap-4xs, 0.25rem);
-  align-items: center;
-  gap: var(--gap-md, 1rem);
-  align-self: stretch;
-`;
-
-const ImageContainer = styled.div`
-  display: flex;
-  align-items: center;
-  gap: var(--gap-2xs, 0.5rem);
-`;
-
-const Image = styled.div`
-  width: 1.25rem;
-  height: 1.25rem;
-
-  background: url(<path-to-image>) lightgray 50% / cover no-repeat;
-`;
-
-const ImageName = styled.p`
-  color: ${semantic.light.object.transparent.neutral};
-
-  ${TYPO.caption1}
-`;
-
-const ImageData = styled.p`
-  color: ${semantic.light.object.transparent.assistive};
-
-  ${TYPO.caption1}
-`;
-
-const ImageDelete = styled.div`
-  display: flex;
-  padding: var(--gap-4xs, 0.25rem);
-  justify-content: center;
-  align-items: center;
-  gap: var(--gap-md, 1rem);
-
-  border-radius: var(--radius-2xs, 0.25rem);
-`;
-
-const MainContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: var(--gap-md, 1rem);
-  flex: 1 0 0;
-  align-self: stretch;
-`;
-
-const HashtagContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  padding-top: 2.5rem;
-  align-items: flex-start;
-  gap: var(--gap-2xs, 0.5rem);
-  align-self: stretch;
-`;
-
-const HashtagTitleBox = styled.div`
-  display: flex;
-  padding: var(--gap-empty, 0rem) var(--gap-4xs, 0.25rem);
-  align-items: flex-start;
-  align-self: stretch;
-`;
-
-const HashtagTitle = styled.p`
-  color: ${semantic.light.object.transparent.alternative};
-
-  ${TYPO.label1}
-`;
-
-const HashtagBox = styled.div`
-  display: flex;
-  padding: var(--gap-xs, 0.625rem) var(--gap-md, 1rem);
-  align-items: center;
-  gap: var(--gap-sm, 0.75rem);
-  align-self: stretch;
-
-  border-radius: var(--radius-xs, 0.5rem);
-  border: var(--stroke-thin, 1px) solid
-    ${semantic.light.border.transparent.alternative};
-  background: ${semantic.light.bg.solid.normal};
-`;
-
-const HashtagContent = styled.div`
-  display: flex;
-  align-items: center;
-  gap: var(--gap-sm, 0.75rem);
-  flex: 1 0 0;
-`;
-
-const HashtagInput = styled.input`
-  flex: 1;
-  border: none;
-  outline: none;
-  background: transparent;
-  ${TYPO.body1}
-
-  &::placeholder {
-    color: ${semantic.light.object.transparent.assistive};
-  }
-`;
-
-const HashtagArrTitle = styled.p`
-  color: ${semantic.light.accent.solid.hero};
-
-  font-size: 0.875rem;
-  font-style: normal;
-  font-weight: 600;
-  line-height: 1.625rem;
-`;
-
-const CaptionBox = styled.div`
-  display: flex;
-  padding: var(--gap-empty, 0rem) var(--gap-md, 1rem);
-  align-items: flex-start;
-  align-self: stretch;
-`;
-
-const CaptionTextShake = keyframes`
-  0% { transform: translateX(0); }
-  25% { transform: translateX(-5px); }
-  50% { transform: translateX(5px); }
-  75% { transform: translateX(-5px); }
-  100% { transform: translateX(0); }
-`;
-
-const CaptionText = styled.p<{ color: string }>`
-  color: ${props => props.color};
-  ${TYPO.caption1}
-
-  ${props =>
-    props.color === semantic.light.feedback.solid.negative &&
-    css`
-      animation: ${CaptionTextShake} 0.3s ease;
-    `}
-`;
-
-const SelectableContainer = styled.div`
-  display: flex;
-  align-items: center;
-  gap: var(--gap-md, 1rem);
-  align-self: stretch;
-`;
-
-const SelectablePublicBox = styled.div`
-  display: flex;
-  padding: var(--gap-sm, 0.75rem) var(--gap-md, 1rem);
-  align-items: center;
-  gap: var(--gap-lg, 1.25rem);
-
-  border-radius: var(--radius-xs, 0.5rem);
-  border: var(--stroke-thin, 1px) solid
-    ${semantic.light.border.transparent.alternative};
-  background: ${semantic.light.bg.solid.normal};
-`;
-
-const SelectablePublicText = styled.p`
-  color: ${semantic.light.object.transparent.neutral};
-  ${TYPO.label1}
-`;
-
-const SelectableSection = styled.div`
-  display: flex;
-  padding: var(--gap-3xs, 0.375rem) var(--gap-empty, 0rem);
-  align-items: center;
-  gap: var(--gap-lg, 1.25rem);
-`;
-
-const RadioBox = styled.div`
-  display: flex;
-  align-items: center;
-  gap: var(--gap-2xs, 0.5rem);
-`;
-
-const RadioBtn = styled.div`
-  [type='radio'] {
-    display: none;
-  }
-
-  label {
-    display: flex;
-    width: 1.25rem;
-    height: 1.25rem;
-    justify-content: center;
-    align-items: center;
-    border-radius: var(--radius-lg, 1.5rem);
-    border: var(--stroke-thick, 0.125rem) solid
-      ${semantic.light.border.transparent.normal};
-    background: ${semantic.light.fill.transparent.assistive};
-    cursor: pointer;
-    transition: border 0.2s ease-in-out, border-color 0.2s ease-in-out;
-
-    &:hover {
-      box-shadow: 0 0 0 0.1rem lightgray;
-    }
-  }
-
-  [type='radio']:checked + label {
-    background: ${semantic.light.accent.transparent.hero};
-    border: var(--stroke-thicker, 0.25rem) solid
-      ${semantic.light.accent.solid.hero};
-  }
-`;
-
-const RadioText = styled.p`
-  color: ${semantic.light.object.transparent.alternative};
-
-  ${TYPO.label1}
-`;
-
-const EmotionBox = styled.div`
-  display: flex;
-  padding: var(--gap-sm, 0.75rem) var(--gap-md, 1rem);
-  align-items: center;
-  gap: var(--gap-lg, 1.25rem);
-
-  border-radius: var(--radius-xs, 0.5rem);
-  border: var(--stroke-thin, 1px) solid
-    ${semantic.light.border.transparent.alternative};
-  background: ${semantic.light.bg.solid.normal};
-`;
-
-const EmotionText = styled.p`
-  color: ${semantic.light.object.transparent.neutral};
-
-  ${TYPO.label1}
-`;
-
-const EmojiBox = styled.div`
-  display: flex;
-  align-items: center;
-  gap: var(--gap-xs, 0.625rem);
-`;
-
-const EmojiSelectableBox = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-
-  border: var(--stroke-thin, 0.06rem) solid
-    ${semantic.light.border.transparent.normal};
-  border-radius: var(--radius-xs, 0.5rem);
-  background: ${semantic.light.fill.transparent.alternative};
-`;
-
-const EmojiInput = styled.input`
-  display: none;
-`;
-
-const EmojiLabel = styled.label`
-  cursor: pointer;
-  font-size: 1.3rem;
-  border-radius: var(--radius-xs, 0.5rem);
-
-  transition: all 0.2s ease-in-out;
-
-  ${EmojiInput}:checked + & {
-    padding: 0rem 0.2rem 0rem 0.2rem;
-    background: ${semantic.light.accent.transparent.hero};
-    border: var(--stroke-thicker, 0.1rem) solid
-      ${semantic.light.accent.solid.hero};
-  }
-`;
