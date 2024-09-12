@@ -15,6 +15,9 @@ import { TYPO } from '@styles/typo';
 const Header = () => {
   const memberId = useUser();
   const navigate = useNavigate();
+  const handleGoogleLogin: TGoogleLogin = () => {
+    window.open(`http://localhost:8080/api/auth/google`, '_self');
+  };
 
   return (
     <NavBar>
@@ -32,7 +35,7 @@ const Header = () => {
             <MenuBar />
           </RightContent>
         ) : (
-          <LoginBtn onClick={() => console.log('로그인')}>로그인</LoginBtn>
+          <LoginBtn onClick={handleGoogleLogin}>로그인</LoginBtn>
         )}
       </ContentWrap>
     </NavBar>
