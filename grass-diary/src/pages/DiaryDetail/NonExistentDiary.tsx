@@ -5,6 +5,7 @@ import { ERROR } from '@constants/message';
 const styles = stylex.create({
   wrap: {
     width: '100vw',
+    minHeight: '100dvh',
     padding: '80px 160px',
   },
   content: {
