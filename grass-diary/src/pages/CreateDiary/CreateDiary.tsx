@@ -64,7 +64,6 @@ const CreateDiary = () => {
   const [imageInfo, setImageInfo] = useState({
     name: '',
     size: '',
-    extension: '',
   });
 
   // 상태 업데이트 함수
@@ -174,7 +173,7 @@ const CreateDiary = () => {
       imageId: 0,
       imageURL: '',
     });
-    setImageInfo({ name: '', size: '', extension: '' });
+    setImageInfo({ name: '', size: '' });
   };
 
   const handleSave = async () => {
@@ -255,12 +254,10 @@ const CreateDiary = () => {
   const handleImageChange = (file: File) => {
     const fileName = file.name;
     const fileSize = (file.size / 1024).toFixed(2); // KB 단위로 변환
-    const fileExtension = fileName.split('.').pop() || '';
 
     setImageInfo({
       name: fileName,
       size: fileSize,
-      extension: fileExtension,
     });
   };
 

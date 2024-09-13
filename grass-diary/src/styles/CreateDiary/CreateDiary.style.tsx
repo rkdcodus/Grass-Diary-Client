@@ -14,7 +14,6 @@ export const Layout = styled.div`
   flex: 1 0 0;
   align-self: stretch;
 
-  border-radius: var(--radius-empty, 0rem);
   border-top: var(--stroke-empty, 0px) solid
     ${semantic.light.border.transparent.alternative};
   border-right: var(--stroke-thin, 1px) solid
@@ -23,37 +22,29 @@ export const Layout = styled.div`
     ${semantic.light.border.transparent.alternative};
   border-left: var(--stroke-thin, 1px) solid
     ${semantic.light.border.transparent.alternative};
-  opacity: var(--opacity-visible, 1);
+
   background: ${semantic.light.bg.solid.subtlest};
 `;
 
 export const SaveWrap = styled.div`
   display: flex;
-  padding: var(--gap-empty, 0rem);
+
   align-items: center;
   gap: var(--gap-xl, 1.5rem);
   align-self: stretch;
-
-  border-radius: var(--radius-empty, 0rem);
-  opacity: var(--opacity-visible, 1);
 `;
 
 export const SaveWrapContainer = styled.div`
   display: flex;
-  padding: var(--gap-empty, 0rem);
+
   align-items: center;
   gap: var(--gap-2xs, 0.5rem);
-
-  border-radius: var(--radius-empty, 0rem);
-  opacity: var(--opacity-visible, 1);
 `;
 
 export const SaveWrapText = styled.p`
   color: ${semantic.light.object.transparent.neutral};
 
   ${TYPO.title1};
-
-  opacity: var(--opacity-visible, 1);
 `;
 
 export const SaveWrapTime = styled.p`
@@ -66,11 +57,9 @@ export const SaveWrapTime = styled.p`
 
 export const SaveBtnContainer = styled.div`
   display: flex;
-  padding: var(--gap-empty, 0rem);
+
   align-items: center;
   gap: var(--gap-md, 1rem);
-
-  border-radius: var(--radius-empty, 0rem);
 `;
 
 export const SavePrevBtn = styled.button<{ disabled: boolean }>`
@@ -234,7 +223,6 @@ export const ModeBtn = styled.div`
 
 export const Divider = styled.span`
   display: flex;
-  height: 0rem;
   justify-content: center;
   align-items: center;
   align-self: stretch;
@@ -244,7 +232,6 @@ export const DividerLine = styled.span`
   width: 43rem;
   height: 0.0625rem;
 
-  opacity: var(--opacity-visible, 1);
   background: ${semantic.light.border.transparent.alternative};
 `;
 

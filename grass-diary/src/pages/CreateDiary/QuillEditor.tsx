@@ -1,13 +1,11 @@
-import styled from 'styled-components';
+import * as S from '@styles/CreateDiary/QuillEditor.style';
 import API from '@services/index';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 
-import { semantic } from '@styles/semantic';
 import { useState, useEffect, useMemo } from 'react';
 import { END_POINT } from '@constants/api';
 import { CONSOLE_ERROR } from '@constants/message';
-import { TYPO } from '@styles/typo';
 
 type QuillEditorProps = {
   onContentChange: (content: string) => void;
@@ -126,7 +124,7 @@ const QuillEditor = ({
 
   return (
     <>
-      <Title>{placeholderText}</Title>
+      <S.Title>{placeholderText}</S.Title>
       <ReactQuill
         theme="snow"
         placeholder="일기를 작성 해보세요!
@@ -141,9 +139,3 @@ const QuillEditor = ({
 };
 
 export default QuillEditor;
-
-const Title = styled.p`
-  color: ${semantic.light.object.transparent.assistive};
-
-  ${TYPO.body2}
-`;
