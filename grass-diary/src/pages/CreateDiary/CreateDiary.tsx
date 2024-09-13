@@ -3,6 +3,7 @@ import QuillEditor from './QuillEditor';
 import EMOJI from '@constants/emoji';
 import 'dayjs/locale/ko';
 
+import { CREATE_MESSAGES } from '@constants/message';
 import { semantic } from '@styles/semantic';
 import { BackButton } from '@components/index';
 import { useState, useEffect } from 'react';
@@ -47,7 +48,7 @@ const CreateDiary = () => {
   // 해시태그 state
   const [hashtag, setHashtag] = useState<string>('');
   const [captionMessage, setCaptionMessage] = useState<string>(
-    '태그명을 입력하고, 스페이스바를 누르면 저장돼요',
+    CREATE_MESSAGES.hashtag.instruction,
   );
   const [captionColor, setCaptionColor] = useState<string>(
     semantic.light.object.transparent.assistive,
@@ -82,12 +83,12 @@ const CreateDiary = () => {
     setHashtag(e.target.value);
 
     if (e.target.value === '') {
-      setCaptionMessage('태그명을 입력하고, 스페이스바를 누르면 저장돼요');
+      setCaptionMessage(CREATE_MESSAGES.hashtag.instruction);
       setCaptionColor(semantic.light.object.transparent.assistive);
     }
 
     if (e.target.value.length > 10) {
-      setCaptionMessage('해시태그 길이가 너무 깁니다.');
+      setCaptionMessage(CREATE_MESSAGES.hashtag.too_long);
       setCaptionColor(semantic.light.feedback.solid.negative);
       return setHashtag('');
     }
@@ -112,13 +113,13 @@ const CreateDiary = () => {
       /[가-힣A-Za-z0-9\u3040-\u309F\u30A0-\u30FF\u4E00-\u9FAF]+/g;
 
     if (specialCharsPattern.test(inputText)) {
-      setCaptionMessage('태그에 특수문자는 넣을 수 없어요');
+      setCaptionMessage(CREATE_MESSAGES.hashtag.no_special_characters);
       setCaptionColor(semantic.light.feedback.solid.negative);
       return setHashtag(''); // 특수문자 포함 시 즉시 종료
     }
 
     if (invalidKoreanPattern.test(inputText)) {
-      setCaptionMessage('올바른 한글을 입력해주세요');
+      setCaptionMessage(CREATE_MESSAGES.hashtag.invalid_korean);
       setCaptionColor(semantic.light.feedback.solid.negative);
       return setHashtag(''); // 잘못된 한글 포함 시 즉시 종료
     }
@@ -130,20 +131,20 @@ const CreateDiary = () => {
     const hashtagText = inputText.match(validCharsPattern)!.join('');
 
     if (diaryInfo.hashArr.includes(hashtagText)) {
-      setCaptionMessage('이미 존재하는 해시태그입니다.');
+      setCaptionMessage(CREATE_MESSAGES.hashtag.duplicate);
       setCaptionColor(semantic.light.feedback.solid.negative);
       return setHashtag(''); // 중복된 해시태그일 때 즉시 종료
     }
 
     if (diaryInfo.hashArr.length >= 15) {
-      setCaptionMessage('해시태그는 15개까지 입력 가능합니다.');
+      setCaptionMessage(CREATE_MESSAGES.hashtag.limit_exceeded);
       setCaptionColor(semantic.light.feedback.solid.negative);
       return setHashtag(''); // 해시태그 최대 개수 초과 시 즉시 종료
     }
 
     // 모든 조건을 통과한 경우에만 해시태그 추가
     setDiaryField({ hashArr: [...diaryInfo.hashArr, hashtagText] });
-    setCaptionMessage('태그명을 입력하고, 스페이스바를 누르면 저장돼요');
+    setCaptionMessage(CREATE_MESSAGES.hashtag.instruction);
     setCaptionColor(semantic.light.object.transparent.assistive);
     setHashtag('');
   };
@@ -189,7 +190,7 @@ const CreateDiary = () => {
     };
 
     if (!checkWritingPermission()) {
-      toast('오늘 이미 작성한 일기가 있어요.');
+      toast(CREATE_MESSAGES.toast.already_written);
       return;
     }
 
@@ -284,7 +285,7 @@ const CreateDiary = () => {
     if (isContentEmpty) return; // 일기 내용이 비어 있으면 저장 요청 불가
 
     localStorage.setItem('diary_draft', JSON.stringify(diaryInfo));
-    toast('작성 중인 일기 내용을 임시저장했어요.');
+    toast(CREATE_MESSAGES.toast.temp_save);
   };
 
   useEffect(() => {
@@ -308,7 +309,7 @@ const CreateDiary = () => {
         <S.SaveWrap>
           <S.SaveWrapContainer>
             <BackButton goBackTo={'/main'} />
-            <S.SaveWrapText>일기 쓰기</S.SaveWrapText>
+            <S.SaveWrapText>{CREATE_MESSAGES.write_diary}</S.SaveWrapText>
           </S.SaveWrapContainer>
           <S.SaveWrapTime>
             {diaryInfo.month}월 {diaryInfo.date}일 {diaryInfo.day}요일
@@ -316,11 +317,13 @@ const CreateDiary = () => {
           <S.SaveBtnContainer>
             <S.SavePrevBtn disabled={isContentEmpty}>
               <S.SavePrevBtnText onClick={handleSaveDraft}>
-                임시저장(Ctrl+S)
+                {CREATE_MESSAGES.temp_save}
               </S.SavePrevBtnText>
             </S.SavePrevBtn>
             <S.SaveBtn onClick={handleSave} disabled={isContentEmpty}>
-              <S.SaveBtnText disabled={isContentEmpty}>저장하기</S.SaveBtnText>
+              <S.SaveBtnText disabled={isContentEmpty}>
+                {CREATE_MESSAGES.save}
+              </S.SaveBtnText>
               {isContentEmpty ? <Publish /> : <PublishOn />}
             </S.SaveBtn>
           </S.SaveBtnContainer>
@@ -338,10 +341,10 @@ const CreateDiary = () => {
             </S.ModeBtn>
             <S.ModeBoxContainer>
               <S.DiaryModeSelectorText>
-                오늘의 질문에 대해
+                {CREATE_MESSAGES.question_title}
               </S.DiaryModeSelectorText>
               <S.DiaryModeSelectorSubText>
-                오늘의 질문을 주제로 한 일기를 작성해보세요
+                {CREATE_MESSAGES.question_prompt}
               </S.DiaryModeSelectorSubText>
             </S.ModeBoxContainer>
           </S.DailyQuestionBox>
@@ -356,9 +359,11 @@ const CreateDiary = () => {
               <label htmlFor="mode-btn-custom"></label>
             </S.ModeBtn>
             <S.ModeBoxContainer>
-              <S.DiaryModeSelectorText>나만의 일기</S.DiaryModeSelectorText>
+              <S.DiaryModeSelectorText>
+                {CREATE_MESSAGES.personal_diary}
+              </S.DiaryModeSelectorText>
               <S.DiaryModeSelectorSubText>
-                나의 오늘 하루에 대해 자유롭게 작성해보세요
+                {CREATE_MESSAGES.personal_prompt}
               </S.DiaryModeSelectorSubText>
             </S.ModeBoxContainer>
           </S.CustomEntryBox>
@@ -396,7 +401,7 @@ const CreateDiary = () => {
         </S.MainContainer>
         <S.HashtagContainer>
           <S.HashtagTitleBox>
-            <S.HashtagTitle>해시태그</S.HashtagTitle>
+            <S.HashtagTitle>{CREATE_MESSAGES.hashtag_title}</S.HashtagTitle>
           </S.HashtagTitleBox>
           <S.HashtagBox>
             <S.HashtagContent>
@@ -417,8 +422,8 @@ const CreateDiary = () => {
                 onKeyDown={handleKeyDown}
                 placeholder={
                   diaryInfo.hashArr.length > 0
-                    ? '태그명을 작성해주세요...'
-                    : '일상, 친구, 점심 등'
+                    ? CREATE_MESSAGES.hashtag.enter_tag
+                    : CREATE_MESSAGES.hashtag.examples
                 }
               />
             </S.HashtagContent>
@@ -429,7 +434,9 @@ const CreateDiary = () => {
         </S.HashtagContainer>
         <S.SelectableContainer>
           <S.SelectablePublicBox>
-            <S.SelectablePublicText>일기 공개 여부</S.SelectablePublicText>
+            <S.SelectablePublicText>
+              {CREATE_MESSAGES.visibility_title}
+            </S.SelectablePublicText>
             <S.SelectableSection>
               <S.RadioBox>
                 <S.RadioBtn>
@@ -443,7 +450,7 @@ const CreateDiary = () => {
                   <label htmlFor="radio-btn-public"></label>
                 </S.RadioBtn>
                 <LockOpen />
-                <S.RadioText>공개</S.RadioText>
+                <S.RadioText>{CREATE_MESSAGES.public}</S.RadioText>
               </S.RadioBox>
               <S.RadioBox>
                 <S.RadioBtn>
@@ -457,12 +464,12 @@ const CreateDiary = () => {
                   <label htmlFor="radio-btn-private"></label>
                 </S.RadioBtn>
                 <Lock />
-                <S.RadioText>비공개</S.RadioText>
+                <S.RadioText>{CREATE_MESSAGES.private}</S.RadioText>
               </S.RadioBox>
             </S.SelectableSection>
           </S.SelectablePublicBox>
           <S.EmotionBox>
-            <S.EmotionText>오늘의 기분</S.EmotionText>
+            <S.EmotionText>{CREATE_MESSAGES.mood_today}</S.EmotionText>
             <S.EmojiBox>
               {Object.entries(EMOJI).map(([index, emoji]) => (
                 <S.EmojiSelectableBox key={index}>

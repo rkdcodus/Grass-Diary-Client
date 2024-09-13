@@ -118,3 +118,34 @@ export const MAIN_MESSAGES = {
       '잔디 일기에는 앞으로 더 매력적인 콘텐츠들이 추가될 예정이에요!',
   },
 } as const;
+
+export const CREATE_MESSAGES = {
+  write_diary: '일기 쓰기',
+  temp_save: '임시저장(Ctrl+S)',
+  save: '저장하기',
+  question_title: '오늘의 질문에 대해',
+  question_prompt: '오늘의 질문을 주제로 한 일기를 작성해보세요',
+  personal_diary: '나만의 일기',
+  personal_prompt: '나의 오늘 하루에 대해 자유롭게 작성해보세요',
+  hashtag_title: '해시태그',
+  visibility_title: '일기 공개 여부',
+  public: '공개',
+  private: '비공개',
+  mood_today: '오늘의 기분',
+
+  toast: {
+    temp_save: '작성 중인 일기 내용을 임시저장했어요.',
+    already_written: '오늘 이미 작성한 일기가 있어요.',
+  },
+
+  hashtag: {
+    instruction: '태그명을 입력하고, 스페이스바를 누르면 저장돼요.',
+    too_long: '해시태그 길이가 너무 깁니다.',
+    no_special_characters: '태그에 특수문자는 넣을 수 없어요.',
+    invalid_korean: '올바른 한글을 입력해주세요.',
+    duplicate: '이미 존재하는 해시태그입니다.',
+    limit_exceeded: '해시태그는 15개까지 입력 가능합니다.',
+    enter_tag: '태그명을 작성해주세요...',
+    examples: '일상, 친구, 점심 등',
+  },
+} as const;
