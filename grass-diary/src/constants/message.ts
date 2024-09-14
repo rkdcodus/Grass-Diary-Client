@@ -149,3 +149,9 @@ export const CREATE_MESSAGES = {
     examples: '일상, 친구, 점심 등',
   },
 } as const;
+
+export const QUILL_MESSAGE = {
+  placeholder: '일기를 작성 해보세요!',
+  custom_entry_placeholder:
+    '오늘은 무엇을 하고, 누구를 만나고, 어떤 음식을 드셨나요?',
+} as const;

@@ -6,6 +6,7 @@ import 'react-quill/dist/quill.snow.css';
 import { useState, useEffect, useMemo } from 'react';
 import { END_POINT } from '@constants/api';
 import { CONSOLE_ERROR } from '@constants/message';
+import { QUILL_MESSAGE } from '@constants/message';
 
 type QuillEditorProps = {
   onContentChange: (content: string) => void;
@@ -41,7 +42,7 @@ const QuillEditor = ({
 
   const placeholderText =
     selectedMode === `customEntry`
-      ? '오늘은 무엇을 하고, 누구를 만나고, 어떤 음식을 드셨나요?'
+      ? QUILL_MESSAGE.custom_entry_placeholder
       : todayQuestion || 'todayQuestion Loading...';
 
   const ImageHandler = () => {
@@ -127,8 +128,7 @@ const QuillEditor = ({
       <S.Title>{placeholderText}</S.Title>
       <ReactQuill
         theme="snow"
-        placeholder="일기를 작성 해보세요!
-        "
+        placeholder={QUILL_MESSAGE.placeholder}
         modules={modules}
         formats={formats}
         onChange={handleChange}
