@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react';
-import { Feed, PopularFeed } from '@components/index';
+import { Callout, Feed, PopularFeed } from '@components/index';
 import { useLatestDiaries } from '@hooks/api/useLatestDiaries';
 import { NULL } from '@constants/message';
 import styled from 'styled-components';
@@ -42,7 +42,7 @@ const Share = () => {
       <PopularFeed />
       <FeedContainer>
         <LatestFeedTitle>공개 일기 피드</LatestFeedTitle>
-        {latest ? (
+        {latest[0]?.length !== 0 ? (
           <ResponsiveMasonry columnsCountBreakPoints={{ 350: 1, 960: 2 }}>
             <Masonry columnsCount={2}>
               {latest.map(page =>
@@ -53,7 +53,7 @@ const Share = () => {
             </Masonry>
           </ResponsiveMasonry>
         ) : (
-          <FeedNull>{NULL.share_feed}</FeedNull>
+          <Callout message={NULL.share_feed} />
         )}
       </FeedContainer>
       <Observe ref={target} />
@@ -77,13 +77,6 @@ const LatestFeedTitle = styled.h3`
     text-align: center;
     ${TYPO.title1}
   }
-`;
-
-const FeedNull = styled.div`
-  width: 100%;
-  height: 10rem;
-  text-align: center;
-  line-height: 10rem;
 `;
 
 const FeedContainer = styled.div`

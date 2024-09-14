@@ -9,7 +9,7 @@ import { ReactComponent as LeftArrow } from '@svg/chevron_left.svg';
 import { ReactComponent as RightArrow } from '@svg/chevron_right.svg';
 
 import { MAIN_MESSAGES, NULL } from '@constants/message';
-import { Feed } from '@components/index';
+import { Callout, Feed } from '@components/index';
 import { usePopularDiaries } from '@hooks/api/usePopularDiaries';
 import { Link, useLocation } from 'react-router-dom';
 import { useEffect, useState } from 'react';
@@ -105,7 +105,9 @@ const PopularFeed = () => {
       ) : (
         <FeedBox>{feedList}</FeedBox>
       )}
-      {top10 && !top10.length ? <div>{NULL.share_popular_feed}</div> : null}
+      {top10 && !top10.length ? (
+        <Callout message={NULL.share_popular_feed} />
+      ) : null}
     </RankContainer>
   );
 };
