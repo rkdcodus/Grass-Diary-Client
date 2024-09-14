@@ -6,9 +6,9 @@ import { PopularFeed, Container, Callout } from '@components/index';
 import TopSection from './TopSection';
 import MiddleSection from './MiddleSection';
 import BottomSection from './BottomSection';
+import Spacer from './Spacer';
 import { useAuthActions } from '@state/auth/authStore';
 import { MAIN_MESSAGES } from '@constants/message';
-import Spacer from './Spacer';
 
 const Main = () => {
   const navigate = useNavigate();

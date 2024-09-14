@@ -1,17 +1,11 @@
-import styled from 'styled-components';
+import * as S from '@styles/Main/Spacer.style';
 
 const Spacer = () => {
   return (
     <>
-      <Section />
+      <S.Section />
     </>
   );
 };
 
 export default Spacer;
-
-const Section = styled.div`
-  height: 7.5rem;
-  max-width: var(--vw-desktop-min, 60rem);
-  align-self: stretch;
-`;
