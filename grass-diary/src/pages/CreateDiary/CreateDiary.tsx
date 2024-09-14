@@ -8,7 +8,6 @@ import { semantic } from '@styles/semantic';
 import { BackButton } from '@components/index';
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-
 import { useCreateDiary } from '@hooks/api/useCreateDiary';
 import { useTodayDate } from '@hooks/api/useTodayDate';
 import { usePostImage } from '@hooks/api/usePostImage';
@@ -179,21 +178,12 @@ const CreateDiary = () => {
 
   const handleSave = async () => {
     if (isContentEmpty) return; // 일기 내용이 비어 있으면 저장 요청 불가
-
     const { quillContent, isPrivate, hashArr, moodValue } = diaryInfo;
-    const request = {
-      content: quillContent,
-      isPrivate,
-      conditionLevel: `LEVEL_${moodValue}`,
-      hashtags: hashArr,
-      imageId: 0,
-    };
 
     if (!checkWritingPermission()) {
       toast(CREATE_MESSAGES.toast.already_written);
       return;
     }
-
     // 사용자가 이미지를 첨부할 경우 postImage -> createDiary 실행
     if (file) {
       postImage(file, {
@@ -205,14 +195,11 @@ const CreateDiary = () => {
             hashtags: hashArr,
             imageId: res.data.imageId,
           };
-
           createDiary(request, {
             onSuccess: response => {
               const newDiaryId = response.data.diaryId;
               navigate(`/diary/${newDiaryId}`, { replace: true });
-
               localStorage.removeItem('diary_draft');
-
               const currentDate = `${diaryInfo.year}년/${diaryInfo.month}월/${diaryInfo.date}일`;
               localStorage.setItem('lastWritingDate', currentDate);
             },
@@ -222,23 +209,27 @@ const CreateDiary = () => {
           });
         },
       });
-      return;
+    } else {
+      const request = {
+        content: quillContent,
+        isPrivate,
+        conditionLevel: `LEVEL_${moodValue}`,
+        hashtags: hashArr,
+        imageId: 0,
+      };
+      createDiary(request, {
+        onSuccess: response => {
+          const newDiaryId = response.data.diaryId;
+          navigate(`/diary/${newDiaryId}`, { replace: true });
+          localStorage.removeItem('diary_draft');
+          const currentDate = `${diaryInfo.year}년/${diaryInfo.month}월/${diaryInfo.date}일`;
+          localStorage.setItem('lastWritingDate', currentDate);
+        },
+        onError: error => {
+          console.error(error);
+        },
+      });
     }
-
-    createDiary(request, {
-      onSuccess: response => {
-        const newDiaryId = response.data.diaryId;
-        navigate(`/diary/${newDiaryId}`, { replace: true });
-
-        localStorage.removeItem('diary_draft');
-
-        const currentDate = `${diaryInfo.year}년/${diaryInfo.month}월/${diaryInfo.date}일`;
-        localStorage.setItem('lastWritingDate', currentDate);
-      },
-      onError: error => {
-        console.error(error);
-      },
-    });
   };
 
   useEffect(() => {
@@ -262,6 +253,7 @@ const CreateDiary = () => {
     });
   };
 
+  // Quill 내용 유무 확인
   const handleContentChange = (content: string) => {
     setDiaryField({ quillContent: content });
     const checkText = content.replace(/<\/?[^>]+(>|$)/g, '');
@@ -269,6 +261,12 @@ const CreateDiary = () => {
   };
 
   // 로컬 스토리지 임시 저장
+
+  const [imageBase64, setImageBase64] = useState<string | null>(null);
+
+  const handleImageBase64Change = (base64String: string) => {
+    setImageBase64(base64String);
+  };
 
   useEffect(() => {
     const savedDraft = localStorage.getItem('diary_draft');
@@ -283,11 +281,46 @@ const CreateDiary = () => {
 
   const handleSaveDraft = () => {
     if (isContentEmpty) return; // 일기 내용이 비어 있으면 저장 요청 불가
-
-    localStorage.setItem('diary_draft', JSON.stringify(diaryInfo));
+    const draftData = {
+      ...diaryInfo,
+      imageBase64: imageBase64,
+      imageInfo: {
+        name: imageInfo.name,
+        size: imageInfo.size,
+      },
+    };
+    localStorage.setItem('diary_draft', JSON.stringify(draftData));
     toast(CREATE_MESSAGES.toast.temp_save);
   };
 
+  useEffect(() => {
+    const savedDraft = localStorage.getItem('diary_draft');
+    if (savedDraft) {
+      const parsedDraft = JSON.parse(savedDraft);
+      setDiaryInfo(parsedDraft);
+      if (parsedDraft.imageBase64) {
+        setImage({
+          imageId: 0,
+          imageURL: parsedDraft.imageBase64,
+        });
+        setImageBase64(parsedDraft.imageBase64);
+        setImageInfo(parsedDraft.imageInfo || { name: '', size: '' });
+        // Base64를 File 객체로 변환
+        fetch(parsedDraft.imageBase64)
+          .then(res => res.blob())
+          .then(blob => {
+            const file = new File([blob], 'image.jpg', { type: 'image/jpeg' });
+            const formData = new FormData();
+            formData.append('image', file);
+            setFile(formData);
+          });
+      }
+      const checkText = parsedDraft.quillContent.replace(/<\/?[^>]+(>|$)/g, '');
+      setIsContentEmpty(checkText.trim().length === 0);
+    }
+  }, []);
+
+  // Ctrl + S, Cmd + S 임시 저장
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
       if ((event.metaKey || event.ctrlKey) && event.key === 's') {
@@ -397,6 +430,7 @@ const CreateDiary = () => {
             setFile={setFile}
             handleImageChange={handleImageChange}
             selectedMode={selectedMode}
+            onImageBase64Change={handleImageBase64Change}
           />
         </S.MainContainer>
         <S.HashtagContainer>
