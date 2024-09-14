@@ -1,4 +1,6 @@
 import { createGlobalStyle } from 'styled-components';
+import { TYPO } from './typo';
+import { semantic } from './semantic';
 
 export const GlobalStyle = createGlobalStyle`
   @font-face {
@@ -130,9 +132,24 @@ export const GlobalStyle = createGlobalStyle`
     padding-left: 16px;
   }
 
+  .ql-toolbar.ql-snow{
+    border-top-right-radius: 0.75rem;
+    border-top-left-radius: 0.75rem;
+  }
+
+  .ql-container.ql-snow{
+    background-color:white;
+    border-bottom-right-radius: 0.75rem;
+    border-bottom-left-radius: 0.75rem;
+  }
+
   .ql-editor {
-    background-color: white;
-    height: 70vh;
+    height: 50vh;
+    width: 42.5rem;
+
+    color: ${semantic.light.object.solid.hero};
+    ${TYPO.body2}
+
   }
 
 

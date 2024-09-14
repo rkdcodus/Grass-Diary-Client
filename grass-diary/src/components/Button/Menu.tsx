@@ -25,7 +25,7 @@ const Menu = ({ onClick, text, svg, line, color }: MenuProps) => {
 
 export default Menu;
 
-const MenuContainer = styled.button`
+const MenuContainer = styled.div`
   width: 10rem;
   display: flex;
   padding: var(--gap-md, 1rem) var(--gap-lg, 1.25rem);
