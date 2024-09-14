@@ -1,37 +1,19 @@
-import { Container, Header } from '@components/index';
+import * as S from '@styles/Intro/IntroStyles';
 import {
-  ServiceMain,
-  MainDesc,
-  SecondDesc,
-  StartContent,
+  FirstSection,
+  LastSection,
+  SecondSection,
+  ThirdSection,
 } from './introComponents';
-import ReactFullpage from '@fullpage/react-fullpage';
 
 const Intro = () => {
   return (
-    <>
-      <ReactFullpage
-        scrollingSpeed={1000}
-        render={({ state }) => {
-          return (
-            <ReactFullpage.Wrapper>
-              <div className="section" style={{ backgroundColor: '#FEFEFE' }}>
-                <ServiceMain />
-              </div>
-              <div className="section" style={{ backgroundColor: '#F9FFF7' }}>
-                <MainDesc />
-              </div>
-              <div className="section" style={{ backgroundColor: '#F0FFEA' }}>
-                <SecondDesc />
-              </div>
-              <div className="section" style={{ backgroundColor: '#E1FFD7' }}>
-                <StartContent />
-              </div>
-            </ReactFullpage.Wrapper>
-          );
-        }}
-      />
-    </>
+    <S.IntroContainer>
+      <FirstSection />
+      <SecondSection />
+      <ThirdSection />
+      <LastSection />
+    </S.IntroContainer>
   );
 };
 

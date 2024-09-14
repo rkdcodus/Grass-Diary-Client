@@ -37,7 +37,7 @@ export const semantic = {
         subtle: '#E2E2E2' as HexColor,
       },
       transparent: {
-        dimmed: 'rgba(17, 17, 17, 0.36)' as RGBAColor,
+        dimmed: 'rgba(17, 17, 17, 0.63)' as RGBAColor,
       },
     },
 
