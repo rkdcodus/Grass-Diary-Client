@@ -1,27 +1,8 @@
-import {
-  useToastActive,
-  useToastIsRed,
-  useToastText,
-} from '@state/toast/ToastStore';
 import { semantic } from '@styles/semantic';
 import { TYPO } from '@styles/typo';
 import styled, { keyframes } from 'styled-components';
 
-const Toast = () => {
-  const text = useToastText();
-  const active = useToastActive();
-  const isRed = useToastIsRed();
-
-  return (
-    <ToastContainer $active={active} $isRed={isRed}>
-      {text}
-    </ToastContainer>
-  );
-};
-
-export default Toast;
-
-const toastFadeIn = keyframes`
+export const toastFadeIn = keyframes`
 30% {
   top: 90%;
 }
@@ -37,7 +18,7 @@ const toastFadeIn = keyframes`
 }
 `;
 
-const ToastContainer = styled.div<{ $active: boolean; $isRed: boolean }>`
+export const ToastBox = styled.div<{ $active: boolean; $isRed: boolean }>`
   position: fixed;
   top: 100%;
   left: 50%;
