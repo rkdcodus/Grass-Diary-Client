@@ -5,13 +5,13 @@ import 'react-quill/dist/quill.snow.css';
 
 import { useState, useEffect, useMemo } from 'react';
 import { END_POINT } from '@constants/api';
-import { CONSOLE_ERROR, TOAST, QUILL_MESSAGE } from '@constants/message';
-import { useToast } from '@state/toast/useToast';
-
+import { CONSOLE_ERROR } from '@constants/message';
+import { QUILL_MESSAGE } from '@constants/message';
 
 type QuillEditorProps = {
   onContentChange: (content: string) => void;
   handleImageChange: (file: File) => void;
+  onImageBase64Change: (base64String: string) => void;
   selectedMode: string;
   quillContent: string;
   setImage: React.Dispatch<React.SetStateAction<DiaryImage>>;
@@ -28,6 +28,7 @@ const QuillEditor = ({
   setImage,
   setFile,
   handleImageChange,
+  onImageBase64Change,
   selectedMode,
 }: QuillEditorProps) => {
   const handleChange = (
@@ -40,7 +41,6 @@ const QuillEditor = ({
   };
 
   const [todayQuestion, setTodayQuestion] = useState<string>();
-  const { redToast } = useToast();
 
   const placeholderText =
     selectedMode === `customEntry`
@@ -55,12 +55,6 @@ const QuillEditor = ({
 
     input.onchange = () => {
       const file = input.files ? input.files[0] : null;
-      const maxSize = 5 * 1024 * 1024;
-
-      if (file && file.size > maxSize) {
-        redToast(TOAST.image_capacity_limit);
-        return;
-      }
 
       if (file) {
         const formData = new FormData();
@@ -72,10 +66,12 @@ const QuillEditor = ({
         const reader = new FileReader();
         reader.readAsDataURL(file);
         reader.onloadend = () => {
+          const base64String = reader.result as string;
           setImage({
             imageId: 0,
-            imageURL: reader.result as string,
+            imageURL: base64String,
           });
+          onImageBase64Change(base64String);
         };
       }
     };
