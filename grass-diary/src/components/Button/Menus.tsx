@@ -10,19 +10,16 @@ interface MenusProps {
 
 const Menus = ({ children, icon }: MenusProps) => {
   const [open, setOpen] = useState(false);
-  const boxRef = useRef<HTMLDivElement>(null);
-  const iconRef = useRef<HTMLDivElement>(null);
+  const iconRef = useRef<HTMLImageElement>(null);
 
   const dropDown = () => setOpen(current => !current);
 
   useEffect(() => {
     const closeMenus = (event: MouseEvent) => {
-      if (open && boxRef.current && iconRef.current) {
-        if (
-          !boxRef.current.contains(event.target as HTMLElement) &&
-          !iconRef.current.contains(event.target as HTMLElement)
-        )
+      if (open && iconRef.current) {
+        if (!iconRef.current.contains(event.target as HTMLElement)) {
           setOpen(false);
+        }
       }
     };
 
@@ -32,21 +29,22 @@ const Menus = ({ children, icon }: MenusProps) => {
   }, [open]);
 
   return (
-    <div ref={iconRef}>
+    <Temp>
       <BarBtn onClick={dropDown}>
-        <Icon src={icon} />
-        <MenusContainer $toggle={open} ref={boxRef}>
-          {children}
-        </MenusContainer>
+        <Icon src={icon} ref={iconRef} />
       </BarBtn>
-    </div>
+      <MenusContainer $toggle={open}>{children}</MenusContainer>
+    </Temp>
   );
 };
 
 export default Menus;
 
-const BarBtn = styled.button`
+const Temp = styled.div`
   position: relative;
+`;
+
+const BarBtn = styled.button`
   display: flex;
   padding: var(--gap-4xs, 0.25rem);
   justify-content: center;

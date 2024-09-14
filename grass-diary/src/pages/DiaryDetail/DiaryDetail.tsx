@@ -54,31 +54,40 @@ const DiaryDetail = () => {
 
       <DiaryBox>
         <TopSection>
-          <Title>
+          <Item>
             <BackButton />
             <Date>{detail?.createdDate}</Date>
+          </Item>
+
+          <Item>
             <SubTitle>
               {writer ? <Profile src={writer.profileImageURL} /> : <AvatarBg />}
               <Nickname>{writer?.nickname}</Nickname>
               <Time>{detail?.createdAt}</Time>
             </SubTitle>
-          </Title>
-          <PrivateContainer>
-            {detail && (
-              <>
-                {detail.isPrivate ? <Lock /> : <LockOpen />}
-                <PrivateLable>
-                  {detail.isPrivate ? '비공개' : '공개'}
-                </PrivateLable>
-              </>
+
+            <PrivateContainer>
+              {detail && (
+                <>
+                  {detail.isPrivate ? <Lock /> : <LockOpen />}
+                  <PrivateLable>
+                    {detail.isPrivate ? '비공개' : '공개'}
+                  </PrivateLable>
+                </>
+              )}
+            </PrivateContainer>
+            <EmojiContainer>
+              <Emoji>{detail && EMOJI[detail.transparency * 10]}</Emoji>
+            </EmojiContainer>
+          </Item>
+
+          <Item>
+            {memberId === detail?.memberId && (
+              <Setting diaryId={diaryId} createdDate={detail?.createdDate} />
             )}
-          </PrivateContainer>
-          <EmojiContainer>
-            <Emoji>{detail && EMOJI[detail.transparency * 10]}</Emoji>
-          </EmojiContainer>
-          {memberId === detail?.memberId && (
-            <Setting diaryId={diaryId} createdDate={detail?.createdDate} />
-          )}
+          </Item>
+
+          {/* <SubTitle></SubTitle> */}
         </TopSection>
 
         <DiaryContent>
@@ -121,10 +130,37 @@ const DiaryDetail = () => {
 
 export default DiaryDetail;
 
+const Item = styled.section`
+  display: flex;
+  align-items: center;
+
+  &:nth-child(2) {
+    flex: 1;
+    margin-left: 1rem;
+    display: flex;
+    gap: 1.5rem;
+  }
+
+  &:nth-child(3) {
+    margin-left: 1.5rem;
+  }
+
+  @media screen and (max-width: 60em) {
+    &:nth-child(2) {
+      order: 3;
+      flex-basis: 100%;
+      margin-top: 0.75rem;
+      margin-left: 0;
+    }
+
+    &:nth-child(3) {
+      margin-left: auto;
+    }
+  }
+`;
+
 const Container = styled.div`
   display: flex;
-  min-width: var(--vw-desktop-min, 60rem);
-  max-width: var(--vw-desktop-max, 160rem);
   flex-direction: column;
   align-items: center;
 
@@ -133,11 +169,11 @@ const Container = styled.div`
 
 const DiaryBox = styled.div`
   margin: auto;
+  min-height: 100dvh;
   min-height: 100vh;
   display: flex;
-  width: 60rem;
-  padding: var(--gap-xl, 1.5rem) var(--gap-xl, 1.5rem) var(--gap-2xl, 2rem)
-    var(--gap-xl, 1.5rem);
+  padding: var(--gap-4xl, 3rem) var(--gap-9xl, 8.5rem) var(--gap-7xl, 4.5rem)
+    var(--gap-9xl, 8.5rem);
   flex-direction: column;
   align-items: flex-start;
   gap: var(--gap-lg, 1.25rem);
@@ -152,31 +188,35 @@ const DiaryBox = styled.div`
   border-left: var(--stroke-thin, 0.0625rem) solid
     ${semantic.light.border.transparent.alternative};
   background: ${semantic.light.bg.solid.subtlest};
+
+  width: 60rem;
+
+  @media screen and (max-width: 60em) {
+    width: 100%;
+    min-width: 20em;
+    padding: var(--gap-xl, 1.5rem) var(--gap-md, 1rem) var(--gap-2xl, 2rem)
+      var(--gap-md, 1rem);
+  }
 `;
 
 const TopSection = styled.div`
   display: flex;
   align-items: center;
-  gap: var(--gap-xl, 1.5rem);
   align-self: stretch;
+  flex-wrap: wrap;
 `;
 
-const Title = styled.div`
-  display: flex;
-  align-items: center;
-  gap: var(--gap-2xs, 0.5rem);
-  flex: 1 0 0;
+const Date = styled.div`
+  margin-left: 0.5rem;
+  ${TYPO.title1}
+  color: ${semantic.light.object.transparent.neutral};
 `;
 
 const SubTitle = styled.div`
   display: flex;
   align-items: center;
   gap: var(--gap-2xs, 0.5rem);
-`;
-
-const Date = styled.div`
-  ${TYPO.title1}
-  color: ${semantic.light.object.transparent.neutral};
+  flex: 1;
 `;
 
 const Profile = styled.img`
@@ -246,6 +286,7 @@ const ImageCard = styled.img`
 `;
 
 const ContentCard = styled.div`
+  word-break: break-word;
   min-height: 12.5rem;
   align-self: stretch;
 
@@ -260,6 +301,12 @@ const BottomSection = styled.div`
   gap: var(--gap-sm, 0.75rem) var(--gap-md, 1rem);
   align-self: stretch;
   flex-wrap: wrap;
+
+  @media screen and (max-width: 60em) {
+    flex-direction: column;
+    align-items: normal;
+    align-content: normal;
+  }
 `;
 
 const HashTagContainer = styled.div`
@@ -291,7 +338,7 @@ const HashText = styled.p`
 `;
 
 const Divider = styled.div`
-  width: 57rem;
+  width: 100%;
   height: 0.0625rem;
 
   background: ${semantic.light.border.transparent.alternative};

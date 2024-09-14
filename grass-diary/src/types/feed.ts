@@ -7,4 +7,5 @@ interface Feed {
   diaryLikeCount: number;
   transparency: number;
   commentCount: number;
+  image: DiaryImage[];
 }

@@ -20,6 +20,7 @@ const router = createBrowserRouter([
     children: [
       { path: '/', element: <Intro /> },
       { path: '/main', element: <Main /> },
+      { path: '/share', element: <Share /> },
     ],
   },
 
@@ -29,7 +30,6 @@ const router = createBrowserRouter([
       { path: '/creatediary', element: <CreateDiary /> },
       { path: '/editdiary/:diaryId', element: <EditDiary /> },
       { path: '/diary/:diaryId', element: <DiaryDetail /> },
-      { path: '/share', element: <Share /> },
       { path: '/setting', element: <Setting /> },
       { path: '/mypage', element: <MyPage /> },
       { path: '/non-existent-page', element: <NonExistentDiary /> },

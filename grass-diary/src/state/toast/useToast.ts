@@ -1,17 +1,27 @@
-import { useToastSetActive, useToastSetText } from './ToastStore';
+import { useToastActions } from './ToastStore';
 
 export const useToast = () => {
-  const setText = useToastSetText();
-  const setActive = useToastSetActive();
+  const { setActive, setText, setIsRed } = useToastActions();
 
-  const toast = (text: string) => {
-    setText(text);
-    setActive();
-
+  const timer = () => {
     setTimeout(() => {
       setActive();
     }, 5000);
   };
 
-  return { toast };
+  const toast = (text: string) => {
+    setText(text);
+    setActive();
+    setIsRed(false);
+    timer();
+  };
+
+  const redToast = (text: string) => {
+    setText(text);
+    setActive();
+    setIsRed(true);
+    timer();
+  };
+
+  return { toast, redToast };
 };

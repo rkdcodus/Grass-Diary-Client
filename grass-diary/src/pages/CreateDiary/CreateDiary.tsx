@@ -1,102 +1,25 @@
-import stylex from '@stylexjs/stylex';
-import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import Swal from 'sweetalert2';
+import * as S from '@styles/CreateDiary/CreateDiary.style';
 import QuillEditor from './QuillEditor';
+import EMOJI from '@constants/emoji';
 import 'dayjs/locale/ko';
 
-import { BackButton, Button, Container } from '@components/index';
-import EMOJI from '@constants/emoji';
-import { ERROR } from '@constants/message';
+import { CREATE_MESSAGES } from '@constants/message';
+import { semantic } from '@styles/semantic';
+import { BackButton } from '@components/index';
+import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+
 import { useCreateDiary } from '@hooks/api/useCreateDiary';
-import 'dayjs/locale/ko';
 import { useTodayDate } from '@hooks/api/useTodayDate';
 import { usePostImage } from '@hooks/api/usePostImage';
 import { useUser } from '@state/user/useUser';
-
-const CreateDiaryStyle = stylex.create({
-  container: {
-    background: '#F9F9F9',
-    width: '100vw',
-    margin: 'auto',
-    border: '1px solid #BFBFBF',
-    borderRadius: '50px 50px 0 0',
-    padding: '65px 100px',
-    maxWidth: '1200px',
-  },
-
-  title: {
-    display: 'flex',
-    justifyContent: 'space-around',
-    alignItems: 'center',
-  },
-
-  subtitle: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    padding: '10px',
-  },
-
-  borderFooter: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    paddingTop: '100px',
-  },
-
-  inputStyle: {
-    backgroundColor: 'white',
-    border: 'solid 1px #BFBFBF',
-    borderRadius: '10px',
-    padding: '20px',
-    width: '700px',
-    height: '50px',
-    outline: 'none',
-    resize: 'none',
-  },
-
-  todayMood: {
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-
-  hashtag: {
-    display: 'flex',
-    justifyContent: 'flex-start',
-    alignItems: 'center',
-    flexWrap: 'wrap',
-    gap: '10px',
-    paddingTop: '20px',
-  },
-
-  hashtagBox: {
-    backgroundColor: 'white',
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    gap: '10px',
-    padding: '10px 15px',
-    border: 'solid 1px #bfbfbf',
-    borderRadius: '30px',
-    fontSize: '15px',
-    fontWeight: 'bold',
-    transition: 'all 0.3s ease',
-  },
-
-  hashtagBtn: {
-    background: 'none',
-    border: 'none',
-    fontSize: '12px',
-    cursor: 'pointer',
-  },
-  imageFile: {
-    padding: '10px 0',
-    width: '170px',
-  },
-});
+import { useToast } from '@state/toast/useToast';
+import { ReactComponent as Publish } from '@svg/publish.svg';
+import { ReactComponent as PublishOn } from '@svg/publish_on.svg';
+import { ReactComponent as Close } from '@svg/close.svg';
+import { ReactComponent as Tag } from '@svg/tag.svg';
+import { ReactComponent as Lock } from '@svg/lock.svg';
+import { ReactComponent as LockOpen } from '@svg/lock_open.svg';
 
 const CreateDiary = () => {
   const navigate = useNavigate();
@@ -104,6 +27,7 @@ const CreateDiary = () => {
   const { mutate: createDiary } = useCreateDiary(memberId);
   const { mutate: postImage } = usePostImage();
   const { date } = useTodayDate();
+  const { toast } = useToast();
   const [diaryInfo, setDiaryInfo] = useState<IDiaryInfo>({
     hashArr: [],
     moodValue: 5,
@@ -115,8 +39,20 @@ const CreateDiary = () => {
     day: null,
   });
 
+  // 오늘의 질문, 나만의 일기 state
+  const [selectedMode, setSelectedMode] = useState('dailyQuestion');
+
+  // 저장 버튼 활성화 state
+  const [isContentEmpty, setIsContentEmpty] = useState(true);
+
   // 해시태그 state
   const [hashtag, setHashtag] = useState<string>('');
+  const [captionMessage, setCaptionMessage] = useState<string>(
+    CREATE_MESSAGES.hashtag.instruction,
+  );
+  const [captionColor, setCaptionColor] = useState<string>(
+    semantic.light.object.transparent.assistive,
+  );
 
   // 이미지 state
   const [file, setFile] = useState<FormData>();
@@ -125,43 +61,106 @@ const CreateDiary = () => {
     imageURL: '',
   });
 
+  // 이미지 정보 state
+  const [imageInfo, setImageInfo] = useState({
+    name: '',
+    size: '',
+  });
+
   // 상태 업데이트 함수
   const setDiaryField = (field: Partial<IDiaryInfo>) => {
     setDiaryInfo(prev => ({ ...prev, ...field }));
   };
 
+  const handleModeChange = (mode: string) => setSelectedMode(mode);
   const handlePrivateChange = () => setDiaryField({ isPrivate: true });
   const handlePublicChange = () => setDiaryField({ isPrivate: false });
+
   const handleMoodChange = (e: React.ChangeEvent<HTMLInputElement>) =>
     setDiaryField({ moodValue: parseInt(e.target.value) });
-  const onChangeHashtag = (e: React.ChangeEvent<HTMLInputElement>) =>
+
+  const onChangeHashtag = (e: React.ChangeEvent<HTMLInputElement>) => {
     setHashtag(e.target.value);
 
-  // 해시태그 로직 함수
-  const addHashtag = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter' || e.key === ' ') {
-      e.preventDefault();
-      const inputText = (e.target as HTMLInputElement).value.trim();
-      const validCharsPattern =
-        /[가-힣A-Za-z0-9\u3040-\u309F\u30A0-\u30FF\u4E00-\u9FAF]+/g;
+    if (e.target.value === '') {
+      setCaptionMessage(CREATE_MESSAGES.hashtag.instruction);
+      setCaptionColor(semantic.light.object.transparent.assistive);
+    }
 
-      const matches = inputText.match(validCharsPattern);
-      if (matches && matches.length > 0 && diaryInfo.hashArr.length < 15) {
-        const hashtagText = matches.join('');
-        // 중복 체크
-        if (!diaryInfo.hashArr.includes(hashtagText)) {
-          setDiaryField({ hashArr: [...diaryInfo.hashArr, hashtagText] });
-        } else {
-          alert('이미 존재하는 해시태그입니다.'); // 작성 페이지 UI 변경 시 수정
-        }
-        setHashtag('');
-      }
+    if (e.target.value.length > 10) {
+      setCaptionMessage(CREATE_MESSAGES.hashtag.too_long);
+      setCaptionColor(semantic.light.feedback.solid.negative);
+      return setHashtag('');
     }
   };
 
-  // 해시태그를 배열에서 제거하는 함수
-  const removeHashtag = (index: number) => {
-    setDiaryField({ hashArr: diaryInfo.hashArr.filter((_, i) => i !== index) });
+  // 해시태그 로직 함수
+  const addHashtag = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key !== 'Enter' && e.key !== ' ') {
+      return; // 'Enter'나 'Space'가 아닌 경우 즉시 종료
+    }
+
+    e.preventDefault();
+    const inputText = (e.target as HTMLInputElement).value.trim();
+
+    if (inputText === '') {
+      return; // 빈 문자열이면 즉시 종료
+    }
+
+    const specialCharsPattern = /[!@#$%^&*()_+={}\[\]|\\:;'"<>,.?/~`]/;
+    const invalidKoreanPattern = /[ㄱ-ㅎㅏ-ㅣ]/;
+    const validCharsPattern =
+      /[가-힣A-Za-z0-9\u3040-\u309F\u30A0-\u30FF\u4E00-\u9FAF]+/g;
+
+    if (specialCharsPattern.test(inputText)) {
+      setCaptionMessage(CREATE_MESSAGES.hashtag.no_special_characters);
+      setCaptionColor(semantic.light.feedback.solid.negative);
+      return setHashtag(''); // 특수문자 포함 시 즉시 종료
+    }
+
+    if (invalidKoreanPattern.test(inputText)) {
+      setCaptionMessage(CREATE_MESSAGES.hashtag.invalid_korean);
+      setCaptionColor(semantic.light.feedback.solid.negative);
+      return setHashtag(''); // 잘못된 한글 포함 시 즉시 종료
+    }
+
+    if (!validCharsPattern.test(inputText)) {
+      return; // 유효한 문자가 없으면 즉시 종료
+    }
+
+    const hashtagText = inputText.match(validCharsPattern)!.join('');
+
+    if (diaryInfo.hashArr.includes(hashtagText)) {
+      setCaptionMessage(CREATE_MESSAGES.hashtag.duplicate);
+      setCaptionColor(semantic.light.feedback.solid.negative);
+      return setHashtag(''); // 중복된 해시태그일 때 즉시 종료
+    }
+
+    if (diaryInfo.hashArr.length >= 15) {
+      setCaptionMessage(CREATE_MESSAGES.hashtag.limit_exceeded);
+      setCaptionColor(semantic.light.feedback.solid.negative);
+      return setHashtag(''); // 해시태그 최대 개수 초과 시 즉시 종료
+    }
+
+    // 모든 조건을 통과한 경우에만 해시태그 추가
+    setDiaryField({ hashArr: [...diaryInfo.hashArr, hashtagText] });
+    setCaptionMessage(CREATE_MESSAGES.hashtag.instruction);
+    setCaptionColor(semantic.light.object.transparent.assistive);
+    setHashtag('');
+  };
+
+  // 해시태그 제거 핸들러
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Backspace' && hashtag === '') {
+      const lastHashtag = diaryInfo.hashArr[diaryInfo.hashArr.length - 1];
+
+      if (lastHashtag) {
+        setDiaryField({
+          hashArr: diaryInfo.hashArr.slice(0, -1),
+        });
+        setHashtag(lastHashtag);
+      }
+    }
   };
 
   const checkWritingPermission = () => {
@@ -175,9 +174,12 @@ const CreateDiary = () => {
       imageId: 0,
       imageURL: '',
     });
+    setImageInfo({ name: '', size: '' });
   };
 
   const handleSave = async () => {
+    if (isContentEmpty) return; // 일기 내용이 비어 있으면 저장 요청 불가
+
     const { quillContent, isPrivate, hashArr, moodValue } = diaryInfo;
     const request = {
       content: quillContent,
@@ -188,24 +190,7 @@ const CreateDiary = () => {
     };
 
     if (!checkWritingPermission()) {
-      Swal.fire({
-        title: ERROR.diary_already_exists,
-        icon: 'warning',
-        showCancelButton: false,
-        confirmButtonColor: '#28CA3B',
-        confirmButtonText: '확인',
-      });
-      return;
-    }
-
-    if (!diaryInfo.quillContent || !diaryInfo.quillContent.trim()) {
-      Swal.fire({
-        title: ERROR.diary_not_write,
-        icon: 'warning',
-        showCancelButton: false,
-        confirmButtonColor: '#28CA3B',
-        confirmButtonText: '확인',
-      });
+      toast(CREATE_MESSAGES.toast.already_written);
       return;
     }
 
@@ -225,6 +210,9 @@ const CreateDiary = () => {
             onSuccess: response => {
               const newDiaryId = response.data.diaryId;
               navigate(`/diary/${newDiaryId}`, { replace: true });
+
+              localStorage.removeItem('diary_draft');
+
               const currentDate = `${diaryInfo.year}년/${diaryInfo.month}월/${diaryInfo.date}일`;
               localStorage.setItem('lastWritingDate', currentDate);
             },
@@ -241,6 +229,9 @@ const CreateDiary = () => {
       onSuccess: response => {
         const newDiaryId = response.data.diaryId;
         navigate(`/diary/${newDiaryId}`, { replace: true });
+
+        localStorage.removeItem('diary_draft');
+
         const currentDate = `${diaryInfo.year}년/${diaryInfo.month}월/${diaryInfo.date}일`;
         localStorage.setItem('lastWritingDate', currentDate);
       },
@@ -261,111 +252,245 @@ const CreateDiary = () => {
     }
   }, [date]);
 
+  const handleImageChange = (file: File) => {
+    const fileName = file.name;
+    const fileSize = (file.size / 1024).toFixed(2); // KB 단위로 변환
+
+    setImageInfo({
+      name: fileName,
+      size: fileSize,
+    });
+  };
+
+  const handleContentChange = (content: string) => {
+    setDiaryField({ quillContent: content });
+    const checkText = content.replace(/<\/?[^>]+(>|$)/g, '');
+    setIsContentEmpty(checkText.trim().length === 0);
+  };
+
+  // 로컬 스토리지 임시 저장
+
+  useEffect(() => {
+    const savedDraft = localStorage.getItem('diary_draft');
+    if (savedDraft) {
+      const parsedDraft = JSON.parse(savedDraft);
+      setDiaryInfo(parsedDraft);
+
+      const checkText = parsedDraft.quillContent.replace(/<\/?[^>]+(>|$)/g, '');
+      setIsContentEmpty(checkText.trim().length === 0);
+    }
+  }, []);
+
+  const handleSaveDraft = () => {
+    if (isContentEmpty) return; // 일기 내용이 비어 있으면 저장 요청 불가
+
+    localStorage.setItem('diary_draft', JSON.stringify(diaryInfo));
+    toast(CREATE_MESSAGES.toast.temp_save);
+  };
+
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if ((event.metaKey || event.ctrlKey) && event.key === 's') {
+        event.preventDefault();
+        handleSaveDraft();
+      }
+    };
+
+    document.addEventListener('keydown', handleKeyDown);
+
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [diaryInfo]);
+
   return (
-    <Container>
-      <main {...stylex.props(CreateDiaryStyle.container)}>
-        <BackButton goBackTo={'/main'} />
-        <section {...stylex.props(CreateDiaryStyle.title)}>
-          <h2>
+    <>
+      <S.Layout>
+        <S.SaveWrap>
+          <S.SaveWrapContainer>
+            <BackButton goBackTo={'/main'} />
+            <S.SaveWrapText>{CREATE_MESSAGES.write_diary}</S.SaveWrapText>
+          </S.SaveWrapContainer>
+          <S.SaveWrapTime>
             {diaryInfo.month}월 {diaryInfo.date}일 {diaryInfo.day}요일
-          </h2>
-        </section>
-        <section>
-          <article {...stylex.props(CreateDiaryStyle.subtitle)}>
-            <label>
+          </S.SaveWrapTime>
+          <S.SaveBtnContainer>
+            <S.SavePrevBtn disabled={isContentEmpty}>
+              <S.SavePrevBtnText onClick={handleSaveDraft}>
+                {CREATE_MESSAGES.temp_save}
+              </S.SavePrevBtnText>
+            </S.SavePrevBtn>
+            <S.SaveBtn onClick={handleSave} disabled={isContentEmpty}>
+              <S.SaveBtnText disabled={isContentEmpty}>
+                {CREATE_MESSAGES.save}
+              </S.SaveBtnText>
+              {isContentEmpty ? <Publish /> : <PublishOn />}
+            </S.SaveBtn>
+          </S.SaveBtnContainer>
+        </S.SaveWrap>
+        <S.DiaryModeSelector>
+          <S.DailyQuestionBox $isSelected={selectedMode === 'dailyQuestion'}>
+            <S.ModeBtn>
               <input
+                id="mode-btn-question"
                 type="radio"
-                value="private"
-                checked={diaryInfo.isPrivate}
-                onChange={handlePrivateChange}
+                checked={selectedMode === 'dailyQuestion'}
+                onChange={() => handleModeChange('dailyQuestion')}
               />
-              비공개
+              <label htmlFor="mode-btn-question"></label>
+            </S.ModeBtn>
+            <S.ModeBoxContainer>
+              <S.DiaryModeSelectorText>
+                {CREATE_MESSAGES.question_title}
+              </S.DiaryModeSelectorText>
+              <S.DiaryModeSelectorSubText>
+                {CREATE_MESSAGES.question_prompt}
+              </S.DiaryModeSelectorSubText>
+            </S.ModeBoxContainer>
+          </S.DailyQuestionBox>
+          <S.CustomEntryBox $isSelected={selectedMode === 'customEntry'}>
+            <S.ModeBtn>
               <input
+                id="mode-btn-custom"
                 type="radio"
-                value="public"
-                checked={!diaryInfo.isPrivate}
-                onChange={handlePublicChange}
+                checked={selectedMode === 'customEntry'}
+                onChange={() => handleModeChange('customEntry')}
               />
-              공개
-            </label>
-            <div {...stylex.props(CreateDiaryStyle.todayMood)}>
-              <div style={{ fontSize: '30px' }}>
-                {EMOJI[diaryInfo.moodValue]}
-              </div>
-              <div>오늘의 기분</div>
-              <input
-                type="range"
-                name="todayMood"
-                min="1"
-                max="9"
-                list="values"
-                value={diaryInfo.moodValue}
-                onChange={handleMoodChange}
-              />
-              <datalist id="values">
-                <option value="0" label="0"></option>
-                <option value="2" label="2"></option>
-                <option value="4" label="4"></option>
-                <option value="6" label="6"></option>
-                <option value="8" label="8"></option>
-                <option value="10" label="10"></option>
-              </datalist>
-            </div>
-          </article>
-        </section>
-        {image.imageURL ? (
-          <>
-            <img
-              {...stylex.props(CreateDiaryStyle.imageFile)}
-              src={image.imageURL}
-              alt="image file"
-            />
-            <button onClick={removeImage}>삭제</button>
-          </>
-        ) : null}
-        <QuillEditor
-          onContentChange={content => setDiaryField({ quillContent: content })}
-          quillContent={diaryInfo.quillContent}
-          setImage={setImage}
-          setFile={setFile}
-        />
-        <section>
-          <article {...stylex.props(CreateDiaryStyle.borderFooter)}>
-            <input
-              {...stylex.props(CreateDiaryStyle.inputStyle)}
-              type="text"
-              value={hashtag}
-              onChange={onChangeHashtag}
-              onKeyUp={addHashtag}
-              placeholder={hashtag ? '' : '#해시태그'}
-            />
-            <Button
-              text="저장"
-              width="120px"
-              defaultColor="#2d2d2d"
-              hoverColor="#FFF"
-              defaultBgColor="#FFFFFF"
-              hoverBgColor="#111111"
-              border="1px solid #bfbfbf"
-              onClick={handleSave}
-            />
-          </article>
-          <div {...stylex.props(CreateDiaryStyle.hashtag)}>
-            {diaryInfo.hashArr.map((tag, index) => (
-              <span key={index} {...stylex.props(CreateDiaryStyle.hashtagBox)}>
-                {tag}
-                <button
-                  {...stylex.props(CreateDiaryStyle.hashtagBtn)}
-                  onClick={() => removeHashtag(index)}
-                >
-                  X
+              <label htmlFor="mode-btn-custom"></label>
+            </S.ModeBtn>
+            <S.ModeBoxContainer>
+              <S.DiaryModeSelectorText>
+                {CREATE_MESSAGES.personal_diary}
+              </S.DiaryModeSelectorText>
+              <S.DiaryModeSelectorSubText>
+                {CREATE_MESSAGES.personal_prompt}
+              </S.DiaryModeSelectorSubText>
+            </S.ModeBoxContainer>
+          </S.CustomEntryBox>
+        </S.DiaryModeSelector>
+        <S.Divider>
+          <S.DividerLine />
+        </S.Divider>
+        <S.ImageLayout>
+          <S.ImageContainer>
+            {image.imageURL ? (
+              <>
+                <S.Image>
+                  <img src={image.imageURL} alt="image file" />
+                </S.Image>
+                <S.ImageName>{imageInfo.name}</S.ImageName>
+                <S.ImageData>{imageInfo.size} KB</S.ImageData>
+                <button onClick={removeImage}>
+                  <S.ImageDelete>
+                    <Close />
+                  </S.ImageDelete>
                 </button>
-              </span>
-            ))}
-          </div>
-        </section>
-      </main>
-    </Container>
+              </>
+            ) : null}
+          </S.ImageContainer>
+        </S.ImageLayout>
+        <S.MainContainer>
+          <QuillEditor
+            onContentChange={handleContentChange}
+            quillContent={diaryInfo.quillContent}
+            setImage={setImage}
+            setFile={setFile}
+            handleImageChange={handleImageChange}
+            selectedMode={selectedMode}
+          />
+        </S.MainContainer>
+        <S.HashtagContainer>
+          <S.HashtagTitleBox>
+            <S.HashtagTitle>{CREATE_MESSAGES.hashtag_title}</S.HashtagTitle>
+          </S.HashtagTitleBox>
+          <S.HashtagBox>
+            <S.HashtagContent>
+              <Tag />
+              <S.HashtagArrTitle>
+                {diaryInfo.hashArr.map((tag, index) => (
+                  <span key={index}>
+                    {tag}
+                    {`  `}
+                  </span>
+                ))}
+              </S.HashtagArrTitle>
+              <S.HashtagInput
+                type="text"
+                value={hashtag}
+                onChange={onChangeHashtag}
+                onKeyUp={addHashtag}
+                onKeyDown={handleKeyDown}
+                placeholder={
+                  diaryInfo.hashArr.length > 0
+                    ? CREATE_MESSAGES.hashtag.enter_tag
+                    : CREATE_MESSAGES.hashtag.examples
+                }
+              />
+            </S.HashtagContent>
+          </S.HashtagBox>
+          <S.CaptionBox>
+            <S.CaptionText color={captionColor}>{captionMessage}</S.CaptionText>
+          </S.CaptionBox>
+        </S.HashtagContainer>
+        <S.SelectableContainer>
+          <S.SelectablePublicBox>
+            <S.SelectablePublicText>
+              {CREATE_MESSAGES.visibility_title}
+            </S.SelectablePublicText>
+            <S.SelectableSection>
+              <S.RadioBox>
+                <S.RadioBtn>
+                  <input
+                    id="radio-btn-public"
+                    type="radio"
+                    value="public"
+                    checked={!diaryInfo.isPrivate}
+                    onChange={handlePublicChange}
+                  />
+                  <label htmlFor="radio-btn-public"></label>
+                </S.RadioBtn>
+                <LockOpen />
+                <S.RadioText>{CREATE_MESSAGES.public}</S.RadioText>
+              </S.RadioBox>
+              <S.RadioBox>
+                <S.RadioBtn>
+                  <input
+                    id="radio-btn-private"
+                    type="radio"
+                    value="private"
+                    checked={diaryInfo.isPrivate}
+                    onChange={handlePrivateChange}
+                  />
+                  <label htmlFor="radio-btn-private"></label>
+                </S.RadioBtn>
+                <Lock />
+                <S.RadioText>{CREATE_MESSAGES.private}</S.RadioText>
+              </S.RadioBox>
+            </S.SelectableSection>
+          </S.SelectablePublicBox>
+          <S.EmotionBox>
+            <S.EmotionText>{CREATE_MESSAGES.mood_today}</S.EmotionText>
+            <S.EmojiBox>
+              {Object.entries(EMOJI).map(([index, emoji]) => (
+                <S.EmojiSelectableBox key={index}>
+                  <S.EmojiInput
+                    type="radio"
+                    id={`emoji-${index}`}
+                    name="mood"
+                    value={index}
+                    checked={diaryInfo.moodValue.toString() === index}
+                    onChange={handleMoodChange}
+                  />
+                  <S.EmojiLabel htmlFor={`emoji-${index}`}>
+                    {emoji}
+                  </S.EmojiLabel>
+                </S.EmojiSelectableBox>
+              ))}
+            </S.EmojiBox>
+          </S.EmotionBox>
+        </S.SelectableContainer>
+      </S.Layout>
+    </>
   );
 };
 

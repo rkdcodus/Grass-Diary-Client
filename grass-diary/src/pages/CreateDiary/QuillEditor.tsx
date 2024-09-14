@@ -1,12 +1,18 @@
-import { useState, useEffect, useMemo } from 'react';
+import * as S from '@styles/CreateDiary/QuillEditor.style';
 import API from '@services/index';
-import { END_POINT } from '@constants/api';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
-import { CONSOLE_ERROR } from '@constants/message';
+
+import { useState, useEffect, useMemo } from 'react';
+import { END_POINT } from '@constants/api';
+import { CONSOLE_ERROR, TOAST, QUILL_MESSAGE } from '@constants/message';
+import { useToast } from '@state/toast/useToast';
+
 
 type QuillEditorProps = {
   onContentChange: (content: string) => void;
+  handleImageChange: (file: File) => void;
+  selectedMode: string;
   quillContent: string;
   setImage: React.Dispatch<React.SetStateAction<DiaryImage>>;
   setFile: React.Dispatch<React.SetStateAction<FormData | undefined>>;
@@ -21,6 +27,8 @@ const QuillEditor = ({
   quillContent,
   setImage,
   setFile,
+  handleImageChange,
+  selectedMode,
 }: QuillEditorProps) => {
   const handleChange = (
     content: string,
@@ -32,6 +40,12 @@ const QuillEditor = ({
   };
 
   const [todayQuestion, setTodayQuestion] = useState<string>();
+  const { redToast } = useToast();
+
+  const placeholderText =
+    selectedMode === `customEntry`
+      ? QUILL_MESSAGE.custom_entry_placeholder
+      : todayQuestion || 'todayQuestion Loading...';
 
   const ImageHandler = () => {
     const input = document.createElement('input');
@@ -41,11 +55,19 @@ const QuillEditor = ({
 
     input.onchange = () => {
       const file = input.files ? input.files[0] : null;
+      const maxSize = 5 * 1024 * 1024;
+
+      if (file && file.size > maxSize) {
+        redToast(TOAST.image_capacity_limit);
+        return;
+      }
 
       if (file) {
         const formData = new FormData();
         formData.append('image', file);
         setFile(formData);
+
+        handleImageChange(file);
 
         const reader = new FileReader();
         reader.readAsDataURL(file);
@@ -111,16 +133,14 @@ const QuillEditor = ({
 
   return (
     <>
-      <h4>{todayQuestion ? todayQuestion : 'Loading...'}</h4>
-      <br></br>
+      <S.Title>{placeholderText}</S.Title>
       <ReactQuill
         theme="snow"
-        placeholder={todayQuestion ? todayQuestion : '일기를 작성 해보세요!'}
+        placeholder={QUILL_MESSAGE.placeholder}
         modules={modules}
         formats={formats}
         onChange={handleChange}
         value={quillContent}
-        style={{ height: '70vh' }}
       />
     </>
   );

@@ -1,4 +1,6 @@
 import { createGlobalStyle } from 'styled-components';
+import { TYPO } from './typo';
+import { semantic } from './semantic';
 
 export const GlobalStyle = createGlobalStyle`
   @font-face {
@@ -18,6 +20,8 @@ export const GlobalStyle = createGlobalStyle`
   *,
   *::before,
   *::after {
+    margin: 0;
+    padding: 0;
     box-sizing: border-box;
   }
 
@@ -27,16 +31,17 @@ export const GlobalStyle = createGlobalStyle`
     text-size-adjust: none;
     font-family: Pretendard;
   }
-
+  
+  body {
+    min-height: 100vh;
+    
+    line-height: 1.5;
+    overscroll-behavior: none;
+  }
+  
   ul[role='list'],
   ol[role='list'] {
     list-style: none;
-  }
-
-  body {
-    margin: 0;
-    min-height: 100vh;
-    line-height: 1.5;
   }
 
   h1,
@@ -127,9 +132,24 @@ export const GlobalStyle = createGlobalStyle`
     padding-left: 16px;
   }
 
+  .ql-toolbar.ql-snow{
+    border-top-right-radius: 0.75rem;
+    border-top-left-radius: 0.75rem;
+  }
+
+  .ql-container.ql-snow{
+    background-color:white;
+    border-bottom-right-radius: 0.75rem;
+    border-bottom-left-radius: 0.75rem;
+  }
+
   .ql-editor {
-    background-color: white;
-    height: 70vh;
+    height: 50vh;
+    width: 42.5rem;
+
+    color: ${semantic.light.object.solid.hero};
+    ${TYPO.body2}
+
   }
 
 
