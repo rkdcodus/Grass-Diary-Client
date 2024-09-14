@@ -11,7 +11,6 @@ import { QUILL_MESSAGE } from '@constants/message';
 type QuillEditorProps = {
   onContentChange: (content: string) => void;
   handleImageChange: (file: File) => void;
-  onImageBase64Change: (base64String: string) => void;
   selectedMode: string;
   quillContent: string;
   setImage: React.Dispatch<React.SetStateAction<DiaryImage>>;
@@ -28,7 +27,6 @@ const QuillEditor = ({
   setImage,
   setFile,
   handleImageChange,
-  onImageBase64Change,
   selectedMode,
 }: QuillEditorProps) => {
   const handleChange = (
@@ -71,7 +69,6 @@ const QuillEditor = ({
             imageId: 0,
             imageURL: base64String,
           });
-          onImageBase64Change(base64String);
         };
       }
     };

@@ -262,12 +262,6 @@ const CreateDiary = () => {
 
   // 로컬 스토리지 임시 저장
 
-  const [imageBase64, setImageBase64] = useState<string | null>(null);
-
-  const handleImageBase64Change = (base64String: string) => {
-    setImageBase64(base64String);
-  };
-
   useEffect(() => {
     const savedDraft = localStorage.getItem('diary_draft');
     if (savedDraft) {
@@ -283,7 +277,7 @@ const CreateDiary = () => {
     if (isContentEmpty) return; // 일기 내용이 비어 있으면 저장 요청 불가
     const draftData = {
       ...diaryInfo,
-      imageBase64: imageBase64,
+      imageBase64: image.imageURL,
       imageInfo: {
         name: imageInfo.name,
         size: imageInfo.size,
@@ -303,7 +297,6 @@ const CreateDiary = () => {
           imageId: 0,
           imageURL: parsedDraft.imageBase64,
         });
-        setImageBase64(parsedDraft.imageBase64);
         setImageInfo(parsedDraft.imageInfo || { name: '', size: '' });
         // Base64를 File 객체로 변환
         fetch(parsedDraft.imageBase64)
@@ -430,7 +423,6 @@ const CreateDiary = () => {
             setFile={setFile}
             handleImageChange={handleImageChange}
             selectedMode={selectedMode}
-            onImageBase64Change={handleImageBase64Change}
           />
         </S.MainContainer>
         <S.HashtagContainer>
