@@ -4,6 +4,9 @@ import { useTodayDate } from '@hooks/api/useTodayDate';
 import { useTodayQuestion } from '@hooks/api/useTodayQuestion';
 import { MAIN_MESSAGES } from '@constants/message';
 
+import { ReactComponent as EditNote } from '@svg/edit_note.svg';
+import { ReactComponent as EventNote } from '@svg/event_note.svg';
+
 const TopSection = () => {
   // 질문 데이터를 가져오는 쿼리
   const { question } = useTodayQuestion();
@@ -24,7 +27,11 @@ const TopSection = () => {
         </S.TodayDateBox>
 
         <S.DailyQuestionText>
-          {question?.question ? <>"{question.question}"</> : <>Loading...</>}
+          {question?.question ? (
+            <>"{question.question}"</>
+          ) : (
+            <>"모바일 UI 테스트 테스트 테스트 테스트?..."</>
+          )}
         </S.DailyQuestionText>
 
         <S.ButtonContainer>
@@ -34,12 +41,14 @@ const TopSection = () => {
                 {MAIN_MESSAGES.top_section.write_diary}
               </S.CreateDiaryText>
             </Link>
+            <EditNote />
           </S.CreateDiaryBtn>
 
           <S.MydiaryBtn>
             <Link to="/mypage">
               <S.MydiaryTxt>{MAIN_MESSAGES.top_section.my_diary}</S.MydiaryTxt>
             </Link>
+            <EventNote />
           </S.MydiaryBtn>
         </S.ButtonContainer>
       </S.Container>
