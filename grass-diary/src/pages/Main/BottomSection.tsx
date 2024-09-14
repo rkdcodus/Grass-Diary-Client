@@ -4,7 +4,7 @@ import AnimateReward from './AnimateReward';
 import { semantic } from '@styles/semantic';
 import { useReward } from '@hooks/api/useReward';
 import { useModal } from '@state/modal/useModal';
-import { MAIN_MESSAGES } from '@constants/message';
+import { MAIN_MESSAGES, MODAL } from '@constants/message';
 import { ReactComponent as Avatar } from '@svg/avatarBg.svg';
 import { ReactComponent as Arrow } from '@svg/chevron_right.svg';
 import { ReactComponent as ArrowBlack } from '@svg/chevron_right_black.svg';
@@ -15,13 +15,13 @@ const BottomSection = () => {
 
   const themeModal = () => {
     const setting = {
-      title: MAIN_MESSAGES.modal.preparation_notice,
-      content: MAIN_MESSAGES.modal.modal_notice('테마 상점은'),
+      title: MODAL.main.modal.preparation_notice,
+      content: MODAL.main.modal.modal_notice('테마 상점은'),
     };
 
     const button1 = {
       active: true,
-      text: MAIN_MESSAGES.modal.confirm_button,
+      text: MODAL.main.modal.confirm_button,
       color: semantic.light.accent.solid.alternative,
     };
     modal(setting, button1);
@@ -29,13 +29,13 @@ const BottomSection = () => {
 
   const reviewModal = () => {
     const setting = {
-      title: MAIN_MESSAGES.modal.preparation_notice,
-      content: MAIN_MESSAGES.modal.modal_notice('한 달 일기 회고는'),
+      title: MODAL.main.modal.preparation_notice,
+      content: MODAL.main.modal.modal_notice('한 달 일기 회고는'),
     };
 
     const button1 = {
       active: true,
-      text: MAIN_MESSAGES.modal.confirm_button,
+      text: MODAL.main.modal.confirm_button,
       color: semantic.light.accent.solid.alternative,
     };
     modal(setting, button1);

@@ -30,7 +30,7 @@ const TopSection = () => {
           {question?.question ? (
             <>"{question.question}"</>
           ) : (
-            <>"모바일 UI 테스트 테스트 테스트 테스트?..."</>
+            <>"Question is Loading..."</>
           )}
         </S.DailyQuestionText>
 
