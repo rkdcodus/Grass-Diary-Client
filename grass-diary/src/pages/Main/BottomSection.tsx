@@ -1,11 +1,9 @@
 import * as S from '@styles/Main/BottomSection.style';
 import AnimateReward from './AnimateReward';
-import subCharacter from '@icon/subCharacter.png';
-import Swal from 'sweetalert2';
 
 import { semantic } from '@styles/semantic';
 import { useReward } from '@hooks/api/useReward';
-import { Link } from 'react-router-dom';
+import { useModal } from '@state/modal/useModal';
 import { MAIN_MESSAGES } from '@constants/message';
 import { ReactComponent as Avatar } from '@svg/avatarBg.svg';
 import { ReactComponent as Arrow } from '@svg/chevron_right.svg';
@@ -13,21 +11,36 @@ import { ReactComponent as ArrowBlack } from '@svg/chevron_right_black.svg';
 
 const BottomSection = () => {
   const { reward } = useReward();
+  const { modal } = useModal();
 
-  const modal = () => {
-    Swal.fire({
-      title: '테마 상점',
-      text: '테마 상점 준비중이에요',
-      imageUrl: subCharacter,
-      imageWidth: 300,
-      imageHeight: 300,
-      imageAlt: 'Custom image',
-      confirmButtonColor: '#28CA3B',
-      confirmButtonText: '확인',
-    });
+  const themeModal = () => {
+    const setting = {
+      title: MAIN_MESSAGES.modal.preparation_notice,
+      content: MAIN_MESSAGES.modal.modal_notice('테마 상점은'),
+    };
+
+    const button1 = {
+      active: true,
+      text: MAIN_MESSAGES.modal.confirm_button,
+      color: semantic.light.accent.solid.alternative,
+    };
+    modal(setting, button1);
   };
 
-  const handleClick = () => window.scrollTo(0, 0);
+  const reviewModal = () => {
+    const setting = {
+      title: MAIN_MESSAGES.modal.preparation_notice,
+      content: MAIN_MESSAGES.modal.modal_notice('한 달 일기 회고는'),
+    };
+
+    const button1 = {
+      active: true,
+      text: MAIN_MESSAGES.modal.confirm_button,
+      color: semantic.light.accent.solid.alternative,
+    };
+    modal(setting, button1);
+  };
+
   return (
     <>
       <S.Section>
@@ -45,8 +58,8 @@ const BottomSection = () => {
                   <AnimateReward n={reward?.rewardPoint ?? 0} />
                 </S.RewardPointBox>
               </S.RewardContainer>
-              <S.ThemeMarketBtn>
-                <S.ThemeMarketText onClick={modal}>
+              <S.ThemeMarketBtn onClick={themeModal}>
+                <S.ThemeMarketText>
                   {MAIN_MESSAGES.bottom_section.theme_store}
                 </S.ThemeMarketText>
                 <Arrow
@@ -66,12 +79,10 @@ const BottomSection = () => {
             </S.CardSubText>
             <S.Divider />
             <S.RetrospectContainer>
-              <S.RetrospectBtn>
-                <Link to="/mypage" onClick={handleClick}>
-                  <S.RetrospectText>
-                    {MAIN_MESSAGES.bottom_section.go_to_review}
-                  </S.RetrospectText>
-                </Link>
+              <S.RetrospectBtn onClick={reviewModal}>
+                <S.RetrospectText>
+                  {MAIN_MESSAGES.bottom_section.go_to_review}
+                </S.RetrospectText>
                 <ArrowBlack></ArrowBlack>
               </S.RetrospectBtn>
             </S.RetrospectContainer>

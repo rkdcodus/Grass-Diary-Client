@@ -111,6 +111,12 @@ export const MAIN_MESSAGES = {
     future_content_message:
       '잔디 일기에는 앞으로 더 매력적인 콘텐츠들이 추가될 예정이에요!',
   },
+  modal: {
+    preparation_notice: '준비 중인 서비스',
+    modal_notice: (type: string) =>
+      `${type} 아직 준비 중이에요.\n빠르게 선보일 수 있도록 할게요!`,
+    confirm_button: '확인',
+  },
 } as const;
 
 export const SETTING_MESSAGES = {
@@ -221,4 +227,3 @@ export const TOAST = {
   delete_diary: '일기가 삭제되었습니다',
   image_capacity_limit: '5MB를 초과하는 이미지 파일은 업로드 할 수 없어요.',
 } as const;
-

@@ -119,9 +119,11 @@ export const RetrospectBtn = styled.button`
   gap: var(--gap-2xs, 0.5rem);
 
   border-radius: var(--radius-xs, 0.5rem);
+  background: ${semantic.light.fill.transparent.alternative};
 `;
 
 export const RetrospectText = styled.p`
+  color: ${semantic.light.object.transparent.alternative};
   text-align: center;
 
   ${TYPO.label2}
