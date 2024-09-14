@@ -5,6 +5,8 @@ interface ITages {
 }
 
 interface IDiary {
+  commentCount: number;
+  image: DiaryImage[];
   content: string;
   createdAt: string;
   createdDate: string;

@@ -1,207 +1,8 @@
-import stylex from '@stylexjs/stylex';
-import { semantic } from '@styles/semantic';
 import styled from 'styled-components';
+
 import { TYPO } from '@styles/typo';
-
-export const styles = stylex.create({
-  mainContainer: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-
-    width: '100%',
-    maxWidth: '1200px',
-  },
-
-  profileSection: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'center',
-
-    width: '100%',
-    height: '500px',
-
-    backgroundColor: '#F9F9F9',
-    border: '1px solid #BFBFBF',
-    borderRadius: '30px 30px 0 0',
-
-    overflow: 'hidden',
-  },
-
-  profileDetails: {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-
-    width: '1200px',
-    height: '90%',
-
-    padding: '20px',
-  },
-
-  profileLeft: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'center',
-
-    width: '25%',
-    height: '100%',
-  },
-
-  profileRight: {
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'center',
-
-    width: '70%',
-    height: '100%',
-
-    gap: '15px',
-  },
-
-  nameSection: {
-    display: 'flex',
-    fontSize: '20px',
-  },
-
-  profileToggle: {
-    display: 'flex',
-  },
-
-  toggleButton: {
-    width: '150px',
-    height: '50px',
-
-    border: 'none',
-    borderBottom: '2px solid #000',
-
-    fontSize: '18px',
-    backgroundColor: 'transparent',
-
-    cursor: 'pointer',
-  },
-
-  basicButton: {
-    width: '150px',
-    height: '50px',
-
-    border: 'none',
-
-    fontSize: '18px',
-    backgroundColor: 'transparent',
-
-    cursor: 'pointer',
-  },
-
-  mainSection: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-
-    width: '70%',
-    gap: '20px',
-  },
-
-  searchSection: {
-    display: 'flex',
-
-    width: '100%',
-    padding: '15px 20px 15px 20px',
-
-    borderRadius: '30px',
-    border: '1px solid #BFBFBF',
-  },
-
-  searchIcon: {
-    fontSize: '20px',
-    paddingRight: '10px',
-  },
-
-  searchBar: {
-    position: 'relative',
-    width: '95%',
-
-    border: 'none',
-    outline: 'none',
-  },
-
-  sortContainer: {
-    display: 'flex',
-    justifyContent: 'flex-end',
-
-    width: '95%',
-  },
-
-  diaryList: {
-    display: 'flex',
-    flexDirection: 'column',
-
-    width: '100%',
-    minHeight: '1050px',
-
-    paddingBottom: '50px',
-    overflowY: 'auto',
-    gap: '50px',
-  },
-
-  diary: {
-    display: 'flex',
-    flexDirection: 'column',
-
-    width: '100%',
-
-    gap: '30px',
-    padding: '40px 50px 40px 50px',
-
-    border: '1px solid #B5B2B2',
-    borderRadius: '20px',
-
-    backgroundColor: '#FFF',
-    cursor: 'pointer',
-  },
-
-  smallProfileSection: {
-    display: 'flex',
-  },
-
-  smallDetailes: {
-    display: 'flex',
-    flexDirection: 'column',
-
-    paddingLeft: '5px',
-    gap: '3px',
-  },
-
-  name: {
-    fontSize: '21px',
-  },
-
-  time: {
-    color: '#BFBFBF',
-  },
-
-  hashtag: {
-    color: '#777777',
-  },
-
-  diaryContent: {
-    display: 'flex',
-    flexDirection: 'column',
-
-    color: '#474747',
-    gap: '20px',
-  },
-
-  pageButtonWrap: {
-    display: 'flex',
-    justifyContent: 'center',
-
-    paddingBottom: '60px',
-    gap: '10px',
-  },
-});
+import { semantic } from '@styles/semantic';
+import { INTERACTION } from '@styles/interaction';
 
 export const SettingContainer = styled.div`
   display: flex;
@@ -416,6 +217,199 @@ export const SearchInput = styled.input`
 
   border: none;
 `;
+
+/* 다이어리 섹션 */
+
+export const UserDiarySection = styled.section`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  width: 43rem;
+  max-width: 43rem;
+
+  gap: 2rem;
+`;
+
+export const DiaryContentContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  align-self: stretch;
+
+  gap: 1.5rem;
+`;
+
+/* 다이어리 정렬 컴포넌트 */
+
+export const DiaryControlBox = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  align-self: stretch;
+
+  gap: 1rem;
+`;
+
+/* 유저 다이어리 컴포넌트 */
+
+export const DiaryListContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  align-self: stretch;
+
+  gap: 1rem;
+`;
+
+export const DiaryCardArticle = styled.article`
+  display: flex;
+  align-self: stretch;
+  flex-direction: column;
+  align-items: flex-start;
+  flex-shrink: 0;
+
+  width: 43rem;
+
+  gap: 1.5rem;
+  padding: 1.25rem;
+
+  border-radius: 1rem;
+  border: 1px solid ${semantic.light.border.transparent.assistive};
+  background: ${semantic.light.bg.solid.normal};
+
+  box-shadow:
+    0px 0px 1px 0px rgba(0, 0, 0, 0.04),
+    0px 2px 4px 0px rgba(0, 0, 0, 0.08);
+  cursor: pointer;
+`;
+
+export const DiaryCardHeaderBox = styled.div`
+  display: flex;
+  align-items: center;
+  align-self: stretch;
+
+  gap: 0.75rem;
+`;
+
+export const DiaryCardDateBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  flex: 1 0 0;
+
+  gap: 0.25rem;
+`;
+
+export const DiaryCardDateText = styled.span`
+  ${TYPO.label1};
+  color: ${semantic.light.object.transparent.neutral};
+`;
+
+export const DiaryCardTimeText = styled.small`
+  ${TYPO.caption1};
+  color: ${semantic.light.object.transparent.assistive};
+`;
+
+export const DiaryCardMoreBox = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  gap: 1rem;
+  padding: 0.25rem;
+`;
+
+export const DiaryCardMoreButton = styled.img`
+  width: 1.75rem;
+  height: 1.75rem;
+`;
+
+export const DiaryCardImgBox = styled.div<{ $imageURL: string }>`
+  align-self: stretch;
+  height: 22.5rem;
+
+  border-radius: 0.75rem;
+  background: url(${props => props.$imageURL}) lightgray 50% / cover no-repeat;
+`;
+
+export const DiaryCardText = styled.span`
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  align-self: stretch;
+
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  ${TYPO.body2};
+  color: ${semantic.light.object.solid.normal};
+`;
+
+export const DiaryCardBottomBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: flex-end;
+  align-self: stretch;
+
+  gap: 0.75rem;
+`;
+
+export const DiaryCardHashtagBox = styled.div`
+  display: flex;
+  align-items: center;
+  align-content: center;
+  align-self: stretch;
+  flex-wrap: wrap;
+
+  gap: 0.5rem;
+`;
+
+export const HashtagBox = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  gap: 0.25rem;
+  padding: 0.25rem 0.625rem;
+
+  border-radius: 0.5rem;
+  border: 1px solid ${semantic.light.border.transparent.alternative};
+  background: ${semantic.light.fill.transparent.assistive};
+`;
+
+export const HashtagImg = styled.img`
+  width: 1rem;
+  height: 1rem;
+`;
+
+export const HashtagText = styled.span`
+  ${TYPO.caption1};
+  color: ${semantic.light.object.transparent.alternative};
+`;
+
+export const CommentFavoriteBox = styled.div`
+  display: flex;
+  align-items: flex-start;
+
+  gap: 1rem;
+`;
+
+export const DiaryCardItemBox = styled.div`
+  display: flex;
+  align-items: center;
+
+  gap: 0.5rem;
+  padding: 0.125rem 0rem;
+`;
+
+export const DiaryCardItemText = styled.span`
+  ${TYPO.label3};
+  color: ${semantic.light.object.transparent.assistive};
+`;
+
 /* 페이지네이션 컴포넌트 */
 
 export const PaginationContainer = styled.div`

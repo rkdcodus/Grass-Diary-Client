@@ -12,6 +12,10 @@ const Menus = ({ children, icon }: MenusProps) => {
   const [open, setOpen] = useState(false);
   const iconRef = useRef<HTMLImageElement>(null);
 
+  const handleClickSetting = (event: React.MouseEvent) => {
+    event.stopPropagation();
+  };
+
   const dropDown = () => setOpen(current => !current);
 
   useEffect(() => {
@@ -29,7 +33,7 @@ const Menus = ({ children, icon }: MenusProps) => {
   }, [open]);
 
   return (
-    <Temp>
+    <Temp onClick={handleClickSetting}>
       <BarBtn onClick={dropDown}>
         <Icon src={icon} ref={iconRef} />
       </BarBtn>
@@ -65,8 +69,10 @@ const MenusContainer = styled.div<{ $toggle: boolean }>`
   border-radius: var(--radius-md, 1rem);
   background: ${semantic.light.bg.solid.normal};
 
-  box-shadow: 0px 0px 2px 0px rgba(0, 0, 0, 0.06),
-    0px 2px 4px 0px rgba(0, 0, 0, 0.06), 0px 4px 8px 0px rgba(0, 0, 0, 0.13);
+  box-shadow:
+    0px 0px 2px 0px rgba(0, 0, 0, 0.06),
+    0px 2px 4px 0px rgba(0, 0, 0, 0.06),
+    0px 4px 8px 0px rgba(0, 0, 0, 0.13);
 
   position: absolute;
   top: 0;

@@ -1,11 +1,15 @@
-import styles from './style';
-import stylex from '@stylexjs/stylex';
+import * as S from './style';
+
 import DOMPurify from 'dompurify';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import useDiary from '@hooks/api/useDiary';
-import { NormalLike, MoodProfile } from '@components/index';
+import { MoodProfile, Profile, Divider } from '@components/index';
 import { useUser } from '@state/user/useUser';
+import { ReactComponent as FavoriteIcon } from '@svg/favorite.svg';
+import { ReactComponent as CommentIcon } from '@svg/comment.svg';
+import { semantic } from '@styles/semantic';
+import Setting from '@pages/DiaryDetail/Setting';
 
 interface IPagination {
   pageSize: number;
@@ -52,38 +56,60 @@ const Pagination = ({ pageSize, currentPage, onPageChange }: IPagination) => {
 };
 
 const DiaryItem = ({ diary, diaryList, index }: IDiaryItem) => {
+  const navigate = useNavigate();
   const createMarkup: TCreateMarpkup = htmlContent => {
     const content = htmlContent || '';
     return { __html: DOMPurify.sanitize(content) };
   };
 
+  const handleClickDiaryCard = () => {
+    navigate(`/diary/${diary.diaryId}`);
+  };
+
   return (
-    <Link to={`/diary/${diary.diaryId}`}>
-      <div {...stylex.props(styles.diary)}>
-        <div {...stylex.props(styles.smallProfileSection)}>
-          <MoodProfile diary={diaryList} index={index} />
-          <div {...stylex.props(styles.smallDetailes)}>
-            <span {...stylex.props(styles.name)}>{diary.createdDate}</span>
-            <span {...stylex.props(styles.time)}>{diary.createdAt}</span>
-          </div>
-        </div>
-        <div {...stylex.props(styles.diaryContent)}>
-          <div>
-            {diary.tags &&
-              diary.tags.map(tag => (
-                <span {...stylex.props(styles.hashtag)} key={tag.id}>
-                  #{`${tag.tag} `}
-                </span>
-              ))}
-          </div>
-          <div dangerouslySetInnerHTML={createMarkup(diary.content)}></div>
-        </div>
-        <NormalLike
-          likeCount={diary.likeCount || 0}
-          justifyContent="flex-start"
-        />
-      </div>
-    </Link>
+    <S.DiaryCardArticle onClick={handleClickDiaryCard}>
+      <S.DiaryCardHeaderBox>
+        <Profile width="2.5rem" height="2.5rem" />
+        <S.DiaryCardDateBox>
+          <S.DiaryCardDateText>{diary.createdDate}</S.DiaryCardDateText>
+          <S.DiaryCardTimeText>{diary.createdAt}</S.DiaryCardTimeText>
+        </S.DiaryCardDateBox>
+        <MoodProfile diary={diaryList} index={index} />
+        <Setting diaryId={diary.diaryId} createdDate={diary.createdDate} />
+      </S.DiaryCardHeaderBox>
+      {diary.image.length ? (
+        <S.DiaryCardImgBox $imageURL={diary.image[0].imageURL} />
+      ) : (
+        ''
+      )}
+      <S.DiaryCardText dangerouslySetInnerHTML={createMarkup(diary.content)} />
+      <Divider width="40.5rem" />
+      <S.DiaryCardBottomBox>
+        <S.DiaryCardHashtagBox>
+          {diary.tags &&
+            diary.tags.map(tag => (
+              <S.HashtagBox key={tag.id}>
+                <S.HashtagImg src="/assets/icons/tag-tag.svg" />
+                <S.HashtagText>{tag.tag}</S.HashtagText>
+              </S.HashtagBox>
+            ))}
+        </S.DiaryCardHashtagBox>
+        <S.CommentFavoriteBox>
+          <S.DiaryCardItemBox>
+            <CommentIcon />
+            <S.DiaryCardItemText>{diary.commentCount}</S.DiaryCardItemText>
+          </S.DiaryCardItemBox>
+          <S.DiaryCardItemBox>
+            <FavoriteIcon
+              width={22}
+              height={22}
+              fill={semantic.light.object.transparent.assistive}
+            />
+            <S.DiaryCardItemText>{diary.likeCount}</S.DiaryCardItemText>
+          </S.DiaryCardItemBox>
+        </S.CommentFavoriteBox>
+      </S.DiaryCardBottomBox>
+    </S.DiaryCardArticle>
   );
 };
 
@@ -113,7 +139,7 @@ const Diary = ({ searchTerm, sortOrder, selectedDiary }: IDiaryProps) => {
 
   return (
     <>
-      <div {...stylex.props(styles.diaryList)}>
+      <S.DiaryListContainer>
         {filteredDiaryList.map((diary, index) => (
           <DiaryItem
             key={diary.diaryId}
@@ -122,8 +148,7 @@ const Diary = ({ searchTerm, sortOrder, selectedDiary }: IDiaryProps) => {
             index={index}
           />
         ))}
-      </div>
-      <Pagination pageSize={pageSize} onPageChange={handlePageChange} />
+      </S.DiaryListContainer>
       <Pagination
         pageSize={pageSize}
         currentPage={currentPage}

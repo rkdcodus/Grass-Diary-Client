@@ -102,7 +102,7 @@ interface ISortButton {
 
 const SortButton = ({ onSortChange }: ISortButton) => {
   return (
-    <div {...stylex.props(styles.sortContainer)}>
+    <S.DiaryControlBox>
       <EllipsisIcon width="170" translateValue="145px">
         <EllipsisBox
           onClick={() => onSortChange('latest')}
@@ -113,7 +113,7 @@ const SortButton = ({ onSortChange }: ISortButton) => {
           text="오래된 순으로 보기"
         />
       </EllipsisIcon>
-    </div>
+    </S.DiaryControlBox>
   );
 };
 
