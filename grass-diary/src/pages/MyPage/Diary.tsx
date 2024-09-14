@@ -9,18 +9,45 @@ import { useUser } from '@state/user/useUser';
 
 interface IPagination {
   pageSize: number;
+  currentPage: number;
   onPageChange: (index: number) => void;
 }
 
-const Pagination = ({ pageSize, onPageChange }: IPagination) => {
+const Pagination = ({ pageSize, currentPage, onPageChange }: IPagination) => {
+  const handleFirstPage = () => onPageChange(0);
+
+  const handlePreviousPage = () => {
+    if (currentPage > 0) onPageChange(currentPage - 1);
+  };
+
+  const handleNextPage = () => {
+    if (currentPage < pageSize - 1) onPageChange(currentPage + 1);
+  };
+
+  const handleLastPage = () => {
+    onPageChange(pageSize - 1);
+  };
+
   return (
-    <div {...stylex.props(styles.pageButtonWrap)}>
+    <S.PaginationContainer>
+      <S.PaginationIconButton onClick={handleFirstPage}>
+        <S.PaginationImg $imageURL="/assets/icons/icon-btn-first-page.svg" />
+      </S.PaginationIconButton>
+      <S.PaginationIconButton onClick={handlePreviousPage}>
+        <S.PaginationImg $imageURL="/assets/icons/icon-btn-chevron-left.svg" />
+      </S.PaginationIconButton>
       {Array.from({ length: pageSize }, (_, index) => (
-        <button key={index} onClick={() => onPageChange(index)}>
+        <S.PaginationIconButton key={index} onClick={() => onPageChange(index)}>
           {index + 1}
-        </button>
+        </S.PaginationIconButton>
       ))}
-    </div>
+      <S.PaginationIconButton onClick={handleNextPage}>
+        <S.PaginationImg $imageURL="/assets/icons/icon-btn-chevron-right.svg" />
+      </S.PaginationIconButton>
+      <S.PaginationIconButton onClick={handleLastPage}>
+        <S.PaginationImg $imageURL="/assets/icons/icon-btn-last-page.svg" />
+      </S.PaginationIconButton>
+    </S.PaginationContainer>
   );
 };
 
@@ -97,6 +124,11 @@ const Diary = ({ searchTerm, sortOrder, selectedDiary }: IDiaryProps) => {
         ))}
       </div>
       <Pagination pageSize={pageSize} onPageChange={handlePageChange} />
+      <Pagination
+        pageSize={pageSize}
+        currentPage={currentPage}
+        onPageChange={handlePageChange}
+      />
     </>
   );
 };

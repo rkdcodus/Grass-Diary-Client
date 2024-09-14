@@ -416,3 +416,32 @@ export const SearchInput = styled.input`
 
   border: none;
 `;
+/* 페이지네이션 컴포넌트 */
+
+export const PaginationContainer = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+`;
+
+export const PaginationIconButton = styled.button`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  gap: 1rem;
+  padding: 0.25rem;
+
+  border: none;
+  border-radius: 0.25rem;
+
+  ${INTERACTION.default.normal()}
+`;
+
+export const PaginationImg = styled.div<{ $imageURL: string }>`
+  width: 1rem;
+  height: 1rem;
+
+  background-size: cover;
+  background: url(${props => props.$imageURL}) no-repeat center center;
+`;
