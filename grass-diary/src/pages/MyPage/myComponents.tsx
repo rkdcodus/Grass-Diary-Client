@@ -1,13 +1,10 @@
-import stylex from '@stylexjs/stylex';
-import styles from './style';
-import Swal from 'sweetalert2';
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import Grass from './Grass';
 import Diary from './Diary';
-import mainCharacter from '@icon/mainCharacter.png';
-import { Button, EllipsisBox, EllipsisIcon, Profile } from '@components/index';
+import * as S from './style';
+import { EllipsisBox, EllipsisIcon, Profile } from '@components/index';
 import { useProfile } from '@state/profile/useProfile';
 
 const MainContainer = () => {
@@ -19,10 +16,6 @@ const MainContainer = () => {
   const [selectedDiary, setSelectedDiary] = useState<IDiary | undefined>(
     undefined,
   );
-
-  const handleToggleButton = (buttonName: string) => {
-    setToggleButton(buttonName);
-  };
 
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(event.target.value);
@@ -41,54 +34,22 @@ const MainContainer = () => {
   }, [window.location.search]);
 
   return (
-    <div {...stylex.props(styles.mainContainer)}>
-      <div {...stylex.props(styles.profileSection)}>
-        <ProfileSection setSelectedDiary={setSelectedDiary} />
-
-        <ToggleButton
-          buttonLabel={toggleButton}
-          handleToggleButton={handleToggleButton}
-        />
-      </div>
-      <div {...stylex.props(styles.mainSection)}>
+    <S.ViewportContainer>
+      <ProfileSection setSelectedDiary={setSelectedDiary} />
+      <S.MainSection>
         <SearchBar onSearchChange={handleSearchChange} />
-        <SortButton onSortChange={handleSortChange} />
-        {toggleButton === '나의 일기장' ? (
-          <Diary
-            searchTerm={searchTerm}
-            sortOrder={sortOrder}
-            selectedDiary={selectedDiary}
-          />
-        ) : (
-          <p>현재 교환 일기가 없습니다.</p>
-        )}
-      </div>
-    </div>
-  );
-};
-
-interface IToggleButton {
-  buttonLabel: string;
-  handleToggleButton: (label: string) => void;
-}
-
-const ToggleButton = ({ buttonLabel, handleToggleButton }: IToggleButton) => {
-  const buttonLabels: string[] = ['나의 일기장', '교환 일기장'];
-
-  return (
-    <div {...stylex.props(styles.profileToggle)}>
-      {buttonLabels.map(label => (
-        <button
-          {...stylex.props(
-            buttonLabel === label ? styles.toggleButton : styles.basicButton,
-          )}
-          onClick={() => handleToggleButton(label)}
-          key={label}
-        >
-          {label}
-        </button>
-      ))}
-    </div>
+        <S.UserDiarySection>
+          <S.DiaryContentContainer>
+            <SortButton onSortChange={handleSortChange} />
+            <Diary
+              searchTerm={searchTerm}
+              sortOrder={sortOrder}
+              selectedDiary={selectedDiary}
+            />
+          </S.DiaryContentContainer>
+        </S.UserDiarySection>
+      </S.MainSection>
+    </S.ViewportContainer>
   );
 };
 
@@ -99,47 +60,22 @@ interface IProfileSection {
 const ProfileSection = ({ setSelectedDiary }: IProfileSection) => {
   const { nickname, profileIntro } = useProfile();
 
-  const modal = () => {
-    Swal.fire({
-      title: '교환 일기장',
-      text: '교환 일기 서비스를 준비중이에요',
-      imageUrl: mainCharacter,
-      imageWidth: 300,
-      imageHeight: 300,
-      imageAlt: 'Custom image',
-      confirmButtonColor: '#28CA3B',
-      confirmButtonText: '확인',
-    });
-  };
-
   return (
-    <div {...stylex.props(styles.profileDetails)}>
-      <div {...stylex.props(styles.profileLeft)}>
-        <Profile width="200px" height="200px" />
-        <div>
-          <Button
-            text="교환 일기 신청"
-            width="150px"
-            defaultColor="#2d2d2d"
-            hoverColor="#FFF"
-            defaultBgColor="#FFFFFF"
-            hoverBgColor="#111111"
-            border="1px solid #929292"
-            marginTop="25px"
-            onClick={modal}
-          />
-        </div>
-      </div>
-      <div {...stylex.props(styles.profileRight)}>
-        <div {...stylex.props(styles.nameSection)}>
-          <span>{nickname}</span>
-        </div>
+    <>
+      <S.UserInfoArticle>
+        <Profile width="4.5rem" height="4.5rem" />
+        <S.UserNameText>{nickname}</S.UserNameText>
+        <S.UserInfoText>
+          {profileIntro !== '' ? profileIntro : '작성한 소개글이 표시됩니다.'}
+        </S.UserInfoText>
+      </S.UserInfoArticle>
+      <S.GrassArticle>
+        <S.GrassYearTagBox>
+          <S.GrassYearText>2024년 잔디 현황</S.GrassYearText>
+        </S.GrassYearTagBox>
         <Grass setSelectedDiary={setSelectedDiary} />
-        <div>
-          <span>{profileIntro !== '' ? profileIntro : '소개글입니다.'}</span>
-        </div>
-      </div>
-    </div>
+      </S.GrassArticle>
+    </>
   );
 };
 

@@ -203,6 +203,54 @@ export const styles = stylex.create({
   },
 });
 
+export const SettingContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  background: linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.3) 0%,
+      rgba(241, 241, 241, 0.3) 100%
+    ),
+    ${semantic.light.bg.solid.subtler};
+`;
+
+export const ViewportContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-self: center;
+
+  max-width: 60rem;
+`;
+
+/* 유저 컨테이너 */
+export const UserInfoArticle = styled.article`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  align-self: stretch;
+
+  max-width: 60rem;
+
+  gap: 1rem;
+  padding: 4rem 1.5rem 1.25rem 1.5rem;
+`;
+
+export const UserNameText = styled.span`
+  text-align: center;
+
+  ${TYPO.title2};
+  color: ${semantic.light.object.solid.normal};
+`;
+
+export const UserInfoText = styled.span`
+  text-align: center;
+
+  ${TYPO.body2};
+  color: ${semantic.light.object.transparent.neutral};
+`;
+
 /* 잔디 컨테이너 */
 
 export const GrassArticle = styled.article`
