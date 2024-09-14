@@ -18,6 +18,16 @@ export const Container = styled.div`
   align-items: center;
   gap: var(--gap-xl, 1.5rem);
   flex: 1 0 0;
+
+  @media screen and (max-width: 60em) {
+    display: flex;
+    max-width: var(--vw-desktop-min, 60rem);
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: var(--gap-xl, 1.5rem);
+    flex: 1 0 0;
+  }
 `;
 
 export const Card = styled.div`
@@ -36,6 +46,15 @@ export const Card = styled.div`
 
   box-shadow: 0rem 0rem 0.0625rem 0rem rgba(0, 0, 0, 0.04),
     0rem 0.125rem 0.25rem 0rem rgba(0, 0, 0, 0.08);
+
+  @media screen and (max-width: 60em) {
+    display: flex;
+    padding: var(--gap-lg, 1.25rem);
+    width: 19em;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--gap-md, 1rem);
+  }
 `;
 
 export const Divider = styled.div`
@@ -43,6 +62,10 @@ export const Divider = styled.div`
   height: 0.0625rem;
 
   background: ${semantic.light.border.transparent.alternative};
+
+  @media screen and (max-width: 60em) {
+    width: 16em;
+  }
 `;
 
 export const CardText = styled.p`

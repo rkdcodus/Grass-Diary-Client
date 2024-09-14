@@ -9,6 +9,10 @@ export const Container = styled.div`
   flex-direction: column;
   align-items: center;
   gap: var(--gap-2xl, 2rem);
+
+  @media screen and (max-width: 60em) {
+    width: 22rem;
+  }
 `;
 
 export const GrassLabel = styled.div`
@@ -22,7 +26,7 @@ export const GrassLabel = styled.div`
   border: var(--stroke-thin, 0.0625rem) solid
     ${semantic.light.border.transparent.alternative};
 
-  background: ${semantic.light.bg.solid.normal};
+  background: ${semantic.light.fill.transparent.alternative};
 `;
 
 export const GrassLabelText = styled.p`
@@ -66,6 +70,13 @@ export const GrassTableBox = styled.div`
   grid-template-columns: repeat(7, 3.5rem);
   grid-gap: var(--gap-xs, 0.625rem);
   margin-bottom: 0.625rem;
+
+  @media screen and (max-width: 60em) {
+    display: grid;
+    grid-template-columns: repeat(7, 2em);
+    grid-gap: var(--gap-xs, 0.525rem);
+    margin-bottom: 0.525rem;
+  }
 `;
 
 export const DayBox = styled.div`
@@ -78,4 +89,16 @@ export const DayBox = styled.div`
 
   box-shadow: 0rem 0rem 0.0625rem 0rem rgba(0, 0, 0, 0.04),
     0rem 0.125rem 0.25rem 0rem rgba(0, 0, 0, 0.08);
+
+  @media screen and (max-width: 60em) {
+    width: 2em;
+    height: 2em;
+
+    border-radius: var(--radius-sm, 0.75rem);
+
+    background: ${semantic.light.fill.transparent.assistive};
+
+    box-shadow: 0rem 0rem 0.0625rem 0rem rgba(0, 0, 0, 0.04),
+      0rem 0.125rem 0.25rem 0rem rgba(0, 0, 0, 0.08);
+  }
 `;

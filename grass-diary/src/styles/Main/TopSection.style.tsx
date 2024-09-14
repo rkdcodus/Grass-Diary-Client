@@ -9,6 +9,10 @@ export const Container = styled.div`
   flex-direction: column;
   align-items: center;
   gap: 2rem;
+
+  @media screen and (max-width: 60em) {
+    width: 22rem;
+  }
 `;
 
 export const TodayDateBox = styled.div`
@@ -23,6 +27,10 @@ export const DailyQuestionText = styled.p`
   text-align: center;
 
   ${TYPO.display1}
+
+  @media screen and (max-width: 60em) {
+    ${TYPO.title3}
+  }
 `;
 
 export const ButtonContainer = styled.div`
