@@ -211,7 +211,7 @@ const Diary = ({
               </S.SideHashtagText>
             </S.SideHashtagList>
             <S.SideHashtagUsageText>
-              ({diaryList.length})
+              ({hashtagList.length})
             </S.SideHashtagUsageText>
           </S.SideHashtagAnchor>
           {hashtagList &&
