@@ -10,7 +10,6 @@ import { useProfile } from '@state/profile/useProfile';
 const MainContainer = () => {
   const navigate = useNavigate();
 
-  const [toggleButton, setToggleButton] = useState<string>('나의 일기장');
   const [searchTerm, setSearchTerm] = useState<string>('');
   const [sortOrder, setSortOrder] = useState<string>('latest');
   const [selectedDiary, setSelectedDiary] = useState<IDiary | undefined>(
@@ -85,16 +84,15 @@ interface ISearchBar {
 
 const SearchBar = ({ onSearchChange }: ISearchBar) => {
   return (
-    <div {...stylex.props(styles.searchSection)}>
-      <div {...stylex.props(styles.searchIcon)}>
-        <i className="fa-solid fa-magnifying-glass"></i>
-      </div>
-      <input
-        {...stylex.props(styles.searchBar)}
-        placeholder="일기 검색하기"
-        onChange={onSearchChange}
-      ></input>
-    </div>
+    <S.SearchArticle>
+      <S.SearchBox>
+        <S.SearchImg src="/assets/icons/search.svg" />
+        <S.SearchInput
+          placeholder="일기 내용을 검색해 보세요..."
+          onChange={onSearchChange}
+        />
+      </S.SearchBox>
+    </S.SearchArticle>
   );
 };
 

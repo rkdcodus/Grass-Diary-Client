@@ -364,3 +364,55 @@ export const DateBubbleBox = styled.div`
     background-repeat: no-repeat;
   }
 `;
+
+/* 메인 섹션 */
+
+export const MainSection = styled.section`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  align-self: stretch;
+
+  max-width: 60rem;
+  padding: 0rem 1.5rem 4.5rem 1.5rem;
+`;
+
+/* 검색 바 컴포넌트 */
+
+export const SearchArticle = styled.article`
+  display: flex;
+  align-items: center;
+  align-self: stretch;
+
+  max-width: 60rem;
+
+  gap: 1rem;
+  padding: 2rem 0rem 1rem 0rem;
+`;
+
+export const SearchBox = styled.div`
+  display: flex;
+  align-items: center;
+  flex: 1 0 0;
+
+  gap: 1rem;
+  padding: 1rem 1.25rem;
+
+  border-radius: 1rem;
+  border: 1px solid ${semantic.light.border.transparent.alternative};
+  background: ${semantic.light.bg.solid.normal};
+`;
+
+export const SearchImg = styled.img`
+  width: 1.125rem;
+  height: 1.125rem;
+`;
+
+export const SearchInput = styled.input`
+  width: 100%;
+
+  ${TYPO.body2};
+  color: ${semantic.light.object.transparent.assistive};
+
+  border: none;
+`;
