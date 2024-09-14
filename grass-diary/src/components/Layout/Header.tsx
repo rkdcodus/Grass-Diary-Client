@@ -10,10 +10,14 @@ import { Profile } from '@components/index';
 import { useNavigate } from 'react-router-dom';
 import { useUser } from '@state/user/useUser';
 import { INTERACTION } from '@styles/interaction';
+import { TYPO } from '@styles/typo';
 
 const Header = () => {
   const memberId = useUser();
   const navigate = useNavigate();
+  const handleGoogleLogin: TGoogleLogin = () => {
+    window.open(`http://localhost:8080/api/auth/google`, '_self');
+  };
 
   return (
     <NavBar>
@@ -24,13 +28,14 @@ const Header = () => {
             <LogoStr />
           </Logo>
         </LogoContainer>
+        <FeedButton onClick={() => navigate('/share')}>피드</FeedButton>
         {memberId ? (
           <RightContent>
             <Profile width="2rem" height="2rem" />
             <MenuBar />
           </RightContent>
         ) : (
-          <LoginBtn onClick={() => console.log('로그인')}>로그인</LoginBtn>
+          <LoginBtn onClick={handleGoogleLogin}>로그인</LoginBtn>
         )}
       </ContentWrap>
     </NavBar>
@@ -38,6 +43,21 @@ const Header = () => {
 };
 
 export default Header;
+
+const FeedButton = styled.button`
+  cursor: pointer;
+  display: flex;
+  padding: var(--gap-5xs, 0.125rem) var(--gap-sm, 0.75rem);
+  justify-content: center;
+  align-items: center;
+  border-radius: var(--radius-xs, 0.5rem);
+  color: ${semantic.light.object.solid.normal};
+  text-align: center;
+  white-space: nowrap;
+  ${TYPO.title1}
+
+  ${INTERACTION.default.normal()}
+`;
 
 const NavBar = styled.header`
   display: flex;
@@ -48,6 +68,10 @@ const NavBar = styled.header`
   border-bottom: var(--stroke-thin, 1px) solid
     ${semantic.light.border.transparent.alternative};
   background: ${semantic.light.bg.solid.subtlest};
+
+  @media screen and (max-width: 60em) {
+    min-width: 20em;
+  }
 `;
 
 const ContentWrap = styled.div`
@@ -102,6 +126,6 @@ const LoginBtn = styled.button`
   color: ${semantic.light.base.solid.white};
   border-radius: var(--radius-xs, 0.5rem);
   background: ${semantic.light.accent.solid.normal};
-
+  white-space: nowrap;
   ${INTERACTION.default.normal(semantic.light.accent.solid.normal)}
 `;

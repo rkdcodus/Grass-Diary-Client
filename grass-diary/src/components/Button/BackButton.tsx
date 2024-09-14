@@ -22,7 +22,7 @@ const BackButton = ({ goBackTo }: IBackButtonProps) => {
   };
   return (
     <ArrowButton onClick={goBack}>
-      <ArrowIcon />
+      <ArrowIcon width={24} height={24} />
     </ArrowButton>
   );
 };
@@ -37,8 +37,6 @@ const ArrowButton = styled.button`
 `;
 
 const ArrowIcon = styled(LeftArrow)`
-  width: 24px;
-  height: 24px;
   fill: ${semantic.light.object.transparent.neutral};
   cursor: pointer;
 `;

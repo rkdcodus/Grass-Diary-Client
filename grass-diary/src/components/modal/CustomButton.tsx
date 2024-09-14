@@ -3,14 +3,20 @@ import { semantic } from '@styles/semantic';
 import styled from 'styled-components';
 
 type CustomButtonProps = {
-  onClick: () => void;
-  text: string;
+  text?: string;
+  onClick?: () => void;
   color?: string;
+  interaction?: string;
 };
 
-const CustomButton = ({ onClick, text, color }: CustomButtonProps) => {
+const CustomButton = ({
+  onClick,
+  text,
+  color,
+  interaction,
+}: CustomButtonProps) => {
   return (
-    <CustomBtn onClick={onClick} $color={color}>
+    <CustomBtn onClick={onClick} $color={color} $interaction={interaction}>
       {text}
     </CustomBtn>
   );
@@ -18,7 +24,7 @@ const CustomButton = ({ onClick, text, color }: CustomButtonProps) => {
 
 export default CustomButton;
 
-const CustomBtn = styled.button<{ $color?: string }>`
+const CustomBtn = styled.button<{ $color?: string; $interaction?: string }>`
   cursor: pointer;
   align-self: stretch;
   display: flex;
@@ -33,5 +39,5 @@ const CustomBtn = styled.button<{ $color?: string }>`
   color: ${props =>
     props.$color || semantic.light.object.transparent.alternative};
 
-  ${INTERACTION.default.normal()}
+  ${props => props.$interaction || INTERACTION.default.normal()}
 `;
