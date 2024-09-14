@@ -77,12 +77,6 @@ export const NULL = {
   share_feed: '공개된 일기가 아직 없어요',
 } as const;
 
-export const DIARY = {
-  edit_info: '일기는 당일 00:00부터 24:00전까지 수정 가능합니다.',
-  delete_confirm:
-    '일기를 삭제하시겠어요?\n삭제된 일기는 다시 되돌릴 수 없어요.',
-} as const;
-
 export const COMMENT = {
   deleted: '삭제된 댓글입니다',
   placeholder: '댓글을 입력해주세요',
@@ -154,4 +148,48 @@ export const QUILL_MESSAGE = {
   placeholder: '일기를 작성 해보세요!',
   custom_entry_placeholder:
     '오늘은 무엇을 하고, 누구를 만나고, 어떤 음식을 드셨나요?',
+} as const;
+
+export const INTRO_MESSAGES = {
+  firstSection: {
+    serviceName: '잔디 일기',
+    serviceIntroduction: '일상 속의 잔디, 나의 이야기를 키우다',
+    scrollMessage: '아래로 스크롤을 내려 잔디 일기에 대해 더 알아보세요!',
+  },
+  secondSection: {
+    secondTitle: '시키는\n나만의 잔디 일기장',
+    secondIntroduction: '일기를 작성하면 파릇파릇한 잔디밭이 만들어져요!',
+  },
+  thirdSection: {
+    thirdTitle: '다른 사람들의 일기를\n',
+    thirdIntroduction: '다양한 생각, 기억들을 둘러보며 이야기를 나눠요.',
+  },
+  lastSection: {
+    startMessage: '이제, 나만의 잔디밭을 가꿔 보세요!',
+  },
+  writeDiary: '일기 쓰러 가기',
+} as const;
+
+export const MODAL = {
+  cancel: '취소',
+  confirm: '확인',
+  login_induce: {
+    title: '로그인 필요',
+    content: '일기가 궁금하다면,\n 로그인 후 읽어볼 수 있어요',
+    button: '로그인하기',
+  },
+  edit_diary: {
+    title: '일기 수정 가능 시간',
+    content: '일기는 당일 00:00부터 24:00전까지 수정 가능합니다.',
+  },
+  delete_diary: {
+    title: '일기 삭제 안내',
+    content: '일기를 삭제하시겠어요?\n삭제된 일기는 다시 되돌릴 수 없어요.',
+    button: '삭제하기',
+  },
+} as const;
+
+export const TOAST = {
+  delete_diary: '일기가 삭제되었습니다',
+  image_capacity_limit: '5MB를 초과하는 이미지 파일은 업로드 할 수 없어요.',
 } as const;

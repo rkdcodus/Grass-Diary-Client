@@ -20,6 +20,8 @@ export const GlobalStyle = createGlobalStyle`
   *,
   *::before,
   *::after {
+    margin: 0;
+    padding: 0;
     box-sizing: border-box;
   }
 
@@ -29,16 +31,17 @@ export const GlobalStyle = createGlobalStyle`
     text-size-adjust: none;
     font-family: Pretendard;
   }
-
+  
+  body {
+    min-height: 100vh;
+    
+    line-height: 1.5;
+    overscroll-behavior: none;
+  }
+  
   ul[role='list'],
   ol[role='list'] {
     list-style: none;
-  }
-
-  body {
-    margin: 0;
-    min-height: 100vh;
-    line-height: 1.5;
   }
 
   h1,

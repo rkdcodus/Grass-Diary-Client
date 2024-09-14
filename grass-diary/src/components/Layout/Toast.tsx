@@ -1,4 +1,8 @@
-import { useToastActive, useToastText } from '@state/toast/ToastStore';
+import {
+  useToastActive,
+  useToastIsRed,
+  useToastText,
+} from '@state/toast/ToastStore';
 import { semantic } from '@styles/semantic';
 import { TYPO } from '@styles/typo';
 import styled, { keyframes } from 'styled-components';
@@ -6,8 +10,13 @@ import styled, { keyframes } from 'styled-components';
 const Toast = () => {
   const text = useToastText();
   const active = useToastActive();
+  const isRed = useToastIsRed();
 
-  return <ToastContainer $active={active}>{text}</ToastContainer>;
+  return (
+    <ToastContainer $active={active} $isRed={isRed}>
+      {text}
+    </ToastContainer>
+  );
 };
 
 export default Toast;
@@ -28,7 +37,7 @@ const toastFadeIn = keyframes`
 }
 `;
 
-const ToastContainer = styled.div<{ $active: boolean }>`
+const ToastContainer = styled.div<{ $active: boolean; $isRed: boolean }>`
   position: fixed;
   top: 100%;
   left: 50%;
@@ -38,7 +47,10 @@ const ToastContainer = styled.div<{ $active: boolean }>`
   gap: var(--gap-2xs, 0.5rem);
 
   border-radius: var(--radius-round, 6rem);
-  background: ${semantic.light.object.solid.hero};
+  background: ${props =>
+    props.$isRed
+      ? semantic.light.feedback.solid.negative
+      : semantic.light.object.solid.hero};
 
   box-shadow: 0px 0px 2px 0px rgba(0, 0, 0, 0.06),
     0px 2px 4px 0px rgba(0, 0, 0, 0.06), 0px 4px 8px 0px rgba(0, 0, 0, 0.13);

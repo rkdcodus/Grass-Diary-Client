@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import { useWriterProfile } from '@hooks/api/useWriterProfile';
 import { semantic } from '@styles/semantic';
@@ -7,6 +7,10 @@ import { ReactComponent as CommentIcon } from '@svg/comment.svg';
 import { TYPO } from '@styles/typo';
 import EMOJI from '@constants/emoji';
 import { ReactComponent as Favorite } from '@svg/favorite.svg';
+import { useAuth } from '@state/auth/useAuth';
+import { useModal } from '@state/modal/useModal';
+import { INTERACTION } from '@styles/interaction';
+import { MODAL } from '@constants/message';
 
 interface IFeedProps {
   feed: Feed;
@@ -14,7 +18,10 @@ interface IFeedProps {
 }
 
 const Feed = ({ feed, isTop }: IFeedProps) => {
+  const navigate = useNavigate();
+  const { isAuthenticated } = useAuth();
   const { data: writer } = useWriterProfile(feed.memberId);
+  const { modal } = useModal();
 
   const title =
     `${feed.createdAt.slice(2, 4)}년 ` +
@@ -31,8 +38,39 @@ const Feed = ({ feed, isTop }: IFeedProps) => {
     return doc.body.textContent || '';
   };
 
+  const handleGoogleLogin: TGoogleLogin = () => {
+    window.open(`http://localhost:8080/api/auth/google`, '_self');
+  };
+
+  const FeedClickHandler = () => {
+    const setting = {
+      title: MODAL.login_induce.title,
+      content: MODAL.login_induce.content,
+    };
+
+    const button1 = {
+      active: true,
+      text: MODAL.cancel,
+    };
+
+    const button2 = {
+      active: true,
+      text: MODAL.login_induce.button,
+      clickHandler: handleGoogleLogin,
+      color: semantic.light.accent.solid.hero,
+      interaction: INTERACTION.accent.subtle(),
+    };
+
+    if (!isAuthenticated) {
+      modal(setting, button1, button2);
+      return;
+    }
+
+    navigate(`/diary/${feed.diaryId}`);
+  };
+
   return (
-    <FeedWrap>
+    <FeedWrap className="Feed">
       <CardContainer $isTop={isTop}>
         <CardHeaderSection>
           <CardUserImg src={writer?.profileImageURL} />
@@ -46,13 +84,13 @@ const Feed = ({ feed, isTop }: IFeedProps) => {
           <CardEmojiContainer>{mood}</CardEmojiContainer>
         </CardHeaderSection>
 
-        <ContentWrap>
-          <Link to={`/diary/${feed.diaryId}`}>
-            {/* <ImageContent $isTop={isTop} /> */}
-            <CardContent $isTop={isTop}>
-              {extractTextFromHTML(feed.content)}
-            </CardContent>
-          </Link>
+        <ContentWrap onClick={FeedClickHandler}>
+          {feed.image[0] && (
+            <ImageContent $isTop={isTop} src={feed.image[0].imageURL} />
+          )}
+          <CardContent $isTop={isTop} $hasImage={feed.image.length > 0}>
+            {extractTextFromHTML(feed.content)}
+          </CardContent>
         </ContentWrap>
 
         <CardFooterSection>
@@ -79,16 +117,19 @@ export default Feed;
 const FeedWrap = styled.div`
   display: flex;
   justify-content: center;
-  margin-bottom: 4px;
 `;
 
 const CardContainer = styled.li<{ $isTop: boolean }>`
   display: flex;
-  padding: var(--gap-md, 1rem);
+  padding: var(--gap-md, 1.25rem);
   flex-direction: column;
-  align-items: flex-start;
+  align-items: flex-end;
   gap: var(--gap-xl, 1.5rem);
-  width: ${props => (props.$isTop ? `17.7rem` : `27.75rem`)};
+
+  width: ${props => (props.$isTop ? `17.7` : `27.75`)}rem;
+  height: ${props => (props.$isTop ? `28.75` : 'auto')}rem;
+  max-height: 39.25rem;
+  margin-bottom: 1rem;
 
   border-radius: var(--radius-md, 1rem);
   border: var(--stroke-thin, 0.0625rem) solid
@@ -96,6 +137,11 @@ const CardContainer = styled.li<{ $isTop: boolean }>`
   background: ${semantic.light.bg.solid.normal};
   box-shadow: 0px 0px 1px 0px rgba(0, 0, 0, 0.04),
     0px 2px 4px 0px rgba(0, 0, 0, 0.08);
+
+  @media screen and (max-width: 60em) {
+    padding: var(--gap-md, 1rem);
+    width: 20rem;
+  }
 `;
 
 const CardHeaderSection = styled.div`
@@ -165,26 +211,23 @@ const CardFooterSection = styled.div`
   width: 100%;
 `;
 
-const CardContent = styled.div<{ $isTop: boolean }>`
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
+const CardContent = styled.div<{ $isTop: boolean; $hasImage: boolean }>`
+  ${props =>
+    props.$hasImage &&
+    `display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+  `}
 
-  // 이미지 있을 경우
-  // -webkit-line-clamp: 3;
-  // min-height: 5.25rem;
-
-  // 이미지 없을 경우
-  -webkit-line-clamp: 10;
-  min-height: ${props => (props.$isTop ? `17.75rem` : `27.75rem`)};
-
-  overflow: hidden;
+  align-self: stretch;
+  word-break: break-all;
   color: ${semantic.light.object.solid.normal};
-  text-overflow: ellipsis;
-
   ${TYPO.body2}
+  overflow: hidden;
 `;
 
-const ImageContent = styled.div<{ $isTop: boolean }>`
+const ImageContent = styled.img<{ $isTop: boolean }>`
+  width: 100%;
   height: ${props => (props.$isTop ? `12.5rem` : `22.5rem`)};
 
   border-radius: var(--radius-sm, 0.75rem);
@@ -195,6 +238,7 @@ const ImageContent = styled.div<{ $isTop: boolean }>`
 const ContentWrap = styled.div`
   flex: 1;
   align-self: stretch;
+  cursor: pointer;
 `;
 
 const IconWrap = styled.div`

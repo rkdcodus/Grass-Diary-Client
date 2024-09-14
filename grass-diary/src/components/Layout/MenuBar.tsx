@@ -1,11 +1,9 @@
 import person from '@svg/person.svg';
 import setting from '@svg/settings.svg';
 import logout from '@svg/logout.svg';
-import person_remove from '@svg/person_remove.svg';
 import arrow from '@svg/arrow_drop_down.svg';
 import useLogout from '@hooks/useLogout';
 import { useQueryClient } from '@tanstack/react-query';
-import { semantic } from '@styles/semantic';
 import { useNavigate } from 'react-router-dom';
 import { Menus, Menu } from '@components/index';
 
@@ -16,10 +14,6 @@ const MenuBar = () => {
   const handleLogout = () => {
     clearAuth();
     queryClient.resetQueries({ queryKey: ['memberId'] });
-  };
-
-  const deleteAccount = () => {
-    console.log('준비 중 입니다.');
   };
 
   return (
@@ -37,12 +31,6 @@ const MenuBar = () => {
           svg={setting}
         />
         <Menu onClick={handleLogout} text={'로그아웃'} svg={logout} />
-        <Menu
-          onClick={deleteAccount}
-          text={'탈퇴'}
-          svg={person_remove}
-          color={semantic.light.feedback.solid.negative}
-        />
       </Menus>
     </div>
   );

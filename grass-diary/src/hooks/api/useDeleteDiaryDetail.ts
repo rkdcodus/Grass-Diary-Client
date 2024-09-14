@@ -1,7 +1,7 @@
 import API from '@services/index';
 import { END_POINT } from '@constants/api';
 import { useMutation } from '@tanstack/react-query';
-import { CONSOLE_ERROR } from '@constants/message';
+import { CONSOLE_ERROR, TOAST } from '@constants/message';
 import { useToast } from '@state/toast/useToast';
 import { useNavigate } from 'react-router-dom';
 
@@ -20,7 +20,7 @@ export const useDeleteDiaryDetail = (id: Id) => {
     onSuccess: () => {
       localStorage.removeItem('lastWritingDate');
       navigate(-1);
-      toast('일기가 삭제되었습니다');
+      toast(TOAST.delete_diary);
     },
     onError: error => {
       console.error(CONSOLE_ERROR.diary.delete + error);
