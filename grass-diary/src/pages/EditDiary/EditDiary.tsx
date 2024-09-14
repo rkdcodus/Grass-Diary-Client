@@ -180,7 +180,6 @@ const EditDiary = () => {
       imageId: image.imageId,
     };
 
-    console.log(image.imageId, image.imageURL);
     if (!image.imageId && image.imageURL) {
       postImage(image.imageURL, {
         onSuccess: res => {

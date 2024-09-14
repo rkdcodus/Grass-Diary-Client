@@ -15,8 +15,6 @@ export const usePostImage = () => {
           return formData;
         });
 
-      formData.forEach(i => console.log(i));
-
       return API.post(END_POINT.image, formData);
     },
     onError: error => {

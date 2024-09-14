@@ -69,7 +69,6 @@ const Modal = () => {
               <CustomButton
                 text={button2.text}
                 onClick={() => {
-                  console.log(button2.clickHandler);
                   if (button2.clickHandler) button2.clickHandler();
                   setActive(false);
                 }}
