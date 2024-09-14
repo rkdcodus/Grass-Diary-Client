@@ -38,34 +38,36 @@ const Share = () => {
   }, [latest]);
 
   return (
-    <>
+    <ShareLayout>
       <PopularFeed />
-      <Background>
-        <FeedContainer>
-          <LatestFeedTitle>공개 일기 피드</LatestFeedTitle>
-          {latest ? (
-            <ResponsiveMasonry columnsCountBreakPoints={{ 350: 1, 960: 2 }}>
-              <Masonry columnsCount={2}>
-                {latest.map(page =>
-                  page?.map(data => {
-                    return (
-                      <Feed key={data.diaryId} feed={data} isTop={false} />
-                    );
-                  }),
-                )}
-              </Masonry>
-            </ResponsiveMasonry>
-          ) : (
-            <FeedNull>{NULL.share_feed}</FeedNull>
-          )}
-        </FeedContainer>
-        <Observe ref={target} />
-      </Background>
-    </>
+      <FeedContainer>
+        <LatestFeedTitle>공개 일기 피드</LatestFeedTitle>
+        {latest ? (
+          <ResponsiveMasonry columnsCountBreakPoints={{ 350: 1, 960: 2 }}>
+            <Masonry columnsCount={2}>
+              {latest.map(page =>
+                page?.map(data => {
+                  return <Feed key={data.diaryId} feed={data} isTop={false} />;
+                }),
+              )}
+            </Masonry>
+          </ResponsiveMasonry>
+        ) : (
+          <FeedNull>{NULL.share_feed}</FeedNull>
+        )}
+      </FeedContainer>
+      <Observe ref={target} />
+    </ShareLayout>
   );
 };
 
 export default Share;
+
+const ShareLayout = styled.div`
+  min-height: 100vh;
+  min-height: 100dvh;
+  background: ${semantic.light.bg.solid.subtler};
+`;
 
 const LatestFeedTitle = styled.h3`
   display: none;
@@ -82,10 +84,6 @@ const FeedNull = styled.div`
   height: 10rem;
   text-align: center;
   line-height: 10rem;
-`;
-
-const Background = styled.section`
-  background: ${semantic.light.bg.solid.subtler};
 `;
 
 const FeedContainer = styled.div`
