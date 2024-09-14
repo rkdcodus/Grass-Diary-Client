@@ -1,6 +1,9 @@
 import stylex from '@stylexjs/stylex';
+import { semantic } from '@styles/semantic';
+import styled from 'styled-components';
+import { TYPO } from '@styles/typo';
 
-const styles = stylex.create({
+export const styles = stylex.create({
   mainContainer: {
     display: 'flex',
     flexDirection: 'column',
@@ -8,8 +11,6 @@ const styles = stylex.create({
 
     width: '100%',
     maxWidth: '1200px',
-
-    gap: '50px',
   },
 
   profileSection: {
@@ -63,56 +64,6 @@ const styles = stylex.create({
   nameSection: {
     display: 'flex',
     fontSize: '20px',
-  },
-
-  grassContainer: {
-    display: 'flex',
-    flexDirection: 'row',
-  },
-
-  dayContainer: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-
-    position: 'relative',
-  },
-
-  grass: {
-    width: '100%',
-    position: 'relative',
-  },
-
-  grassDate: (border, backgroundColor) => ({
-    position: 'relative',
-
-    width: '13px',
-    height: '13px',
-
-    borderRadius: '100%',
-
-    border,
-    backgroundColor,
-  }),
-
-  dateBubble: {
-    position: 'absolute',
-
-    width: '50px',
-    padding: '8px',
-
-    top: '20px',
-    left: '50%',
-    transform: 'translateX(-50%)',
-
-    fontSize: '11px',
-    textAlign: 'center',
-
-    border: '1px solid #BFBFBF',
-    borderRadius: '20px',
-    backgroundColor: '#FFF',
-
-    zIndex: '3',
   },
 
   profileToggle: {
@@ -252,4 +203,116 @@ const styles = stylex.create({
   },
 });
 
-export default styles;
+/* 잔디 컨테이너 */
+
+export const GrassArticle = styled.article`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  align-self: stretch;
+
+  max-width: 60rem;
+
+  gap: 1.5rem;
+  padding: 1.5rem 1.5rem 3rem 1.5rem;
+`;
+
+export const GrassYearTagBox = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  gap: 0.375rem;
+  padding: 0.5rem 1rem;
+
+  border-radius: 0.75rem;
+  border: 1px solid ${semantic.light.border.transparent.alternative};
+  background: ${semantic.light.fill.transparent.assistive};
+`;
+
+export const GrassYearText = styled.span`
+  text-align: center;
+
+  ${TYPO.label2};
+  color: ${semantic.light.object.transparent.alternative};
+`;
+
+export const GrassContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  gap: 0.25rem;
+`;
+
+export const GrassBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  position: relative;
+
+  width: 100%;
+  gap: 0.25rem;
+`;
+
+export const GrassDateBox = styled.div<{
+  $border: string;
+  $background: string;
+}>`
+  position: relative;
+
+  width: 0.875rem;
+  height: 0.875rem;
+
+  border-radius: 0.25rem;
+  border: ${({ $border }) => $border};
+  background: ${({ $background }) => $background};
+`;
+
+export const DaysBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  position: relative;
+`;
+
+export const DateBubbleBox = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  position: absolute;
+
+  gap: 0.5rem;
+  padding: 0.625rem 0.75rem;
+
+  top: -3.2rem;
+  right: -1.3rem;
+
+  ${TYPO.label1};
+  text-align: center;
+  color: ${semantic.light.inverse.solid.normal};
+
+  border-radius: 0.75rem;
+  background: ${semantic.light.inverse.solid.bg};
+
+  box-shadow:
+    0px 0px 2px 0px rgba(0, 0, 0, 0.06),
+    0px 2px 4px 0px rgba(0, 0, 0, 0.06),
+    0px 4px 8px 0px rgba(0, 0, 0, 0.13);
+
+  z-index: 3;
+
+  &::after {
+    content: '';
+
+    position: absolute;
+
+    top: 2.4rem;
+    left: 1.3rem;
+
+    width: 3rem;
+    height: 3rem;
+
+    background-image: url('../../../public/assets/icons/pin.svg');
+    background-repeat: no-repeat;
+  }
+`;
