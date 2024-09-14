@@ -55,15 +55,10 @@ const EditDiary = () => {
   );
 
   // 이미지 state
-  const [file, setFile] = useState<FormData>();
   const { mutate: postImage } = usePostImage();
-  const [image, setImage] = useState<DiaryImage>({
+  const [image, setImage] = useState<ImageInfo>({
     imageId: 0,
     imageURL: '',
-  });
-
-  // 이미지 정보 state
-  const [imageInfo, setImageInfo] = useState({
     name: '',
     size: '',
   });
@@ -168,8 +163,9 @@ const EditDiary = () => {
     setImage({
       imageId: 0,
       imageURL: '',
+      name: '',
+      size: '',
     });
-    setImageInfo({ name: '', size: '' });
   };
 
   const handleSave = async () => {
@@ -184,8 +180,9 @@ const EditDiary = () => {
       imageId: image.imageId,
     };
 
-    if (file) {
-      postImage(file, {
+    console.log(image.imageId, image.imageURL);
+    if (!image.imageId && image.imageURL) {
+      postImage(image.imageURL, {
         onSuccess: res => {
           const request = {
             content: quillContent,
@@ -199,21 +196,8 @@ const EditDiary = () => {
       });
       return;
     }
-    patchDiary(request, {
-      onSuccess: () => {
-        localStorage.removeItem('diary_draft');
-      },
-    });
-  };
 
-  const handleImageChange = (file: File) => {
-    const fileName = file.name;
-    const fileSize = (file.size / 1024).toFixed(2); // KB 단위로 변환
-
-    setImageInfo({
-      name: fileName,
-      size: fileSize,
-    });
+    patchDiary(request);
   };
 
   const handleContentChange = (content: string) => {
@@ -224,6 +208,8 @@ const EditDiary = () => {
 
   // 일기 불러오기
   useEffect(() => {
+    const savedDraft = localStorage.getItem('diary_draft');
+
     if (date) {
       setDiaryField({
         year: date.year,
@@ -233,11 +219,12 @@ const EditDiary = () => {
       });
     }
 
-    const savedDraft = localStorage.getItem('diary_draft');
-
     if (savedDraft) {
       const parsedDraft = JSON.parse(savedDraft);
+      const img = parsedDraft.imageInfo;
+
       setDiaryInfo(parsedDraft);
+      if (img) setImage(img);
 
       const checkText = parsedDraft.quillContent.replace(/<\/?[^>]+(>|$)/g, '');
       setIsContentEmpty(checkText.trim().length === 0);
@@ -258,27 +245,20 @@ const EditDiary = () => {
         setImage({
           imageId: detail.image[0].imageId,
           imageURL: detail.image[0].imageURL,
+          name: '',
+          size: '',
         });
       }
     }
   }, [date, detail]);
 
   // 로컬 스토리지 임시 저장
-  // useEffect(() => {
-  //   const savedDraft = localStorage.getItem('diary_draft');
-  //   if (savedDraft) {
-  //     const parsedDraft = JSON.parse(savedDraft);
-  //     setDiaryInfo(parsedDraft);
-
-  //     const checkText = parsedDraft.quillContent.replace(/<\/?[^>]+(>|$)/g, '');
-  //     setIsContentEmpty(checkText.trim().length === 0);
-  //   }
-  // }, []);
 
   const handleSaveDraft = () => {
     if (isContentEmpty) return; // 일기 내용이 비어 있으면 저장 요청 불가
 
-    localStorage.setItem('diary_draft', JSON.stringify(diaryInfo));
+    const draftData = { ...diaryInfo, imageInfo: image };
+    localStorage.setItem('diary_draft', JSON.stringify(draftData));
     toast(CREATE_MESSAGES.toast.temp_save);
   };
 
@@ -372,8 +352,8 @@ const EditDiary = () => {
                 <S.Image>
                   <img src={image.imageURL} alt="image file" />
                 </S.Image>
-                <S.ImageName>{imageInfo.name}</S.ImageName>
-                <S.ImageData>{imageInfo.size} KB</S.ImageData>
+                <S.ImageName>{image.name}</S.ImageName>
+                <S.ImageData>{image.size} KB</S.ImageData>
                 <button onClick={removeImage}>
                   <S.ImageDelete>
                     <Close />
@@ -388,8 +368,6 @@ const EditDiary = () => {
             onContentChange={handleContentChange}
             quillContent={diaryInfo.quillContent}
             setImage={setImage}
-            setFile={setFile}
-            handleImageChange={handleImageChange}
             selectedMode={selectedMode}
           />
         </S.MainContainer>
