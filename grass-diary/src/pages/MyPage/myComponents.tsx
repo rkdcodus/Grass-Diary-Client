@@ -12,7 +12,7 @@ const MainContainer = () => {
 
   const [searchTerm, setSearchTerm] = useState<string>('');
   const [sortOrder, setSortOrder] = useState<string>('latest');
-  const [selectedDiary, setSelectedDiary] = useState<IDiary | undefined>(
+  const [selectedDiary, setSelectedDiary] = useState<IDiary[] | undefined>(
     undefined,
   );
 
@@ -41,6 +41,7 @@ const MainContainer = () => {
           <S.DiaryContentContainer>
             <SortButton onSortChange={handleSortChange} />
             <Diary
+              setSelectedDiary={setSelectedDiary}
               searchTerm={searchTerm}
               sortOrder={sortOrder}
               selectedDiary={selectedDiary}
@@ -53,7 +54,7 @@ const MainContainer = () => {
 };
 
 interface IProfileSection {
-  setSelectedDiary: React.Dispatch<React.SetStateAction<IDiary | undefined>>;
+  setSelectedDiary: React.Dispatch<React.SetStateAction<IDiary[] | undefined>>;
 }
 
 const ProfileSection = ({ setSelectedDiary }: IProfileSection) => {

@@ -33,7 +33,7 @@ const createGrass: TCreateGrass = () => {
 };
 
 interface IGrass {
-  setSelectedDiary: React.Dispatch<React.SetStateAction<IDiary | undefined>>;
+  setSelectedDiary: React.Dispatch<React.SetStateAction<IDiary[] | undefined>>;
 }
 
 const Grass = ({ setSelectedDiary }: IGrass) => {
@@ -79,7 +79,7 @@ const Grass = ({ setSelectedDiary }: IGrass) => {
   });
 
   useEffect(() => {
-    if (selectedDiary) setSelectedDiary(selectedDiary);
+    if (selectedDiary) setSelectedDiary([selectedDiary]);
     if (!selectedDiary) setSelectedDiary(undefined);
   }, [selectedDiary]);
 

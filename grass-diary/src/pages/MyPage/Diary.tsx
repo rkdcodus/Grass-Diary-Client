@@ -1,14 +1,19 @@
+import stylex from '@stylexjs/stylex';
 import * as S from './style';
 
 import DOMPurify from 'dompurify';
-import { useNavigate } from 'react-router-dom';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useQuery } from '@tanstack/react-query';
+import { useNavigate, useSearchParams } from 'react-router-dom';
+
+import API from '@services/index';
+
+import { semantic } from '@styles/semantic';
 import useDiary from '@hooks/api/useDiary';
-import { MoodProfile, Profile, Divider } from '@components/index';
 import { useUser } from '@state/user/useUser';
 import { ReactComponent as FavoriteIcon } from '@svg/favorite.svg';
 import { ReactComponent as CommentIcon } from '@svg/comment.svg';
-import { semantic } from '@styles/semantic';
+import { MoodProfile, Profile, Divider } from '@components/index';
 import Setting from '@pages/DiaryDetail/Setting';
 
 interface IPagination {
@@ -116,10 +121,21 @@ const DiaryItem = ({ diary, diaryList, index }: IDiaryItem) => {
 interface IDiaryProps {
   searchTerm: string;
   sortOrder: string;
-  selectedDiary?: IDiary;
+  selectedDiary?: IDiary[];
+  setSelectedDiary: any;
 }
 
-const Diary = ({ searchTerm, sortOrder, selectedDiary }: IDiaryProps) => {
+const Diary = ({
+  setSelectedDiary,
+  searchTerm,
+  sortOrder,
+  selectedDiary,
+}: IDiaryProps) => {
+  const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const [hashtagId, setHashtagId] = useState<string | null>(null);
+  const [isSelected, setIsSelected] = useState('');
+
   const memberId = useUser();
   const [currentPage, setCurrentPage] = useState(0);
   const { diaryList, pageSize } = useDiary({
@@ -129,16 +145,95 @@ const Diary = ({ searchTerm, sortOrder, selectedDiary }: IDiaryProps) => {
   });
 
   const filteredDiaryList =
-    selectedDiary && selectedDiary.diaryId
-      ? [selectedDiary]
+    selectedDiary && selectedDiary.length > 0
+      ? selectedDiary
       : diaryList.filter(diary => diary.content.includes(searchTerm));
 
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
   };
 
+  const handleViewAllClick = () => {
+    setIsSelected('all');
+    navigate('/mypage');
+  };
+
+  useEffect(() => {
+    const tagId = searchParams.get('tagId');
+    tagId ? setHashtagId(tagId) : setHashtagId(null);
+  }, [searchParams, navigate]);
+
+  const handleTagClick = (tagId: string) => {
+    const params = new URLSearchParams(searchParams.toString());
+
+    params.set('tagId', tagId);
+    navigate(`/mypage?${params.toString()}`);
+
+    setIsSelected(tagId);
+  };
+
+  const { data: hashtagList } = useQuery({
+    queryKey: ['hashtagList', memberId],
+    queryFn: () =>
+      API.get(`/search/hashTag/${memberId}`).then(({ data }) => data),
+    enabled: !!memberId,
+  });
+
+  const { data: selectedTag } = useQuery<
+    IDiary,
+    Error,
+    IDiary,
+    (string | number | string | null)[]
+  >({
+    queryKey: ['selectedDiary', memberId, hashtagId],
+    queryFn: () =>
+      API.get(`search/tagId/${memberId}?tagId=${hashtagId}`).then(
+        ({ data }) => data,
+      ),
+    enabled: !!hashtagId && !!memberId,
+  });
+
+  useEffect(() => {
+    if (selectedTag) setSelectedDiary(selectedTag);
+    if (!selectedTag) setSelectedDiary(undefined);
+  }, [selectedTag]);
+
   return (
     <>
+      <S.HashtagAside>
+        <S.HashtagListText>해시태그 목록</S.HashtagListText>
+        <Divider width="10rem" />
+        <S.SideHashtagListBox>
+          <S.SideHashtagAnchor onClick={handleViewAllClick}>
+            <S.SideHashtagList>
+              <S.SideHashtagText $variant={isSelected === 'all'}>
+                전체 보기
+              </S.SideHashtagText>
+            </S.SideHashtagList>
+            <S.SideHashtagUsageText>
+              ({diaryList.length})
+            </S.SideHashtagUsageText>
+          </S.SideHashtagAnchor>
+          {hashtagList &&
+            hashtagList.map(
+              (hashtag: { usage: number; tagId: string; tag: string }) => (
+                <S.SideHashtagAnchor>
+                  <S.SideHashtagList
+                    key={hashtag.tagId}
+                    onClick={() => handleTagClick(hashtag.tagId)}
+                  >
+                    <S.SideHashtagText $variant={isSelected === hashtag.tagId}>
+                      {hashtag.tag}
+                    </S.SideHashtagText>
+                  </S.SideHashtagList>
+                  <S.SideHashtagUsageText>
+                    ({hashtag.usage})
+                  </S.SideHashtagUsageText>
+                </S.SideHashtagAnchor>
+              ),
+            )}
+        </S.SideHashtagListBox>
+      </S.HashtagAside>
       <S.DiaryListContainer>
         {filteredDiaryList.map((diary, index) => (
           <DiaryItem

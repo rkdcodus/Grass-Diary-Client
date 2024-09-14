@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 import { TYPO } from '@styles/typo';
 import { semantic } from '@styles/semantic';
@@ -173,6 +173,8 @@ export const MainSection = styled.section`
   flex-direction: column;
   align-items: flex-end;
   align-self: stretch;
+
+  position: relative;
 
   max-width: 60rem;
   padding: 0rem 1.5rem 4.5rem 1.5rem;
@@ -438,4 +440,89 @@ export const PaginationImg = styled.div<{ $imageURL: string }>`
 
   background-size: cover;
   background: url(${props => props.$imageURL}) no-repeat center center;
+`;
+
+/* 사이드 해시태그 목록 컴포넌트 */
+
+export const HashtagAside = styled.aside`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+
+  position: absolute;
+
+  left: 1.6rem;
+
+  width: 12.5rem;
+  min-width: 12.5rem;
+
+  padding: 1.25rem;
+  gap: 1rem;
+
+  border-radius: 1rem;
+  border: 1px solid ${semantic.light.border.transparent.assistive};
+  background: ${semantic.light.bg.solid.normal};
+
+  box-shadow:
+    0px 0px 1px 0px rgba(0, 0, 0, 0.04),
+    0px 2px 4px 0px rgba(0, 0, 0, 0.08);
+`;
+
+export const HashtagListText = styled.span`
+  align-self: stretch;
+  height: 1.375rem;
+
+  ${TYPO.label2};
+  color: ${semantic.light.object.solid.normal};
+`;
+
+export const SideHashtagListBox = styled.ul`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  align-self: stretch;
+
+  list-style-type: none;
+
+  gap: 0.5rem;
+`;
+
+export const SideHashtagAnchor = styled.a`
+  display: flex;
+  align-items: center;
+  align-self: stretch;
+
+  gap: 0.25rem;
+`;
+
+export const SideHashtagList = styled.li`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  gap: 0.5rem;
+  padding: 0.25rem 0.5rem;
+
+  border-radius: 0.5rem;
+
+  ${INTERACTION.default.normal()}
+`;
+
+export const SideHashtagText = styled.span<{ $variant?: boolean }>`
+  ${TYPO.label1};
+  color: ${semantic.light.object.solid.normal};
+  text-align: center;
+
+  ${({ $variant }) => {
+    if ($variant) {
+      return css`
+        color: ${semantic.light.accent.solid.hero};
+      `;
+    }
+  }}
+`;
+
+export const SideHashtagUsageText = styled.span`
+  ${TYPO.label1};
+  color: ${semantic.light.object.transparent.assistive};
 `;
