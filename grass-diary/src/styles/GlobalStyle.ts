@@ -150,6 +150,12 @@ export const GlobalStyle = createGlobalStyle`
     color: ${semantic.light.object.solid.hero};
     ${TYPO.body2}
 
+    @media screen and (max-width: 60em) {
+    height:36.25em;
+    width: 20em;
+    gap: 1.5em;
+  }
+
   }
 
 

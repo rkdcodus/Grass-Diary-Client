@@ -39,7 +39,6 @@ const useModalButtonStore = create<ModalButtonState>(set => ({
     interaction: '',
     clickHandler: () => console.log('button2 default'),
   },
-
   actions: {
     setResetActive: () =>
       set(state => ({
@@ -70,7 +69,6 @@ const useModalButtonStore = create<ModalButtonState>(set => ({
       })),
   },
 }));
-
 export const useModalButton1 = () =>
   useModalButtonStore(state => state.button1);
 export const useModalButton2 = () =>

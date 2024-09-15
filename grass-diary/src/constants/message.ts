@@ -158,6 +158,7 @@ export const CREATE_MESSAGES = {
   toast: {
     temp_save: '작성 중인 일기 내용을 임시저장했어요.',
     already_written: '오늘 이미 작성한 일기가 있어요.',
+    write_diary: '일기 내용을 작성해주세요.',
   },
 
   hashtag: {
@@ -220,8 +221,15 @@ export const MODAL = {
       preparation_notice: '준비 중인 서비스',
       modal_notice: (type: string) =>
         `${type} 아직 준비 중이에요.\n빠르게 선보일 수 있도록 할게요!`,
-      confirm_button: '확인',
     },
+  },
+
+  create_diary: {
+    load_temporary: '임시 저장된 글 불러오기',
+    load_temporary_description:
+      '이전에 임시 저장하신 일기 내용이 있어요.\n불러오면 이어서 작성할 수 있어요.',
+    new_entry: '새로 작성',
+    continue_entry: '이어서 작성',
   },
 } as const;
 
