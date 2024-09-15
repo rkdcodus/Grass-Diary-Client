@@ -10,7 +10,10 @@ const Menus = ({ children, icon }: MenusProps) => {
   const [open, setOpen] = useState(false);
   const iconRef = useRef<HTMLImageElement>(null);
 
-  const dropDown = () => setOpen(current => !current);
+  const dropDown = (event: React.MouseEvent) => {
+    event.stopPropagation();
+    setOpen(current => !current);
+  };
 
   useEffect(() => {
     const closeMenus = (event: MouseEvent) => {

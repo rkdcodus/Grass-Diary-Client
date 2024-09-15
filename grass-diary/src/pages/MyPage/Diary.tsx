@@ -1,72 +1,141 @@
-import styles from './style';
 import stylex from '@stylexjs/stylex';
+import * as S from './style';
+
 import DOMPurify from 'dompurify';
-import { Link } from 'react-router-dom';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useQuery } from '@tanstack/react-query';
+import { useNavigate, useSearchParams } from 'react-router-dom';
+
+import API from '@services/index';
+
+import { semantic } from '@styles/semantic';
 import useDiary from '@hooks/api/useDiary';
-import { NormalLike, MoodProfile } from '@components/index';
 import { useUser } from '@state/user/useUser';
+import { ReactComponent as FavoriteIcon } from '@svg/favorite.svg';
+import { ReactComponent as CommentIcon } from '@svg/comment.svg';
+import { MoodProfile, Profile, Divider } from '@components/index';
+import Setting from '@pages/DiaryDetail/Setting';
 
 interface IPagination {
   pageSize: number;
+  currentPage: number;
   onPageChange: (index: number) => void;
 }
 
-const Pagination = ({ pageSize, onPageChange }: IPagination) => {
+const Pagination = ({ pageSize, currentPage, onPageChange }: IPagination) => {
+  const handleFirstPage = () => onPageChange(0);
+
+  const handlePreviousPage = () => {
+    if (currentPage > 0) onPageChange(currentPage - 1);
+  };
+
+  const handleNextPage = () => {
+    if (currentPage < pageSize - 1) onPageChange(currentPage + 1);
+  };
+
+  const handleLastPage = () => {
+    onPageChange(pageSize - 1);
+  };
+
   return (
-    <div {...stylex.props(styles.pageButtonWrap)}>
+    <S.PaginationContainer>
+      <S.PaginationIconButton onClick={handleFirstPage}>
+        <S.PaginationImg $imageURL="/assets/icons/icon-btn-first-page.svg" />
+      </S.PaginationIconButton>
+      <S.PaginationIconButton onClick={handlePreviousPage}>
+        <S.PaginationImg $imageURL="/assets/icons/icon-btn-chevron-left.svg" />
+      </S.PaginationIconButton>
       {Array.from({ length: pageSize }, (_, index) => (
-        <button key={index} onClick={() => onPageChange(index)}>
+        <S.PaginationIconButton key={index} onClick={() => onPageChange(index)}>
           {index + 1}
-        </button>
+        </S.PaginationIconButton>
       ))}
-    </div>
+      <S.PaginationIconButton onClick={handleNextPage}>
+        <S.PaginationImg $imageURL="/assets/icons/icon-btn-chevron-right.svg" />
+      </S.PaginationIconButton>
+      <S.PaginationIconButton onClick={handleLastPage}>
+        <S.PaginationImg $imageURL="/assets/icons/icon-btn-last-page.svg" />
+      </S.PaginationIconButton>
+    </S.PaginationContainer>
   );
 };
 
 const DiaryItem = ({ diary, diaryList, index }: IDiaryItem) => {
+  const navigate = useNavigate();
   const createMarkup: TCreateMarpkup = htmlContent => {
     const content = htmlContent || '';
     return { __html: DOMPurify.sanitize(content) };
   };
 
+  const handleClickDiaryCard = () => {
+    navigate(`/diary/${diary.diaryId}`);
+  };
+
   return (
-    <Link to={`/diary/${diary.diaryId}`}>
-      <div {...stylex.props(styles.diary)}>
-        <div {...stylex.props(styles.smallProfileSection)}>
-          <MoodProfile diary={diaryList} index={index} />
-          <div {...stylex.props(styles.smallDetailes)}>
-            <span {...stylex.props(styles.name)}>{diary.createdDate}</span>
-            <span {...stylex.props(styles.time)}>{diary.createdAt}</span>
-          </div>
-        </div>
-        <div {...stylex.props(styles.diaryContent)}>
-          <div>
-            {diary.tags &&
-              diary.tags.map(tag => (
-                <span {...stylex.props(styles.hashtag)} key={tag.id}>
-                  #{`${tag.tag} `}
-                </span>
-              ))}
-          </div>
-          <div dangerouslySetInnerHTML={createMarkup(diary.content)}></div>
-        </div>
-        <NormalLike
-          likeCount={diary.likeCount || 0}
-          justifyContent="flex-start"
-        />
-      </div>
-    </Link>
+    <S.DiaryCardArticle onClick={handleClickDiaryCard}>
+      <S.DiaryCardHeaderBox>
+        <Profile width="2.5rem" height="2.5rem" />
+        <S.DiaryCardDateBox>
+          <S.DiaryCardDateText>{diary.createdDate}</S.DiaryCardDateText>
+          <S.DiaryCardTimeText>{diary.createdAt}</S.DiaryCardTimeText>
+        </S.DiaryCardDateBox>
+        <MoodProfile diary={diaryList} index={index} />
+        <Setting diaryId={diary.diaryId} createdDate={diary.createdDate} />
+      </S.DiaryCardHeaderBox>
+      {diary.image.length ? (
+        <S.DiaryCardImgBox $imageURL={diary.image[0].imageURL} />
+      ) : (
+        ''
+      )}
+      <S.DiaryCardText dangerouslySetInnerHTML={createMarkup(diary.content)} />
+      <Divider width="40.5rem" />
+      <S.DiaryCardBottomBox>
+        <S.DiaryCardHashtagBox>
+          {diary.tags &&
+            diary.tags.map(tag => (
+              <S.HashtagBox key={tag.id}>
+                <S.HashtagImg src="/assets/icons/tag-tag.svg" />
+                <S.HashtagText>{tag.tag}</S.HashtagText>
+              </S.HashtagBox>
+            ))}
+        </S.DiaryCardHashtagBox>
+        <S.CommentFavoriteBox>
+          <S.DiaryCardItemBox>
+            <CommentIcon />
+            <S.DiaryCardItemText>{diary.commentCount}</S.DiaryCardItemText>
+          </S.DiaryCardItemBox>
+          <S.DiaryCardItemBox>
+            <FavoriteIcon
+              width={22}
+              height={22}
+              fill={semantic.light.object.transparent.assistive}
+            />
+            <S.DiaryCardItemText>{diary.likeCount}</S.DiaryCardItemText>
+          </S.DiaryCardItemBox>
+        </S.CommentFavoriteBox>
+      </S.DiaryCardBottomBox>
+    </S.DiaryCardArticle>
   );
 };
 
 interface IDiaryProps {
   searchTerm: string;
   sortOrder: string;
-  selectedDiary?: IDiary;
+  selectedDiary?: IDiary[];
+  setSelectedDiary: any;
 }
 
-const Diary = ({ searchTerm, sortOrder, selectedDiary }: IDiaryProps) => {
+const Diary = ({
+  setSelectedDiary,
+  searchTerm,
+  sortOrder,
+  selectedDiary,
+}: IDiaryProps) => {
+  const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const [hashtagId, setHashtagId] = useState<string | null>(null);
+  const [isSelected, setIsSelected] = useState('');
+
   const memberId = useUser();
   const [currentPage, setCurrentPage] = useState(0);
   const { diaryList, pageSize } = useDiary({
@@ -76,17 +145,96 @@ const Diary = ({ searchTerm, sortOrder, selectedDiary }: IDiaryProps) => {
   });
 
   const filteredDiaryList =
-    selectedDiary && selectedDiary.diaryId
-      ? [selectedDiary]
+    selectedDiary && selectedDiary.length > 0
+      ? selectedDiary
       : diaryList.filter(diary => diary.content.includes(searchTerm));
 
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
   };
 
+  const handleViewAllClick = () => {
+    setIsSelected('all');
+    navigate('/mypage');
+  };
+
+  useEffect(() => {
+    const tagId = searchParams.get('tagId');
+    tagId ? setHashtagId(tagId) : setHashtagId(null);
+  }, [searchParams, navigate]);
+
+  const handleTagClick = (tagId: string) => {
+    const params = new URLSearchParams(searchParams.toString());
+
+    params.set('tagId', tagId);
+    navigate(`/mypage?${params.toString()}`);
+
+    setIsSelected(tagId);
+  };
+
+  const { data: hashtagList } = useQuery({
+    queryKey: ['hashtagList', memberId],
+    queryFn: () =>
+      API.get(`/search/hashTag/${memberId}`).then(({ data }) => data),
+    enabled: !!memberId,
+  });
+
+  const { data: selectedTag } = useQuery<
+    IDiary,
+    Error,
+    IDiary,
+    (string | number | string | null)[]
+  >({
+    queryKey: ['selectedDiary', memberId, hashtagId],
+    queryFn: () =>
+      API.get(`search/tagId/${memberId}?tagId=${hashtagId}`).then(
+        ({ data }) => data,
+      ),
+    enabled: !!hashtagId && !!memberId,
+  });
+
+  useEffect(() => {
+    if (selectedTag) setSelectedDiary(selectedTag);
+    if (!selectedTag) setSelectedDiary(undefined);
+  }, [selectedTag]);
+
   return (
     <>
-      <div {...stylex.props(styles.diaryList)}>
+      <S.HashtagAside>
+        <S.HashtagListText>해시태그 목록</S.HashtagListText>
+        <Divider width="10rem" />
+        <S.SideHashtagListBox>
+          <S.SideHashtagAnchor onClick={handleViewAllClick}>
+            <S.SideHashtagList>
+              <S.SideHashtagText $variant={isSelected === 'all'}>
+                전체 보기
+              </S.SideHashtagText>
+            </S.SideHashtagList>
+            <S.SideHashtagUsageText>
+              ({hashtagList && hashtagList.length})
+            </S.SideHashtagUsageText>
+          </S.SideHashtagAnchor>
+          {hashtagList &&
+            hashtagList.map(
+              (hashtag: { usage: number; tagId: string; tag: string }) => (
+                <S.SideHashtagAnchor>
+                  <S.SideHashtagList
+                    key={hashtag.tagId}
+                    onClick={() => handleTagClick(hashtag.tagId)}
+                  >
+                    <S.SideHashtagText $variant={isSelected === hashtag.tagId}>
+                      {hashtag.tag}
+                    </S.SideHashtagText>
+                  </S.SideHashtagList>
+                  <S.SideHashtagUsageText>
+                    ({hashtag.usage})
+                  </S.SideHashtagUsageText>
+                </S.SideHashtagAnchor>
+              ),
+            )}
+        </S.SideHashtagListBox>
+      </S.HashtagAside>
+      <S.DiaryListContainer>
         {filteredDiaryList.map((diary, index) => (
           <DiaryItem
             key={diary.diaryId}
@@ -95,8 +243,12 @@ const Diary = ({ searchTerm, sortOrder, selectedDiary }: IDiaryProps) => {
             index={index}
           />
         ))}
-      </div>
-      <Pagination pageSize={pageSize} onPageChange={handlePageChange} />
+      </S.DiaryListContainer>
+      <Pagination
+        pageSize={pageSize}
+        currentPage={currentPage}
+        onPageChange={handlePageChange}
+      />
     </>
   );
 };

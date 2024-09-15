@@ -4,6 +4,7 @@ import { useState, useRef, useEffect } from 'react';
 const ellipsis = stylex.create({
   ellipsis: {
     position: 'relative',
+    zIndex: '999',
   },
   icon: {
     zIndex: '1',
