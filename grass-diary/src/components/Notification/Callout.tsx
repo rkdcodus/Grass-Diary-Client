@@ -8,7 +8,9 @@ type CalloutProps = {
 const Callout = ({ message }: CalloutProps) => {
   return (
     <S.Container>
-      <Info />
+      <S.Space>
+        <Info />
+      </S.Space>
       <S.Text>{message}</S.Text>
     </S.Container>
   );
