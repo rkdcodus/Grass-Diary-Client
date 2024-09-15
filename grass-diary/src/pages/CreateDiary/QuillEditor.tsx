@@ -1,16 +1,19 @@
-import { useState, useEffect, useMemo } from 'react';
+import * as S from '@styles/CreateDiary/QuillEditor.style';
 import API from '@services/index';
-import { END_POINT } from '@constants/api';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
+
+import { useState, useEffect, useMemo } from 'react';
+import { END_POINT } from '@constants/api';
 import { CONSOLE_ERROR, TOAST } from '@constants/message';
+import { QUILL_MESSAGE } from '@constants/message';
 import { useToast } from '@state/toast/useToast';
 
 type QuillEditorProps = {
   onContentChange: (content: string) => void;
+  selectedMode: string;
   quillContent: string;
-  setImage: React.Dispatch<React.SetStateAction<DiaryImage>>;
-  setFile: React.Dispatch<React.SetStateAction<FormData | undefined>>;
+  setImage: React.Dispatch<React.SetStateAction<ImageInfo>>;
 };
 
 type QuestionResponse = {
@@ -21,7 +24,7 @@ const QuillEditor = ({
   onContentChange,
   quillContent,
   setImage,
-  setFile,
+  selectedMode,
 }: QuillEditorProps) => {
   const handleChange = (
     content: string,
@@ -35,6 +38,11 @@ const QuillEditor = ({
   const [todayQuestion, setTodayQuestion] = useState<string>();
   const { redToast } = useToast();
 
+  const placeholderText =
+    selectedMode === `customEntry`
+      ? QUILL_MESSAGE.custom_entry_placeholder
+      : todayQuestion || 'todayQuestion Loading...';
+
   const ImageHandler = () => {
     const input = document.createElement('input');
     input.setAttribute('type', 'file');
@@ -46,21 +54,20 @@ const QuillEditor = ({
       const maxSize = 5 * 1024 * 1024;
 
       if (file && file.size > maxSize) {
-        redToast(TOAST.image_capacity_limit);
-        return;
+        return redToast(TOAST.image_capacity_limit);
       }
 
       if (file) {
-        const formData = new FormData();
-        formData.append('image', file);
-        setFile(formData);
-
         const reader = new FileReader();
         reader.readAsDataURL(file);
+
         reader.onloadend = () => {
+          const base64String = reader.result as string;
           setImage({
             imageId: 0,
-            imageURL: reader.result as string,
+            imageURL: base64String,
+            name: file.name,
+            size: (file.size / 1024).toFixed(2), // KB 단위로 변환
           });
         };
       }
@@ -119,16 +126,14 @@ const QuillEditor = ({
 
   return (
     <>
-      <h4>{todayQuestion ? todayQuestion : 'Loading...'}</h4>
-      <br></br>
+      <S.Title>{placeholderText}</S.Title>
       <ReactQuill
         theme="snow"
-        placeholder={todayQuestion ? todayQuestion : '일기를 작성 해보세요!'}
+        placeholder={QUILL_MESSAGE.placeholder}
         modules={modules}
         formats={formats}
         onChange={handleChange}
         value={quillContent}
-        style={{ height: '70vh' }}
       />
     </>
   );

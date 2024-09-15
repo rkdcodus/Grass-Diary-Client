@@ -1,28 +1,27 @@
-import stylex from '@stylexjs/stylex';
+import styled from 'styled-components';
 import { useProfile } from '@state/profile/useProfile';
 
-const styles = stylex.create({
-  profileImage: (width: string, height: string) => ({
-    objectFit: 'cover',
-    borderRadius: '100%',
+const AvatarImg = styled.img<{ $width?: string; $height?: string }>`
+  width: ${props => (props.$width ? props.$width : '9.8125rem')};
+  height: ${props => (props.$height ? props.$height : '9.75rem')};
 
-    width,
-    height,
-  }),
-});
+  border-radius: 100%;
+  object-fit: cover;
+`;
 
 interface IProfileProps {
-  width: string;
-  height: string;
+  width?: string;
+  height?: string;
 }
 
 const Profile = ({ width, height }: IProfileProps) => {
   const { profileImageURL }: pickProfileImageURL = useProfile();
 
   return profileImageURL ? (
-    <img
-      {...stylex.props(styles.profileImage(width, height))}
-      src={profileImageURL}
+    <AvatarImg
+      $width={width}
+      $height={height}
+      src={profileImageURL || '/assets/img/defaultAvatar.svg'}
       alt="사용자 프로필 사진"
     />
   ) : null;

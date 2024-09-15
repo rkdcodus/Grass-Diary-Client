@@ -1,104 +1,517 @@
-import stylex from '@stylexjs/stylex';
+import styled, { css } from 'styled-components';
 
-const styles = stylex.create({
-  contentWrap: {
-    display: 'flex',
-    flexDirection: 'column',
+import { semantic } from '@styles/semantic';
+import { TYPO } from '@styles/typo';
 
-    width: '1160px',
-    height: '100vh',
+const SettingContainer = styled.main`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 
-    backgroundColor: '#F9F9F9',
-    border: '1px solid #BFBFBF',
-    borderRadius: '3.2rem 3.2rem 0 0',
+  gap: 1.5rem;
 
-    gap: '0.625rem',
-  },
+  background: linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.3) 0%,
+      rgba(241, 241, 241, 0.3) 100%
+    ),
+    ${semantic.light.bg.solid.subtler};
+`;
 
-  titleSection: {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
+const ContentContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 
-    width: '100%',
-    height: '12.5rem',
-  },
+  width: 60rem;
+  gap: 2.5rem;
+`;
 
-  title: {
-    fontSize: '1.4rem',
-  },
+const ProfileSection = styled.section`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 
-  profileSection: {
-    display: 'flex',
-    justifyContent: 'center',
+  width: 58.5rem;
+  height: 31.0625rem;
 
-    width: '100%',
-    gap: '1.9rem',
-  },
+  gap: 4rem;
+  padding: 1.25rem;
+`;
 
-  profileLeft: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'center',
+const ProfileArticle = styled.article`
+  display: flex;
+  flex-direction: column;
+  align-self: stretch;
+  align-items: flex-start;
+  justify-content: center;
+  flex-shrink: 0;
 
-    width: '30%',
-  },
+  position: relative;
 
-  profileRight: {
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'center',
+  max-width: 60rem;
+  height: 28.875rem;
 
-    width: '55%',
-    gap: '1.25rem',
-  },
+  gap: 1rem;
+  padding: 1.5rem;
+`;
 
-  settingSection: {
-    display: 'flex',
-    gap: '1.9rem',
-  },
+const ProfileContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  align-self: stretch;
 
-  textInput: (padding, height) => ({
-    width: '28.2rem',
+  gap: 4.5rem;
+`;
 
-    borderRadius: '1rem',
-    border: '1px solid #BFBFBF',
+const ProfileLeftContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-self: stretch;
 
-    resize: 'none',
-    outline: 'none',
+  height: 9.75rem;
+`;
 
-    height,
-    padding,
-  }),
+const AvatarContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  align-self: stretch;
 
-  saveSection: {
-    display: 'flex',
-    justifyContent: 'space-between',
+  gap: 0.6875rem;
+`;
 
-    width: '71%',
-  },
+const AvatarImageBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  align-self: stretch;
 
-  colorWrapper: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
+  gap: 0.6875rem;
+`;
 
-    width: '3.1rem',
-    height: '3.1rem',
+const UserNameText = styled.span`
+  align-self: stretch;
+  text-align: center;
 
-    border: '1px solid #BFBFBF',
-    borderRadius: '100%',
-    backgroundColor: '#FFF',
-  },
+  ${TYPO.title2}
+  color: ${semantic.light.object.solid.normal};
+`;
 
-  grassColor: {
-    width: '2.2rem',
-    height: '2.2rem',
+const ProfileButtonBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  flex-shrink: 0;
 
-    borderRadius: '100%',
-    backgroundColor: '#84FF79',
-  },
-});
+  width: 9.8125rem;
+  gap: 1.125rem;
+`;
 
-export default styles;
+const ImageUploadButton = styled.button`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-self: stretch;
+
+  height: 2.625rem;
+
+  gap: 0.5rem;
+  padding: 0.625rem 1rem;
+
+  border-radius: 0.5rem;
+
+  color: ${semantic.light.base.solid.white};
+  background: ${semantic.light.accent.solid.normal};
+
+  cursor: pointer;
+`;
+
+const ImageDeleteButton = styled.button`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-self: stretch;
+
+  height: 2.625rem;
+
+  gap: 0.5rem;
+  padding: 0.625rem 1rem;
+
+  border-radius: 0.5rem;
+
+  color: ${semantic.light.base.solid.white};
+  background: ${semantic.light.object.solid.normal};
+
+  cursor: pointer;
+`;
+
+const ProfileRightContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+
+  width: 37.8125rem;
+  height: 18.5rem;
+
+  gap: 0.625rem;
+  padding: 1.25rem;
+`;
+
+const UserIntroductionContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  align-self: stretch;
+
+  gap: 4.5rem;
+`;
+
+const UserIntroductionBox = styled.div<{ isFocused: boolean }>`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+
+  width: 37.8125rem;
+  height: 18.5rem;
+
+  gap: 0.625rem;
+  padding: 1.25rem;
+
+  border-radius: 1rem;
+  border: 1px solid
+    ${({ isFocused }) =>
+      isFocused
+        ? semantic.light.accent.solid.alternative
+        : semantic.light.border.transparent.assistive};
+
+  box-shadow:
+    0px 0px 1px 0px rgba(0, 0, 0, 0.04),
+    0px 2px 4px 0px rgba(0, 0, 0, 0.08);
+  background: ${semantic.light.bg.solid.normal};
+`;
+
+const UserIntroduction = styled.textarea`
+  flex-shrink: 0;
+  align-self: stretch;
+
+  height: 11.875rem;
+
+  border: none;
+  resize: none;
+  outline: none;
+
+  ${TYPO.caption2}
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: ${semantic.light.object.transparent.neutral};
+`;
+
+const IntroductionCountText = styled.span`
+  position: absolute;
+
+  top: 25.125rem;
+  right: 2rem;
+
+  width: 4.375rem;
+
+  ${TYPO.caption2};
+  color: ${semantic.light.accent.solid.alternative};
+`;
+
+const DetailSettingSection = styled.section`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  align-self: stretch;
+
+  max-width: 60rem;
+  height: 80.0625rem;
+
+  gap: 3rem;
+  padding: 1.25rem;
+`;
+
+const DetailSettingArticle = styled.article`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  align-self: stretch;
+
+  gap: 1.5rem;
+`;
+
+const SettingBox = styled.div`
+  display: flex;
+  justify-content: space-between;
+
+  width: 100%;
+
+  gap: 1rem;
+`;
+
+const SettingLeftBox = styled.div<{ $variant?: string }>`
+  display: flex;
+  align-items: center;
+
+  gap: 7rem;
+
+  ${({ $variant }) => {
+    if ($variant === 'email') {
+      return css`
+        gap: 4.325rem;
+      `;
+    }
+  }}
+`;
+
+const SettingLabel = styled.label`
+  ${TYPO.title1}
+  color: ${semantic.light.object.solid.normal};
+`;
+
+const SettingText = styled.span`
+  ${TYPO.label2}
+  color: ${semantic.light.object.solid.normal};
+`;
+
+const AmendButton = styled.button`
+  ${TYPO.label2}
+  color: ${semantic.light.accent.solid.alternative};
+`;
+
+const NicknameInput = styled.input`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 0;
+
+  width: 42rem;
+  height: 2.0625rem;
+
+  padding: 1.3rem 1rem;
+
+  border-radius: 0.5rem;
+  border: 1px solid ${semantic.light.border.transparent.alternative};
+  background: #fff;
+
+  &:focus {
+    border: 1px solid ${semantic.light.accent.solid.alternative};
+  }
+`;
+
+const SaveButton = styled.button`
+  display: flex;
+  align-items: center;
+  align-self: stretch;
+  justify-content: center;
+
+  width: 4.3125rem;
+
+  gap: 0.5rem;
+  padding: 0.625rem 1rem;
+
+  border-radius: 0.5rem;
+  color: ${semantic.light.base.solid.white};
+  background: ${semantic.light.accent.solid.normal};
+`;
+
+const SettingMessage = styled.span`
+  align-self: stretch;
+
+  ${TYPO.caption1};
+  color: ${semantic.light.object.transparent.neutral};
+`;
+
+const DividerLine = styled.div`
+  width: 57.5rem;
+  height: 0.0625rem;
+
+  background: ${semantic.light.border.transparent.alternative};
+`;
+
+const NotificationBox = styled.div`
+  display: flex;
+  width: 100%;
+
+  padding-bottom: 0.75rem;
+
+  gap: 5rem;
+`;
+
+const NotificationLeftBox = styled.div``;
+
+const NotificationRightBox = styled.div`
+  display: flex;
+  flex-direction: column;
+
+  gap: 4.125rem;
+  padding-bottom: 0.75rem;
+`;
+
+const NotificationTypeBox = styled.div`
+  display: flex;
+  align-items: center;
+
+  margin-top: 0.2rem;
+  gap: 0.5rem;
+`;
+
+const NotificationText = styled.span`
+  flex-shrink: 0;
+  width: 12.9375rem;
+
+  ${TYPO.label2};
+  color: ${semantic.light.object.solid.normal};
+`;
+
+const NotificationToggle = styled.input``;
+
+const ThemeContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+
+  width: 100%;
+  max-width: 60rem;
+
+  gap: 2.5rem 3rem;
+  padding: 1rem 0rem;
+`;
+
+const ThemeMessageBox = styled.div`
+  display: flex;
+  flex-direction: column;
+
+  gap: 1rem;
+`;
+
+const ThemeSelectBox = styled.div`
+  display: flex;
+  gap: 2.5rem 3rem;
+`;
+
+const ThemeImg = styled.img`
+  width: 6.5625rem;
+  height: 6.5625rem;
+
+  cursor: pointer;
+`;
+
+const WithdrawBoxArticle = styled.article`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  align-self: stretch;
+
+  gap: 1.25rem;
+`;
+
+const WithdrawBox = styled.div`
+  display: flex;
+  align-items: center;
+
+  gap: 4.5rem;
+`;
+
+const WithdrawButton = styled.button`
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  align-self: stretch;
+
+  height: 2.0625rem;
+
+  gap: 0.5rem;
+  padding: 0.625rem 1rem;
+
+  border-radius: 0.5rem;
+
+  color: ${semantic.light.base.solid.white};
+  background: ${semantic.light.inverse.solid.negative};
+`;
+
+const BottomSection = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: flex-end;
+  align-self: stretch;
+
+  gap: 3rem;
+`;
+
+const ApplyButton = styled.button`
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+
+  gap: 0.5rem;
+  padding: 0.625rem 1rem;
+
+  border-radius: 0.5rem;
+  color: ${semantic.light.base.solid.white};
+  background: ${semantic.light.accent.solid.normal};
+`;
+
+const NavigateButton = styled.button`
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+
+  gap: 0.5rem;
+  padding: 0.625rem 1rem;
+
+  border-radius: 0.5rem;
+  border: 1px solid ${semantic.light.accent.solid.normal};
+  color: ${semantic.light.accent.solid.hero};
+  background: ${semantic.light.accent.transparent.normal};
+`;
+
+export {
+  SettingContainer,
+  ContentContainer,
+  ProfileSection,
+  DetailSettingSection,
+  ProfileArticle,
+  ProfileContainer,
+  ProfileLeftContainer,
+  ProfileRightContainer,
+  AvatarContainer,
+  AvatarImageBox,
+  UserNameText,
+  ProfileButtonBox,
+  ImageUploadButton,
+  ImageDeleteButton,
+  UserIntroductionContainer,
+  UserIntroductionBox,
+  UserIntroduction,
+  IntroductionCountText,
+  DetailSettingArticle,
+  SettingBox,
+  SettingLeftBox,
+  SettingLabel,
+  SettingText,
+  AmendButton,
+  NicknameInput,
+  SaveButton,
+  SettingMessage,
+  DividerLine,
+  NotificationBox,
+  NotificationLeftBox,
+  NotificationRightBox,
+  NotificationTypeBox,
+  NotificationText,
+  NotificationToggle,
+  ThemeContainer,
+  ThemeMessageBox,
+  ThemeSelectBox,
+  ThemeImg,
+  WithdrawBoxArticle,
+  WithdrawBox,
+  WithdrawButton,
+  BottomSection,
+  ApplyButton,
+  NavigateButton,
+};

@@ -113,6 +113,91 @@ export const MAIN_MESSAGES = {
   },
 } as const;
 
+export const SETTING_MESSAGES = {
+  button: {
+    image: (type: string) => `이미지 ${type}`,
+    save: '저장',
+    amend: '수정',
+    withdraw: '회원 탈퇴',
+    apply: '적용하기',
+    navigate: '잔디 테마 설정 페이지로 이동하기',
+  },
+  placeholder: {
+    introduction: '소개글을 작성해 보세요. 150자까지만 쓸 수 있어요!',
+  },
+  label: {
+    nickname: '닉네임',
+    email: '이메일 주소',
+    theme: '테마',
+    withdraw: '회원 탈퇴',
+  },
+  message: {
+    nickname:
+      '마이페이지의 최상단에 나타나는 닉네임을 8글자 이내로 설정할 수 있습니다.',
+    email: '회원 인증 및 메일 발송에 사용되는 이메일 주소입니다.',
+    theme: '기본 모드와 나이트 모드를 선택할 수 있습니다.',
+    withdraw:
+      '회원 탈퇴 시 작성한 포스트 및 댓글은 모두 삭제되며 복구되지 않습니다.',
+  },
+};
+
+export const CREATE_MESSAGES = {
+  write_diary: '일기 쓰기',
+  temp_save: '임시저장(Ctrl+S)',
+  save: '저장하기',
+  question_title: '오늘의 질문에 대해',
+  question_prompt: '오늘의 질문을 주제로 한 일기를 작성해보세요',
+  personal_diary: '나만의 일기',
+  personal_prompt: '나의 오늘 하루에 대해 자유롭게 작성해보세요',
+  hashtag_title: '해시태그',
+  visibility_title: '일기 공개 여부',
+  public: '공개',
+  private: '비공개',
+  mood_today: '오늘의 기분',
+
+  toast: {
+    temp_save: '작성 중인 일기 내용을 임시저장했어요.',
+    already_written: '오늘 이미 작성한 일기가 있어요.',
+  },
+
+  hashtag: {
+    instruction: '태그명을 입력하고, 스페이스바를 누르면 저장돼요.',
+    too_long: '해시태그 길이가 너무 깁니다.',
+    no_special_characters: '태그에 특수문자는 넣을 수 없어요.',
+    invalid_korean: '올바른 한글을 입력해주세요.',
+    duplicate: '이미 존재하는 해시태그입니다.',
+    limit_exceeded: '해시태그는 15개까지 입력 가능합니다.',
+    enter_tag: '태그명을 작성해주세요...',
+    examples: '일상, 친구, 점심 등',
+  },
+} as const;
+
+export const QUILL_MESSAGE = {
+  placeholder: '일기를 작성 해보세요!',
+  custom_entry_placeholder:
+    '오늘은 무엇을 하고, 누구를 만나고, 어떤 음식을 드셨나요?',
+} as const;
+
+export const INTRO_MESSAGES = {
+  firstSection: {
+    serviceName: '잔디 일기',
+    serviceIntroduction: '일상 속의 잔디, 나의 이야기를 키우다',
+    scrollMessage: '아래로 스크롤을 내려 잔디 일기에 대해 더 알아보세요!',
+  },
+  secondSection: {
+    secondTitle: '시키는\n나만의 잔디 일기장',
+    secondIntroduction: '일기를 작성하면 파릇파릇한 잔디밭이 만들어져요!',
+  },
+  thirdSection: {
+    thirdTitle: '다른 사람들의 일기를\n',
+    thirdIntroduction: '다양한 생각, 기억들을 둘러보며 이야기를 나눠요.',
+  },
+  lastSection: {
+    startMessage: '이제, 나만의 잔디밭을 가꿔 보세요!',
+  },
+  writeDiary: '일기 쓰러 가기',
+} as const;
+
 export const MODAL = {
   cancel: '취소',
   confirm: '확인',
@@ -136,3 +221,4 @@ export const TOAST = {
   delete_diary: '일기가 삭제되었습니다',
   image_capacity_limit: '5MB를 초과하는 이미지 파일은 업로드 할 수 없어요.',
 } as const;
+

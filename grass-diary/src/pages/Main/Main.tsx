@@ -1,12 +1,11 @@
 import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 import { checkAuth } from '@utils/authUtils';
-import { PopularFeed, Header, Container } from '@components/index';
+import { PopularFeed, Container } from '@components/index';
 
 import TopSection from './TopSection';
 import MiddleSection from './MiddleSection';
 import BottomSection from './BottomSection';
-import Banner from './Banner';
 import { useAuthActions } from '@state/auth/authStore';
 
 const Main = () => {

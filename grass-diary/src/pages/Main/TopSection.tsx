@@ -15,7 +15,7 @@ const TopSection = () => {
   return (
     <>
       <Container>
-        <TodayDateText>
+        <TodayDateBox>
           {date ? (
             <p>
               {date.year}년 {date.month}월 {date.date}일 {date.day}요일
@@ -23,7 +23,7 @@ const TopSection = () => {
           ) : (
             <p>Loading...</p>
           )}
-        </TodayDateText>
+        </TodayDateBox>
 
         <DailyQuestionText>
           {question?.question ? <>"{question.question}"</> : <>Loading...</>}
@@ -60,7 +60,7 @@ const Container = styled.div`
   gap: 2rem;
 `;
 
-const TodayDateText = styled.p`
+const TodayDateBox = styled.div`
   color: ${semantic.light.object.transparent.neutral};
   text-align: center;
 

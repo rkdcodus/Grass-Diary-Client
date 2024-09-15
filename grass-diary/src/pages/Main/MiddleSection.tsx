@@ -70,13 +70,13 @@ const MiddleSection = () => {
           </GrassBannerTextSecond>
         </GrassBanner>
 
-        <GrassTable>
+        <GrassTableBox>
           {daysInMonth.map(day => (
             <div key={day} style={getGrassStyle(day)}>
               <DayBox></DayBox>
             </div>
           ))}
-        </GrassTable>
+        </GrassTableBox>
       </Container>
     </>
   );
@@ -143,7 +143,7 @@ const HighlightedText = styled.span`
   color: ${semantic.light.accent.solid.normal};
 `;
 
-const GrassTable = styled.p`
+const GrassTableBox = styled.div`
   display: grid;
   grid-template-columns: repeat(7, 3.5rem);
   grid-gap: var(--gap-xs, 0.625rem);
