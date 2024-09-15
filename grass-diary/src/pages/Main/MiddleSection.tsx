@@ -1,10 +1,8 @@
+import * as S from '@styles/Main/MiddleSection.style';
 import dayjs from 'dayjs';
-import styled from 'styled-components';
 import { useCallback } from 'react';
-import { semantic } from '@styles/semantic';
 import { useGrassRecord } from '@hooks/api/useGrassRecord';
 import { MAIN_MESSAGES } from '@constants/message';
-import { TYPO } from '@styles/typo';
 
 const MiddleSection = () => {
   // 잔디 날짜 계산
@@ -49,115 +47,37 @@ const MiddleSection = () => {
 
   return (
     <>
-      <Container>
-        <GrassLabel>
-          <GrassLabelText>
+      <S.Container>
+        <S.GrassLabel>
+          <S.GrassLabelText>
             {MAIN_MESSAGES.middle_section.status_label}
-          </GrassLabelText>
-        </GrassLabel>
+          </S.GrassLabelText>
+        </S.GrassLabel>
 
-        <GrassBanner>
-          <GrassBannerText>
+        <S.GrassBanner>
+          <S.GrassBannerText>
             {currentMonth}
             {MAIN_MESSAGES.middle_section.monthly_grass_summary}
-            <HighlightedText>
+            <S.HighlightedText>
               {grassQuery?.thisMonthCount ? grassQuery?.thisMonthCount : 0}
-            </HighlightedText>
+            </S.HighlightedText>
             {MAIN_MESSAGES.middle_section.planted_grass_count}
-          </GrassBannerText>
-          <GrassBannerTextSecond>
+          </S.GrassBannerText>
+          <S.GrassBannerTextSecond>
             {MAIN_MESSAGES.middle_section.grass_prompt}
-          </GrassBannerTextSecond>
-        </GrassBanner>
+          </S.GrassBannerTextSecond>
+        </S.GrassBanner>
 
-        <GrassTableBox>
+        <S.GrassTableBox>
           {daysInMonth.map(day => (
             <div key={day} style={getGrassStyle(day)}>
-              <DayBox></DayBox>
+              <S.DayBox></S.DayBox>
             </div>
           ))}
-        </GrassTableBox>
-      </Container>
+        </S.GrassTableBox>
+      </S.Container>
     </>
   );
 };
 
 export default MiddleSection;
-
-const Container = styled.div`
-  display: flex;
-  max-width: var(--vw-desktop-min, 60rem);
-  padding: var(--gap-2xl, 2rem) var(--gap-xl, 1.5rem);
-  flex-direction: column;
-  align-items: center;
-  gap: var(--gap-2xl, 2rem);
-`;
-
-const GrassLabel = styled.div`
-  display: flex;
-  padding: var(--gap-2xs, 0.5rem) var(--gap-md, 1rem);
-  justify-content: center;
-  align-items: center;
-  gap: var(--gap-3xs, 0.375rem);
-
-  border-radius: var(--radius-sm, 0.75rem);
-  border: var(--stroke-thin, 0.0625rem) solid
-    ${semantic.light.border.transparent.alternative};
-
-  background: ${semantic.light.bg.solid.normal};
-`;
-
-const GrassLabelText = styled.p`
-  color: ${semantic.light.object.transparent.alternative};
-  text-align: center;
-
-  ${TYPO.label2}
-`;
-
-const GrassBanner = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: var(--gap-2xs, 0.5rem);
-  align-self: stretch;
-`;
-
-const GrassBannerText = styled.p`
-  align-self: stretch;
-  color: ${semantic.light.object.transparent.alternative};
-  text-align: center;
-
-  ${TYPO.title1}
-`;
-
-const GrassBannerTextSecond = styled.p`
-  align-self: stretch;
-
-  color: ${semantic.light.object.transparent.alternative};
-  text-align: center;
-
-  ${TYPO.label2}
-`;
-
-const HighlightedText = styled.span`
-  color: ${semantic.light.accent.solid.normal};
-`;
-
-const GrassTableBox = styled.div`
-  display: grid;
-  grid-template-columns: repeat(7, 3.5rem);
-  grid-gap: var(--gap-xs, 0.625rem);
-  margin-bottom: 0.625rem;
-`;
-
-const DayBox = styled.div`
-  width: 3.5rem;
-  height: 3.5rem;
-
-  border-radius: var(--radius-sm, 0.75rem);
-
-  background: ${semantic.light.fill.transparent.assistive};
-
-  box-shadow: 0rem 0rem 0.0625rem 0rem rgba(0, 0, 0, 0.04),
-    0rem 0.125rem 0.25rem 0rem rgba(0, 0, 0, 0.08);
-`;

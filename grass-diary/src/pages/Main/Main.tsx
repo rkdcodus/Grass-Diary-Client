@@ -1,12 +1,14 @@
 import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 import { checkAuth } from '@utils/authUtils';
-import { PopularFeed, Container } from '@components/index';
+import { PopularFeed, Container, Callout } from '@components/index';
 
 import TopSection from './TopSection';
 import MiddleSection from './MiddleSection';
 import BottomSection from './BottomSection';
+import Spacer from './Spacer';
 import { useAuthActions } from '@state/auth/authStore';
+import { MAIN_MESSAGES } from '@constants/message';
 
 const Main = () => {
   const navigate = useNavigate();
@@ -46,6 +48,10 @@ const Main = () => {
       <MiddleSection />
       <BottomSection />
       <PopularFeed />
+      <div style={{ padding: '4rem' }}>
+        <Callout message={MAIN_MESSAGES.banner.future_content_message} />
+      </div>
+      <Spacer />
     </Container>
   );
 };

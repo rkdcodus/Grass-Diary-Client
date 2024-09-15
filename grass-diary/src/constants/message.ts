@@ -215,6 +215,14 @@ export const MODAL = {
     content: '일기를 삭제하시겠어요?\n삭제된 일기는 다시 되돌릴 수 없어요.',
     button: '삭제하기',
   },
+  main: {
+    modal: {
+      preparation_notice: '준비 중인 서비스',
+      modal_notice: (type: string) =>
+        `${type} 아직 준비 중이에요.\n빠르게 선보일 수 있도록 할게요!`,
+      confirm_button: '확인',
+    },
+  },
 } as const;
 
 export const TOAST = {
