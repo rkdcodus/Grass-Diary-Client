@@ -1,5 +1,4 @@
-import stylex from '@stylexjs/stylex';
-import styles from './style';
+import * as S from './style';
 import { useEffect, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 
@@ -7,8 +6,8 @@ import { formatDate, getDaysArray } from '@utils/dateUtils';
 import useGrass from '@hooks/api/useGrass';
 import API from '@services/index';
 import { END_POINT } from '@constants/api';
-import { CONSOLE_ERROR } from '@constants/message';
 import { useUser } from '@state/user/useUser';
+import { semantic } from '@styles/semantic';
 
 type TCreateGrass = () => { year: number; grass: (Date | null)[][] };
 
@@ -34,26 +33,31 @@ const createGrass: TCreateGrass = () => {
 };
 
 interface IGrass {
-  setSelectedDiary: React.Dispatch<React.SetStateAction<IDiary | undefined>>;
+  setSelectedDiary: React.Dispatch<React.SetStateAction<IDiary[] | undefined>>;
 }
 
 const Grass = ({ setSelectedDiary }: IGrass) => {
-  const [selectedGrass, setSelectedGrass] = useState<string | null>(null);
-  const [hoveredGrass, setHoveredGrass] = useState<string | null>(null);
-  const { year, grass } = createGrass();
   const memberId = useUser();
   const grassColors = useGrass(memberId);
+  const { year, grass } = createGrass();
 
-  const handleGrassClick = (date: Date | null) => {
-    formatDate(date) === selectedGrass
-      ? setSelectedGrass(null)
-      : setSelectedGrass(formatDate(date));
-  };
+  const [selectedGrass, setSelectedGrass] = useState<string | null>(null);
+  const [hoveredGrass, setHoveredGrass] = useState<string | null>(null);
 
   const handleGrassHover = (date: Date | null) => {
-    date && selectedGrass !== formatDate(date)
-      ? setHoveredGrass(formatDate(date))
-      : setHoveredGrass(null);
+    const formattedDate = date ? formatDate(date) : null;
+    if (formattedDate !== hoveredGrass) {
+      setHoveredGrass(formattedDate);
+    }
+  };
+
+  const handleGrassClick = (date: Date | null) => {
+    const formattedDate = formatDate(date);
+    if (formattedDate === selectedGrass) {
+      setSelectedGrass(null);
+    } else {
+      setSelectedGrass(formattedDate);
+    }
   };
 
   const selectedDate: string | null = selectedGrass
@@ -72,54 +76,53 @@ const Grass = ({ setSelectedDiary }: IGrass) => {
         ({ data }) => data,
       ),
     enabled: !!selectedGrass && !!memberId,
-    onError: error => console.error(CONSOLE_ERROR.search_date.get + error),
   });
 
   useEffect(() => {
-    if (selectedDiary) setSelectedDiary(selectedDiary);
+    if (selectedDiary) setSelectedDiary([selectedDiary]);
     if (!selectedDiary) setSelectedDiary(undefined);
   }, [selectedDiary]);
 
   return (
-    <div {...stylex.props(styles.grassContainer)}>
+    <S.GrassContainer>
       {grass.map((column, index) => (
-        <div key={index} {...stylex.props(styles.grass)}>
+        <S.GrassBox key={index}>
           {column.map((day, index) => {
-            if (!day) return;
+            if (!day) return null;
             const writeDay = formatDate(day);
+            const isHovered = writeDay === hoveredGrass;
+            const isSelected = writeDay === selectedGrass;
+
             return (
-              <div key={index} {...stylex.props(styles.dayContainer)}>
+              <S.DaysBox key={index}>
                 {grassColors && (
-                  <div
+                  <S.GrassDateBox
                     onClick={() => handleGrassClick(day)}
                     onMouseOver={() => handleGrassHover(day)}
                     onMouseOut={() => handleGrassHover(null)}
-                    {...stylex.props(
-                      styles.grassDate(
-                        writeDay === selectedGrass ? '1px solid black' : 'none',
-                        grassColors[writeDay]
-                          ? `rgba(${grassColors[writeDay]})`
-                          : '#E0E0E0',
-                      ),
-                    )}
-                  ></div>
+                    $border={
+                      !writeDay
+                        ? `1px solid ${semantic.light.accent.solid.normal}`
+                        : `1px solid ${semantic.light.border.transparent.alternative}`
+                    }
+                    $background={
+                      grassColors[writeDay]
+                        ? `rgba(${grassColors[writeDay]})`
+                        : `${semantic.light.fill.transparent.assistive}`
+                    }
+                  />
                 )}
-                {writeDay === hoveredGrass && writeDay !== selectedGrass && (
-                  <div {...stylex.props(styles.dateBubble)}>
-                    <span>{hoveredGrass}</span>
-                  </div>
+                {(isHovered || isSelected) && (
+                  <S.DateBubbleBox>
+                    <span>{isHovered ? hoveredGrass : selectedGrass}</span>
+                  </S.DateBubbleBox>
                 )}
-                {writeDay === selectedGrass && (
-                  <div {...stylex.props(styles.dateBubble)}>
-                    <span>{selectedGrass}</span>
-                  </div>
-                )}
-              </div>
+              </S.DaysBox>
             );
           })}
-        </div>
+        </S.GrassBox>
       ))}
-    </div>
+    </S.GrassContainer>
   );
 };
 
