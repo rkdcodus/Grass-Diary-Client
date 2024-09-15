@@ -8,7 +8,7 @@ export const ModalBox = styled.div<{ $active: boolean }>`
   justify-content: center;
   align-items: center;
 
-  z-index: 1;
+  z-index: 999;
   position: fixed;
   top: 0;
   left: 0;
