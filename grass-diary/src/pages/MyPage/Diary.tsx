@@ -88,7 +88,7 @@ const DiaryItem = ({ diary, diaryList, index }: IDiaryItem) => {
         ''
       )}
       <S.DiaryCardText dangerouslySetInnerHTML={createMarkup(diary.content)} />
-      <Divider width="40.5rem" />
+      <Divider width="100%" />
       <S.DiaryCardBottomBox>
         <S.DiaryCardHashtagBox>
           {diary.tags &&
@@ -202,7 +202,7 @@ const Diary = ({
     <>
       <S.HashtagAside>
         <S.HashtagListText>해시태그 목록</S.HashtagListText>
-        <Divider width="10rem" />
+        <Divider width="100%" />
         <S.SideHashtagListBox>
           <S.SideHashtagAnchor onClick={handleViewAllClick}>
             <S.SideHashtagList>
