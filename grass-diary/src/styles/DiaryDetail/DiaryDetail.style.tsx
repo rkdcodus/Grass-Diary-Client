@@ -122,8 +122,8 @@ export const PrivateText = styled.p`
 
 export const EmojiBox = styled.div`
   position: relative;
-  width: 1.625rem;
-  height: 1.625rem;
+  width: 2rem;
+  height: 2rem;
   padding: var(--gap-5xs, 0.125rem);
   border-radius: var(--radius-round, 6rem);
   border: var(--stroke-thin, 0.0625rem) solid

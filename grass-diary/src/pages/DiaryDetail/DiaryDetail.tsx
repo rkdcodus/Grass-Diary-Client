@@ -76,6 +76,7 @@ const DiaryDetail = () => {
                 </>
               )}
             </S.PrivateBox>
+
             <S.EmojiBox>
               <S.EmojiText>
                 {detail && EMOJI[detail.transparency * 10]}
