@@ -1,10 +1,10 @@
-import styled from 'styled-components';
+import * as S from '@styles/Main/TopSection.style';
 import { Link } from 'react-router-dom';
 import { useTodayDate } from '@hooks/api/useTodayDate';
 import { useTodayQuestion } from '@hooks/api/useTodayQuestion';
-import { semantic } from '@styles/semantic';
 import { MAIN_MESSAGES } from '@constants/message';
-import { TYPO } from '@styles/typo';
+import { ReactComponent as EditNote } from '@svg/edit_note.svg';
+import { ReactComponent as EventNote } from '@svg/event_note.svg';
 
 const TopSection = () => {
   // 질문 데이터를 가져오는 쿼리
@@ -14,8 +14,8 @@ const TopSection = () => {
 
   return (
     <>
-      <Container>
-        <TodayDateBox>
+      <S.Container>
+        <S.TodayDateBox>
           {date ? (
             <p>
               {date.year}년 {date.month}월 {date.date}일 {date.day}요일
@@ -23,99 +23,36 @@ const TopSection = () => {
           ) : (
             <p>Loading...</p>
           )}
-        </TodayDateBox>
+        </S.TodayDateBox>
 
-        <DailyQuestionText>
-          {question?.question ? <>"{question.question}"</> : <>Loading...</>}
-        </DailyQuestionText>
+        <S.DailyQuestionText>
+          {question?.question ? (
+            <>"{question.question}"</>
+          ) : (
+            <>"Question is Loading..."</>
+          )}
+        </S.DailyQuestionText>
 
-        <ButtonContainer>
-          <CreateDiaryBtn>
+        <S.ButtonContainer>
+          <S.CreateDiaryBtn>
             <Link to="/creatediary">
-              <CreateDiaryText>
+              <S.CreateDiaryText>
                 {MAIN_MESSAGES.top_section.write_diary}
-              </CreateDiaryText>
+              </S.CreateDiaryText>
             </Link>
-          </CreateDiaryBtn>
+            <EditNote />
+          </S.CreateDiaryBtn>
 
-          <MydiaryBtn>
+          <S.MydiaryBtn>
             <Link to="/mypage">
-              <MydiaryTxt>{MAIN_MESSAGES.top_section.my_diary}</MydiaryTxt>
+              <S.MydiaryTxt>{MAIN_MESSAGES.top_section.my_diary}</S.MydiaryTxt>
             </Link>
-          </MydiaryBtn>
-        </ButtonContainer>
-      </Container>
+            <EventNote />
+          </S.MydiaryBtn>
+        </S.ButtonContainer>
+      </S.Container>
     </>
   );
 };
 
 export default TopSection;
-
-const Container = styled.div`
-  display: flex;
-  max-width: 60rem;
-  padding: 4.5rem 1.5rem;
-  flex-direction: column;
-  align-items: center;
-  gap: 2rem;
-`;
-
-const TodayDateBox = styled.div`
-  color: ${semantic.light.object.transparent.neutral};
-  text-align: center;
-
-  ${TYPO.label3}
-`;
-
-const DailyQuestionText = styled.p`
-  color: ${semantic.light.object.solid.hero};
-  text-align: center;
-
-  ${TYPO.display1}
-`;
-
-const ButtonContainer = styled.div`
-  display: flex;
-  align-items: flex-start;
-  gap: 1rem;
-`;
-
-const CreateDiaryBtn = styled.button`
-  display: flex;
-  padding: 0.75rem 1rem;
-  justify-content: center;
-  align-items: center;
-  gap: 0.5rem;
-
-  border-radius: 0.75rem;
-
-  background: ${semantic.light.accent.solid.normal};
-  border: none;
-`;
-
-const CreateDiaryText = styled.p`
-  color: ${semantic.light.base.solid.white};
-  text-align: center;
-
-  ${TYPO.label3}
-`;
-
-const MydiaryBtn = styled.button`
-  display: flex;
-  padding: 0.75rem 1rem;
-  justify-content: center;
-  align-items: center;
-  gap: 0.5rem;
-
-  border-radius: 0.75rem;
-  border: 0.0625rem solid ${semantic.light.border.transparent.alternative};
-
-  background: ${semantic.light.bg.solid.normal};
-`;
-
-const MydiaryTxt = styled.p`
-  color: ${semantic.light.object.transparent.alternative};
-  text-align: center;
-
-  ${TYPO.label3}
-`;

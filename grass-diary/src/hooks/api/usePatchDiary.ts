@@ -19,6 +19,7 @@ export const usePatchDiary = (diaryId: Id) => {
     mutationFn: (request: DiaryRequest) => fetchAxios({ diaryId, request }),
     onSuccess() {
       navigate(`/diary/${diaryId}`, { replace: true, state: 'editcomplete' });
+      localStorage.removeItem('diary_draft');
     },
     onError(error) {
       console.error(error.response.data.description);

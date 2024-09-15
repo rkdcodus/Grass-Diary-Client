@@ -1,6 +1,4 @@
-import styled from 'styled-components';
-import { semantic } from '@styles/semantic';
-import { TYPO } from '@styles/typo';
+import * as S from '@styles/component/Comment/Input.style';
 import { useEffect, useState } from 'react';
 
 import { useParamsId } from '@hooks/useParamsId';
@@ -53,16 +51,16 @@ const CommentInput = ({
   }, [text]);
 
   return (
-    <InputComment $focus={focus} $isReply={isReply}>
-      <CommentTop>
-        <WriterWrap>
+    <S.InputContainer $focus={focus} $isReply={isReply}>
+      <S.TopBox>
+        <S.WriterBox>
           {isReply && <ReplyIcon />}
-          <WriterProfile src={profileImageURL} />
-          <WriterName>{nickname}</WriterName>
-        </WriterWrap>
-      </CommentTop>
-      <InputWrap>
-        <Input
+          <S.ProfileImage src={profileImageURL} />
+          <S.NameText>{nickname}</S.NameText>
+        </S.WriterBox>
+      </S.TopBox>
+      <S.InputBox>
+        <S.Input
           rows={rows}
           value={text}
           onFocus={onFocus}
@@ -70,12 +68,16 @@ const CommentInput = ({
           onInput={commentHandler}
           placeholder={COMMENT.placeholder}
         />
-        {isCancelBtn && <CancelBtn onClick={cancel}>취소</CancelBtn>}
-        <SubmitBtn type="button" onClick={submitBtn} disabled={text === ''}>
+        {isCancelBtn && <S.CancelButton onClick={cancel}>취소</S.CancelButton>}
+        <S.SubmitButton
+          type="button"
+          onClick={submitBtn}
+          disabled={text === ''}
+        >
           등록
-        </SubmitBtn>
-      </InputWrap>
-    </InputComment>
+        </S.SubmitButton>
+      </S.InputBox>
+    </S.InputContainer>
   );
 };
 
@@ -158,110 +160,3 @@ const PatchInput = ({ commentId, isReply, content }: PatchInputProps) => {
 };
 
 export { PostInput, PatchInput };
-
-const CommentTop = styled.div`
-  display: flex;
-  align-items: center;
-  gap: var(--gap-md, 1rem);
-  align-self: stretch;
-`;
-
-const WriterWrap = styled.div`
-  display: flex;
-  align-items: center;
-  gap: var(--gap-2xs, 0.5rem);
-  flex: 1 0 0;
-`;
-
-const WriterProfile = styled.img`
-  width: 1.5rem;
-  height: 1.5rem;
-  flex-shrink: 0;
-  border-radius: var(--radius-empty, 1.5rem);
-  object-fit: cover;
-`;
-
-const WriterName = styled.p`
-  ${TYPO.label2}
-  color: ${semantic.light.object.solid.normal};
-`;
-
-const InputComment = styled.div<{ $focus: boolean; $isReply: boolean }>`
-  display: flex;
-  padding: var(--gap-sm, 0.75rem) var(--gap-md, 1rem);
-  flex-direction: column;
-  align-items: flex-start;
-  gap: var(--gap-md, 1rem);
-  align-self: stretch;
-
-  border-radius: var(--radius-sm, 0.75rem);
-  border: var(--stroke-thin, 0.0625rem) solid
-    ${props =>
-      props.$focus
-        ? semantic.light.accent.solid.hero
-        : semantic.light.border.transparent.normal};
-  ${props =>
-    props.$isReply &&
-    `box-shadow: 0px 0px 2px 0px rgba(0, 0, 0, 0.06), 0px 3px 6px 0px rgba(0, 0, 0, 0.11);`}
-`;
-
-const InputWrap = styled.div`
-  display: flex;
-  align-items: center;
-  gap: var(--gap-md, 1rem);
-  align-self: stretch;
-  align-items: flex-end;
-`;
-
-const Input = styled.textarea`
-  resize: none;
-  background: inherit;
-  height: auto;
-
-  &:focus {
-    outline: none;
-  }
-
-  display: flex;
-  padding: var(--gap-empty, 0rem) var(--gap-4xs, 0.25rem);
-  align-items: center;
-  flex: 1 0 0;
-
-  border: none;
-  ${TYPO.body1}
-  caret-color: ${semantic.light.accent.solid.normal};
-
-  &::placeholder,
-  &::-webkit-input-placeholder {
-    color: ${semantic.light.object.transparent.assistive};
-  }
-  &:-ms-input-placeholder {
-    color: ${semantic.light.object.transparent.assistive};
-  }
-`;
-
-const CancelBtn = styled.div`
-  cursor: pointer;
-  padding: var(--gap-4xs, 0.25rem) var(--gap-2xs, 0.5rem);
-  gap: var(--gap-2xs, 0.5rem);
-  text-align: center;
-
-  ${TYPO.label1}
-  color: ${semantic.light.object.transparent.alternative};
-`;
-
-const SubmitBtn = styled.button`
-  display: flex;
-  padding: var(--gap-4xs, 0.25rem) var(--gap-2xs, 0.5rem);
-  justify-content: center;
-  align-items: center;
-  gap: var(--gap-2xs, 0.5rem);
-  text-align: center;
-
-  ${TYPO.label1}
-  color: ${semantic.light.accent.solid.normal};
-
-  &:disabled {
-    color: ${semantic.light.object.transparent.disabled};
-  }
-`;

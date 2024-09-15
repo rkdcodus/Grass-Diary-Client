@@ -158,6 +158,7 @@ export const CREATE_MESSAGES = {
   toast: {
     temp_save: '작성 중인 일기 내용을 임시저장했어요.',
     already_written: '오늘 이미 작성한 일기가 있어요.',
+    write_diary: '일기 내용을 작성해주세요.',
   },
 
   hashtag: {
@@ -224,9 +225,34 @@ export const MODAL = {
     content: '일기를 삭제하시겠어요?\n삭제된 일기는 다시 되돌릴 수 없어요.',
     button: '삭제하기',
   },
+  main: {
+    modal: {
+      preparation_notice: '준비 중인 서비스',
+      modal_notice: (type: string) =>
+        `${type} 아직 준비 중이에요.\n빠르게 선보일 수 있도록 할게요!`,
+    },
+  },
+
+  create_diary: {
+    load_temporary: '임시 저장된 글 불러오기',
+    load_temporary_description:
+      '이전에 임시 저장하신 일기 내용이 있어요.\n불러오면 이어서 작성할 수 있어요.',
+    new_entry: '새로 작성',
+    continue_entry: '이어서 작성',
+  },
 } as const;
 
 export const TOAST = {
   delete_diary: '일기가 삭제되었습니다',
   image_capacity_limit: '5MB를 초과하는 이미지 파일은 업로드 할 수 없어요.',
 } as const;
+
+export const SNACKBAR = {
+  reward: {
+    message: (point: number) => `일기를 작성해서 ${point} 리워드를 받았어요.`,
+    highlight: (point: number) => `${point} 리워드`,
+    linkText: '리워드 내역 보기',
+    page: '/rewardpage',
+  },
+} as const;
+
