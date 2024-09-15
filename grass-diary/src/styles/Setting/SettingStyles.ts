@@ -269,6 +269,7 @@ const DetailSettingArticle = styled.article`
 const SettingBox = styled.div`
   display: flex;
   justify-content: space-between;
+  align-items: center;
 
   gap: 1rem;
 `;
@@ -277,7 +278,7 @@ const SettingLeftBox = styled.div<{ $variant?: string }>`
   display: flex;
   align-items: center;
 
-  gap: 7rem;
+  gap: 4.3rem;
 
   ${({ $variant }) => {
     if ($variant === 'email') {
@@ -288,7 +289,7 @@ const SettingLeftBox = styled.div<{ $variant?: string }>`
   }}
 
   @media screen and (max-width: 60em) {
-    gap: 4.5rem;
+    gap: 2rem;
 
     ${({ $variant }) => {
       if ($variant === 'email') {
@@ -298,9 +299,23 @@ const SettingLeftBox = styled.div<{ $variant?: string }>`
       }
     }}
   }
+
+  @media screen and (max-width: 20em) {
+    gap: 2rem;
+
+    ${({ $variant }) => {
+      if ($variant === 'email') {
+        return css`
+          gap: 0.8rem;
+        `;
+      }
+    }}
+  }
 `;
 
 const SettingLabel = styled.label`
+  width: 7rem;
+
   ${TYPO.title1}
   color: ${semantic.light.object.solid.normal};
 `;
@@ -321,7 +336,7 @@ const NicknameInput = styled.input`
   align-items: center;
   flex-shrink: 0;
 
-  width: 42rem;
+  width: 41rem;
   height: 2.0625rem;
 
   padding: 1.3rem 1rem;
@@ -333,6 +348,16 @@ const NicknameInput = styled.input`
   &:focus {
     border: 1px solid ${semantic.light.accent.solid.alternative};
   }
+
+  @media screen and (max-width: 60em) {
+    flex-grow: 1;
+    width: 60%;
+  }
+
+  @media screen and (max-width: 40em) {
+    flex-grow: 1;
+    width: 40%;
+  }
 `;
 
 const SaveButton = styled.button`
@@ -341,7 +366,8 @@ const SaveButton = styled.button`
   align-self: stretch;
   justify-content: center;
 
-  width: 4.3125rem;
+  width: 7rem;
+  height: 2.75rem;
 
   gap: 0.5rem;
   padding: 0.625rem 1rem;
