@@ -1,35 +1,26 @@
 import { create } from 'zustand';
 
-type Button1Props = {
-  active: boolean;
-  text: string;
-  color?: string;
-  interaction?: string;
-};
-
-type Button2Props = {
-  active: boolean;
-  text: string;
-  color?: string;
-  interaction?: string;
-  clickHandler: () => void;
-};
-
 type Actions = {
-  setButton1: ({ active, text, color, interaction }: Button1Props) => void;
+  setButton1: ({
+    active,
+    text,
+    color,
+    interaction,
+    clickHandler,
+  }: Button1) => void;
   setButton2: ({
     active,
     text,
     color,
     interaction,
     clickHandler,
-  }: Button2Props) => void;
+  }: Button2) => void;
   setResetActive: () => void;
 };
 
 interface ModalButtonState {
-  button1: Button1Props;
-  button2: Button2Props;
+  button1: Button1;
+  button2: Button2;
   actions: Actions;
 }
 
@@ -39,6 +30,7 @@ const useModalButtonStore = create<ModalButtonState>(set => ({
     text: '',
     color: '',
     interaction: '',
+    clickHandler: () => console.log('button1 default'),
   },
   button2: {
     active: false,
@@ -54,9 +46,16 @@ const useModalButtonStore = create<ModalButtonState>(set => ({
         button1: { ...state.button1, active: false },
         button2: { ...state.button2, active: false },
       })),
-    setButton1: ({ active, text, color, interaction }) =>
+    setButton1: ({ active, text, color, interaction, clickHandler }) =>
       set(state => ({
-        button1: { ...state.button1, active, text, color, interaction },
+        button1: {
+          ...state.button1,
+          active,
+          text,
+          color,
+          interaction,
+          clickHandler,
+        },
       })),
     setButton2: ({ active, text, color, interaction, clickHandler }) =>
       set(state => ({

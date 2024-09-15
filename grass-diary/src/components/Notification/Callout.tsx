@@ -1,4 +1,4 @@
-import * as S from '@styles/components/callout/Callout.style';
+import * as S from '@styles/component/Notification/Callout.style';
 import { ReactComponent as Info } from '@svg/info.svg';
 
 type CalloutProps = {
@@ -8,9 +8,7 @@ type CalloutProps = {
 const Callout = ({ message }: CalloutProps) => {
   return (
     <S.Container>
-      <S.Space>
-        <Info />
-      </S.Space>
+      <Info />
       <S.Text>{message}</S.Text>
     </S.Container>
   );

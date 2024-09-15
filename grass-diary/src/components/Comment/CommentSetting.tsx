@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import * as S from '@styles/component/Comment/CommentSetting.style';
 import { semantic } from '@styles/semantic';
 import moreVert from '@svg/more_vert.svg';
 import editIcon from '@svg/mode_edit.svg';
@@ -21,7 +21,7 @@ const CommentSetting = ({ commentId, writerId }: CommentSettingProps) => {
   const editHandler = () => setEditId(commentId);
 
   return (
-    <SettingWrap>
+    <S.SettingBox>
       {memberId === detail?.memberId ? (
         <Menus icon={moreVert}>
           {memberId === writerId && (
@@ -47,12 +47,8 @@ const CommentSetting = ({ commentId, writerId }: CommentSettingProps) => {
           </Menus>
         )
       )}
-    </SettingWrap>
+    </S.SettingBox>
   );
 };
 
 export default CommentSetting;
-
-const SettingWrap = styled.div`
-  padding: var(--gap-4xs, 0.25rem);
-`;

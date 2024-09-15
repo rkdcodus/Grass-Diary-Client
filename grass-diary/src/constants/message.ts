@@ -222,10 +222,19 @@ export const MODAL = {
         `${type} 아직 준비 중이에요.\n빠르게 선보일 수 있도록 할게요!`,
       confirm_button: '확인',
     },
-  }
+  },
 } as const;
 
 export const TOAST = {
   delete_diary: '일기가 삭제되었습니다',
   image_capacity_limit: '5MB를 초과하는 이미지 파일은 업로드 할 수 없어요.',
+} as const;
+
+export const SNACKBAR = {
+  reward: {
+    message: (point: number) => `일기를 작성해서 ${point} 리워드를 받았어요.`,
+    highlight: (point: number) => `${point} 리워드`,
+    linkText: '리워드 내역 보기',
+    page: '/rewardpage',
+  },
 } as const;
