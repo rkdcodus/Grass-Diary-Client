@@ -8,6 +8,7 @@ const SettingContainer = styled.main`
   flex-direction: column;
   align-items: center;
 
+  min-width: 20rem;
   gap: 1.5rem;
 
   background: linear-gradient(
@@ -23,8 +24,12 @@ const ContentContainer = styled.div`
   flex-direction: column;
   align-items: center;
 
-  width: 60rem;
+  width: 100%;
   gap: 2.5rem;
+
+  @media screen and (max-width: 60em) {
+    gap: 1.5rem;
+  }
 `;
 
 const ProfileSection = styled.section`
@@ -32,8 +37,8 @@ const ProfileSection = styled.section`
   flex-direction: column;
   align-items: center;
 
-  width: 58.5rem;
-  height: 31.0625rem;
+  width: 100%;
+  max-width: 60rem;
 
   gap: 4rem;
   padding: 1.25rem;
@@ -49,11 +54,12 @@ const ProfileArticle = styled.article`
 
   position: relative;
 
-  max-width: 60rem;
-  height: 28.875rem;
-
   gap: 1rem;
-  padding: 1.5rem;
+  padding: 3rem 1.5rem;
+
+  @media screen and (max-width: 60em) {
+    padding: 3rem 0 0 0;
+  }
 `;
 
 const ProfileContainer = styled.div`
@@ -63,6 +69,14 @@ const ProfileContainer = styled.div`
   align-self: stretch;
 
   gap: 4.5rem;
+
+  @media screen and (max-width: 60em) {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+
+    gap: 1.75rem;
+  }
 `;
 
 const ProfileLeftContainer = styled.div`
@@ -70,8 +84,6 @@ const ProfileLeftContainer = styled.div`
   justify-content: center;
   align-items: center;
   align-self: stretch;
-
-  height: 9.75rem;
 `;
 
 const AvatarContainer = styled.div`
@@ -106,7 +118,7 @@ const ProfileButtonBox = styled.div`
   align-items: flex-start;
   flex-shrink: 0;
 
-  width: 9.8125rem;
+  width: 100%;
   gap: 1.125rem;
 `;
 
@@ -153,17 +165,20 @@ const ProfileRightContainer = styled.div`
   flex-direction: column;
   align-items: flex-start;
 
-  width: 37.8125rem;
-  height: 18.5rem;
+  width: 75%;
+  height: 100%;
 
   gap: 0.625rem;
   padding: 1.25rem;
+
+  @media screen and (max-width: 60em) {
+    width: 100%;
+    padding: 1.25rem 0;
+  }
 `;
 
 const UserIntroductionContainer = styled.div`
   display: flex;
-  justify-content: center;
-  align-items: flex-end;
   align-self: stretch;
 
   gap: 4.5rem;
@@ -174,7 +189,7 @@ const UserIntroductionBox = styled.div<{ isFocused: boolean }>`
   flex-direction: column;
   align-items: flex-start;
 
-  width: 37.8125rem;
+  width: 100%;
   height: 18.5rem;
 
   gap: 0.625rem;
@@ -197,7 +212,7 @@ const UserIntroduction = styled.textarea`
   flex-shrink: 0;
   align-self: stretch;
 
-  height: 11.875rem;
+  height: 100%;
 
   border: none;
   resize: none;
@@ -212,32 +227,39 @@ const UserIntroduction = styled.textarea`
 const IntroductionCountText = styled.span`
   position: absolute;
 
-  top: 25.125rem;
-  right: 2rem;
+  top: 23rem;
+  right: 2.3rem;
 
   width: 4.375rem;
 
   ${TYPO.caption2};
   color: ${semantic.light.accent.solid.alternative};
+
+  @media screen and (max-width: 60em) {
+    top: 44.5rem;
+    right: 0;
+  }
 `;
 
 const DetailSettingSection = styled.section`
   display: flex;
   flex-direction: column;
   align-items: center;
-  align-self: stretch;
 
   max-width: 60rem;
-  height: 80.0625rem;
+  width: 100%;
 
   gap: 3rem;
   padding: 1.25rem;
+
+  @media screen and (max-width: 60em) {
+    padding: 2.5rem 1.5rem;
+  }
 `;
 
 const DetailSettingArticle = styled.article`
   display: flex;
   flex-direction: column;
-  align-items: center;
   align-self: stretch;
 
   gap: 1.5rem;
@@ -246,8 +268,6 @@ const DetailSettingArticle = styled.article`
 const SettingBox = styled.div`
   display: flex;
   justify-content: space-between;
-
-  width: 100%;
 
   gap: 1rem;
 `;
@@ -265,6 +285,18 @@ const SettingLeftBox = styled.div<{ $variant?: string }>`
       `;
     }
   }}
+
+  @media screen and (max-width: 60em) {
+    gap: 4.5rem;
+
+    ${({ $variant }) => {
+      if ($variant === 'email') {
+        return css`
+          gap: 2rem;
+        `;
+      }
+    }}
+  }
 `;
 
 const SettingLabel = styled.label`
@@ -326,7 +358,7 @@ const SettingMessage = styled.span`
 `;
 
 const DividerLine = styled.div`
-  width: 57.5rem;
+  width: 100%;
   height: 0.0625rem;
 
   background: ${semantic.light.border.transparent.alternative};
