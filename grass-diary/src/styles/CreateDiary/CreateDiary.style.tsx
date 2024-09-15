@@ -3,6 +3,8 @@ import { semantic } from '@styles/semantic';
 import { TYPO } from '@styles/typo';
 
 export const Layout = styled.div`
+  position: relative;
+  min-height: 100vh;
   display: flex;
   margin: 0 auto;
   max-width: var(--vw-desktop-min, 60rem);
@@ -24,6 +26,12 @@ export const Layout = styled.div`
     ${semantic.light.border.transparent.alternative};
 
   background: ${semantic.light.bg.solid.subtlest};
+
+  @media screen and (max-width: 60em) {
+    display: grid;
+    justify-content: center;
+    padding: var(--gap-lg, 1.25rem) var(--gap-md, 1rem);
+  }
 `;
 
 export const SaveWrap = styled.div`
@@ -32,6 +40,11 @@ export const SaveWrap = styled.div`
   align-items: center;
   gap: var(--gap-xl, 1.5rem);
   align-self: stretch;
+
+  @media screen and (max-width: 60em) {
+    width: 20em;
+    gap: 1.5em;
+  }
 `;
 
 export const SaveWrapContainer = styled.div`
@@ -60,6 +73,12 @@ export const SaveBtnContainer = styled.div`
 
   align-items: center;
   gap: var(--gap-md, 1rem);
+
+  @media screen and (max-width: 60em) {
+    position: absolute;
+    bottom: 0;
+    padding: var(--gap-lg, 1rem) var(--gap-md, 2rem);
+  }
 `;
 
 export const SavePrevBtn = styled.button<{ disabled: boolean }>`
@@ -133,6 +152,12 @@ export const DiaryModeSelector = styled.div`
   align-items: center;
   gap: var(--gap-md, 1rem);
   align-self: stretch;
+
+  @media screen and (max-width: 60em) {
+    width: 20em;
+    display: flex;
+    flex-direction: column;
+  }
 `;
 
 export const ModeBoxContainer = styled.div`
@@ -226,6 +251,11 @@ export const Divider = styled.span`
   justify-content: center;
   align-items: center;
   align-self: stretch;
+
+  @media screen and (max-width: 60em) {
+    width: 20em;
+    gap: 1.5em;
+  }
 `;
 
 export const DividerLine = styled.span`
@@ -285,6 +315,11 @@ export const MainContainer = styled.div`
   gap: var(--gap-md, 1rem);
   flex: 1 0 0;
   align-self: stretch;
+
+  @media screen and (max-width: 60em) {
+    width: 20em;
+    gap: 1.5em;
+  }
 `;
 
 export const HashtagContainer = styled.div`
@@ -294,6 +329,11 @@ export const HashtagContainer = styled.div`
   align-items: flex-start;
   gap: var(--gap-2xs, 0.5rem);
   align-self: stretch;
+
+  @media screen and (max-width: 60em) {
+    width: 20em;
+    gap: 1.5em;
+  }
 `;
 
 export const HashtagTitleBox = styled.div`
@@ -307,6 +347,10 @@ export const HashtagTitle = styled.p`
   color: ${semantic.light.object.transparent.alternative};
 
   ${TYPO.label1}
+
+  @media screen and (max-width: 60em) {
+    padding-top: 1.8em;
+  }
 `;
 
 export const HashtagBox = styled.div`
@@ -381,6 +425,15 @@ export const SelectableContainer = styled.div`
   align-items: center;
   gap: var(--gap-md, 1rem);
   align-self: stretch;
+
+  @media screen and (max-width: 60em) {
+    width: 20em;
+    gap: 1.5em;
+
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 3.5em;
+  }
 `;
 
 export const SelectablePublicBox = styled.div`
@@ -459,6 +512,11 @@ export const EmotionBox = styled.div`
   border: var(--stroke-thin, 1px) solid
     ${semantic.light.border.transparent.alternative};
   background: ${semantic.light.bg.solid.normal};
+
+  @media screen and (max-width: 60em) {
+    width: 20em;
+    gap: 1.5em;
+  }
 `;
 
 export const EmotionText = styled.p`
