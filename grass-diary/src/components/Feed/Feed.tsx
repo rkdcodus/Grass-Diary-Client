@@ -10,6 +10,7 @@ import { useAuth } from '@state/auth/useAuth';
 import { useModal } from '@state/modal/useModal';
 import { INTERACTION } from '@styles/interaction';
 import { MODAL } from '@constants/message';
+import { useUser } from '@state/user/useUser';
 
 interface IFeedProps {
   feed: Feed;
@@ -18,7 +19,7 @@ interface IFeedProps {
 
 const Feed = ({ feed, isTop }: IFeedProps) => {
   const navigate = useNavigate();
-  const { isAuthenticated } = useAuth();
+  const memberId = useUser();
   const { data: writer } = useWriterProfile(feed.memberId);
   const { modal } = useModal();
 
@@ -60,7 +61,7 @@ const Feed = ({ feed, isTop }: IFeedProps) => {
       interaction: INTERACTION.accent.subtle(),
     };
 
-    if (!isAuthenticated) {
+    if (!memberId) {
       modal(setting, button1, button2);
       return;
     }
