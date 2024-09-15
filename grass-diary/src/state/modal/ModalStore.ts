@@ -1,23 +1,16 @@
 import { create } from 'zustand';
 
-type Setting = {
-  title: string;
-  content: string;
-};
-
 type Actions = {
   setLogin: (login: boolean) => void;
   setActive: (active: boolean) => void;
   setSetting: ({ title, content }: Setting) => void;
 };
-
 type ModalState = {
   login: boolean;
   active: boolean;
   setting: Setting;
   actions: Actions;
 };
-
 const useModalStore = create<ModalState>(set => ({
   login: false,
   active: false,
@@ -31,7 +24,6 @@ const useModalStore = create<ModalState>(set => ({
     setSetting: setting => set({ setting }),
   },
 }));
-
 export const useModalLogin = () => useModalStore(state => state.login);
 export const useModalActive = () => useModalStore(state => state.active);
 export const useModalSetting = () => useModalStore(state => state.setting);

@@ -30,7 +30,7 @@ const CreateDiary = () => {
   const { mutate: createDiary } = useCreateDiary(memberId);
   const { mutate: postImage } = usePostImage();
   const { date } = useTodayDate();
-  const { toast } = useToast();
+  const { toast, redToast } = useToast();
   const [diaryInfo, setDiaryInfo] = useState<IDiaryInfo>({
     hashArr: [],
     moodValue: 5,
@@ -70,29 +70,59 @@ const CreateDiary = () => {
     size: '',
   });
 
-  // 모달
+  // 임시 저장 모달
 
-  // useEffect(() => {
-  //   const setting = {
-  //     title: MODAL.create_diary.load_temporary,
-  //     content: MODAL.create_diary.load_temporary_description,
-  //   };
+  const temporarySaveModal = () => {
+    const setting = {
+      title: MODAL.create_diary.load_temporary,
+      content: MODAL.create_diary.load_temporary_description,
+    };
 
-  //   const button1 = {
-  //     active: true,
-  //     text: MODAL.cancel,
-  //   };
+    const button1 = {
+      active: true,
+      text: MODAL.create_diary.continue_entry,
+      color: semantic.light.accent.solid.hero,
+      interaction: INTERACTION.accent.subtle(),
+    };
 
-  //   const button2 = {
-  //     active: true,
-  //     text: MODAL.create_diary.continue_entry,
-  //     clickHandler: undefined,
-  //     color: semantic.light.accent.solid.hero,
-  //     interaction: INTERACTION.accent.subtle(),
-  //   };
+    const button2 = {
+      active: true,
+      text: MODAL.create_diary.new_entry,
+      clickHandler: () => {
+        localStorage.removeItem('diary_draft');
 
-  //   modal(setting, button1, button2);
-  // }, []);
+        setDiaryInfo({
+          hashArr: [],
+          moodValue: 5,
+          quillContent: '',
+          isPrivate: true,
+          year: null,
+          month: null,
+          date: null,
+          day: null,
+        });
+
+        setImage({
+          imageId: 0,
+          imageURL: '',
+        });
+
+        setImageInfo({
+          name: '',
+          size: '',
+        });
+      },
+    };
+
+    modal(setting, button2, button1);
+  };
+
+  useEffect(() => {
+    const savedDraft = localStorage.getItem('diary_draft');
+    if (savedDraft) {
+      temporarySaveModal();
+    }
+  }, []);
 
   // 상태 업데이트 함수
   const setDiaryField = (field: Partial<IDiaryInfo>) => {
@@ -212,6 +242,7 @@ const CreateDiary = () => {
       toast(CREATE_MESSAGES.toast.already_written);
       return;
     }
+
     // 사용자가 이미지를 첨부할 경우 postImage -> createDiary 실행
     if (file) {
       postImage(file, {
@@ -308,7 +339,11 @@ const CreateDiary = () => {
   }, []);
 
   const handleSaveDraft = () => {
-    if (isContentEmpty) return; // 일기 내용이 비어 있으면 저장 요청 불가
+    if (isContentEmpty) {
+      redToast(CREATE_MESSAGES.toast.write_diary);
+      return; // 일기 내용이 비어 있으면 저장 요청 불가
+    }
+
     const draftData = {
       ...diaryInfo,
       imageBase64: imageBase64,

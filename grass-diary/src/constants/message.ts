@@ -158,6 +158,7 @@ export const CREATE_MESSAGES = {
   toast: {
     temp_save: '작성 중인 일기 내용을 임시저장했어요.',
     already_written: '오늘 이미 작성한 일기가 있어요.',
+    write_diary: '일기 내용을 작성해주세요.',
   },
 
   hashtag: {
