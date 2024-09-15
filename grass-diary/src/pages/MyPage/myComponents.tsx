@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 
 import Grass from './Grass';
 import Diary from './Diary';
-import * as S from './style';
+import * as S from '../../styles/MyPage/MyStyles';
 import { EllipsisBox, EllipsisIcon, Profile } from '@components/index';
 import { useProfile } from '@state/profile/useProfile';
 

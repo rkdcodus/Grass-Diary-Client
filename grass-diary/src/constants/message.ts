@@ -183,15 +183,24 @@ export const INTRO_MESSAGES = {
   firstSection: {
     serviceName: '잔디 일기',
     serviceIntroduction: '일상 속의 잔디, 나의 이야기를 키우다',
-    scrollMessage: '아래로 스크롤을 내려 잔디 일기에 대해 더 알아보세요!',
+    scrollMessage: (isMobile: boolean) =>
+      isMobile
+        ? '아래로 스크롤을 내려\n잔디 일기에 대해 더 알아보세요!'
+        : '아래로 스크롤을 내려 잔디 일기에 대해 더 알아보세요!',
   },
   secondSection: {
     secondTitle: '시키는\n나만의 잔디 일기장',
-    secondIntroduction: '일기를 작성하면 파릇파릇한 잔디밭이 만들어져요!',
+    secondIntroduction: (isMobile: boolean) =>
+      isMobile
+        ? '일기를 작성하면\n파릇파릇한 잔디밭이 만들어져요!'
+        : '일기를 작성하면 파릇파릇한 잔디밭이 만들어져요!',
   },
   thirdSection: {
     thirdTitle: '다른 사람들의 일기를\n',
-    thirdIntroduction: '다양한 생각, 기억들을 둘러보며 이야기를 나눠요.',
+    thirdIntroduction: (isMobile: boolean) =>
+      isMobile
+        ? '다양한 생각, 기억들을 둘러보며\n이야기를 나눠요.'
+        : '다양한 생각, 기억들을 둘러보며 이야기를 나눠요.',
   },
   lastSection: {
     startMessage: '이제, 나만의 잔디밭을 가꿔 보세요!',
@@ -246,3 +255,4 @@ export const SNACKBAR = {
     page: '/rewardpage',
   },
 } as const;
+

@@ -1,5 +1,5 @@
 import { MainContainer } from './myComponents';
-import * as S from './style';
+import * as S from '../../styles/MyPage/MyStyles';
 
 const MyPage = () => {
   return (

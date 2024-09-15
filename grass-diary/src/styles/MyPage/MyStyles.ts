@@ -9,6 +9,8 @@ export const SettingContainer = styled.div`
   flex-direction: column;
   align-items: center;
 
+  min-width: 20rem;
+
   background: linear-gradient(
       180deg,
       rgba(255, 255, 255, 0.3) 0%,
@@ -23,6 +25,7 @@ export const ViewportContainer = styled.div`
   align-self: center;
 
   max-width: 60rem;
+  width: 100%;
 `;
 
 /* 유저 컨테이너 */
@@ -32,10 +35,14 @@ export const UserInfoArticle = styled.article`
   align-items: center;
   align-self: stretch;
 
-  max-width: 60rem;
+  width: 100%;
 
   gap: 1rem;
   padding: 4rem 1.5rem 1.25rem 1.5rem;
+
+  @media screen and (max-width: 60em) {
+    padding: 4rem 1rem 1.25rem 1rem;
+  }
 `;
 
 export const UserNameText = styled.span`
@@ -59,8 +66,6 @@ export const GrassArticle = styled.article`
   flex-direction: column;
   align-items: center;
   align-self: stretch;
-
-  max-width: 60rem;
 
   gap: 1.5rem;
   padding: 1.5rem 1.5rem 3rem 1.5rem;
@@ -88,8 +93,12 @@ export const GrassYearText = styled.span`
 
 export const GrassContainer = styled.div`
   display: flex;
-  flex-direction: row;
   gap: 0.25rem;
+
+  @media screen and (max-width: 60em) {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
 `;
 
 export const GrassBox = styled.div`
@@ -99,6 +108,11 @@ export const GrassBox = styled.div`
 
   width: 100%;
   gap: 0.25rem;
+
+  @media screen and (max-width: 60em) {
+    flex-direction: row;
+    gap: 0.5rem;
+  }
 `;
 
 export const GrassDateBox = styled.div<{
@@ -113,6 +127,16 @@ export const GrassDateBox = styled.div<{
   border-radius: 0.25rem;
   border: ${({ $border }) => $border};
   background: ${({ $background }) => $background};
+
+  @media screen and (max-width: 60em) {
+    width: 2rem;
+    height: 2rem;
+
+    border-radius: 0.5rem;
+    box-shadow:
+      0px 0px 1px 0px rgba(0, 0, 0, 0.04),
+      0px 2px 4px 0px rgba(0, 0, 0, 0.08);
+  }
 `;
 
 export const DaysBox = styled.div`
@@ -164,6 +188,10 @@ export const DateBubbleBox = styled.div`
     background-image: url('../../../public/assets/icons/pin.svg');
     background-repeat: no-repeat;
   }
+
+  @media screen and (max-width: 60em) {
+    right: -0.7rem;
+  }
 `;
 
 /* 메인 섹션 */
@@ -204,6 +232,13 @@ export const SearchBox = styled.div`
   border-radius: 1rem;
   border: 1px solid ${semantic.light.border.transparent.alternative};
   background: ${semantic.light.bg.solid.normal};
+
+  @media screen and (max-width: 60em) {
+    padding: 0.625rem 1rem;
+    gap: 0.75rem;
+
+    border-radius: 0.5rem;
+  }
 `;
 
 export const SearchImg = styled.img`
@@ -218,6 +253,10 @@ export const SearchInput = styled.input`
   color: ${semantic.light.object.transparent.assistive};
 
   border: none;
+
+  @media screen and (max-width: 60em) {
+    ${TYPO.body1};
+  }
 `;
 
 /* 다이어리 섹션 */
@@ -227,7 +266,7 @@ export const UserDiarySection = styled.section`
   flex-direction: column;
   align-items: center;
 
-  width: 43rem;
+  width: 100%;
   max-width: 43rem;
 
   gap: 2rem;
@@ -236,7 +275,7 @@ export const UserDiarySection = styled.section`
 export const DiaryContentContainer = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
   align-self: stretch;
 
   gap: 1.5rem;
@@ -271,7 +310,7 @@ export const DiaryCardArticle = styled.article`
   align-items: flex-start;
   flex-shrink: 0;
 
-  width: 43rem;
+  width: 100%;
 
   gap: 1.5rem;
   padding: 1.25rem;
@@ -466,6 +505,10 @@ export const HashtagAside = styled.aside`
   box-shadow:
     0px 0px 1px 0px rgba(0, 0, 0, 0.04),
     0px 2px 4px 0px rgba(0, 0, 0, 0.08);
+
+  @media screen and (max-width: 60em) {
+    display: none;
+  }
 `;
 
 export const HashtagListText = styled.span`

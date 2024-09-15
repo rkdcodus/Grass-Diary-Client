@@ -1,3 +1,4 @@
+import { INTERACTION } from '@styles/interaction';
 import { semantic } from '@styles/semantic';
 import { TYPO } from '@styles/typo';
 import styled from 'styled-components';
@@ -6,7 +7,8 @@ const IntroContainer = styled.main`
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+
+  min-width: 20rem;
 
   background: linear-gradient(180deg, #fff 0%, #ebebeb 100%);
 `;
@@ -20,9 +22,15 @@ const CommonSection = styled.section`
   position: relative;
 
   width: 100%;
+  min-width: 20rem;
   height: 56.75rem;
 
   gap: 2rem;
+
+  @media screen and (max-width: 60em) {
+    gap: 4.5rem;
+    padding: 4.5rem 1rem 1.5rem 1rem;
+  }
 `;
 
 /** first section */
@@ -34,14 +42,17 @@ const MainBox = styled.div`
   flex-direction: column;
   justify-content: center;
 
-  position: absolute;
+  position: relative;
 
-  top: 40%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  bottom: 11rem;
 
   gap: 1.5rem;
   max-width: 60rem;
+
+  @media screen and (max-width: 60em) {
+    gap: 2rem;
+    padding: 4.5rem 0;
+  }
 `;
 
 const FirstTitleContainer = styled.div`
@@ -94,6 +105,8 @@ const LoginButton = styled.button`
 
   border-radius: 0.75rem;
   background: ${semantic.light.accent.solid.normal};
+
+  ${INTERACTION.default.normal(semantic.light.accent.solid.normal)}
 `;
 
 const ButtonText = styled.span`
@@ -109,10 +122,9 @@ const ScrollMessageContainer = styled.div`
   align-items: center;
 
   position: absolute;
+  bottom: 1rem;
 
-  bottom: 1.5rem;
-
-  width: 60rem;
+  width: 100%;
   max-width: 60rem;
 
   gap: 0.5rem;
@@ -139,6 +151,10 @@ const CommonArticle = styled.article`
 
   max-width: 60rem;
   gap: 2rem;
+
+  @media screen and (max-width: 60em) {
+    flex-direction: column;
+  }
 `;
 
 const CommonTitleContainer = styled.div`
@@ -147,8 +163,6 @@ const CommonTitleContainer = styled.div`
   justify-content: center;
   align-self: stretch;
   align-items: center;
-
-  width: 29.5rem;
 
   gap: 1.5rem;
 `;
@@ -160,7 +174,7 @@ const CommonTitle = styled.h1`
   color: ${semantic.light.object.solid.hero};
 `;
 
-const CommonIntroductionText = styled.small`
+const CommonIntroductionText = styled.p`
   text-align: center;
 
   ${TYPO.label3}
@@ -172,6 +186,53 @@ const HighlightText = styled.span`
 
   ${TYPO.title3};
   color: ${semantic.light.accent.solid.normal};
+`;
+
+const LastSection = styled.div`
+  display: flex;
+  align-items: center;
+  align-self: stretch;
+  justify-content: center;
+
+  position: relative;
+
+  width: 100%;
+  min-width: 20rem;
+  height: 56.75rem;
+
+  gap: 2rem;
+
+  @media screen and (max-width: 60em) {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    align-self: stretch;
+
+    height: 20rem;
+
+    gap: 2rem;
+    padding: 4.5rem 1rem;
+  }
+`;
+
+const LastBox = styled.div`
+  display: flex;
+  align-items: center;
+  align-self: stretch;
+  flex-direction: column;
+  justify-content: center;
+
+  position: relative;
+
+  bottom: 11rem;
+
+  gap: 1.5rem;
+  max-width: 60rem;
+
+  @media screen and (max-width: 60em) {
+    bottom: 0;
+  }
 `;
 
 export {
@@ -193,4 +254,6 @@ export {
   CommonTitle,
   CommonIntroductionText,
   HighlightText,
+  LastSection,
+  LastBox,
 };

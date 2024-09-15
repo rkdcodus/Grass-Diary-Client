@@ -1,18 +1,17 @@
 import { useState, useEffect } from 'react';
 import { NavigateFunction, useNavigate } from 'react-router-dom';
 
-import useModal from '@hooks/useModal';
+import { useModal } from '@state/modal/useModal';
 import { checkAuth } from '@utils/authUtils';
-import LoginModal from './LoginModal/LoginModal';
 
 import * as S from '@styles/Intro/IntroStyles';
 import { Divider } from '@components/index';
 import { INTRO_MESSAGES } from '@constants/message';
+import useIsMobile from '@hooks/useIsMobile';
 
-const OpenModalButton = ({ top }: { top: string }) => {
+const OpenModalButton = () => {
   const navigate: NavigateFunction = useNavigate();
-  const { isModalOpen, handleOpenModal, handleCloseModal }: IModalReturn =
-    useModal();
+  const { loginModal } = useModal();
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
 
   useEffect(() => {
@@ -28,7 +27,7 @@ const OpenModalButton = ({ top }: { top: string }) => {
 
   const handleStartButton: TStartButton = () => {
     if (isLoggedIn) navigate('/main');
-    if (!isLoggedIn) handleOpenModal();
+    if (!isLoggedIn) loginModal();
   };
 
   return (
@@ -40,18 +39,13 @@ const OpenModalButton = ({ top }: { top: string }) => {
           <img src="/assets/icons/button-solid-chevron-right.svg" />
         </S.LoginButton>
       </S.LoginButtonContainer>
-      {!isLoggedIn && isModalOpen && (
-        <LoginModal
-          top={top}
-          isOpen={handleOpenModal}
-          isClose={handleCloseModal}
-        />
-      )}
     </>
   );
 };
 
 const FirstSection = () => {
+  const isMobile = useIsMobile();
+
   return (
     <>
       <S.CommonSection>
@@ -63,11 +57,13 @@ const FirstSection = () => {
           <S.MainIntrouctionText>
             {INTRO_MESSAGES.firstSection.serviceIntroduction}
           </S.MainIntrouctionText>
-          <OpenModalButton top="50%" />
+          <OpenModalButton />
         </S.MainBox>
       </S.CommonSection>
       <S.ScrollMessageContainer>
-        <S.ScrollText>{INTRO_MESSAGES.firstSection.scrollMessage}</S.ScrollText>
+        <S.ScrollText>
+          {INTRO_MESSAGES.firstSection.scrollMessage(isMobile)}
+        </S.ScrollText>
         <S.ScrollImg src="/assets/icons/expand-more.svg" />
       </S.ScrollMessageContainer>
     </>
@@ -75,6 +71,8 @@ const FirstSection = () => {
 };
 
 const SecondSection = () => {
+  const isMobile = useIsMobile();
+
   return (
     <S.CommonSection>
       <S.CommonArticle>
@@ -85,30 +83,50 @@ const SecondSection = () => {
             {INTRO_MESSAGES.secondSection.secondTitle}
           </S.CommonTitle>
           <S.CommonIntroductionText>
-            {INTRO_MESSAGES.secondSection.secondIntroduction}
+            {INTRO_MESSAGES.secondSection.secondIntroduction(isMobile)}
           </S.CommonIntroductionText>
         </S.CommonTitleContainer>
-        <img src="/assets/img/banner:record.svg" />
+        <img src="/assets/img/banner_record.svg" />
       </S.CommonArticle>
     </S.CommonSection>
   );
 };
 
 const ThirdSection = () => {
+  const isMobile = useIsMobile();
+
   return (
     <S.CommonSection>
       <S.CommonArticle>
-        <img src="/assets/img/card:publicDiary.svg" />
-        <S.CommonTitleContainer>
-          <S.CommonTitle>
-            {INTRO_MESSAGES.thirdSection.thirdTitle}
-            <S.HighlightText>구경</S.HighlightText>하고
-            <S.HighlightText> 소통</S.HighlightText>해요
-          </S.CommonTitle>
-          <S.CommonIntroductionText>
-            {INTRO_MESSAGES.thirdSection.thirdIntroduction}
-          </S.CommonIntroductionText>
-        </S.CommonTitleContainer>
+        {isMobile ? (
+          <>
+            <S.CommonTitleContainer>
+              <S.CommonTitle>
+                {INTRO_MESSAGES.thirdSection.thirdTitle}
+                <S.HighlightText>구경</S.HighlightText>하고
+                <S.HighlightText> 소통</S.HighlightText>해요
+              </S.CommonTitle>
+              <S.CommonIntroductionText>
+                {INTRO_MESSAGES.thirdSection.thirdIntroduction(isMobile)}
+              </S.CommonIntroductionText>
+            </S.CommonTitleContainer>
+            <img src="/assets/img/card_publicDiary.svg" />
+          </>
+        ) : (
+          <>
+            <img src="/assets/img/card_publicDiary.svg" />
+            <S.CommonTitleContainer>
+              <S.CommonTitle>
+                {INTRO_MESSAGES.thirdSection.thirdTitle}
+                <S.HighlightText>구경</S.HighlightText>하고
+                <S.HighlightText> 소통</S.HighlightText>해요
+              </S.CommonTitle>
+              <S.CommonIntroductionText>
+                {INTRO_MESSAGES.thirdSection.thirdIntroduction(isMobile)}
+              </S.CommonIntroductionText>
+            </S.CommonTitleContainer>
+          </>
+        )}
       </S.CommonArticle>
     </S.CommonSection>
   );
@@ -116,14 +134,14 @@ const ThirdSection = () => {
 
 const LastSection = () => {
   return (
-    <S.CommonSection>
-      <S.MainBox>
+    <S.LastSection>
+      <S.LastBox>
         <S.MainIntrouctionText>
           {INTRO_MESSAGES.lastSection.startMessage}
         </S.MainIntrouctionText>
-        <OpenModalButton top="50%" />
-      </S.MainBox>
-    </S.CommonSection>
+        <OpenModalButton />
+      </S.LastBox>
+    </S.LastSection>
   );
 };
 

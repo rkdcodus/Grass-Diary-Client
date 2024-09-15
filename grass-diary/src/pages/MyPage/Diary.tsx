@@ -1,5 +1,4 @@
-import stylex from '@stylexjs/stylex';
-import * as S from './style';
+import * as S from '../../styles/MyPage/MyStyles';
 
 import DOMPurify from 'dompurify';
 import { useState, useEffect } from 'react';
@@ -15,6 +14,7 @@ import { ReactComponent as FavoriteIcon } from '@svg/favorite.svg';
 import { ReactComponent as CommentIcon } from '@svg/comment.svg';
 import { MoodProfile, Profile, Divider } from '@components/index';
 import Setting from '@pages/DiaryDetail/Setting';
+import { END_POINT } from '@constants/api';
 
 interface IPagination {
   pageSize: number;
@@ -88,7 +88,7 @@ const DiaryItem = ({ diary, diaryList, index }: IDiaryItem) => {
         ''
       )}
       <S.DiaryCardText dangerouslySetInnerHTML={createMarkup(diary.content)} />
-      <Divider width="40.5rem" />
+      <Divider width="100%" />
       <S.DiaryCardBottomBox>
         <S.DiaryCardHashtagBox>
           {diary.tags &&
@@ -187,7 +187,7 @@ const Diary = ({
   >({
     queryKey: ['selectedDiary', memberId, hashtagId],
     queryFn: () =>
-      API.get(`search/tagId/${memberId}?tagId=${hashtagId}`).then(
+      API.get(`${END_POINT.hashtagList(memberId, hashtagId)}`).then(
         ({ data }) => data,
       ),
     enabled: !!hashtagId && !!memberId,
@@ -202,7 +202,7 @@ const Diary = ({
     <>
       <S.HashtagAside>
         <S.HashtagListText>해시태그 목록</S.HashtagListText>
-        <Divider width="10rem" />
+        <Divider width="100%" />
         <S.SideHashtagListBox>
           <S.SideHashtagAnchor onClick={handleViewAllClick}>
             <S.SideHashtagList>

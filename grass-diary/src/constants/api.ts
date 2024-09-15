@@ -37,4 +37,6 @@ export const END_POINT = {
   image: '/image/diary',
   comment: (id: Id) => `/comment/${id}`,
   comment_delete: (id: Id) => `/comment/${id}/delete`,
+  hashtagList: (memberId: Id, hashtagId: string | null) =>
+    `search/tagId/${memberId}?tagId=${hashtagId}`,
 } as const;
