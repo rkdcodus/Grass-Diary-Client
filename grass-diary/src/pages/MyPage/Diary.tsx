@@ -1,4 +1,3 @@
-import stylex from '@stylexjs/stylex';
 import * as S from './style';
 
 import DOMPurify from 'dompurify';
