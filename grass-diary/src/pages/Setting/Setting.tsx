@@ -5,7 +5,7 @@ import {
   useQueryClient,
 } from '@tanstack/react-query';
 
-import * as S from './styles';
+import * as S from '../../styles/Setting/SettingStyles';
 import API from '@services/index';
 import { Profile } from '@components/index';
 import { END_POINT } from '@constants/api';

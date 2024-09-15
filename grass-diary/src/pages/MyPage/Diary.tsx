@@ -1,4 +1,4 @@
-import * as S from './style';
+import * as S from '../../styles/MyPage/MyStyles';
 
 import DOMPurify from 'dompurify';
 import { useState, useEffect } from 'react';

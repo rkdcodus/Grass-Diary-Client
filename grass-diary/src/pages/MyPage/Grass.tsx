@@ -1,4 +1,4 @@
-import * as S from './style';
+import * as S from '../../styles/MyPage/MyStyles';
 import { useEffect, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 
