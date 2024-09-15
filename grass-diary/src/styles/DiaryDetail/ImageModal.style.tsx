@@ -42,6 +42,8 @@ export const CloseText = styled.span`
 `;
 
 export const CloseIcon = styled(CloseSvg)`
+  width: 20px;
+  height: 20px;
   fill: ${semantic.light.inverse.solid.normal};
 `;
 
