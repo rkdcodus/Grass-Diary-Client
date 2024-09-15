@@ -1,3 +1,4 @@
+import { INTERACTION } from '@styles/interaction';
 import { semantic } from '@styles/semantic';
 import { TYPO } from '@styles/typo';
 import styled from 'styled-components';
@@ -104,6 +105,8 @@ const LoginButton = styled.button`
 
   border-radius: 0.75rem;
   background: ${semantic.light.accent.solid.normal};
+
+  ${INTERACTION.default.normal(semantic.light.accent.solid.normal)}
 `;
 
 const ButtonText = styled.span`

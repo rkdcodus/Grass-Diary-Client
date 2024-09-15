@@ -2,6 +2,7 @@ import styled, { css } from 'styled-components';
 
 import { semantic } from '@styles/semantic';
 import { TYPO } from '@styles/typo';
+import { INTERACTION } from '@styles/interaction';
 
 const SettingContainer = styled.main`
   display: flex;
@@ -138,7 +139,7 @@ const ImageUploadButton = styled.button`
   color: ${semantic.light.base.solid.white};
   background: ${semantic.light.accent.solid.normal};
 
-  cursor: pointer;
+  ${INTERACTION.default.normal(semantic.light.accent.solid.normal)}
 `;
 
 const ImageDeleteButton = styled.button`
@@ -157,7 +158,7 @@ const ImageDeleteButton = styled.button`
   color: ${semantic.light.base.solid.white};
   background: ${semantic.light.object.solid.normal};
 
-  cursor: pointer;
+  ${INTERACTION.default.normal(semantic.light.object.solid.normal)}
 `;
 
 const ProfileRightContainer = styled.div`
@@ -348,6 +349,8 @@ const SaveButton = styled.button`
   border-radius: 0.5rem;
   color: ${semantic.light.base.solid.white};
   background: ${semantic.light.accent.solid.normal};
+
+  ${INTERACTION.default.normal(semantic.light.accent.solid.normal)}
 `;
 
 const SettingMessage = styled.span`
@@ -462,6 +465,8 @@ const WithdrawButton = styled.button`
 
   color: ${semantic.light.base.solid.white};
   background: ${semantic.light.inverse.solid.negative};
+
+  ${INTERACTION.default.subtle(semantic.light.inverse.solid.negative)}
 `;
 
 const BottomSection = styled.div`
@@ -485,6 +490,8 @@ const ApplyButton = styled.button`
   border-radius: 0.5rem;
   color: ${semantic.light.base.solid.white};
   background: ${semantic.light.accent.solid.normal};
+
+  ${INTERACTION.default.normal(semantic.light.accent.solid.normal)}
 `;
 
 const NavigateButton = styled.button`
@@ -499,6 +506,8 @@ const NavigateButton = styled.button`
   border: 1px solid ${semantic.light.accent.solid.normal};
   color: ${semantic.light.accent.solid.hero};
   background: ${semantic.light.accent.transparent.normal};
+
+  ${INTERACTION.accent.subtle()}
 `;
 
 export {
