@@ -13,16 +13,20 @@ import { useTodayDate } from '@hooks/api/useTodayDate';
 import { usePostImage } from '@hooks/api/usePostImage';
 import { useUser } from '@state/user/useUser';
 import { useToast } from '@state/toast/useToast';
+import { useModal } from '@state/modal/useModal';
 import { ReactComponent as Publish } from '@svg/publish.svg';
 import { ReactComponent as PublishOn } from '@svg/publish_on.svg';
 import { ReactComponent as Close } from '@svg/close.svg';
 import { ReactComponent as Tag } from '@svg/tag.svg';
 import { ReactComponent as Lock } from '@svg/lock.svg';
 import { ReactComponent as LockOpen } from '@svg/lock_open.svg';
+import { INTERACTION } from '@styles/interaction';
+import { MODAL } from '@constants/message';
 
 const CreateDiary = () => {
   const navigate = useNavigate();
   const memberId = useUser();
+  const { modal } = useModal();
   const { mutate: createDiary } = useCreateDiary(memberId);
   const { mutate: postImage } = usePostImage();
   const { date } = useTodayDate();
@@ -65,6 +69,30 @@ const CreateDiary = () => {
     name: '',
     size: '',
   });
+
+  // 모달
+
+  // useEffect(() => {
+  //   const setting = {
+  //     title: MODAL.create_diary.load_temporary,
+  //     content: MODAL.create_diary.load_temporary_description,
+  //   };
+
+  //   const button1 = {
+  //     active: true,
+  //     text: MODAL.cancel,
+  //   };
+
+  //   const button2 = {
+  //     active: true,
+  //     text: MODAL.create_diary.continue_entry,
+  //     clickHandler: undefined,
+  //     color: semantic.light.accent.solid.hero,
+  //     interaction: INTERACTION.accent.subtle(),
+  //   };
+
+  //   modal(setting, button1, button2);
+  // }, []);
 
   // 상태 업데이트 함수
   const setDiaryField = (field: Partial<IDiaryInfo>) => {

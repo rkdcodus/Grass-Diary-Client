@@ -21,7 +21,7 @@ const BottomSection = () => {
 
     const button1 = {
       active: true,
-      text: MODAL.main.modal.confirm_button,
+      text: MODAL.confirm,
       color: semantic.light.accent.solid.alternative,
     };
     modal(setting, button1);
@@ -35,7 +35,7 @@ const BottomSection = () => {
 
     const button1 = {
       active: true,
-      text: MODAL.main.modal.confirm_button,
+      text: MODAL.confirm,
       color: semantic.light.accent.solid.alternative,
     };
     modal(setting, button1);
