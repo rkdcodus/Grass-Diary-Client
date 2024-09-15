@@ -1,4 +1,4 @@
-import * as S from '@styles/components/callout/Callout.style';
+import * as S from '@styles/component/Notification/Callout.style';
 import { ReactComponent as Info } from '@svg/info.svg';
 
 type CalloutProps = {

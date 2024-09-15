@@ -1,16 +1,9 @@
-import stylex from '@stylexjs/stylex';
 import { useState, useMemo } from 'react';
-import { Profile } from '@components/index';
-import EMOJI from '@constants/emoji';
+import styled from 'styled-components';
 
-const styles = stylex.create({
-  emoji: {
-    fontSize: '22px',
-    zIndex: '1',
-    position: 'relative',
-    transform: 'translate(-19px, 33px)',
-  },
-});
+import EMOJI from '@constants/emoji';
+import { TYPO } from '@styles/typo';
+import { semantic } from '@styles/semantic';
 
 const MoodProfile = ({ diary, index }: IMoodProfile) => {
   const [mood, setMood] = useState<string[]>([]);
@@ -27,11 +20,37 @@ const MoodProfile = ({ diary, index }: IMoodProfile) => {
   }, [diary]);
 
   return (
-    <>
-      <Profile width="60px" height="60px" />
-      <div {...stylex.props(styles.emoji)}>{mood[index]}</div>
-    </>
+    <EmojiBox>
+      <EmojiText>{mood[index]}</EmojiText>
+    </EmojiBox>
   );
 };
 
 export default MoodProfile;
+
+const EmojiBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  padding: 0.125rem;
+
+  border-radius: 6rem;
+  border: 1px solid ${semantic.light.border.transparent.assistive};
+  background: ${semantic.light.fill.transparent.assistive};
+`;
+
+const EmojiText = styled.span`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  width: 1.5rem;
+  height: 1.5rem;
+
+  text-align: center;
+
+  ${TYPO.title2}
+  color: ${semantic.light.object.transparent.alternative};
+`;

@@ -1,14 +1,7 @@
-import styled from 'styled-components';
-import { semantic } from '@styles/semantic';
-import { TYPO } from '@styles/typo';
-
+import * as S from '@styles/component/Like/Like.style';
 import { useEffect, useState } from 'react';
 import { useCountLike } from '@hooks/api/useCountLike';
 import { useUser } from '@state/user/useUser';
-
-import { ReactComponent as LikeBorder } from '@svg/favorite_border.svg';
-import { ReactComponent as LikeIcon } from '@svg/favorite.svg';
-import { INTERACTION } from '@styles/interaction';
 
 interface ILikeProps {
   diaryId: Id;
@@ -49,58 +42,11 @@ const Like = ({ diaryId, likeCount, setLikeCount, liked }: ILikeProps) => {
   }, [liked]);
 
   return (
-    <>
-      <LikeContainer $isPushed={isPushed} onClick={likeHandler}>
-        <LikeCount>{likeCount}</LikeCount>
-        {isPushed ? <YES width={18} height={18} /> : <No />}
-      </LikeContainer>
-    </>
+    <S.LikeContainer $isPushed={isPushed} onClick={likeHandler}>
+      <S.CountText>{likeCount}</S.CountText>
+      {isPushed ? <S.YES width={18} height={18} /> : <S.No />}
+    </S.LikeContainer>
   );
 };
 
 export default Like;
-
-const LikeContainer = styled.button<{ $isPushed: boolean }>`
-  margin-left: auto;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: var(--gap-xs, 0.625rem) var(--gap-md, 1rem);
-  gap: var(--gap-2xs, 0.5rem);
-  border-radius: var(--radius-xs, 0.5rem);
-
-  border: var(--stroke-thin, 0.0625rem) solid
-    ${props =>
-      props.$isPushed
-        ? semantic.light.accent.solid.normal
-        : semantic.light.border.transparent.alternative};
-
-  background: ${props =>
-    props.$isPushed
-      ? semantic.light.accent.transparent.normal
-      : semantic.light.bg.solid.normal};
-
-  color: ${props =>
-    props.$isPushed
-      ? semantic.light.accent.solid.hero
-      : semantic.light.object.transparent.alternative};
-
-  ${props =>
-    props.$isPushed
-      ? INTERACTION.default.normal(semantic.light.accent.transparent.normal)
-      : INTERACTION.default.normal(semantic.light.bg.solid.normal)}
-`;
-
-const LikeCount = styled.p`
-  text-align: center;
-  ${TYPO.label2}
-`;
-
-const YES = styled(LikeIcon)`
-  cursor: pointer;
-  fill: ${semantic.light.accent.solid.hero};
-`;
-
-const No = styled(LikeBorder)`
-  cursor: pointer;
-`;

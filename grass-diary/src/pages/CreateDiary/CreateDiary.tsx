@@ -58,14 +58,9 @@ const CreateDiary = () => {
   );
 
   // 이미지 state
-  const [file, setFile] = useState<FormData>();
-  const [image, setImage] = useState<DiaryImage>({
+  const [image, setImage] = useState<ImageInfo>({
     imageId: 0,
     imageURL: '',
-  });
-
-  // 이미지 정보 state
-  const [imageInfo, setImageInfo] = useState({
     name: '',
     size: '',
   });
@@ -105,10 +100,7 @@ const CreateDiary = () => {
         setImage({
           imageId: 0,
           imageURL: '',
-        });
-
-        setImageInfo({
-          name: '',
+           name: '',
           size: '',
         });
       },
@@ -230,8 +222,9 @@ const CreateDiary = () => {
     setImage({
       imageId: 0,
       imageURL: '',
+      name: '',
+      size: '',
     });
-    setImageInfo({ name: '', size: '' });
   };
 
   const handleSave = async () => {
@@ -244,8 +237,8 @@ const CreateDiary = () => {
     }
 
     // 사용자가 이미지를 첨부할 경우 postImage -> createDiary 실행
-    if (file) {
-      postImage(file, {
+    if (image.imageURL) {
+      postImage(image.imageURL, {
         onSuccess: res => {
           const request = {
             content: quillContent,
@@ -302,16 +295,6 @@ const CreateDiary = () => {
     }
   }, [date]);
 
-  const handleImageChange = (file: File) => {
-    const fileName = file.name;
-    const fileSize = (file.size / 1024).toFixed(2); // KB 단위로 변환
-
-    setImageInfo({
-      name: fileName,
-      size: fileSize,
-    });
-  };
-
   // Quill 내용 유무 확인
   const handleContentChange = (content: string) => {
     setDiaryField({ quillContent: content });
@@ -320,38 +303,14 @@ const CreateDiary = () => {
   };
 
   // 로컬 스토리지 임시 저장
-
-  const [imageBase64, setImageBase64] = useState<string | null>(null);
-
-  const handleImageBase64Change = (base64String: string) => {
-    setImageBase64(base64String);
-  };
-
-  useEffect(() => {
-    const savedDraft = localStorage.getItem('diary_draft');
-    if (savedDraft) {
-      const parsedDraft = JSON.parse(savedDraft);
-      setDiaryInfo(parsedDraft);
-
-      const checkText = parsedDraft.quillContent.replace(/<\/?[^>]+(>|$)/g, '');
-      setIsContentEmpty(checkText.trim().length === 0);
-    }
-  }, []);
-
   const handleSaveDraft = () => {
     if (isContentEmpty) {
       redToast(CREATE_MESSAGES.toast.write_diary);
       return; // 일기 내용이 비어 있으면 저장 요청 불가
     }
 
-    const draftData = {
-      ...diaryInfo,
-      imageBase64: imageBase64,
-      imageInfo: {
-        name: imageInfo.name,
-        size: imageInfo.size,
-      },
-    };
+    const draftData = { ...diaryInfo, imageInfo: image };
+
     localStorage.setItem('diary_draft', JSON.stringify(draftData));
     toast(CREATE_MESSAGES.toast.temp_save);
   };
@@ -360,24 +319,11 @@ const CreateDiary = () => {
     const savedDraft = localStorage.getItem('diary_draft');
     if (savedDraft) {
       const parsedDraft = JSON.parse(savedDraft);
+      const img = parsedDraft.imageInfo;
+
       setDiaryInfo(parsedDraft);
-      if (parsedDraft.imageBase64) {
-        setImage({
-          imageId: 0,
-          imageURL: parsedDraft.imageBase64,
-        });
-        setImageBase64(parsedDraft.imageBase64);
-        setImageInfo(parsedDraft.imageInfo || { name: '', size: '' });
-        // Base64를 File 객체로 변환
-        fetch(parsedDraft.imageBase64)
-          .then(res => res.blob())
-          .then(blob => {
-            const file = new File([blob], 'image.jpg', { type: 'image/jpeg' });
-            const formData = new FormData();
-            formData.append('image', file);
-            setFile(formData);
-          });
-      }
+      if (img) setImage(img);
+
       const checkText = parsedDraft.quillContent.replace(/<\/?[^>]+(>|$)/g, '');
       setIsContentEmpty(checkText.trim().length === 0);
     }
@@ -474,8 +420,8 @@ const CreateDiary = () => {
                 <S.Image>
                   <img src={image.imageURL} alt="image file" />
                 </S.Image>
-                <S.ImageName>{imageInfo.name}</S.ImageName>
-                <S.ImageData>{imageInfo.size} KB</S.ImageData>
+                <S.ImageName>{image.name}</S.ImageName>
+                <S.ImageData>{image.size} KB</S.ImageData>
                 <button onClick={removeImage}>
                   <S.ImageDelete>
                     <Close />
@@ -490,10 +436,7 @@ const CreateDiary = () => {
             onContentChange={handleContentChange}
             quillContent={diaryInfo.quillContent}
             setImage={setImage}
-            setFile={setFile}
-            handleImageChange={handleImageChange}
             selectedMode={selectedMode}
-            onImageBase64Change={handleImageBase64Change}
           />
         </S.MainContainer>
         <S.HashtagContainer>

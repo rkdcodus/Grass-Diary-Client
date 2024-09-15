@@ -1,11 +1,11 @@
-import { Container } from '@components/index';
 import { MainContainer } from './myComponents';
+import * as S from './style';
 
 const MyPage = () => {
   return (
-    <Container>
+    <S.SettingContainer>
       <MainContainer />
-    </Container>
+    </S.SettingContainer>
   );
 };
 
