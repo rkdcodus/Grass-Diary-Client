@@ -6,7 +6,6 @@ import { semantic } from '@styles/semantic';
 import { ReactComponent as CommentIcon } from '@svg/comment.svg';
 import EMOJI from '@constants/emoji';
 import { ReactComponent as Favorite } from '@svg/favorite.svg';
-import { useAuth } from '@state/auth/useAuth';
 import { useModal } from '@state/modal/useModal';
 import { INTERACTION } from '@styles/interaction';
 import { MODAL } from '@constants/message';

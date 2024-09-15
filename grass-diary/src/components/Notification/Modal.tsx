@@ -60,7 +60,10 @@ const Modal = () => {
             {button1.active && (
               <CustomButton
                 text={button1.text}
-                onClick={() => setActive(false)}
+                onClick={() => {
+                  if (button1.clickHandler) button1.clickHandler();
+                  setActive(false);
+                }}
                 color={button1.color}
                 interaction={button1.interaction}
               />
