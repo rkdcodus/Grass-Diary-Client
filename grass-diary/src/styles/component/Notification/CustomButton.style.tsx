@@ -2,29 +2,10 @@ import { INTERACTION } from '@styles/interaction';
 import { semantic } from '@styles/semantic';
 import styled from 'styled-components';
 
-type CustomButtonProps = {
-  text?: string;
-  onClick?: () => void;
-  color?: string;
-  interaction?: string;
-};
-
-const CustomButton = ({
-  onClick,
-  text,
-  color,
-  interaction,
-}: CustomButtonProps) => {
-  return (
-    <CustomBtn onClick={onClick} $color={color} $interaction={interaction}>
-      {text}
-    </CustomBtn>
-  );
-};
-
-export default CustomButton;
-
-const CustomBtn = styled.button<{ $color?: string; $interaction?: string }>`
+export const CustomButton = styled.button<{
+  $color?: string;
+  $interaction?: string;
+}>`
   cursor: pointer;
   align-self: stretch;
   display: flex;

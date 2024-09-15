@@ -1,6 +1,4 @@
-import styled from 'styled-components';
-import { semantic } from '@styles/semantic';
-import { TYPO } from '@styles/typo';
+import * as S from '@styles/component/Comment/Comments.style';
 import { useParamsId } from '@hooks/useParamsId';
 import { useGetComment } from '@hooks/api/comment/useGetComment';
 import { PostInput } from './Input';
@@ -11,21 +9,13 @@ const Comments = () => {
   const { data: comments } = useGetComment(diaryId);
 
   return (
-    <CommentContainer>
+    <S.CommentList>
       {comments?.map((comment: CommentResponse) => (
         <Comment key={comment.commentId} comment={comment} />
       ))}
       <PostInput parentId={null} />
-    </CommentContainer>
+    </S.CommentList>
   );
 };
 
 export default Comments;
-
-const CommentContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: var(--gap-xs, 0.625rem);
-  align-self: stretch;
-`;

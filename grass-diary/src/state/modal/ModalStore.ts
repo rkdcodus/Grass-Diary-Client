@@ -1,10 +1,5 @@
 import { create } from 'zustand';
 
-type Setting = {
-  title: string;
-  content: string;
-};
-
 type Actions = {
   setLogin: (login: boolean) => void;
   setActive: (active: boolean) => void;

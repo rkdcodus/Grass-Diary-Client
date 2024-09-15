@@ -1,22 +1,8 @@
 import styled from 'styled-components';
 import { semantic } from '@styles/semantic';
 import { TYPO } from '@styles/typo';
-import { ReactComponent as Info } from '@svg/info.svg';
 
-type CalloutProps = {
-  message: string;
-};
-
-const Callout = ({ message }: CalloutProps) => {
-  return (
-    <Container>
-      <Info />
-      <Text>{message}</Text>
-    </Container>
-  );
-};
-
-const Container = styled.div`
+export const Container = styled.div`
   display: flex;
   align-self: center;
   padding: var(--gap-3xs, 0.375rem) var(--gap-sm, 0.75rem);
@@ -30,9 +16,8 @@ const Container = styled.div`
   background: ${semantic.light.fill.transparent.assistive};
 `;
 
-const Text = styled.p`
+export const Text = styled.p`
   color: ${semantic.light.object.transparent.alternative};
 
   ${TYPO.caption2}
 `;
-export default Callout;

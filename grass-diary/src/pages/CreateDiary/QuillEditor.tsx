@@ -5,17 +5,15 @@ import 'react-quill/dist/quill.snow.css';
 
 import { useState, useEffect, useMemo } from 'react';
 import { END_POINT } from '@constants/api';
-import { CONSOLE_ERROR } from '@constants/message';
+import { CONSOLE_ERROR, TOAST } from '@constants/message';
 import { QUILL_MESSAGE } from '@constants/message';
+import { useToast } from '@state/toast/useToast';
 
 type QuillEditorProps = {
   onContentChange: (content: string) => void;
-  handleImageChange: (file: File) => void;
-  onImageBase64Change: (base64String: string) => void;
   selectedMode: string;
   quillContent: string;
-  setImage: React.Dispatch<React.SetStateAction<DiaryImage>>;
-  setFile: React.Dispatch<React.SetStateAction<FormData | undefined>>;
+  setImage: React.Dispatch<React.SetStateAction<ImageInfo>>;
 };
 
 type QuestionResponse = {
@@ -26,9 +24,6 @@ const QuillEditor = ({
   onContentChange,
   quillContent,
   setImage,
-  setFile,
-  handleImageChange,
-  onImageBase64Change,
   selectedMode,
 }: QuillEditorProps) => {
   const handleChange = (
@@ -41,6 +36,7 @@ const QuillEditor = ({
   };
 
   const [todayQuestion, setTodayQuestion] = useState<string>();
+  const { redToast } = useToast();
 
   const placeholderText =
     selectedMode === `customEntry`
@@ -55,23 +51,24 @@ const QuillEditor = ({
 
     input.onchange = () => {
       const file = input.files ? input.files[0] : null;
+      const maxSize = 5 * 1024 * 1024;
+
+      if (file && file.size > maxSize) {
+        return redToast(TOAST.image_capacity_limit);
+      }
 
       if (file) {
-        const formData = new FormData();
-        formData.append('image', file);
-        setFile(formData);
-
-        handleImageChange(file);
-
         const reader = new FileReader();
         reader.readAsDataURL(file);
+
         reader.onloadend = () => {
           const base64String = reader.result as string;
           setImage({
             imageId: 0,
             imageURL: base64String,
+            name: file.name,
+            size: (file.size / 1024).toFixed(2), // KB 단위로 변환
           });
-          onImageBase64Change(base64String);
         };
       }
     };

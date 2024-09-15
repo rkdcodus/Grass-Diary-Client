@@ -74,6 +74,11 @@ interface DiaryImage {
   imageURL: string;
 }
 
+interface ImageInfo extends DiaryImage {
+  name: string;
+  size: string;
+}
+
 // DiaryDetail Type
 interface IDiaryDetail extends IDiary {
   memberId: Id;

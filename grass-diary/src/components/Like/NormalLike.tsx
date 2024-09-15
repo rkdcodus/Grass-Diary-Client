@@ -1,15 +1,6 @@
 import { semantic } from '@styles/semantic';
-import stylex from '@stylexjs/stylex';
 import { ReactComponent as Favorite } from '@svg/favorite.svg';
-
-const feed = stylex.create({
-  like: (justifyContent: string) => ({
-    display: 'flex',
-    gap: '0.625rem',
-
-    justifyContent,
-  }),
-});
+import * as S from '@styles/component/Like/NormalLike.style';
 
 interface INormalLikeProps {
   likeCount: number;
@@ -18,7 +9,7 @@ interface INormalLikeProps {
 
 const NormalLike = ({ likeCount, justifyContent }: INormalLikeProps) => {
   return (
-    <div {...stylex.props(feed.like(justifyContent))}>
+    <S.Box $justifyContent={justifyContent}>
       <span>
         <Favorite
           width={22}
@@ -27,7 +18,7 @@ const NormalLike = ({ likeCount, justifyContent }: INormalLikeProps) => {
         />
       </span>
       <span>{likeCount}</span>
-    </div>
+    </S.Box>
   );
 };
 
