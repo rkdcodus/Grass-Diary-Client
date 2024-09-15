@@ -355,7 +355,7 @@ const EditDiary = () => {
                 <S.ImageData>{image.size} KB</S.ImageData>
                 <button onClick={removeImage}>
                   <S.ImageDelete>
-                    <Close />
+                    <Close width={16} height={16} />
                   </S.ImageDelete>
                 </button>
               </>

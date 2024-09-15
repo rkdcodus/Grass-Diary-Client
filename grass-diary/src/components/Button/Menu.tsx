@@ -9,9 +9,13 @@ interface MenuProps {
 }
 
 const Menu = ({ onClick, text, svg, line, color }: MenuProps) => {
+  const clickHandler = (event: React.MouseEvent) => {
+    if (onClick) onClick();
+    event.stopPropagation();
+  };
   return (
     <>
-      <S.MenuBox onClick={onClick}>
+      <S.MenuBox onClick={clickHandler}>
         <S.MenuText color={color}>{text}</S.MenuText>
         <S.MenuIcon src={svg} alt={text} />
       </S.MenuBox>
