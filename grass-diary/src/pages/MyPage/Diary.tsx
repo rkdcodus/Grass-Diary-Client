@@ -15,6 +15,7 @@ import { ReactComponent as FavoriteIcon } from '@svg/favorite.svg';
 import { ReactComponent as CommentIcon } from '@svg/comment.svg';
 import { MoodProfile, Profile, Divider } from '@components/index';
 import Setting from '@pages/DiaryDetail/Setting';
+import { END_POINT } from '@constants/api';
 
 interface IPagination {
   pageSize: number;
@@ -187,7 +188,7 @@ const Diary = ({
   >({
     queryKey: ['selectedDiary', memberId, hashtagId],
     queryFn: () =>
-      API.get(`search/tagId/${memberId}?tagId=${hashtagId}`).then(
+      API.get(`${END_POINT.hashtagList(memberId, hashtagId)}`).then(
         ({ data }) => data,
       ),
     enabled: !!hashtagId && !!memberId,
