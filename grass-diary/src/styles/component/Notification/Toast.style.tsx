@@ -19,6 +19,7 @@ export const toastFadeIn = keyframes`
 `;
 
 export const ToastBox = styled.div<{ $active: boolean; $isRed: boolean }>`
+  display: ${props => (props.$active ? 'block' : 'none')};
   position: fixed;
   top: 100%;
   left: 50%;
