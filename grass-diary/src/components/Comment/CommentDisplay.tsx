@@ -66,9 +66,9 @@ const CommentDisplay = ({ comment, parentId }: CommentDisplayProps) => {
           />
         </div>
       </S.TopBox>
-      <S.ContentBox $isReply={comment.depth ? true : false}>
+      <S.ContentText $isReply={comment.depth ? true : false}>
         {comment.content}
-      </S.ContentBox>
+      </S.ContentText>
     </S.CommentItem>
   );
 };

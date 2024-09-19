@@ -57,13 +57,13 @@ export const TimeText = styled.p`
   color: ${semantic.light.object.transparent.assistive};
 `;
 
-export const ContentBox = styled.div<{
+export const ContentText = styled.p<{
   $isReply?: boolean;
 }>`
   ${TYPO.body1}
   ${props => props.$isReply && `padding-left: var(--gap-2xl, 2rem);`}
   color: ${semantic.light.object.solid.normal};
-  white-space: pre;
+  word-break: break-word;
 `;
 
 export const DeletedText = styled.p`
