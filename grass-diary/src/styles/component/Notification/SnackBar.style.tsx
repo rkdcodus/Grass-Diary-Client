@@ -34,6 +34,7 @@ export const ToastContainer = styled.div<{ $active: boolean }>`
 `;
 
 export const MainText = styled.p`
+  white-space: nowrap;
   color: ${semantic.light.inverse.solid.hero};
   text-align: center;
   ${TYPO.label2}
@@ -44,6 +45,7 @@ export const HighlightText = styled.span`
 `;
 
 export const NavigateButton = styled.button`
+  white-space: nowrap;
   display: flex;
   padding: var(--gap-4xs, 0.25rem) var(--gap-2xs, 0.5rem);
 
