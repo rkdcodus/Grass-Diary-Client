@@ -75,13 +75,6 @@ const CreateDiary = () => {
 
     const button1 = {
       active: true,
-      text: MODAL.create_diary.continue_entry,
-      color: semantic.light.accent.solid.hero,
-      interaction: INTERACTION.accent.subtle(),
-    };
-
-    const button2 = {
-      active: true,
       text: MODAL.create_diary.new_entry,
       clickHandler: () => {
         localStorage.removeItem('diary_draft');
@@ -106,7 +99,15 @@ const CreateDiary = () => {
       },
     };
 
-    modal(setting, button2, button1);
+    const button2 = {
+      active: true,
+      text: MODAL.create_diary.continue_entry,
+      color: semantic.light.accent.solid.hero,
+      interaction: INTERACTION.accent.subtle(),
+      clickHandler: () => {},
+    };
+
+    modal(setting, button1, button2);
   };
 
   useEffect(() => {
@@ -371,44 +372,48 @@ const CreateDiary = () => {
           </S.SaveBtnContainer>
         </S.SaveWrap>
         <S.DiaryModeSelector>
-          <S.DailyQuestionBox $isSelected={selectedMode === 'dailyQuestion'}>
-            <S.ModeBtn>
-              <input
-                id="mode-btn-question"
-                type="radio"
-                checked={selectedMode === 'dailyQuestion'}
-                onChange={() => handleModeChange('dailyQuestion')}
-              />
-              <label htmlFor="mode-btn-question"></label>
-            </S.ModeBtn>
-            <S.ModeBoxContainer>
-              <S.DiaryModeSelectorText>
-                {CREATE_MESSAGES.question_title}
-              </S.DiaryModeSelectorText>
-              <S.DiaryModeSelectorSubText>
-                {CREATE_MESSAGES.question_prompt}
-              </S.DiaryModeSelectorSubText>
-            </S.ModeBoxContainer>
-          </S.DailyQuestionBox>
-          <S.CustomEntryBox $isSelected={selectedMode === 'customEntry'}>
-            <S.ModeBtn>
-              <input
-                id="mode-btn-custom"
-                type="radio"
-                checked={selectedMode === 'customEntry'}
-                onChange={() => handleModeChange('customEntry')}
-              />
-              <label htmlFor="mode-btn-custom"></label>
-            </S.ModeBtn>
-            <S.ModeBoxContainer>
-              <S.DiaryModeSelectorText>
-                {CREATE_MESSAGES.personal_diary}
-              </S.DiaryModeSelectorText>
-              <S.DiaryModeSelectorSubText>
-                {CREATE_MESSAGES.personal_prompt}
-              </S.DiaryModeSelectorSubText>
-            </S.ModeBoxContainer>
-          </S.CustomEntryBox>
+          <label htmlFor="mode-btn-question">
+            <S.DailyQuestionBox $isSelected={selectedMode === 'dailyQuestion'}>
+              <S.ModeBtn>
+                <input
+                  id="mode-btn-question"
+                  type="radio"
+                  checked={selectedMode === 'dailyQuestion'}
+                  onChange={() => handleModeChange('dailyQuestion')}
+                />
+                <label htmlFor="mode-btn-question"></label>
+              </S.ModeBtn>
+              <S.ModeBoxContainer>
+                <S.DiaryModeSelectorText>
+                  {CREATE_MESSAGES.question_title}
+                </S.DiaryModeSelectorText>
+                <S.DiaryModeSelectorSubText>
+                  {CREATE_MESSAGES.question_prompt}
+                </S.DiaryModeSelectorSubText>
+              </S.ModeBoxContainer>
+            </S.DailyQuestionBox>
+          </label>
+          <label htmlFor="mode-btn-custom">
+            <S.CustomEntryBox $isSelected={selectedMode === 'customEntry'}>
+              <S.ModeBtn>
+                <input
+                  id="mode-btn-custom"
+                  type="radio"
+                  checked={selectedMode === 'customEntry'}
+                  onChange={() => handleModeChange('customEntry')}
+                />
+                <label htmlFor="mode-btn-custom"></label>
+              </S.ModeBtn>
+              <S.ModeBoxContainer>
+                <S.DiaryModeSelectorText>
+                  {CREATE_MESSAGES.personal_diary}
+                </S.DiaryModeSelectorText>
+                <S.DiaryModeSelectorSubText>
+                  {CREATE_MESSAGES.personal_prompt}
+                </S.DiaryModeSelectorSubText>
+              </S.ModeBoxContainer>
+            </S.CustomEntryBox>
+          </label>
         </S.DiaryModeSelector>
         <S.Divider>
           <S.DividerLine />
@@ -445,7 +450,7 @@ const CreateDiary = () => {
           </S.HashtagTitleBox>
           <S.HashtagBox>
             <S.HashtagContent>
-              <Tag />
+              <Tag style={{ flexShrink: 0 }} />
               <S.HashtagArrTitle>
                 {diaryInfo.hashArr.map((tag, index) => (
                   <span key={index}>
