@@ -53,7 +53,11 @@ const Modal = () => {
             </button>
             <S.TermText>
               로그인 시,{' '}
-              <S.TermAnchor href={FOOTER.terms_of_use_url}>
+              <S.TermAnchor
+                href={FOOTER.terms_of_use_url}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 서비스 이용약관
               </S.TermAnchor>
               에 동의하는 것으로 간주됩니다.
