@@ -196,6 +196,8 @@ export const DailyQuestionBox = styled.div<{ $isSelected: boolean }>`
     props.$isSelected
       ? semantic.light.accent.transparent.alternative
       : semantic.light.bg.solid.normal};
+
+  cursor: pointer;
 `;
 
 export const CustomEntryBox = styled.div<{ $isSelected: boolean }>`
@@ -214,6 +216,8 @@ export const CustomEntryBox = styled.div<{ $isSelected: boolean }>`
     props.$isSelected
       ? semantic.light.accent.transparent.alternative
       : semantic.light.bg.solid.normal};
+
+  cursor: pointer;
 `;
 
 export const ModeBtn = styled.div`
