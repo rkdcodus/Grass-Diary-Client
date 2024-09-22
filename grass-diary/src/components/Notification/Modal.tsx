@@ -10,6 +10,7 @@ import {
   useModalButton1,
   useModalButton2,
 } from '@state/modal/ModalButtonStore';
+import { FOOTER } from '@constants/message';
 
 const Modal = () => {
   const login = useModalLogin();
@@ -51,8 +52,11 @@ const Modal = () => {
               <img src="/assets/img/googleLogin.png" />
             </button>
             <S.TermText>
-              로그인 시, <S.TermAnchor href="#">서비스 이용약관</S.TermAnchor>에
-              동의하는 것으로 간주됩니다.
+              로그인 시,{' '}
+              <S.TermAnchor href={FOOTER.terms_of_use_url}>
+                서비스 이용약관
+              </S.TermAnchor>
+              에 동의하는 것으로 간주됩니다.
             </S.TermText>
           </S.LoginBox>
         ) : (
