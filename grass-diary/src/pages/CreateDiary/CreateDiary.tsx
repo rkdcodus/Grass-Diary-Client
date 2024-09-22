@@ -75,13 +75,6 @@ const CreateDiary = () => {
 
     const button1 = {
       active: true,
-      text: MODAL.create_diary.continue_entry,
-      color: semantic.light.accent.solid.hero,
-      interaction: INTERACTION.accent.subtle(),
-    };
-
-    const button2 = {
-      active: true,
       text: MODAL.create_diary.new_entry,
       clickHandler: () => {
         localStorage.removeItem('diary_draft');
@@ -106,7 +99,15 @@ const CreateDiary = () => {
       },
     };
 
-    modal(setting, button2, button1);
+    const button2 = {
+      active: true,
+      text: MODAL.create_diary.continue_entry,
+      color: semantic.light.accent.solid.hero,
+      interaction: INTERACTION.accent.subtle(),
+      clickHandler: () => {},
+    };
+
+    modal(setting, button1, button2);
   };
 
   useEffect(() => {
