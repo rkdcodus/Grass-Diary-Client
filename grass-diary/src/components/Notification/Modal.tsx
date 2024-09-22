@@ -44,9 +44,9 @@ const Modal = () => {
           <S.LoginBox>
             <button
               onClick={() => {
-                handleGoogleLogin();
                 setLogin(false);
                 setActive(false);
+                handleGoogleLogin();
               }}
             >
               <img src="/assets/img/googleLogin.png" />
@@ -69,8 +69,8 @@ const Modal = () => {
               <CustomButton
                 text={button1.text}
                 onClick={() => {
-                  if (button1.clickHandler) button1.clickHandler();
                   setActive(false);
+                  if (button1.clickHandler) button1.clickHandler();
                 }}
                 color={button1.color}
                 interaction={button1.interaction}
@@ -80,8 +80,8 @@ const Modal = () => {
               <CustomButton
                 text={button2.text}
                 onClick={() => {
-                  if (button2.clickHandler) button2.clickHandler();
                   setActive(false);
+                  if (button2.clickHandler) button2.clickHandler();
                 }}
                 color={button2.color}
                 interaction={button2.interaction}
