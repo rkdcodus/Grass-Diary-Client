@@ -445,7 +445,7 @@ const CreateDiary = () => {
           </S.HashtagTitleBox>
           <S.HashtagBox>
             <S.HashtagContent>
-              <Tag />
+              <Tag style={{ flexShrink: 0 }} />
               <S.HashtagArrTitle>
                 {diaryInfo.hashArr.map((tag, index) => (
                   <span key={index}>

@@ -25,13 +25,3 @@ export const Text = styled.p`
     ${TYPO.caption1}
   }
 `;
-
-export const Space = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  @media screen and (max-width: 60em) {
-    font-size: 1em;
-  }
-`;
