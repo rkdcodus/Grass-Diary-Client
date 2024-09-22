@@ -48,7 +48,11 @@ const SnackBar = () => {
           <S.NavigateButton onClick={clickHandler}>{linkText}</S.NavigateButton>
         )}
 
-        <S.CloseButton onClick={() => setActive(false)}>
+        <S.CloseButton
+          onClick={() => {
+            isMobile ? clickHandler() : setActive(false);
+          }}
+        >
           {isMobile ? (
             <Arrow
               width={16}
