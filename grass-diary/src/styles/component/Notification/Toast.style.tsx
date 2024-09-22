@@ -29,7 +29,7 @@ export const ToastBox = styled.div<{ $active: boolean; $isRed: boolean }>`
   padding: var(--gap-sm, 0.75rem) var(--gap-xl, 1.5rem);
   gap: var(--gap-2xs, 0.5rem);
 
-  border-radius: var(--radius-round, 6rem);
+  border-radius: var(--radius-md, 1rem);
   background: ${props =>
     props.$isRed
       ? semantic.light.feedback.solid.negative

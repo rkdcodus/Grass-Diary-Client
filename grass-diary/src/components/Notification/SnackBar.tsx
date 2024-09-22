@@ -1,6 +1,7 @@
 import { semantic } from '@styles/semantic';
 import * as S from '@styles/component/Notification/SnackBar.style';
 import { ReactComponent as CloseIcon } from '@svg/close.svg';
+import { ReactComponent as Arrow } from '@svg/chevron_right.svg';
 import {
   useSnackBarActions,
   useSnackBarActive,
@@ -10,9 +11,11 @@ import {
   useSnackBarText,
 } from '@state/toast/SnackBarStore';
 import { useNavigate } from 'react-router-dom';
+import useIsMobile from '@hooks/useIsMobile';
 
 const SnackBar = () => {
   const navigate = useNavigate();
+  const isMobile = useIsMobile();
   const active = useSnackBarActive();
   const text = useSnackBarText();
   const highlight = useSnackBarHighlight();
@@ -40,16 +43,27 @@ const SnackBar = () => {
           text
         )}
       </S.MainText>
-      {linkText !== '' && (
-        <S.NavigateButton onClick={clickHandler}>{linkText}</S.NavigateButton>
-      )}
-      <S.CloseButton onClick={() => setActive(false)}>
-        <CloseIcon
-          width={16}
-          height={16}
-          fill={semantic.light.inverse.solid.normal}
-        />
-      </S.CloseButton>
+      <S.ButtonContainer>
+        {linkText !== '' && (
+          <S.NavigateButton onClick={clickHandler}>{linkText}</S.NavigateButton>
+        )}
+
+        <S.CloseButton onClick={() => setActive(false)}>
+          {isMobile ? (
+            <Arrow
+              width={16}
+              height={16}
+              fill={semantic.light.inverse.solid.normal}
+            />
+          ) : (
+            <CloseIcon
+              width={16}
+              height={16}
+              fill={semantic.light.inverse.solid.normal}
+            />
+          )}
+        </S.CloseButton>
+      </S.ButtonContainer>
     </S.ToastContainer>
   );
 };
