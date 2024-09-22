@@ -30,6 +30,8 @@ const Modal = () => {
         <S.TopBox>
           <S.Title>{setting.title}</S.Title>
           <S.CloseIcon
+            width={20}
+            height={20}
             onClick={() => {
               setActive(false);
               setLogin(false);
