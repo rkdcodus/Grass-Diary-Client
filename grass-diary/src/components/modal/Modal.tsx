@@ -11,7 +11,6 @@ import {
   useModalButton2,
 } from '@state/modal/ModalButtonStore';
 import { API_URI } from '@services/index';
-import { FOOTER } from '@constants/message';
 
 const Modal = () => {
   const login = useModalLogin();
@@ -31,8 +30,6 @@ const Modal = () => {
         <S.TopBox>
           <S.Title>{setting.title}</S.Title>
           <S.CloseIcon
-            width={20}
-            height={20}
             onClick={() => {
               setActive(false);
               setLogin(false);
@@ -47,23 +44,16 @@ const Modal = () => {
           <S.LoginBox>
             <button
               onClick={() => {
+                handleGoogleLogin();
                 setLogin(false);
                 setActive(false);
-                handleGoogleLogin();
               }}
             >
               <img src="/assets/img/googleLogin.png" />
             </button>
             <S.TermText>
-              로그인 시,{' '}
-              <S.TermAnchor
-                href={FOOTER.terms_of_use_url}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                서비스 이용약관
-              </S.TermAnchor>
-              에 동의하는 것으로 간주됩니다.
+              로그인 시, <S.TermAnchor href="#">서비스 이용약관</S.TermAnchor>에
+              동의하는 것으로 간주됩니다.
             </S.TermText>
           </S.LoginBox>
         ) : (
@@ -72,8 +62,8 @@ const Modal = () => {
               <CustomButton
                 text={button1.text}
                 onClick={() => {
-                  setActive(false);
                   if (button1.clickHandler) button1.clickHandler();
+                  setActive(false);
                 }}
                 color={button1.color}
                 interaction={button1.interaction}
@@ -83,8 +73,8 @@ const Modal = () => {
               <CustomButton
                 text={button2.text}
                 onClick={() => {
-                  setActive(false);
                   if (button2.clickHandler) button2.clickHandler();
+                  setActive(false);
                 }}
                 color={button2.color}
                 interaction={button2.interaction}

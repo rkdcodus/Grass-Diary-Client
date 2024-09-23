@@ -8,9 +8,7 @@ type CalloutProps = {
 const Callout = ({ message }: CalloutProps) => {
   return (
     <S.Container>
-      <S.Space>
-        <Info />
-      </S.Space>
+      <Info style={{ flexShrink: 0 }} />
       <S.Text>{message}</S.Text>
     </S.Container>
   );
