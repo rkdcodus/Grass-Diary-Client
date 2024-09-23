@@ -5,7 +5,6 @@ import { useQuery } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 
 import { useWriterProfile } from './useWriterProfile';
-import { useNavigate } from 'react-router-dom';
 
 const fetchDiaryDetails = async (id: Id): Promise<IDiaryDetail> => {
   const res = await API.get(END_POINT.diary(id));
