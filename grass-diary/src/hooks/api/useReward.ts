@@ -27,6 +27,7 @@ export const useReward = () => {
     queryFn: fetchUseReward,
     initialData: { rewardPoint: 0 },
     enabled: !!memberId,
+    throwOnError: true,
   });
 
   if (isError) console.error(CONSOLE_ERROR.reward.get + error.message);

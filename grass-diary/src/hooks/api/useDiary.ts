@@ -31,6 +31,7 @@ const useDiary = ({ memberId, currentPage, sortOrder }: IUseDiaryProps) => {
     queryFn,
     enabled: !!memberId,
     onError: error => console.error(CONSOLE_ERROR.diary.get + error),
+    throwOnError: true,
   });
 
   const diaryList: IDiary[] = diary?.content || [];

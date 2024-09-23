@@ -30,6 +30,7 @@ export const useLatestDiaries = () => {
       return lastPage[lastPage.length - 1].diaryId;
     },
     initialPageParam: 922337203685477600,
+    throwOnError: true,
   });
 
   const latest: Feed[][] = data?.pages || [];

@@ -14,5 +14,6 @@ export const usePopularDiaries = () => {
       const res = await fetchPopularDiary();
       return res.data;
     },
+    throwOnError: true,
   });
 };

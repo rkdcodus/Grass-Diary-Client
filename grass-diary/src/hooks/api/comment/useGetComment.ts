@@ -9,5 +9,6 @@ export const useGetComment = (diaryId: Id) => {
       const res = await API.get(END_POINT.comment(diaryId));
       return res.data;
     },
+    throwOnError: true,
   });
 };
