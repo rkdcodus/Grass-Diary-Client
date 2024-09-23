@@ -25,7 +25,7 @@ import { MODAL } from '@constants/message';
 
 const CreateDiary = () => {
   const navigate = useNavigate();
-  const memberId = useUser();
+  const { memberId } = useUser();
   const { modal } = useModal();
   const { mutate: createDiary } = useCreateDiary(memberId);
   const { mutate: postImage } = usePostImage();

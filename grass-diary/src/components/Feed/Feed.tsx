@@ -18,7 +18,7 @@ interface IFeedProps {
 
 const Feed = ({ feed, isTop }: IFeedProps) => {
   const navigate = useNavigate();
-  const memberId = useUser();
+  const { memberId } = useUser();
   const { data: writer } = useWriterProfile(feed.memberId);
   const { modal, loginModal } = useModal();
 

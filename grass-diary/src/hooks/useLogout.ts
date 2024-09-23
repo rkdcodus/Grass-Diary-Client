@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { useAuthActions } from '@state/auth/authStore';
-import { useSetMemberId } from '@state/user/userStore';
+import { useSetMemberId } from '@state/user/UserStore';
 
 const useLogout = () => {
   const navigate = useNavigate();
@@ -9,6 +9,7 @@ const useLogout = () => {
 
   const clearAuth = () => {
     localStorage.removeItem('accessToken');
+    localStorage.setItem('manualLogout', 'true');
     setIsAuthenticated(false);
     setMemberId(0);
 

@@ -20,7 +20,7 @@ const fetchAxios = async (memberId: Id) => {
 
 export const useProfile = () => {
   const { renderErrorPage } = useError();
-  const memberId = useUser();
+  const { memberId } = useUser();
   const profileImageURL = useProfileImageURL();
   const nickname = useNickname();
   const profileIntro = useProfileIntro();

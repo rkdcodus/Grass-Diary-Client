@@ -13,7 +13,7 @@ const fetchAxios = async () => {
   return res.data.memberId;
 };
 
-export const useUser = (): Id => {
+export const useUser = () => {
   const { renderErrorPage } = useError();
   const { isAuthenticated } = useAuth();
   const memberId = useMemberId();
@@ -28,6 +28,9 @@ export const useUser = (): Id => {
     queryKey: ['memberId'],
     queryFn: fetchAxios,
     enabled: !!isAuthenticated,
+    retry: 1,
+    refetchInterval: 5000,
+    refetchIntervalInBackground: true,
   });
 
   useEffect(() => {
@@ -38,5 +41,5 @@ export const useUser = (): Id => {
     } else if (isSuccess) setMemberId(data);
   }, [isAuthenticated, isError, isSuccess]);
 
-  return memberId;
+  return { memberId, isError };
 };

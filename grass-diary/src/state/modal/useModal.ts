@@ -21,6 +21,7 @@ export const useModal = () => {
     setActive(true);
     setLogin(true);
     setSetting(setting);
+    localStorage.removeItem('manualLogout');
   };
 
   return { modal, loginModal };

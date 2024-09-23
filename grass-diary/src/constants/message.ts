@@ -245,6 +245,10 @@ export const MODAL = {
     new_entry: '새로 작성',
     continue_entry: '이어서 작성',
   },
+  login_expiration: {
+    title: '로그인 만료',
+    content: '로그인 만료 시간 10분이 지나\n자동으로 로그아웃 되었어요',
+  },
 } as const;
 
 export const TOAST = {

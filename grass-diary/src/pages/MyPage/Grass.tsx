@@ -39,7 +39,7 @@ interface IGrass {
 }
 
 const Grass = ({ setSelectedDiary }: IGrass) => {
-  const memberId = useUser();
+  const { memberId } = useUser();
   const grassColors = useGrass(memberId);
   const { year, grass } = createGrass();
   const { renderErrorPage } = useError();

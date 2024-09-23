@@ -7,7 +7,7 @@ import { AxiosError } from 'axios';
 import { useError } from '@hooks/useError';
 
 export const useReward = () => {
-  const memberId = useUser();
+  const { memberId } = useUser();
   const { renderErrorPage } = useError();
 
   const fetchUseReward = async (): Promise<RewardPointResponse> => {
