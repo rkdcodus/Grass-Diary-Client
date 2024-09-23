@@ -15,11 +15,14 @@ import { useProfileActions } from '@state/profile/ProfileStore';
 import { useModal } from '@state/modal/useModal';
 import { INTERACTION } from '@styles/interaction';
 import { semantic } from '@styles/semantic';
+import { AxiosError } from 'axios';
+import { useError } from '@hooks/useError';
 
 const Setting = () => {
   const queryClient: QueryClient = useQueryClient();
   const { nickname, profileIntro }: omitProfileImageURL = useProfile();
   const { setNickName, setProfileIntro } = useProfileActions();
+  const { renderErrorPage } = useError();
   const { modal } = useModal();
 
   const [isFocused, setIsFocused] = useState(false);
@@ -55,7 +58,7 @@ const Setting = () => {
 
   const updateProfile = useMutation<
     omitProfileImageURL,
-    Error,
+    AxiosError<ApiErrorResponse>,
     omitProfileImageURL
   >({
     mutationFn: profileInfo =>
@@ -65,7 +68,10 @@ const Setting = () => {
       setIsEditingNickname(false);
       setNickName(editNickname);
     },
-    onError: error => console.error(CONSOLE_ERROR.member.patch + error),
+    onError: error => {
+      console.error(CONSOLE_ERROR.member.patch + error);
+      renderErrorPage(error);
+    },
   });
 
   return (

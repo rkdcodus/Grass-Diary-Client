@@ -10,7 +10,7 @@ import {
   Share,
   Setting,
   MyPage,
-  NonExistentDiary,
+  ErrorPage,
   RewardPage,
 } from '@pages/index';
 
@@ -32,7 +32,7 @@ const router = createBrowserRouter([
       { path: '/diary/:diaryId', element: <DiaryDetail /> },
       { path: '/setting', element: <Setting /> },
       { path: '/mypage', element: <MyPage /> },
-      { path: '/non-existent-page', element: <NonExistentDiary /> },
+      { path: '/errorpage', element: <ErrorPage /> },
       { path: '/rewardpage', element: <RewardPage /> },
     ],
   },

@@ -1,8 +1,11 @@
 import { useMutation } from '@tanstack/react-query';
 import API from '@services/index';
 import { END_POINT } from '@constants/api';
+import { AxiosError } from 'axios';
+import { useError } from '@hooks/useError';
 
 export const usePostImage = () => {
+  const { renderErrorPage } = useError();
   return useMutation({
     mutationFn: async (imageURL: string) => {
       // base64 형식을 객체로 변환.
@@ -17,8 +20,9 @@ export const usePostImage = () => {
 
       return API.post(END_POINT.image, formData);
     },
-    onError: error => {
+    onError: (error: AxiosError<ApiErrorResponse>) => {
       console.error(error.message);
+      renderErrorPage(error);
     },
   });
 };

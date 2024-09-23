@@ -1,13 +1,12 @@
 import * as S from '@styles/CreateDiary/QuillEditor.style';
-import API from '@services/index';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 
-import { useState, useEffect, useMemo } from 'react';
-import { END_POINT } from '@constants/api';
-import { CONSOLE_ERROR, TOAST } from '@constants/message';
+import { useMemo } from 'react';
+import { TOAST } from '@constants/message';
 import { QUILL_MESSAGE } from '@constants/message';
 import { useToast } from '@state/toast/useToast';
+import { useTodayQuestion } from '@hooks/api/useTodayQuestion';
 
 type QuillEditorProps = {
   onContentChange: (content: string) => void;
@@ -34,14 +33,13 @@ const QuillEditor = ({
   ) => {
     onContentChange(editor.getHTML());
   };
-
-  const [todayQuestion, setTodayQuestion] = useState<string>();
+  const { question } = useTodayQuestion();
   const { redToast } = useToast();
 
   const placeholderText =
     selectedMode === `customEntry`
       ? QUILL_MESSAGE.custom_entry_placeholder
-      : todayQuestion || 'todayQuestion Loading...';
+      : question?.question || 'todayQuestion Loading...';
 
   const ImageHandler = () => {
     const input = document.createElement('input');
@@ -73,16 +71,6 @@ const QuillEditor = ({
       }
     };
   };
-
-  useEffect(() => {
-    API.get<QuestionResponse>(END_POINT.today_question)
-      .then(response => {
-        setTodayQuestion(response.data.question);
-      })
-      .catch(error => {
-        console.error(CONSOLE_ERROR.question.get + error);
-      });
-  }, []);
 
   const toolbarOptions = [
     ['image'],
