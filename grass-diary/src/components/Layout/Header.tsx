@@ -6,7 +6,11 @@ import { useNavigate } from 'react-router-dom';
 import { useUser } from '@state/user/useUser';
 import { useModal } from '@state/modal/useModal';
 
-const Header = () => {
+interface HeaderProps {
+  resetErrorBoundary?: (...args: any[]) => void;
+}
+
+const Header = ({ resetErrorBoundary }: HeaderProps) => {
   const memberId = useUser();
   const { loginModal } = useModal();
   const navigate = useNavigate();
@@ -15,12 +19,24 @@ const Header = () => {
     <S.Header>
       <S.Container>
         <S.LogoBox>
-          <S.LogoButton onClick={() => navigate('/main')}>
+          <S.LogoButton
+            onClick={() => {
+              if (resetErrorBoundary) resetErrorBoundary();
+              navigate('/main');
+            }}
+          >
             <S.LogoImage src={sampleLogo} />
             <S.LogoIcon />
           </S.LogoButton>
         </S.LogoBox>
-        <S.FeedButton onClick={() => navigate('/share')}>피드</S.FeedButton>
+        <S.FeedButton
+          onClick={() => {
+            if (resetErrorBoundary) resetErrorBoundary();
+            navigate('/share');
+          }}
+        >
+          피드
+        </S.FeedButton>
         {memberId ? (
           <S.MenuBarBox>
             <Profile width="2rem" height="2rem" />

@@ -8,3 +8,4 @@ export { default as Setting } from './Setting/Setting';
 export { default as MyPage } from './MyPage/MyPage';
 export { default as NonExistentDiary } from './DiaryDetail/NonExistentDiary';
 export { default as RewardPage } from './RewardPage/RewardPage';
+export { default as ErrorPage } from './Error/ErrorPage';

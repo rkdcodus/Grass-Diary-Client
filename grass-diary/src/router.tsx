@@ -13,27 +13,33 @@ import {
   NonExistentDiary,
   RewardPage,
 } from '@pages/index';
+import ErrorBoundaryLayout from '@components/Layout/ErrorBoundaryLayout';
 
 const router = createBrowserRouter([
   {
-    element: <Layout />,
+    element: <ErrorBoundaryLayout />,
     children: [
-      { path: '/', element: <Intro /> },
-      { path: '/main', element: <Main /> },
-      { path: '/share', element: <Share /> },
-    ],
-  },
+      {
+        element: <Layout />,
+        children: [
+          { path: '/', element: <Intro /> },
+          { path: '/main', element: <Main /> },
+          { path: '/share', element: <Share /> },
+        ],
+      },
 
-  {
-    element: <ProtectedRoute />,
-    children: [
-      { path: '/creatediary', element: <CreateDiary /> },
-      { path: '/editdiary/:diaryId', element: <EditDiary /> },
-      { path: '/diary/:diaryId', element: <DiaryDetail /> },
-      { path: '/setting', element: <Setting /> },
-      { path: '/mypage', element: <MyPage /> },
-      { path: '/non-existent-page', element: <NonExistentDiary /> },
-      { path: '/rewardpage', element: <RewardPage /> },
+      {
+        element: <ProtectedRoute />,
+        children: [
+          { path: '/creatediary', element: <CreateDiary /> },
+          { path: '/editdiary/:diaryId', element: <EditDiary /> },
+          { path: '/diary/:diaryId', element: <DiaryDetail /> },
+          { path: '/setting', element: <Setting /> },
+          { path: '/mypage', element: <MyPage /> },
+          { path: '/non-existent-page', element: <NonExistentDiary /> },
+          { path: '/rewardpage', element: <RewardPage /> },
+        ],
+      },
     ],
   },
 ]);

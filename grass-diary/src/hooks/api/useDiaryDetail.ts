@@ -23,15 +23,14 @@ export const useDiaryDetail = (diaryId: Id) => {
     queryKey: ['get-diaryDetail', diaryId],
     queryFn: () => fetchDiaryDetails(diaryId),
     retry: 1,
+    throwOnError: true,
   });
 
   const writerId = detail?.memberId;
   const { data: writer } = useWriterProfile(writerId!);
-  const navigate = useNavigate();
 
   if (isError) {
     console.error(error.message);
-    navigate('/non-existent-page');
   }
 
   return { detail, writer, isLoading };

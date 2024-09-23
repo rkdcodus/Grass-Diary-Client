@@ -4,18 +4,13 @@ import logout from '@svg/logout.svg';
 import arrow from '@svg/arrow_drop_down.svg';
 import useLogout from '@hooks/useLogout';
 import history from '@svg/history.svg';
-import { useQueryClient } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 import { Menus, Menu } from '@components/index';
 
 const MenuBar = () => {
   const navigate = useNavigate();
   const clearAuth = useLogout();
-  const queryClient = useQueryClient();
-  const handleLogout = () => {
-    clearAuth();
-    queryClient.resetQueries({ queryKey: ['memberId'] });
-  };
+  const handleLogout = () => clearAuth();
 
   return (
     <div>
