@@ -247,7 +247,7 @@ export const MODAL = {
   },
   login_expiration: {
     title: '로그인 만료',
-    content: '로그인 만료 시간 10분이 지나\n자동으로 로그아웃 되었어요',
+    content: '로그인 만료 시간 30분이 지나\n자동으로 로그아웃 되었어요',
   },
 } as const;
 
