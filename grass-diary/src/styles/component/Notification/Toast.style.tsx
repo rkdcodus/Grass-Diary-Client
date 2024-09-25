@@ -14,7 +14,7 @@ export const toastFadeIn = keyframes`
 
 100% {
   opacity: 0;
-  top: 90%;
+  top: 100%;
 }
 `;
 
@@ -41,7 +41,7 @@ export const ToastBox = styled.div<{ $active: boolean; $isRed: boolean }>`
   ${TYPO.label2}
   color: ${semantic.light.inverse.solid.hero};
   text-align: center;
-  animation: ${props => props.$active && toastFadeIn} 4s 1s ease;
+  animation: ${props => props.$active && toastFadeIn} 3s ease;
   transition: 1s;
 
   @media screen and (max-width: 60em) {
