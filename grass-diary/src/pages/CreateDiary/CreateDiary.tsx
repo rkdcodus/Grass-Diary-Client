@@ -61,8 +61,9 @@ const CreateDiary = () => {
   const [image, setImage] = useState<ImageInfo>({
     imageId: 0,
     imageURL: '',
-    name: '',
-    size: '',
+    imageName: '',
+    imageSize: 0,
+    imageType: '',
   });
 
   // 임시 저장 모달
@@ -93,8 +94,9 @@ const CreateDiary = () => {
         setImage({
           imageId: 0,
           imageURL: '',
-          name: '',
-          size: '',
+          imageName: '',
+          imageSize: 0,
+          imageType: '',
         });
       },
     };
@@ -223,8 +225,9 @@ const CreateDiary = () => {
     setImage({
       imageId: 0,
       imageURL: '',
-      name: '',
-      size: '',
+      imageName: '',
+      imageSize: 0,
+      imageType: '',
     });
   };
 
@@ -239,7 +242,7 @@ const CreateDiary = () => {
 
     // 사용자가 이미지를 첨부할 경우 postImage -> createDiary 실행
     if (image.imageURL) {
-      postImage(image.imageURL, {
+      postImage(image, {
         onSuccess: res => {
           const request = {
             content: quillContent,
@@ -425,8 +428,8 @@ const CreateDiary = () => {
                 <S.Image>
                   <img src={image.imageURL} alt="image file" />
                 </S.Image>
-                <S.ImageName>{image.name}</S.ImageName>
-                <S.ImageData>{image.size} KB</S.ImageData>
+                <S.ImageName>{image.imageName}</S.ImageName>
+                <S.ImageData>{image.imageSize} KB</S.ImageData>
                 <button onClick={removeImage}>
                   <S.ImageDelete>
                     <Close width={16} height={16} />

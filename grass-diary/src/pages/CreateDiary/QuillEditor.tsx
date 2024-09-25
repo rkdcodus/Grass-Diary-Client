@@ -61,11 +61,13 @@ const QuillEditor = ({
 
         reader.onloadend = () => {
           const base64String = reader.result as string;
+
           setImage({
             imageId: 0,
             imageURL: base64String,
-            name: file.name,
-            size: (file.size / 1024).toFixed(2), // KB 단위로 변환
+            imageName: file.name,
+            imageSize: +(file.size / 1024).toFixed(2), // KB
+            imageType: file.type,
           });
         };
       }
