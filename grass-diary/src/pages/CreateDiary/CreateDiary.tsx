@@ -259,9 +259,6 @@ const CreateDiary = () => {
               const currentDate = `${diaryInfo.year}년/${diaryInfo.month}월/${diaryInfo.date}일`;
               localStorage.setItem('lastWritingDate', currentDate);
             },
-            onError: error => {
-              console.error(error);
-            },
           });
         },
       });
@@ -280,9 +277,6 @@ const CreateDiary = () => {
           localStorage.removeItem('diary_draft');
           const currentDate = `${diaryInfo.year}년/${diaryInfo.month}월/${diaryInfo.date}일`;
           localStorage.setItem('lastWritingDate', currentDate);
-        },
-        onError: error => {
-          console.error(error);
         },
       });
     }

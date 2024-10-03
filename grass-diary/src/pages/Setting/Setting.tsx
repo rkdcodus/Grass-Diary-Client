@@ -68,10 +68,6 @@ const Setting = () => {
       setIsEditingNickname(false);
       setNickName(editNickname);
     },
-    onError: error => {
-      console.error(CONSOLE_ERROR.member.patch + error);
-      renderErrorPage(error);
-    },
   });
 
   return (
