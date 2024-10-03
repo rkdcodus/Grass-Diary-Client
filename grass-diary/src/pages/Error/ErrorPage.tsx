@@ -1,3 +1,4 @@
+import { ERROR } from '@constants/message';
 import * as S from '@styles/Error/Error';
 import { useLocation } from 'react-router-dom';
 
@@ -7,7 +8,7 @@ const ErrorPage = () => {
     <>
       <S.Container>
         <S.ErrorSection>
-          <S.ErrorText>{location.state}</S.ErrorText>
+          <S.ErrorText>{location.state || ERROR.permission_err}</S.ErrorText>
         </S.ErrorSection>
       </S.Container>
     </>

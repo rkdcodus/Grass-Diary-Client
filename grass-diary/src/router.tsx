@@ -22,6 +22,7 @@ const router = createBrowserRouter([
       { path: '/main', element: <Main /> },
       { path: '/share', element: <Share /> },
     ],
+    errorElement: <ErrorPage />,
   },
 
   {
@@ -35,6 +36,7 @@ const router = createBrowserRouter([
       { path: '/errorpage', element: <ErrorPage /> },
       { path: '/rewardpage', element: <RewardPage /> },
     ],
+    errorElement: <ErrorPage />,
   },
 ]);
 
