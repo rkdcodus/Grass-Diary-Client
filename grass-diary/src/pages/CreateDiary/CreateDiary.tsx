@@ -356,10 +356,10 @@ const CreateDiary = () => {
       }
     };
 
-    const savDataTime = setInterval(autoSaveDraft, autoSave);
+    const saveDataTime = setInterval(autoSaveDraft, autoSave);
 
     return () => {
-      clearInterval(savDataTime);
+      clearInterval(saveDataTime);
     };
   }, [diaryInfo, isContentEmpty]);
 
