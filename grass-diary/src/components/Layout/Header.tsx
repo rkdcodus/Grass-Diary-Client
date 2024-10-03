@@ -30,6 +30,7 @@ const Header = () => {
         interaction: INTERACTION.accent.subtle(),
       };
 
+      localStorage.removeItem('accessToken');
       modal(setting, button1);
     }
   }, [isError]);
