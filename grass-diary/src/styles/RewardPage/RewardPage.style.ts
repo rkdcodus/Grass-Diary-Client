@@ -56,6 +56,11 @@ export const RewardSection = styled.section`
   align-items: center;
   gap: var(--gap-md, 1rem);
   align-self: stretch;
+
+  @media screen and (max-width: 60em) {
+    display: flex;
+    flex-direction: column;
+  }
 `;
 
 export const RewardContainer = styled.div`
@@ -63,6 +68,12 @@ export const RewardContainer = styled.div`
   align-items: center;
   gap: var(--gap-2xl, 2rem);
   flex: 1 0 0;
+
+  @media screen and (max-width: 60em) {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-2xl, 1rem);
+  }
 `;
 
 export const GrassCountBox = styled.div`
