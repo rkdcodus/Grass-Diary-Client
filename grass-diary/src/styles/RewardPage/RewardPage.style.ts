@@ -165,6 +165,15 @@ export const GetRewardText = styled.p`
   ${TYPO.caption2}
 `;
 
+export const DividerBox = styled.div`
+  display: flex;
+  height: 0.0625rem;
+  padding-top: 0.0625rem;
+  justify-content: center;
+  align-items: center;
+  align-self: stretch;
+`;
+
 export const Divider = styled.span`
   width: 57rem;
   height: 0.0625rem;

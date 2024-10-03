@@ -43,7 +43,7 @@ const RewardPage = () => {
           <S.RewardSection>
             <S.RewardContainer>
               <S.GrassCountBox>
-                <img src="/src/assets/image/pot.png" alt="image" />
+                <img src="../src/assets/image/pot.png" alt="image" />
                 <S.CountText>{grassQuery?.totalCount}</S.CountText>
                 <S.CountCaptionText>내가 심은 잔디</S.CountCaptionText>
               </S.GrassCountBox>
@@ -72,49 +72,57 @@ const RewardPage = () => {
                 </S.DayTextBox>
                 <S.GetRewardText>획득 리워드</S.GetRewardText>
               </S.DayBox>
-              <S.Divider />
+              <S.DividerBox>
+                <S.Divider />
+              </S.DividerBox>
             </S.DayContainer>
 
             {groupedHistory &&
-              Object.values(groupedHistory).map(
-                (group: {
-                  year: string;
-                  month: number;
-                  records: RewardHistory[];
-                }) => (
-                  <S.RewardListContainer key={`${group.year}-${group.month}`}>
-                    <S.HistoryYearMonthTextBox>
-                      <S.HistoryYearMonthText>
-                        {`${group.year}년 ${group.month}월`}
-                      </S.HistoryYearMonthText>
-                    </S.HistoryYearMonthTextBox>
-                    <S.RewardListBox>
-                      {group.records
-                        .slice()
-                        .reverse()
-                        .map(rewardHistory => {
-                          const [date] = rewardHistory.rewardedDate.split(' ');
-                          const [, , day] = date.split('-');
-                          return (
-                            <S.RewardList key={rewardHistory.historyId}>
-                              <S.RewardDate>
-                                <S.RewardDateText>
-                                  {`${group.month}월 ${parseInt(day, 10)}일`}
-                                </S.RewardDateText>
-                              </S.RewardDate>
-                              <S.RewardPoint>
-                                <S.RewardPointText>
-                                  <Avatar /> +{rewardHistory.rewardPoint}
-                                </S.RewardPointText>
-                              </S.RewardPoint>
-                            </S.RewardList>
-                          );
-                        })}
-                    </S.RewardListBox>
-                    <S.Divider />
-                  </S.RewardListContainer>
-                ),
-              )}
+              Object.values(groupedHistory)
+                .slice()
+                .reverse()
+                .map(
+                  (group: {
+                    year: string;
+                    month: number;
+                    records: RewardHistory[];
+                  }) => (
+                    <S.RewardListContainer key={`${group.year}-${group.month}`}>
+                      <S.HistoryYearMonthTextBox>
+                        <S.HistoryYearMonthText>
+                          {`${group.year}년 ${group.month}월`}
+                        </S.HistoryYearMonthText>
+                      </S.HistoryYearMonthTextBox>
+                      <S.RewardListBox>
+                        {group.records
+                          .slice()
+                          .reverse()
+                          .map(rewardHistory => {
+                            const [date] =
+                              rewardHistory.rewardedDate.split(' ');
+                            const [, , day] = date.split('-');
+                            return (
+                              <S.RewardList key={rewardHistory.historyId}>
+                                <S.RewardDate>
+                                  <S.RewardDateText>
+                                    {`${group.month}월 ${parseInt(day, 10)}일`}
+                                  </S.RewardDateText>
+                                </S.RewardDate>
+                                <S.RewardPoint>
+                                  <S.RewardPointText>
+                                    <Avatar /> +{rewardHistory.rewardPoint}
+                                  </S.RewardPointText>
+                                </S.RewardPoint>
+                              </S.RewardList>
+                            );
+                          })}
+                      </S.RewardListBox>
+                      <S.DividerBox>
+                        <S.Divider />
+                      </S.DividerBox>
+                    </S.RewardListContainer>
+                  ),
+                )}
           </S.HistorySection>
         </S.Layout>
       </S.Background>
