@@ -14,7 +14,6 @@ const fetchAxios = async () => {
 };
 
 export const useUser = () => {
-  const { renderErrorPage } = useError();
   const { isAuthenticated } = useAuth();
   const memberId = useMemberId();
   const setMemberId = useSetMemberId();
@@ -35,10 +34,8 @@ export const useUser = () => {
 
   useEffect(() => {
     if (!isAuthenticated) setMemberId(0);
-    else if (isError) {
-      setMemberId(0);
-      renderErrorPage(error);
-    } else if (isSuccess) setMemberId(data);
+    else if (isError) setMemberId(0);
+    else if (isSuccess) setMemberId(data);
   }, [isAuthenticated, isError, isSuccess]);
 
   return { memberId, isError };
