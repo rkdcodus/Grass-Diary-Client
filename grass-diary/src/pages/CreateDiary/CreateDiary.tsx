@@ -346,6 +346,23 @@ const CreateDiary = () => {
     };
   }, [diaryInfo]);
 
+  // 자동 임시 저장
+  useEffect(() => {
+    const autoSave = 60000;
+
+    const autoSaveDraft = () => {
+      if (!isContentEmpty) {
+        handleSaveDraft();
+      }
+    };
+
+    const savDataTime = setInterval(autoSaveDraft, autoSave);
+
+    return () => {
+      clearInterval(savDataTime);
+    };
+  }, [diaryInfo, isContentEmpty]);
+
   return (
     <>
       <S.Layout>
