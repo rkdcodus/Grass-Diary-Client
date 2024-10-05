@@ -10,8 +10,9 @@ import {
   Share,
   Setting,
   MyPage,
-  ErrorPage,
   RewardPage,
+  ErrorPage,
+  NotFoundPage,
 } from '@pages/index';
 
 const router = createBrowserRouter([
@@ -22,7 +23,7 @@ const router = createBrowserRouter([
       { path: '/main', element: <Main /> },
       { path: '/share', element: <Share /> },
     ],
-    errorElement: <ErrorPage />,
+    errorElement: <NotFoundPage />,
   },
 
   {
@@ -36,7 +37,7 @@ const router = createBrowserRouter([
       { path: '/errorpage', element: <ErrorPage /> },
       { path: '/rewardpage', element: <RewardPage /> },
     ],
-    errorElement: <ErrorPage />,
+    errorElement: <NotFoundPage />,
   },
 ]);
 
