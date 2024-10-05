@@ -13,7 +13,7 @@ import { useUser } from '@state/user/useUser';
 import { useTheme } from '@hooks/api/useTheme';
 import { useModal } from '@state/modal/useModal';
 
-const ThemePage = () => {
+const ThemeStorePage = () => {
   const { reward } = useReward();
   const { modal } = useModal();
   const memberId = useUser();
@@ -352,4 +352,4 @@ const ThemePage = () => {
   );
 };
 
-export default ThemePage;
+export default ThemeStorePage;
