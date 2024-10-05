@@ -161,7 +161,7 @@ export const Box = styled.div<{ backgroundColor: string }>`
   box-shadow: 0rem 0rem 0.0625rem 0rem rgba(0, 0, 0, 0.04),
     0rem 0.125rem 0.25rem 0rem rgba(0, 0, 0, 0.08);
 
-  transition: 0.5s ease all;
+  transition: 0.3s ease all;
 
   @media screen and (max-width: 60em) {
     width: 2em;
@@ -264,7 +264,7 @@ export const ThemeColor = styled.div<{
     0rem 0.125rem 0.25rem 0rem rgba(0, 0, 0, 0.08);
   cursor: pointer;
 
-  transition: 0.3s ease all;
+  transition: 0.2s ease all;
 
   &:hover {
     box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2);

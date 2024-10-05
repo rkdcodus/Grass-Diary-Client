@@ -7,7 +7,7 @@ import { ReactComponent as Avatar } from '@svg/avatarBg.svg';
 import { ReactComponent as Navigate } from '@svg/navigate_next.svg';
 import { MAIN_MESSAGES } from '@constants/message';
 import { Link } from 'react-router-dom';
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useReward } from '@hooks/api/useReward';
 import { useUser } from '@state/user/useUser';
 import { useTheme } from '@hooks/api/useTheme';
@@ -21,6 +21,44 @@ const ThemePage = () => {
   const [selectedColor, setSelectedColor] = useState<string>('');
   const [selectedColorName, setSelectedColorName] = useState<string>('');
   const [selectedColorId, setSelectedColorId] = useState<number | null>(null);
+  const [previewBoxes, setPreviewBoxes] = useState(
+    () => Math.floor(Math.random() * 30) + 1,
+  );
+  const previewDays = 31;
+  const themePrice = 100;
+
+  const handleColorClick = useCallback(
+    (color: string, name: string, id: number) => {
+      setSelectedColor(color);
+      setSelectedColorName(name);
+      setSelectedColorId(id);
+      setPreviewBoxes(Math.floor(Math.random() * 30) + 1);
+    },
+    [],
+  );
+
+  useEffect(() => {
+    console.log(previewBoxes);
+  }, [previewBoxes]);
+
+  const boxes = Array.from({ length: previewDays }, (_, index) => {
+    const isAccent = index < previewBoxes;
+
+    const backgroundColor = isAccent
+      ? semantic.light.accent.solid.alternative
+      : semantic.light.fill.transparent.assistive;
+
+    if (selectedColor) {
+      const backgroundColor = isAccent
+        ? selectedColor
+        : semantic.light.fill.transparent.assistive;
+      return <S.Box key={index} backgroundColor={backgroundColor} />;
+    }
+
+    return <S.Box key={index} backgroundColor={backgroundColor} />;
+  });
+
+  const handleClick = () => window.scrollTo(0, 0);
 
   const alreadyModal = () => {
     const setting = {
@@ -48,18 +86,43 @@ const ThemePage = () => {
     modal(setting, button1);
   };
 
-  const handleColorClick = useCallback(
-    (color: string, name: string, id: number) => {
-      setSelectedColor(color);
-      setSelectedColorName(name);
-      setSelectedColorId(id);
-    },
-    [],
-  );
+  const notEnoughModal = () => {
+    const setting = {
+      title: '포인트 부족',
+      content: `포인트가 부족해요.\n일기를 써서 포인트를 얻어보세요!`,
+    };
+    const button1 = {
+      active: true,
+      text: '확인',
+      color: semantic.light.accent.solid.alternative,
+    };
+    modal(setting, button1);
+  };
+
+  const completedModal = () => {
+    const setting = {
+      title: '구입 완료!',
+      content: `설정-테마 변경 페이지에서\n테마를 변경할 수 있어요.`,
+    };
+    const button1 = {
+      active: true,
+      text: '확인',
+      color: semantic.light.accent.solid.alternative,
+      clickHandler: () => {
+        window.location.reload();
+      },
+    };
+    modal(setting, button1);
+  };
 
   const handlePurchase = useCallback(() => {
     if (selectedColorId === null) {
       selectModal();
+      return;
+    }
+
+    if (reward.rewardPoint < themePrice) {
+      notEnoughModal();
       return;
     }
 
@@ -82,9 +145,8 @@ const ThemePage = () => {
           }
           console.log(error);
         },
-        onSuccess: data => {
-          alert(`${data.purchasedColor.name} 색상 구매가 완료되었습니다.`);
-          // 여기에 구매 성공 후 추가 로직을 넣을 수 있습니다.
+        onSuccess: () => {
+          completedModal();
         },
       },
     );
@@ -95,27 +157,6 @@ const ThemePage = () => {
     selectedColorId,
     selectedColorName,
   ]);
-
-  const previewDays = 31;
-  const previewBoxes = 3;
-  const boxes = Array.from({ length: previewDays }, (_, index) => {
-    const isAccent = index < previewBoxes;
-
-    const backgroundColor = isAccent
-      ? semantic.light.accent.solid.alternative
-      : semantic.light.fill.transparent.assistive;
-
-    if (selectedColor) {
-      const backgroundColor = isAccent
-        ? selectedColor
-        : semantic.light.fill.transparent.assistive;
-      return <S.Box key={index} backgroundColor={backgroundColor} />;
-    }
-
-    return <S.Box key={index} backgroundColor={backgroundColor} />;
-  });
-
-  const handleClick = () => window.scrollTo(0, 0);
 
   return (
     <>
@@ -189,7 +230,7 @@ const ThemePage = () => {
                 onClick={() =>
                   handleColorClick(
                     semantic.light.inverse.solid.accent,
-                    'accent',
+                    'default',
                     1,
                   )
                 }
