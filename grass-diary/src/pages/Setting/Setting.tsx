@@ -12,6 +12,7 @@ import { END_POINT } from '@constants/api';
 import { CONSOLE_ERROR, SETTING_MESSAGES } from '@constants/message';
 import { useProfile } from '@state/profile/useProfile';
 import { useProfileActions } from '@state/profile/ProfileStore';
+import { Link } from 'react-router-dom';
 
 const Setting = () => {
   const queryClient: QueryClient = useQueryClient();
@@ -179,10 +180,12 @@ const Setting = () => {
             >
               {SETTING_MESSAGES.button.apply}
             </S.ApplyButton>
-            <S.NavigateButton>
-              {SETTING_MESSAGES.button.navigate}
-              <img src="/assets/icons/button-outlined-chevron-right.svg" />
-            </S.NavigateButton>
+            <Link to="/themesetting">
+              <S.NavigateButton>
+                {SETTING_MESSAGES.button.navigate}
+                <img src="/assets/icons/button-outlined-chevron-right.svg" />
+              </S.NavigateButton>
+            </Link>
           </S.BottomSection>
         </S.DetailSettingSection>
       </S.ContentContainer>

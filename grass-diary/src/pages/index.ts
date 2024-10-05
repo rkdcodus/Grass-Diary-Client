@@ -9,3 +9,4 @@ export { default as MyPage } from './MyPage/MyPage';
 export { default as NonExistentDiary } from './DiaryDetail/NonExistentDiary';
 export { default as RewardPage } from './RewardPage/RewardPage';
 export { default as ThemeStorePage } from './ThemePage/ThemeStorePage';
+export { default as ThemeSettingPage } from './ThemePage/ThemeSettingPage.tsx';

@@ -1,11 +1,6 @@
 import * as S from '@styles/ThemePage/ThemePage.style';
-import * as SMB from '@styles/Main/BottomSection.style';
-import AnimateReward from '@pages/Main/AnimateReward';
 import { semantic } from '@styles/semantic';
 import { ReactComponent as Arrow } from '@svg/chevron_right.svg';
-import { ReactComponent as Avatar } from '@svg/avatarBg.svg';
-import { ReactComponent as Navigate } from '@svg/navigate_next.svg';
-import { MAIN_MESSAGES } from '@constants/message';
 import { Link } from 'react-router-dom';
 import { useCallback, useEffect, useState } from 'react';
 import { useReward } from '@hooks/api/useReward';
@@ -13,7 +8,7 @@ import { useUser } from '@state/user/useUser';
 import { useTheme } from '@hooks/api/useTheme';
 import { useModal } from '@state/modal/useModal';
 
-const ThemeStorePage = () => {
+const ThemeSettingPage = () => {
   const { reward } = useReward();
   const { modal } = useModal();
   const memberId = useUser();
@@ -21,25 +16,16 @@ const ThemeStorePage = () => {
   const [selectedColor, setSelectedColor] = useState<string>('');
   const [selectedColorName, setSelectedColorName] = useState<string>('');
   const [selectedColorId, setSelectedColorId] = useState<number | null>(null);
-  const [previewBoxes, setPreviewBoxes] = useState(
-    () => Math.floor(Math.random() * 30) + 1,
-  );
+  const previewBoxes = 3;
   const previewDays = 31;
-  const themePrice = 100;
-
   const handleColorClick = useCallback(
     (color: string, name: string, id: number) => {
       setSelectedColor(color);
       setSelectedColorName(name);
       setSelectedColorId(id);
-      setPreviewBoxes(Math.floor(Math.random() * 30) + 1);
     },
     [],
   );
-
-  useEffect(() => {
-    console.log(previewBoxes);
-  }, [previewBoxes]);
 
   const boxes = Array.from({ length: previewDays }, (_, index) => {
     const isAccent = index < previewBoxes;
@@ -60,113 +46,13 @@ const ThemeStorePage = () => {
 
   const handleClick = () => window.scrollTo(0, 0);
 
-  const alreadyModal = () => {
-    const setting = {
-      title: '테마 색상',
-      content: `이미 구매하신 색상이에요.\n다른 색상을 골라 보세요!`,
-    };
-    const button1 = {
-      active: true,
-      text: '확인',
-      color: semantic.light.accent.solid.alternative,
-    };
-    modal(setting, button1);
-  };
-
-  const selectModal = () => {
-    const setting = {
-      title: '테마 색상',
-      content: `색상을 선택해 주세요!`,
-    };
-    const button1 = {
-      active: true,
-      text: '확인',
-      color: semantic.light.accent.solid.alternative,
-    };
-    modal(setting, button1);
-  };
-
-  const notEnoughModal = () => {
-    const setting = {
-      title: '포인트 부족',
-      content: `포인트가 부족해요.\n일기를 써서 포인트를 얻어보세요!`,
-    };
-    const button1 = {
-      active: true,
-      text: '확인',
-      color: semantic.light.accent.solid.alternative,
-    };
-    modal(setting, button1);
-  };
-
-  const completedModal = () => {
-    const setting = {
-      title: '구입 완료!',
-      content: `설정-테마 변경 페이지에서\n테마를 변경할 수 있어요.`,
-    };
-    const button1 = {
-      active: true,
-      text: '확인',
-      color: semantic.light.accent.solid.alternative,
-      clickHandler: () => {
-        window.location.reload();
-      },
-    };
-    modal(setting, button1);
-  };
-
-  const handlePurchase = useCallback(() => {
-    if (selectedColorId === null) {
-      selectModal();
-      return;
-    }
-
-    if (reward.rewardPoint < themePrice) {
-      notEnoughModal();
-      return;
-    }
-
-    purchaseTheme(
-      {
-        memberId,
-        colorCodeId: selectedColorId,
-        colorName: selectedColorName,
-        rgb: selectedColor,
-      },
-      {
-        onError: error => {
-          if (
-            error.response.data.status === 409 &&
-            error.response.data.code === 'COLOR_ALREADY_PURCHASED_ERR'
-          ) {
-            alreadyModal();
-          } else {
-            alert(`구매 중 오류가 발생했습니다: ${error.description}`);
-          }
-          console.log(error);
-        },
-        onSuccess: () => {
-          completedModal();
-        },
-      },
-    );
-  }, [
-    memberId,
-    purchaseTheme,
-    selectedColor,
-    selectedColorId,
-    selectedColorName,
-  ]);
-
   return (
     <>
       <S.Layout>
         <S.ThemeTitleBox>
-          <Link to="/themesetting">
-            <S.ThemeStoreBtn>
-              <S.ThemeStoreBtnText>
-                테마 설정 페이지로 이동하기
-              </S.ThemeStoreBtnText>
+          <Link to="/main">
+            <S.ThemeStoreBtn onClick={handleClick}>
+              <S.ThemeStoreBtnText>메인 페이지로 이동하기</S.ThemeStoreBtnText>
               <Arrow
                 width={18}
                 height={18}
@@ -174,39 +60,8 @@ const ThemeStorePage = () => {
               />
             </S.ThemeStoreBtn>
           </Link>
-          <S.ThemeTitle>테마 상점</S.ThemeTitle>
+          <S.ThemeTitle>테마 설정</S.ThemeTitle>
         </S.ThemeTitleBox>
-        <S.ThemeSubTitleBox>
-          <S.ThemeSubTitle>
-            잔디 포인트로 다양한 테마를 구입해 보세요!
-          </S.ThemeSubTitle>
-        </S.ThemeSubTitleBox>
-
-        <SMB.Card>
-          <S.RewardTitleBox>
-            <SMB.CardText>
-              {MAIN_MESSAGES.bottom_section.my_reward}
-            </SMB.CardText>
-            <Link to="/rewardpage">
-              <S.RewardPageBtn onClick={handleClick}>
-                <S.RewardBtnText>리워드 내역</S.RewardBtnText>
-                <Navigate />
-              </S.RewardPageBtn>
-            </Link>
-          </S.RewardTitleBox>
-          <SMB.CardSubText>
-            {MAIN_MESSAGES.bottom_section.reward_message}
-          </SMB.CardSubText>
-          <SMB.Divider />
-          <SMB.Wrap>
-            <SMB.RewardContainer>
-              <Avatar />
-              <SMB.RewardPointBox>
-                <AnimateReward n={reward?.rewardPoint ?? 0} />
-              </SMB.RewardPointBox>
-            </SMB.RewardContainer>
-          </SMB.Wrap>
-        </SMB.Card>
 
         <S.ThemePreviewContainer>
           <S.ThemePreviewTextBox>
@@ -345,8 +200,8 @@ const ThemeStorePage = () => {
         </S.ThemeColorContainer>
 
         <S.BuyThemeBox>
-          <S.BuyThemeBtn onClick={handlePurchase}>
-            <S.BuyThemeBtnText>구입하기</S.BuyThemeBtnText>
+          <S.BuyThemeBtn>
+            <S.BuyThemeBtnText>적용하기</S.BuyThemeBtnText>
           </S.BuyThemeBtn>
         </S.BuyThemeBox>
       </S.Layout>
@@ -354,4 +209,4 @@ const ThemeStorePage = () => {
   );
 };
 
-export default ThemeStorePage;
+export default ThemeSettingPage;

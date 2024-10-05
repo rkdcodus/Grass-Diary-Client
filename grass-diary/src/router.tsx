@@ -13,6 +13,7 @@ import {
   NonExistentDiary,
   RewardPage,
   ThemeStorePage,
+  ThemeSettingPage,
 } from '@pages/index';
 
 const router = createBrowserRouter([
@@ -36,6 +37,7 @@ const router = createBrowserRouter([
       { path: '/non-existent-page', element: <NonExistentDiary /> },
       { path: '/rewardpage', element: <RewardPage /> },
       { path: '/themepage', element: <ThemeStorePage /> },
+      { path: '/themesetting', element: <ThemeSettingPage /> },
     ],
   },
 ]);
