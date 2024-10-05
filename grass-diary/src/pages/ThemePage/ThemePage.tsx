@@ -8,24 +8,36 @@ import { MAIN_MESSAGES } from '@constants/message';
 import AnimateReward from '@pages/Main/AnimateReward';
 import { useReward } from '@hooks/api/useReward';
 import { Link } from 'react-router-dom';
+import { useState } from 'react';
 
 const ThemePage = () => {
   const { reward } = useReward();
-  const handleClick = () => window.scrollTo(0, 0);
 
-  const previewDays: number = 31;
-  const previewBoxes: number = 3;
+  const [selectedColor, setSelectedColor] = useState<string | null>(null);
+  const handleColorClick = (color: string) => {
+    setSelectedColor(color);
+  };
+
+  const previewDays = 31;
+  const previewBoxes = 3;
   const boxes = Array.from({ length: previewDays }, (_, index) => {
     const isAccent = index < previewBoxes;
+
     const backgroundColor = isAccent
       ? semantic.light.accent.solid.alternative
       : semantic.light.fill.transparent.assistive;
 
+    if (selectedColor) {
+      const backgroundColor = isAccent
+        ? selectedColor
+        : semantic.light.fill.transparent.assistive;
+      return <S.Box key={index} backgroundColor={backgroundColor} />;
+    }
+
     return <S.Box key={index} backgroundColor={backgroundColor} />;
   });
 
-  const themeColorCount = 10;
-  const themeColor = Array.from({});
+  const handleClick = () => window.scrollTo(0, 0);
 
   return (
     <>
@@ -96,27 +108,90 @@ const ThemePage = () => {
               </S.ThemeColorTitleContainer>
               <S.ThemeColor
                 backgroundColor={semantic.light.inverse.solid.accent}
+                onClick={() =>
+                  handleColorClick(semantic.light.inverse.solid.accent)
+                }
+                isSelected={
+                  selectedColor === semantic.light.inverse.solid.accent
+                }
               />
-              <S.ThemeColor backgroundColor={semantic.light.theme.solid.red} />
+
+              <S.ThemeColor
+                backgroundColor={semantic.light.theme.solid.red}
+                onClick={() => handleColorClick(semantic.light.theme.solid.red)}
+                isSelected={selectedColor === semantic.light.theme.solid.red}
+              />
+
               <S.ThemeColor
                 backgroundColor={semantic.light.theme.solid.amber}
+                onClick={() =>
+                  handleColorClick(semantic.light.theme.solid.amber)
+                }
+                isSelected={selectedColor === semantic.light.theme.solid.amber}
               />
-              <S.ThemeColor backgroundColor={semantic.light.theme.solid.blue} />
+
+              <S.ThemeColor
+                backgroundColor={semantic.light.theme.solid.blue}
+                onClick={() =>
+                  handleColorClick(semantic.light.theme.solid.blue)
+                }
+                isSelected={selectedColor === semantic.light.theme.solid.blue}
+              />
+
               <S.ThemeColor
                 backgroundColor={semantic.light.theme.solid.purple}
+                onClick={() =>
+                  handleColorClick(semantic.light.theme.solid.purple)
+                }
+                isSelected={selectedColor === semantic.light.theme.solid.purple}
               />
+
               <S.ThemeColor
                 backgroundColor={semantic.light.theme.solid.lightpink}
+                onClick={() =>
+                  handleColorClick(semantic.light.theme.solid.lightpink)
+                }
+                isSelected={
+                  selectedColor === semantic.light.theme.solid.lightpink
+                }
               />
+
               <S.ThemeColor
                 backgroundColor={semantic.light.theme.solid.lightpurple}
+                onClick={() =>
+                  handleColorClick(semantic.light.theme.solid.lightpurple)
+                }
+                isSelected={
+                  selectedColor === semantic.light.theme.solid.lightpurple
+                }
               />
+
               <S.ThemeColor
                 backgroundColor={semantic.light.theme.solid.lightblue}
+                onClick={() =>
+                  handleColorClick(semantic.light.theme.solid.lightblue)
+                }
+                isSelected={
+                  selectedColor === semantic.light.theme.solid.lightblue
+                }
               />
-              <S.ThemeColor backgroundColor={semantic.light.theme.solid.ruby} />
+
+              <S.ThemeColor
+                backgroundColor={semantic.light.theme.solid.ruby}
+                onClick={() =>
+                  handleColorClick(semantic.light.theme.solid.ruby)
+                }
+                isSelected={selectedColor === semantic.light.theme.solid.ruby}
+              />
+
               <S.ThemeColor
                 backgroundColor={semantic.light.theme.solid.diamond}
+                onClick={() =>
+                  handleColorClick(semantic.light.theme.solid.diamond)
+                }
+                isSelected={
+                  selectedColor === semantic.light.theme.solid.diamond
+                }
               />
             </S.ThemeColorBox>
           </S.ThemeColorSection>
@@ -124,7 +199,7 @@ const ThemePage = () => {
 
         <S.BuyThemeBox>
           <S.BuyThemeBtn>
-            <S.BuyThemeBtnText>구입하기- 10포인트</S.BuyThemeBtnText>
+            <S.BuyThemeBtnText>구입하기</S.BuyThemeBtnText>
           </S.BuyThemeBtn>
         </S.BuyThemeBox>
       </S.Layout>

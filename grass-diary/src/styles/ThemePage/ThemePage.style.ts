@@ -1,6 +1,6 @@
 import { semantic } from '@styles/semantic';
 import { TYPO } from '@styles/typo';
-import styled from 'styled-components';
+import styled, { css, keyframes } from 'styled-components';
 
 export const Layout = styled.div`
   min-height: 100vh;
@@ -10,6 +10,10 @@ export const Layout = styled.div`
   align-items: center;
   gap: var(--gap-xl, 1.5rem);
   align-self: stretch;
+
+  @media screen and (max-width: 60em) {
+    width: 22rem;
+  }
 `;
 
 export const ThemeTitleBox = styled.div`
@@ -19,6 +23,10 @@ export const ThemeTitleBox = styled.div`
   align-items: flex-end;
   gap: var(--gap-5xl, 3.5rem);
   padding-top: 3.5rem;
+
+  @media screen and (max-width: 60em) {
+    width: 22rem;
+  }
 `;
 
 export const ThemeStoreBtn = styled.button`
@@ -153,6 +161,8 @@ export const Box = styled.div<{ backgroundColor: string }>`
   box-shadow: 0rem 0rem 0.0625rem 0rem rgba(0, 0, 0, 0.04),
     0rem 0.125rem 0.25rem 0rem rgba(0, 0, 0, 0.08);
 
+  transition: 0.5s ease all;
+
   @media screen and (max-width: 60em) {
     width: 2em;
     height: 2em;
@@ -172,6 +182,11 @@ export const ThemeColorContainer = styled.div`
   flex-direction: column;
   justify-content: flex-end;
   align-items: flex-end;
+
+  @media screen and (max-width: 60em) {
+    width: 22rem;
+    padding-left: 2.5rem;
+  }
 `;
 
 export const ThemeColorSection = styled.section`
@@ -224,7 +239,19 @@ export const ThemeColorSubTitle = styled.p`
   ${TYPO.caption1}
 `;
 
-export const ThemeColor = styled.div<{ backgroundColor: string }>`
+const bounce = keyframes`
+0%, 100% {
+  transform:scale(1)
+}
+50% {
+  transform:scale(1.1)
+}
+`;
+
+export const ThemeColor = styled.div<{
+  backgroundColor: string;
+  isSelected: boolean;
+}>`
   width: 6.5rem;
   height: 6.5rem;
 
@@ -235,10 +262,25 @@ export const ThemeColor = styled.div<{ backgroundColor: string }>`
 
   box-shadow: 0rem 0rem 0.0625rem 0rem rgba(0, 0, 0, 0.04),
     0rem 0.125rem 0.25rem 0rem rgba(0, 0, 0, 0.08);
+  cursor: pointer;
+
+  transition: 0.3s ease all;
+
+  &:hover {
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2);
+    opacity: 70%;
+  }
+
+  ${props =>
+    props.isSelected &&
+    css`
+      animation: ${bounce} 1 ease;
+      transform: scale(1.2);
+    `}
 
   @media screen and (max-width: 60em) {
-    width: 2em;
-    height: 2em;
+    width: 3.5em;
+    height: 3.5em;
 
     border: 4px solid ${semantic.light.border.solid.alternative};
     border-radius: var(--radius-sm, 50%);
@@ -247,6 +289,15 @@ export const ThemeColor = styled.div<{ backgroundColor: string }>`
 
     box-shadow: 0rem 0rem 0.0625rem 0rem rgba(0, 0, 0, 0.04),
       0rem 0.125rem 0.25rem 0rem rgba(0, 0, 0, 0.08);
+
+    transition: 0.3s ease all;
+
+    ${props =>
+      props.isSelected &&
+      css`
+        animation: ${bounce} 1 ease;
+        transform: scale(1.2);
+      `}
   }
 `;
 
