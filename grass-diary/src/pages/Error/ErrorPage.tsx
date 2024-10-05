@@ -8,7 +8,7 @@ const ErrorPage = () => {
     <>
       <S.Container>
         <S.ErrorSection>
-          <S.ErrorText>{location.state || ERROR.permission_err}</S.ErrorText>
+          <S.ErrorText>{location.state}</S.ErrorText>
         </S.ErrorSection>
       </S.Container>
     </>
