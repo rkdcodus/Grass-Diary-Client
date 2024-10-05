@@ -9,18 +9,41 @@ import * as S from '../../styles/Setting/SettingStyles';
 import API from '@services/index';
 import { Profile } from '@components/index';
 import { END_POINT } from '@constants/api';
-import { CONSOLE_ERROR, SETTING_MESSAGES } from '@constants/message';
+import { CONSOLE_ERROR, MODAL, SETTING_MESSAGES } from '@constants/message';
 import { useProfile } from '@state/profile/useProfile';
 import { useProfileActions } from '@state/profile/ProfileStore';
+import { useModal } from '@state/modal/useModal';
+import { INTERACTION } from '@styles/interaction';
+import { semantic } from '@styles/semantic';
+import { AxiosError } from 'axios';
+import { useError } from '@hooks/useError';
 
 const Setting = () => {
   const queryClient: QueryClient = useQueryClient();
   const { nickname, profileIntro }: omitProfileImageURL = useProfile();
   const { setNickName, setProfileIntro } = useProfileActions();
+  const { renderErrorPage } = useError();
+  const { modal } = useModal();
 
   const [isFocused, setIsFocused] = useState(false);
   const [isEditingNickname, setIsEditingNickname] = useState(false);
   const [editNickname, setEditNickname] = useState(nickname);
+
+  const handleModal = (content: string) => {
+    const setting = {
+      title: MODAL.main.modal.preparation_notice,
+      content: content,
+    };
+
+    const button1 = {
+      active: true,
+      text: MODAL.confirm,
+      color: semantic.light.accent.solid.hero,
+      interaction: INTERACTION.accent.subtle(),
+    };
+
+    modal(setting, button1);
+  };
 
   const handleChangeNickname = (event: React.ChangeEvent<HTMLInputElement>) => {
     setEditNickname(event.target.value);
@@ -35,7 +58,7 @@ const Setting = () => {
 
   const updateProfile = useMutation<
     omitProfileImageURL,
-    Error,
+    AxiosError<ApiErrorResponse>,
     omitProfileImageURL
   >({
     mutationFn: profileInfo =>
@@ -45,7 +68,10 @@ const Setting = () => {
       setIsEditingNickname(false);
       setNickName(editNickname);
     },
-    onError: error => console.error(CONSOLE_ERROR.member.patch + error),
+    onError: error => {
+      console.error(CONSOLE_ERROR.member.patch + error);
+      renderErrorPage(error);
+    },
   });
 
   return (
@@ -61,10 +87,22 @@ const Setting = () => {
                     <S.UserNameText>{nickname}</S.UserNameText>
                   </S.AvatarImageBox>
                   <S.ProfileButtonBox>
-                    <S.ImageUploadButton>
+                    <S.ImageUploadButton
+                      onClick={() =>
+                        handleModal(
+                          MODAL.main.modal.modal_notice('프로필 변경 기능'),
+                        )
+                      }
+                    >
                       {SETTING_MESSAGES.button.image('업로드')}
                     </S.ImageUploadButton>
-                    <S.ImageDeleteButton>
+                    <S.ImageDeleteButton
+                      onClick={() =>
+                        handleModal(
+                          MODAL.main.modal.modal_notice('프로필 변경 기능'),
+                        )
+                      }
+                    >
                       {SETTING_MESSAGES.button.image('삭제')}
                     </S.ImageDeleteButton>
                   </S.ProfileButtonBox>
@@ -160,7 +198,11 @@ const Setting = () => {
           <S.WithdrawBoxArticle>
             <S.WithdrawBox>
               <S.SettingLabel>{SETTING_MESSAGES.label.withdraw}</S.SettingLabel>
-              <S.WithdrawButton>
+              <S.WithdrawButton
+                onClick={() =>
+                  handleModal(MODAL.main.modal.modal_notice('회원 탈퇴 기능'))
+                }
+              >
                 {SETTING_MESSAGES.button.withdraw}
               </S.WithdrawButton>
             </S.WithdrawBox>

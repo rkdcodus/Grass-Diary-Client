@@ -10,6 +10,8 @@ import {
   useProfileImageURL,
   useProfileIntro,
 } from './ProfileStore';
+import { AxiosError } from 'axios';
+import { useError } from '@hooks/useError';
 
 const fetchAxios = async (memberId: Id) => {
   const res = await API.get(END_POINT.member_profile(memberId));
@@ -17,21 +19,29 @@ const fetchAxios = async (memberId: Id) => {
 };
 
 export const useProfile = () => {
-  const memberId = useUser();
-  const { setProfileImageURL, setNickName, setProfileIntro } =
-    useProfileActions();
+  const { renderErrorPage } = useError();
+  const { memberId } = useUser();
   const profileImageURL = useProfileImageURL();
   const nickname = useNickname();
   const profileIntro = useProfileIntro();
+  const { setProfileImageURL, setNickName, setProfileIntro } =
+    useProfileActions();
 
-  const { data, isSuccess, isError, error } = useQuery({
+  const { data, isSuccess, isError, error } = useQuery<
+    IProfile,
+    AxiosError<ApiErrorResponse>
+  >({
     queryKey: ['profile'],
     queryFn: () => fetchAxios(memberId),
     enabled: !!memberId,
   });
 
   useEffect(() => {
-    if (isError) console.error(CONSOLE_ERROR.profile.get + error);
+    if (isError) {
+      console.error(CONSOLE_ERROR.profile.get + error);
+      renderErrorPage(error);
+    }
+
     if (isSuccess) {
       setProfileImageURL(data.profileImageURL);
       setNickName(data.nickname);
