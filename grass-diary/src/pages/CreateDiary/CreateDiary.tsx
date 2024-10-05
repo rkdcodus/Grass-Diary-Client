@@ -215,12 +215,6 @@ const CreateDiary = () => {
     }
   };
 
-  const checkWritingPermission = () => {
-    const lastWritingDate = localStorage.getItem('lastWritingDate');
-    const currentDate = `${diaryInfo.year}년/${diaryInfo.month}월/${diaryInfo.date}일`;
-    return lastWritingDate !== currentDate;
-  };
-
   const removeImage = () => {
     setImage({
       imageId: 0,
@@ -234,11 +228,6 @@ const CreateDiary = () => {
   const handleSave = async () => {
     if (isContentEmpty) return; // 일기 내용이 비어 있으면 저장 요청 불가
     const { quillContent, isPrivate, hashArr, moodValue } = diaryInfo;
-
-    if (!checkWritingPermission()) {
-      toast(CREATE_MESSAGES.toast.already_written);
-      return;
-    }
 
     // 사용자가 이미지를 첨부할 경우 postImage -> createDiary 실행
     if (image.imageURL) {
