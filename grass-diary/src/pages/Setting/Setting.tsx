@@ -20,7 +20,7 @@ import { useError } from '@hooks/useError';
 
 const Setting = () => {
   const queryClient: QueryClient = useQueryClient();
-  const { nickname, profileIntro }: omitProfileImageURL = useProfile();
+  const { nickname, profileIntro, email }: omitProfileImageURL = useProfile();
   const { setNickName, setProfileIntro } = useProfileActions();
   const { renderErrorPage } = useError();
   const { modal } = useModal();
@@ -152,6 +152,7 @@ const Setting = () => {
                     updateProfile.mutate({
                       nickname: editNickname,
                       profileIntro,
+                      email,
                     })
                   }
                 >
@@ -172,7 +173,7 @@ const Setting = () => {
             <S.SettingBox>
               <S.SettingLeftBox $variant="email">
                 <S.SettingLabel>{SETTING_MESSAGES.label.email}</S.SettingLabel>
-                <S.SettingText>username@gmail.com</S.SettingText>
+                <S.SettingText>{email}</S.SettingText>
               </S.SettingLeftBox>
             </S.SettingBox>
             <S.SettingMessage>
