@@ -196,11 +196,23 @@ const Setting = () => {
           {/* <S.DividerLine />
           <Temporary /> */}
           <S.DividerLine />
+          <S.DetailSettingArticle>
+            <S.NavigateBox>
+              <S.SettingLabel>{SETTING_MESSAGES.label.theme}</S.SettingLabel>
+              <a href="#">
+                <S.WithdrawButton src="/assets/icons/icon-btn-chevron-right.svg" />
+              </a>
+            </S.NavigateBox>
+            <S.SettingMessage>
+              {SETTING_MESSAGES.message.theme}
+            </S.SettingMessage>
+          </S.DetailSettingArticle>
+          <S.DividerLine />
           <S.ThemeContainer>
             <S.ThemeMessageBox>
-              <S.SettingLabel>{SETTING_MESSAGES.label.theme}</S.SettingLabel>
+              <S.SettingLabel>{SETTING_MESSAGES.label.mode}</S.SettingLabel>
               <S.SettingMessage>
-                {SETTING_MESSAGES.message.theme}
+                {SETTING_MESSAGES.message.mode}
               </S.SettingMessage>
             </S.ThemeMessageBox>
             <S.ThemeSelectBox>
@@ -210,19 +222,13 @@ const Setting = () => {
           </S.ThemeContainer>
           <S.DividerLine />
           <S.WithdrawBoxArticle>
-            <S.WithdrawBox>
+            <S.NavigateBox>
               <S.SettingLabel>{SETTING_MESSAGES.label.withdraw}</S.SettingLabel>
               <a href="#">
                 <S.WithdrawButton src="/assets/icons/icon-btn-chevron-right.svg" />
               </a>
-            </S.WithdrawBox>
+            </S.NavigateBox>
           </S.WithdrawBoxArticle>
-          <S.BottomSection>
-            <S.NavigateButton>
-              {SETTING_MESSAGES.button.navigate}
-              <img src="/assets/icons/button-outlined-chevron-right.svg" />
-            </S.NavigateButton>
-          </S.BottomSection>
         </S.DetailSettingSection>
       </S.ContentContainer>
     </S.SettingContainer>

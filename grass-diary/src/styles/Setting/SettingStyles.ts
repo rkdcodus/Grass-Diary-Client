@@ -465,9 +465,12 @@ const WithdrawBoxArticle = styled.article`
   align-self: stretch;
 
   gap: 1.25rem;
+
+  padding-top: 1rem;
+  padding-bottom: 3rem;
 `;
 
-const WithdrawBox = styled.div`
+const NavigateBox = styled.div`
   display: flex;
   align-items: center;
 
@@ -478,16 +481,6 @@ const WithdrawBox = styled.div`
 const WithdrawButton = styled.img`
   width: 1.25rem;
   height: 1.25rem;
-`;
-
-const BottomSection = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  align-items: flex-end;
-  align-self: stretch;
-
-  gap: 3rem;
 `;
 
 export const IntroductionButtonBox = styled.div`
@@ -515,22 +508,6 @@ const ApplyButton = styled.button`
   background: ${semantic.light.accent.solid.normal};
 
   ${INTERACTION.default.normal(semantic.light.accent.solid.normal)}
-`;
-
-const NavigateButton = styled.button`
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-
-  gap: 0.5rem;
-  padding: 0.625rem 1rem;
-
-  border-radius: 0.5rem;
-  border: 1px solid ${semantic.light.accent.solid.normal};
-  color: ${semantic.light.accent.solid.hero};
-  background: ${semantic.light.accent.transparent.normal};
-
-  ${INTERACTION.accent.subtle()}
 `;
 
 export {
@@ -573,9 +550,7 @@ export {
   ThemeSelectBox,
   ThemeImg,
   WithdrawBoxArticle,
-  WithdrawBox,
+  NavigateBox,
   WithdrawButton,
-  BottomSection,
   ApplyButton,
-  NavigateButton,
 };
