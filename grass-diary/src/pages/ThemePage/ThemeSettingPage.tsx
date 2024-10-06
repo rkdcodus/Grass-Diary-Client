@@ -3,21 +3,32 @@ import { semantic } from '@styles/semantic';
 import { ReactComponent as Arrow } from '@svg/chevron_right.svg';
 import { Link } from 'react-router-dom';
 import { useCallback, useEffect, useState } from 'react';
-import { useReward } from '@hooks/api/useReward';
 import { useUser } from '@state/user/useUser';
-import { useTheme } from '@hooks/api/useTheme';
 import { useModal } from '@state/modal/useModal';
+import { useThemeSetting } from '@hooks/api/useThemeSetting';
+import { useGrassRecord } from '@hooks/api/useGrassRecord';
+import { useThemeList } from '@hooks/api/\buseThemeList';
 
 const ThemeSettingPage = () => {
-  const { reward } = useReward();
   const { modal } = useModal();
   const memberId = useUser();
-  const { mutate: purchaseTheme } = useTheme();
-  const [selectedColor, setSelectedColor] = useState<string>('');
+  const { grassQuery } = useGrassRecord();
+  const { mutate: applyThemeColor } = useThemeSetting();
+  const { themeList } = useThemeList();
+  const [selectedColor, setSelectedColor] = useState<string>(
+    `rgb(${grassQuery?.grassInfoDTO.colorRGB})` || '',
+  );
   const [selectedColorName, setSelectedColorName] = useState<string>('');
   const [selectedColorId, setSelectedColorId] = useState<number | null>(null);
   const previewBoxes = 3;
   const previewDays = 31;
+
+  useEffect(() => {
+    if (grassQuery) {
+      setSelectedColor(`rgb(${grassQuery?.grassInfoDTO.colorRGB})`);
+    }
+  }, [grassQuery]);
+
   const handleColorClick = useCallback(
     (color: string, name: string, id: number) => {
       setSelectedColor(color);
@@ -45,6 +56,100 @@ const ThemeSettingPage = () => {
   });
 
   const handleClick = () => window.scrollTo(0, 0);
+
+  // 모달
+
+  const chooseModal = () => {
+    const setting = {
+      title: '테마 설정',
+      content: `색상을 선택해 주세요.`,
+    };
+    const button1 = {
+      active: true,
+      text: '확인',
+      color: semantic.light.accent.solid.alternative,
+    };
+    modal(setting, button1);
+  };
+
+  const applyModal = () => {
+    const setting = {
+      title: '테마 설정',
+      content: `적용 완료!`,
+    };
+    const button1 = {
+      active: true,
+      text: '확인',
+      color: semantic.light.accent.solid.alternative,
+      clickHandler: () => {
+        window.location.reload();
+      },
+    };
+    modal(setting, button1);
+  };
+
+  const alreadyModal = () => {
+    const setting = {
+      title: '테마 설정',
+      content: `이미 사용 중인 색상입니다.`,
+    };
+    const button1 = {
+      active: true,
+      text: '확인',
+      color: semantic.light.accent.solid.alternative,
+    };
+    modal(setting, button1);
+  };
+
+  const nonexistentModal = () => {
+    const setting = {
+      title: '테마 설정',
+      content: `해당 색상을 소유하고 있지 않습니다.`,
+    };
+    const button1 = {
+      active: true,
+      text: '확인',
+      color: semantic.light.accent.solid.alternative,
+    };
+    modal(setting, button1);
+  };
+
+  const handleApplyClick = () => {
+    if (!selectedColorId) {
+      chooseModal();
+      return;
+    }
+    applyThemeColor(
+      {
+        memberId,
+        colorCodeId: selectedColorId,
+        colorName: selectedColorName,
+        rgb: selectedColor,
+      },
+      {
+        onError: error => {
+          const statusCode = error?.response?.status;
+
+          if (statusCode === 409) {
+            const errorCode = error?.response?.data?.code;
+            console.log(errorCode);
+            if (errorCode === 'COLOR_ALREADY_EQUIPPED_ERR') {
+              alreadyModal();
+            } else if (errorCode === 'MEMBER_DOES_NOT_OWN_COLOR_ERR') {
+              nonexistentModal();
+            } else {
+              alert('알 수 없는 오류가 발생했습니다.');
+            }
+          } else {
+            alert('테마 적용 중 오류가 발생했습니다.');
+          }
+        },
+        onSuccess: () => {
+          applyModal();
+        },
+      },
+    );
+  };
 
   return (
     <>
@@ -82,125 +187,42 @@ const ThemeSettingPage = () => {
                   </S.ThemeColorSubTitle>
                 </S.ThemeColorTitleBox>
               </S.ThemeColorTitleContainer>
-              <S.ThemeColor
-                backgroundColor={semantic.light.inverse.solid.accent}
-                onClick={() =>
-                  handleColorClick(
-                    semantic.light.inverse.solid.accent,
-                    'default',
-                    1,
-                  )
-                }
-                isSelected={
-                  selectedColor === semantic.light.inverse.solid.accent
-                }
-              />
-
-              <S.ThemeColor
-                backgroundColor={semantic.light.theme.solid.red}
-                onClick={() =>
-                  handleColorClick(semantic.light.theme.solid.red, 'red', 2)
-                }
-                isSelected={selectedColor === semantic.light.theme.solid.red}
-              />
-
-              <S.ThemeColor
-                backgroundColor={semantic.light.theme.solid.amber}
-                onClick={() =>
-                  handleColorClick(semantic.light.theme.solid.amber, 'amber', 3)
-                }
-                isSelected={selectedColor === semantic.light.theme.solid.amber}
-              />
-
-              <S.ThemeColor
-                backgroundColor={semantic.light.theme.solid.blue}
-                onClick={() =>
-                  handleColorClick(semantic.light.theme.solid.blue, 'blue', 4)
-                }
-                isSelected={selectedColor === semantic.light.theme.solid.blue}
-              />
-
-              <S.ThemeColor
-                backgroundColor={semantic.light.theme.solid.purple}
-                onClick={() =>
-                  handleColorClick(
-                    semantic.light.theme.solid.purple,
-                    'purple',
-                    5,
-                  )
-                }
-                isSelected={selectedColor === semantic.light.theme.solid.purple}
-              />
-
-              <S.ThemeColor
-                backgroundColor={semantic.light.theme.solid.lightpink}
-                onClick={() =>
-                  handleColorClick(
-                    semantic.light.theme.solid.lightpink,
-                    'lightpink',
-                    6,
-                  )
-                }
-                isSelected={
-                  selectedColor === semantic.light.theme.solid.lightpink
-                }
-              />
-
-              <S.ThemeColor
-                backgroundColor={semantic.light.theme.solid.lightpurple}
-                onClick={() =>
-                  handleColorClick(
-                    semantic.light.theme.solid.lightpurple,
-                    'lightpurple',
-                    7,
-                  )
-                }
-                isSelected={
-                  selectedColor === semantic.light.theme.solid.lightpurple
-                }
-              />
-
-              <S.ThemeColor
-                backgroundColor={semantic.light.theme.solid.lightblue}
-                onClick={() =>
-                  handleColorClick(
-                    semantic.light.theme.solid.lightblue,
-                    'lightblue',
-                    8,
-                  )
-                }
-                isSelected={
-                  selectedColor === semantic.light.theme.solid.lightblue
-                }
-              />
-
-              <S.ThemeColor
-                backgroundColor={semantic.light.theme.solid.ruby}
-                onClick={() =>
-                  handleColorClick(semantic.light.theme.solid.ruby, 'ruby', 9)
-                }
-                isSelected={selectedColor === semantic.light.theme.solid.ruby}
-              />
-
-              <S.ThemeColor
-                backgroundColor={semantic.light.theme.solid.diamond}
-                onClick={() =>
-                  handleColorClick(
-                    semantic.light.theme.solid.diamond,
-                    'diamond',
-                    10,
-                  )
-                }
-                isSelected={
-                  selectedColor === semantic.light.theme.solid.diamond
-                }
-              />
+              {themeList?.colors?.length > 0 ? (
+                themeList.colors.map(color => (
+                  <S.ThemeColor
+                    key={color.id}
+                    backgroundColor={`rgb(${color.rgb})`}
+                    onClick={() =>
+                      handleColorClick(
+                        `rgb(${color.rgb})`,
+                        color.colorName,
+                        color.id,
+                      )
+                    }
+                    isSelected={selectedColor === `rgb(${color.rgb})`}
+                  />
+                ))
+              ) : (
+                <S.ThemeColor
+                  backgroundColor={semantic.light.inverse.solid.accent}
+                  onClick={() =>
+                    handleColorClick(
+                      semantic.light.inverse.solid.accent,
+                      'default',
+                      1,
+                    )
+                  }
+                  isSelected={
+                    selectedColor === semantic.light.inverse.solid.accent
+                  }
+                />
+              )}
             </S.ThemeColorBox>
           </S.ThemeColorSection>
         </S.ThemeColorContainer>
 
         <S.BuyThemeBox>
-          <S.BuyThemeBtn>
+          <S.BuyThemeBtn onClick={handleApplyClick}>
             <S.BuyThemeBtnText>적용하기</S.BuyThemeBtnText>
           </S.BuyThemeBtn>
         </S.BuyThemeBox>
