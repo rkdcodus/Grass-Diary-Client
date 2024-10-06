@@ -212,17 +212,10 @@ const Setting = () => {
           <S.WithdrawBoxArticle>
             <S.WithdrawBox>
               <S.SettingLabel>{SETTING_MESSAGES.label.withdraw}</S.SettingLabel>
-              <S.WithdrawButton
-                onClick={() =>
-                  handleModal(MODAL.main.modal.modal_notice('회원 탈퇴 기능'))
-                }
-              >
-                {SETTING_MESSAGES.button.withdraw}
-              </S.WithdrawButton>
+              <a href="#">
+                <S.WithdrawButton src="/assets/icons/icon-btn-chevron-right.svg" />
+              </a>
             </S.WithdrawBox>
-            <S.SettingMessage>
-              {SETTING_MESSAGES.message.withdraw}
-            </S.SettingMessage>
           </S.WithdrawBoxArticle>
           <S.BottomSection>
             <S.NavigateButton>

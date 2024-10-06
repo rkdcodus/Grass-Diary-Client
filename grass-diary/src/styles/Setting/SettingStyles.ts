@@ -314,8 +314,6 @@ const SettingLeftBox = styled.div<{ $variant?: string }>`
 `;
 
 const SettingLabel = styled.label`
-  width: 7rem;
-
   ${TYPO.title1}
   color: ${semantic.light.object.solid.normal};
 `;
@@ -473,26 +471,13 @@ const WithdrawBox = styled.div`
   display: flex;
   align-items: center;
 
-  gap: 4.5rem;
+  gap: 0.5rem;
+  cursor: pointer;
 `;
 
-const WithdrawButton = styled.button`
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  align-self: stretch;
-
-  height: 2.0625rem;
-
-  gap: 0.5rem;
-  padding: 0.625rem 1rem;
-
-  border-radius: 0.5rem;
-
-  color: ${semantic.light.base.solid.white};
-  background: ${semantic.light.inverse.solid.negative};
-
-  ${INTERACTION.default.subtle(semantic.light.inverse.solid.negative)}
+const WithdrawButton = styled.img`
+  width: 1.25rem;
+  height: 1.25rem;
 `;
 
 const BottomSection = styled.div`
