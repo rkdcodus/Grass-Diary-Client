@@ -144,7 +144,7 @@ const Setting = () => {
         <S.DetailSettingSection>
           <S.DetailSettingArticle>
             <S.SettingBox>
-              <S.SettingLeftBox>
+              <S.SettingLeftBox $variant="nickname">
                 <S.SettingLabel>
                   {SETTING_MESSAGES.label.nickname}
                 </S.SettingLabel>

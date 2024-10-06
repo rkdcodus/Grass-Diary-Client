@@ -283,7 +283,13 @@ const SettingLeftBox = styled.div<{ $variant?: string }>`
   ${({ $variant }) => {
     if ($variant === 'email') {
       return css`
-        gap: 4.325rem;
+        gap: 3.325rem;
+      `;
+    }
+
+    if ($variant === 'nickname') {
+      return css`
+        gap: 5.725rem;
       `;
     }
   }}
@@ -295,6 +301,12 @@ const SettingLeftBox = styled.div<{ $variant?: string }>`
       if ($variant === 'email') {
         return css`
           gap: 2rem;
+        `;
+      }
+
+      if ($variant === 'nickname') {
+        return css`
+          gap: 4.4rem;
         `;
       }
     }}
