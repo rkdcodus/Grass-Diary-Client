@@ -29,24 +29,25 @@ export const useTheme = () => {
   const queryClient = useQueryClient();
 
   return useMutation<PurchaseResponse, ErrorResponse, ThemePurchaseData>({
-    mutationFn: ({
+    mutationFn: async ({
       memberId,
       colorCodeId,
       colorName,
       rgb,
-    }: ThemePurchaseData) =>
-      API.post<PurchaseResponse>(END_POINT.theme_color(colorCodeId), {
-        memberId,
-        colorCodeId,
-        colorName,
-        rgb,
-      }),
-    onSuccess: res => {
-      queryClient.invalidateQueries({ queryKey: ['themes'] });
-      console.log('success', res.purchasedColor);
+    }: ThemePurchaseData) => {
+      const response = await API.post<PurchaseResponse>(
+        END_POINT.theme_color(colorCodeId),
+        {
+          memberId,
+          colorCodeId,
+          colorName,
+          rgb,
+        },
+      );
+      return response.data;
     },
-    onError: error => {
-      console.error('error', error.response.data.description);
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['themes'] });
     },
   });
 };

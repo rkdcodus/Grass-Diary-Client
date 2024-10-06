@@ -6,19 +6,23 @@ import { ReactComponent as Arrow } from '@svg/chevron_right.svg';
 import { ReactComponent as Avatar } from '@svg/avatarBg.svg';
 import { ReactComponent as Navigate } from '@svg/navigate_next.svg';
 import { MAIN_MESSAGES } from '@constants/message';
-import { Link } from 'react-router-dom';
 import { useCallback, useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { useReward } from '@hooks/api/useReward';
 import { useUser } from '@state/user/useUser';
 import { useTheme } from '@hooks/api/useTheme';
+import { useGrassRecord } from '@hooks/api/useGrassRecord';
 import { useModal } from '@state/modal/useModal';
 
 const ThemeStorePage = () => {
   const { reward } = useReward();
   const { modal } = useModal();
   const memberId = useUser();
+  const { grassQuery } = useGrassRecord();
   const { mutate: purchaseTheme } = useTheme();
-  const [selectedColor, setSelectedColor] = useState<string>('');
+  const [selectedColor, setSelectedColor] = useState<string>(
+    `rgb(${grassQuery?.grassInfoDTO.colorRGB})` || '',
+  );
   const [selectedColorName, setSelectedColorName] = useState<string>('');
   const [selectedColorId, setSelectedColorId] = useState<number | null>(null);
   const [previewBoxes, setPreviewBoxes] = useState(
@@ -26,6 +30,12 @@ const ThemeStorePage = () => {
   );
   const previewDays = 31;
   const themePrice = 100;
+
+  useEffect(() => {
+    if (grassQuery) {
+      setSelectedColor(`rgb(${grassQuery?.grassInfoDTO.colorRGB})`);
+    }
+  }, [grassQuery]);
 
   const handleColorClick = useCallback(
     (color: string, name: string, id: number) => {
@@ -37,9 +47,7 @@ const ThemeStorePage = () => {
     [],
   );
 
-  useEffect(() => {
-    console.log(previewBoxes);
-  }, [previewBoxes]);
+  useEffect(() => {}, [previewBoxes]);
 
   const boxes = Array.from({ length: previewDays }, (_, index) => {
     const isAccent = index < previewBoxes;
