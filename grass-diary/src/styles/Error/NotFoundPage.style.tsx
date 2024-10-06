@@ -42,14 +42,20 @@ export const ErrorTextBox = styled.div`
 `;
 
 export const HeaderText = styled.h1`
-  color: ${semantic.light.accent.solid.normal};
+  color: ${semantic.light.object.solid.hero};
 
   ${TYPO.display1}
+  @media screen and (max-width: 60em) {
+    ${TYPO.title3}
+  }
 `;
 
 export const GuideText = styled.span`
   color: ${semantic.light.object.transparent.neutral};
   ${TYPO.body4}
+  @media screen and (max-width: 60em) {
+    ${TYPO.body1}
+  }
 `;
 
 export const ErrorCode = styled.span`
