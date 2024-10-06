@@ -237,7 +237,6 @@ export const MODAL = {
         `${type} 아직 준비 중이에요.\n빠르게 선보일 수 있도록 할게요!`,
     },
   },
-
   create_diary: {
     load_temporary: '임시 저장된 글 불러오기',
     load_temporary_description:
@@ -248,6 +247,10 @@ export const MODAL = {
   authentication_error: {
     title: '인증 오류',
     content: '로그인 만료 시간 30분이 지나\n자동으로 로그아웃 되었어요',
+  },
+  network_error: {
+    title: '네트워크 오류',
+    content: '현재 접속이 원활하지 않습니다\n잠시 후 다시 시도해주세요',
   },
 } as const;
 
