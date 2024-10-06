@@ -38,10 +38,7 @@ export const useUser = () => {
 
   if (isError) {
     const manualLogout = localStorage.getItem('manualLogout');
-    console.log('error', error);
     if (manualLogout === null) {
-      console.log('error 조건문 내부', error);
-
       const setting = {
         title: MODAL.authentication_error.title,
         content:
