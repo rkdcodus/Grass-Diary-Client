@@ -24,21 +24,20 @@ export const Layout = styled.div`
 
 export const ThemeTitleBox = styled.div`
   display: flex;
-  width: 60rem;
   flex-direction: column;
   align-items: flex-end;
   gap: var(--gap-5xl, 3.5rem);
   padding-top: 3.5rem;
+  padding-left: 48rem;
 
   @media screen and (max-width: 60em) {
     display: flex;
-    height: 20rem;
+    height: 12rem;
     padding: var(--gap-2xl, 2rem) var(--gap-lg, 1.25rem) var(--gap-5xl, 3.5rem)
       var(--gap-lg, 1.25rem);
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: var(--gap-lg, 5.25rem);
   }
 `;
 
@@ -86,6 +85,15 @@ export const ThemeSubTitle = styled.p`
   text-align: center;
 
   ${TYPO.body3}
+
+  @media screen and (max-width: 60em) {
+    align-self: stretch;
+
+    color: ${semantic.light.object.transparent.alternative};
+    text-align: center;
+
+    ${TYPO.title1}
+  }
 `;
 
 export const RewardPageBtn = styled.button`

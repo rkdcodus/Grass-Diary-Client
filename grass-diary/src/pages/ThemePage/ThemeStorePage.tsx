@@ -182,8 +182,10 @@ const ThemeStorePage = () => {
               />
             </S.ThemeStoreBtn>
           </Link>
-          <S.ThemeTitle>테마 상점</S.ThemeTitle>
         </S.ThemeTitleBox>
+
+        <S.ThemeTitle>테마 상점</S.ThemeTitle>
+
         <S.ThemeSubTitleBox>
           <S.ThemeSubTitle>
             잔디 포인트로 다양한 테마를 구입해 보세요!

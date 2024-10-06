@@ -165,8 +165,9 @@ const ThemeSettingPage = () => {
               />
             </S.ThemeStoreBtn>
           </Link>
-          <S.ThemeTitle>테마 설정</S.ThemeTitle>
         </S.ThemeTitleBox>
+
+        <S.ThemeTitle>테마 설정</S.ThemeTitle>
 
         <S.ThemePreviewContainer>
           <S.ThemePreviewTextBox>
