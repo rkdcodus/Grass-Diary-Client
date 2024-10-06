@@ -112,8 +112,11 @@ const RewardPage = () => {
                                   </S.RewardDateText>
                                 </S.RewardDate>
                                 <S.RewardPoint>
+                                  <Avatar />
                                   <S.RewardPointText>
-                                    <Avatar /> +{rewardHistory.rewardPoint}
+                                    {rewardHistory.rewardPoint < 0
+                                      ? rewardHistory.rewardPoint
+                                      : `+${rewardHistory.rewardPoint}`}
                                   </S.RewardPointText>
                                 </S.RewardPoint>
                               </S.RewardList>
