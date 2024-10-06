@@ -41,4 +41,6 @@ export const END_POINT = {
   hashtagList: (memberId: Id, hashtagId: string | null) =>
     `search/tagId/${memberId}?tagId=${hashtagId}`,
   theme_color: (colorCodeId: number) => `/store/color/${colorCodeId}`,
+  theme_setting: (colorCodeId: number) => `member/colors/${colorCodeId}/equip`,
+  theme_list: (memberId: Id) => `member/${memberId}/colors`,
 } as const;
