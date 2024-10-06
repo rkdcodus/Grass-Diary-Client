@@ -12,20 +12,33 @@ export const Layout = styled.div`
   align-self: stretch;
 
   @media screen and (max-width: 60em) {
-    width: 22rem;
+    display: flex;
+    width: 23.4375rem;
+    min-width: var(--vw-mobile-min, 20rem);
+    max-width: var(--vw-mobile-max, 59.9375rem);
+    flex-direction: column;
+    align-items: center;
+    gap: var(--gap-md, 1rem);
   }
 `;
 
 export const ThemeTitleBox = styled.div`
   display: flex;
-  width: 78rem;
+  width: 60rem;
   flex-direction: column;
   align-items: flex-end;
   gap: var(--gap-5xl, 3.5rem);
   padding-top: 3.5rem;
 
   @media screen and (max-width: 60em) {
-    width: 22rem;
+    display: flex;
+    height: 20rem;
+    padding: var(--gap-2xl, 2rem) var(--gap-lg, 1.25rem) var(--gap-5xl, 3.5rem)
+      var(--gap-lg, 1.25rem);
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: var(--gap-lg, 5.25rem);
   }
 `;
 
