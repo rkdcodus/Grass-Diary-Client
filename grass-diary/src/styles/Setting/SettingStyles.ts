@@ -505,10 +505,22 @@ const BottomSection = styled.div`
   gap: 3rem;
 `;
 
-const ApplyButton = styled.button`
+export const IntroductionButtonBox = styled.div`
   display: flex;
   justify-content: flex-end;
+
+  width: 100%;
+
+  padding-top: 0.5rem;
+  padding-right: 1.25rem;
+`;
+
+const ApplyButton = styled.button`
+  display: flex;
+  justify-content: center;
   align-items: center;
+
+  width: 4.3125rem;
 
   gap: 0.5rem;
   padding: 0.625rem 1rem;

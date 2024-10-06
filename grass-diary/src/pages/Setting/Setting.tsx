@@ -126,6 +126,19 @@ const Setting = () => {
             <S.IntroductionCountText>
               {profileIntro.length}/150자
             </S.IntroductionCountText>
+            <S.IntroductionButtonBox>
+              <S.ApplyButton
+                onClick={() =>
+                  updateProfile.mutate({
+                    profileIntro: profileIntro,
+                    nickname,
+                    email,
+                  })
+                }
+              >
+                {SETTING_MESSAGES.button.save}
+              </S.ApplyButton>
+            </S.IntroductionButtonBox>
           </S.ProfileArticle>
         </S.ProfileSection>
         <S.DetailSettingSection>
@@ -212,16 +225,6 @@ const Setting = () => {
             </S.SettingMessage>
           </S.WithdrawBoxArticle>
           <S.BottomSection>
-            <S.ApplyButton
-              onClick={() =>
-                updateProfile.mutate({
-                  nickname: nickname,
-                  profileIntro: profileIntro,
-                })
-              }
-            >
-              {SETTING_MESSAGES.button.apply}
-            </S.ApplyButton>
             <S.NavigateButton>
               {SETTING_MESSAGES.button.navigate}
               <img src="/assets/icons/button-outlined-chevron-right.svg" />

@@ -124,7 +124,6 @@ export const SETTING_MESSAGES = {
     save: '저장',
     amend: '수정',
     withdraw: '회원 탈퇴',
-    apply: '적용하기',
     navigate: '잔디 테마 설정 페이지로 이동하기',
   },
   placeholder: {
