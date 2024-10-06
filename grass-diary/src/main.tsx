@@ -24,6 +24,7 @@ const App = () => {
       },
     }),
   );
+
   return (
     <QueryClientProvider client={queryClient}>
       <ReactQueryDevtools />

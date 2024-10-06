@@ -1,6 +1,7 @@
 import { useToast } from '@state/toast/useToast';
 import axios from 'axios';
 import { useCallback } from 'react';
+
 const useApiError = () => {
   const { toast } = useToast();
   const handleError = useCallback((error: unknown) => {
@@ -14,4 +15,5 @@ const useApiError = () => {
   }, []);
   return { handleError };
 };
+
 export default useApiError;
