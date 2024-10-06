@@ -39,4 +39,5 @@ export const END_POINT = {
   comment_delete: (id: Id) => `/comment/${id}/delete`,
   hashtagList: (memberId: Id, hashtagId: string | null) =>
     `search/tagId/${memberId}?tagId=${hashtagId}`,
+  withdraw: () => `/member/withdraw`,
 } as const;

@@ -13,6 +13,7 @@ import {
   ErrorPage,
   RewardPage,
 } from '@pages/index';
+import Withdraw from '@pages/Withdraw/Withdraw';
 
 const router = createBrowserRouter([
   {
@@ -34,6 +35,7 @@ const router = createBrowserRouter([
       { path: '/mypage', element: <MyPage /> },
       { path: '/errorpage', element: <ErrorPage /> },
       { path: '/rewardpage', element: <RewardPage /> },
+      { path: '/withdraw', element: <Withdraw /> },
     ],
   },
 ]);

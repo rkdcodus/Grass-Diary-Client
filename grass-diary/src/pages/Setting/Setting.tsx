@@ -224,7 +224,7 @@ const Setting = () => {
           <S.WithdrawBoxArticle>
             <S.NavigateBox>
               <S.SettingLabel>{SETTING_MESSAGES.label.withdraw}</S.SettingLabel>
-              <a href="#">
+              <a href="/withdraw">
                 <S.WithdrawButton src="/assets/icons/icon-btn-chevron-right.svg" />
               </a>
             </S.NavigateBox>
