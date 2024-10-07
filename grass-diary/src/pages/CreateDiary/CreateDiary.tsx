@@ -61,8 +61,9 @@ const CreateDiary = () => {
   const [image, setImage] = useState<ImageInfo>({
     imageId: 0,
     imageURL: '',
-    name: '',
-    size: '',
+    imageName: '',
+    imageSize: 0,
+    imageType: '',
   });
 
   // 임시 저장 모달
@@ -74,13 +75,6 @@ const CreateDiary = () => {
     };
 
     const button1 = {
-      active: true,
-      text: MODAL.create_diary.continue_entry,
-      color: semantic.light.accent.solid.hero,
-      interaction: INTERACTION.accent.subtle(),
-    };
-
-    const button2 = {
       active: true,
       text: MODAL.create_diary.new_entry,
       clickHandler: () => {
@@ -100,13 +94,22 @@ const CreateDiary = () => {
         setImage({
           imageId: 0,
           imageURL: '',
-          name: '',
-          size: '',
+          imageName: '',
+          imageSize: 0,
+          imageType: '',
         });
       },
     };
 
-    modal(setting, button2, button1);
+    const button2 = {
+      active: true,
+      text: MODAL.create_diary.continue_entry,
+      color: semantic.light.accent.solid.hero,
+      interaction: INTERACTION.accent.subtle(),
+      clickHandler: () => {},
+    };
+
+    modal(setting, button1, button2);
   };
 
   useEffect(() => {
@@ -212,18 +215,13 @@ const CreateDiary = () => {
     }
   };
 
-  const checkWritingPermission = () => {
-    const lastWritingDate = localStorage.getItem('lastWritingDate');
-    const currentDate = `${diaryInfo.year}년/${diaryInfo.month}월/${diaryInfo.date}일`;
-    return lastWritingDate !== currentDate;
-  };
-
   const removeImage = () => {
     setImage({
       imageId: 0,
       imageURL: '',
-      name: '',
-      size: '',
+      imageName: '',
+      imageSize: 0,
+      imageType: '',
     });
   };
 
@@ -231,14 +229,9 @@ const CreateDiary = () => {
     if (isContentEmpty) return; // 일기 내용이 비어 있으면 저장 요청 불가
     const { quillContent, isPrivate, hashArr, moodValue } = diaryInfo;
 
-    if (!checkWritingPermission()) {
-      toast(CREATE_MESSAGES.toast.already_written);
-      return;
-    }
-
     // 사용자가 이미지를 첨부할 경우 postImage -> createDiary 실행
     if (image.imageURL) {
-      postImage(image.imageURL, {
+      postImage(image, {
         onSuccess: res => {
           const request = {
             content: quillContent,
@@ -254,9 +247,6 @@ const CreateDiary = () => {
               localStorage.removeItem('diary_draft');
               const currentDate = `${diaryInfo.year}년/${diaryInfo.month}월/${diaryInfo.date}일`;
               localStorage.setItem('lastWritingDate', currentDate);
-            },
-            onError: error => {
-              console.error(error);
             },
           });
         },
@@ -276,9 +266,6 @@ const CreateDiary = () => {
           localStorage.removeItem('diary_draft');
           const currentDate = `${diaryInfo.year}년/${diaryInfo.month}월/${diaryInfo.date}일`;
           localStorage.setItem('lastWritingDate', currentDate);
-        },
-        onError: error => {
-          console.error(error);
         },
       });
     }
@@ -345,6 +332,23 @@ const CreateDiary = () => {
     };
   }, [diaryInfo]);
 
+  // 자동 임시 저장
+  useEffect(() => {
+    const autoSave = 60000;
+
+    const autoSaveDraft = () => {
+      if (!isContentEmpty) {
+        handleSaveDraft();
+      }
+    };
+
+    const saveDataTime = setInterval(autoSaveDraft, autoSave);
+
+    return () => {
+      clearInterval(saveDataTime);
+    };
+  }, [diaryInfo, isContentEmpty]);
+
   return (
     <>
       <S.Layout>
@@ -371,44 +375,48 @@ const CreateDiary = () => {
           </S.SaveBtnContainer>
         </S.SaveWrap>
         <S.DiaryModeSelector>
-          <S.DailyQuestionBox $isSelected={selectedMode === 'dailyQuestion'}>
-            <S.ModeBtn>
-              <input
-                id="mode-btn-question"
-                type="radio"
-                checked={selectedMode === 'dailyQuestion'}
-                onChange={() => handleModeChange('dailyQuestion')}
-              />
-              <label htmlFor="mode-btn-question"></label>
-            </S.ModeBtn>
-            <S.ModeBoxContainer>
-              <S.DiaryModeSelectorText>
-                {CREATE_MESSAGES.question_title}
-              </S.DiaryModeSelectorText>
-              <S.DiaryModeSelectorSubText>
-                {CREATE_MESSAGES.question_prompt}
-              </S.DiaryModeSelectorSubText>
-            </S.ModeBoxContainer>
-          </S.DailyQuestionBox>
-          <S.CustomEntryBox $isSelected={selectedMode === 'customEntry'}>
-            <S.ModeBtn>
-              <input
-                id="mode-btn-custom"
-                type="radio"
-                checked={selectedMode === 'customEntry'}
-                onChange={() => handleModeChange('customEntry')}
-              />
-              <label htmlFor="mode-btn-custom"></label>
-            </S.ModeBtn>
-            <S.ModeBoxContainer>
-              <S.DiaryModeSelectorText>
-                {CREATE_MESSAGES.personal_diary}
-              </S.DiaryModeSelectorText>
-              <S.DiaryModeSelectorSubText>
-                {CREATE_MESSAGES.personal_prompt}
-              </S.DiaryModeSelectorSubText>
-            </S.ModeBoxContainer>
-          </S.CustomEntryBox>
+          <label htmlFor="mode-btn-question">
+            <S.DailyQuestionBox $isSelected={selectedMode === 'dailyQuestion'}>
+              <S.ModeBtn>
+                <input
+                  id="mode-btn-question"
+                  type="radio"
+                  checked={selectedMode === 'dailyQuestion'}
+                  onChange={() => handleModeChange('dailyQuestion')}
+                />
+                <label htmlFor="mode-btn-question"></label>
+              </S.ModeBtn>
+              <S.ModeBoxContainer>
+                <S.DiaryModeSelectorText>
+                  {CREATE_MESSAGES.question_title}
+                </S.DiaryModeSelectorText>
+                <S.DiaryModeSelectorSubText>
+                  {CREATE_MESSAGES.question_prompt}
+                </S.DiaryModeSelectorSubText>
+              </S.ModeBoxContainer>
+            </S.DailyQuestionBox>
+          </label>
+          <label htmlFor="mode-btn-custom">
+            <S.CustomEntryBox $isSelected={selectedMode === 'customEntry'}>
+              <S.ModeBtn>
+                <input
+                  id="mode-btn-custom"
+                  type="radio"
+                  checked={selectedMode === 'customEntry'}
+                  onChange={() => handleModeChange('customEntry')}
+                />
+                <label htmlFor="mode-btn-custom"></label>
+              </S.ModeBtn>
+              <S.ModeBoxContainer>
+                <S.DiaryModeSelectorText>
+                  {CREATE_MESSAGES.personal_diary}
+                </S.DiaryModeSelectorText>
+                <S.DiaryModeSelectorSubText>
+                  {CREATE_MESSAGES.personal_prompt}
+                </S.DiaryModeSelectorSubText>
+              </S.ModeBoxContainer>
+            </S.CustomEntryBox>
+          </label>
         </S.DiaryModeSelector>
         <S.Divider>
           <S.DividerLine />
@@ -420,8 +428,8 @@ const CreateDiary = () => {
                 <S.Image>
                   <img src={image.imageURL} alt="image file" />
                 </S.Image>
-                <S.ImageName>{image.name}</S.ImageName>
-                <S.ImageData>{image.size} KB</S.ImageData>
+                <S.ImageName>{image.imageName}</S.ImageName>
+                <S.ImageData>{image.imageSize} KB</S.ImageData>
                 <button onClick={removeImage}>
                   <S.ImageDelete>
                     <Close width={16} height={16} />
@@ -445,7 +453,7 @@ const CreateDiary = () => {
           </S.HashtagTitleBox>
           <S.HashtagBox>
             <S.HashtagContent>
-              <Tag />
+              <Tag style={{ flexShrink: 0 }} />
               <S.HashtagArrTitle>
                 {diaryInfo.hashArr.map((tag, index) => (
                   <span key={index}>

@@ -4,13 +4,12 @@ import MenuBar from './MenuBar';
 import { Profile } from '@components/index';
 import { useNavigate } from 'react-router-dom';
 import { useUser } from '@state/user/useUser';
+import { useModal } from '@state/modal/useModal';
 
 const Header = () => {
   const memberId = useUser();
+  const { loginModal } = useModal();
   const navigate = useNavigate();
-  const handleGoogleLogin: TGoogleLogin = () => {
-    window.open(`http://localhost:8080/api/auth/google`, '_self');
-  };
 
   return (
     <S.Header>
@@ -28,7 +27,7 @@ const Header = () => {
             <MenuBar />
           </S.MenuBarBox>
         ) : (
-          <S.LoginButton onClick={handleGoogleLogin}>로그인</S.LoginButton>
+          <S.LoginButton onClick={loginModal}>로그인</S.LoginButton>
         )}
       </S.Container>
     </S.Header>

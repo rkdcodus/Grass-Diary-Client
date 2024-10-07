@@ -10,6 +10,7 @@ import { useModal } from '@state/modal/useModal';
 import { INTERACTION } from '@styles/interaction';
 import { MODAL } from '@constants/message';
 import { useUser } from '@state/user/useUser';
+import { API_URI } from '@services/index';
 
 interface IFeedProps {
   feed: Feed;
@@ -20,7 +21,7 @@ const Feed = ({ feed, isTop }: IFeedProps) => {
   const navigate = useNavigate();
   const memberId = useUser();
   const { data: writer } = useWriterProfile(feed.memberId);
-  const { modal } = useModal();
+  const { modal, loginModal } = useModal();
 
   const title =
     `${feed.createdAt.slice(2, 4)}년 ` +
@@ -38,7 +39,7 @@ const Feed = ({ feed, isTop }: IFeedProps) => {
   };
 
   const handleGoogleLogin: TGoogleLogin = () => {
-    window.open(`http://localhost:8080/api/auth/google`, '_self');
+    window.open(`${API_URI}/api/auth/google`, '_self');
   };
 
   const FeedClickHandler = () => {
@@ -55,7 +56,7 @@ const Feed = ({ feed, isTop }: IFeedProps) => {
     const button2 = {
       active: true,
       text: MODAL.login_induce.button,
-      clickHandler: handleGoogleLogin,
+      clickHandler: loginModal,
       color: semantic.light.accent.solid.hero,
       interaction: INTERACTION.accent.subtle(),
     };

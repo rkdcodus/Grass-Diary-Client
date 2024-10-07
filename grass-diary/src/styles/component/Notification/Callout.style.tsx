@@ -6,7 +6,7 @@ export const Container = styled.div`
   display: flex;
   align-self: center;
   padding: var(--gap-3xs, 0.375rem) var(--gap-sm, 0.75rem);
-  align-items: flex-start;
+  align-items: center;
   gap: var(--gap-2xs, 0.5rem);
 
   border-radius: var(--radius-xs, 0.5rem);
@@ -23,11 +23,5 @@ export const Text = styled.p`
 
   @media screen and (max-width: 60em) {
     ${TYPO.caption1}
-  }
-`;
-
-export const Space = styled.div`
-  @media screen and (max-width: 60em) {
-    font-size: 1em;
   }
 `;
