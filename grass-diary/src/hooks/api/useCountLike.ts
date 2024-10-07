@@ -19,24 +19,15 @@ const deleteLikeApi = ({ diaryId, memberId }: IApiProps) => {
 };
 
 export const useCountLike = ({ diaryId, memberId }: IApiProps) => {
-  const { renderErrorPage } = useError();
   const { mutate: postLike, isSuccess: postSuccess } = useMutation({
     mutationFn: () => {
       return postLikeApi({ diaryId, memberId });
-    },
-    onError: (error: AxiosError<ApiErrorResponse>) => {
-      console.error(CONSOLE_ERROR.like.post + error);
-      renderErrorPage(error);
     },
   });
 
   const { mutate: deleteLike, isSuccess: deleteSuccess } = useMutation({
     mutationFn: () => {
       return deleteLikeApi({ diaryId, memberId });
-    },
-    onError: (error: AxiosError<ApiErrorResponse>) => {
-      console.error(CONSOLE_ERROR.like.delete + error);
-      renderErrorPage(error);
     },
   });
 

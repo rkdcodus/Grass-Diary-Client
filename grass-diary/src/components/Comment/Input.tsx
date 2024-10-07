@@ -85,7 +85,7 @@ const CommentInput = ({
 // parentId가 null이라면 댓글, 아니라면 대댓글
 const PostInput = ({ parentId }: PostInputProps) => {
   const diaryId = useParamsId();
-  const { memberId } = useUser();
+  const memberId = useUser();
   const { mutate: postComment } = usePostComment(diaryId);
   const { resetReplyId } = useCommentActions();
   const [text, setText] = useState('');

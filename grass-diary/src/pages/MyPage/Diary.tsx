@@ -139,7 +139,7 @@ const Diary = ({
   const [hashtagId, setHashtagId] = useState<string | null>(null);
   const [isSelected, setIsSelected] = useState('');
 
-  const { memberId } = useUser();
+  const memberId = useUser();
   const [currentPage, setCurrentPage] = useState(0);
   const { diaryList, pageSize } = useDiary({
     memberId,

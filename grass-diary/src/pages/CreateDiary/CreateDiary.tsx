@@ -25,7 +25,7 @@ import { MODAL } from '@constants/message';
 
 const CreateDiary = () => {
   const navigate = useNavigate();
-  const { memberId } = useUser();
+  const memberId = useUser();
   const { modal } = useModal();
   const { mutate: createDiary } = useCreateDiary(memberId);
   const { mutate: postImage } = usePostImage();
@@ -215,12 +215,6 @@ const CreateDiary = () => {
     }
   };
 
-  const checkWritingPermission = () => {
-    const lastWritingDate = localStorage.getItem('lastWritingDate');
-    const currentDate = `${diaryInfo.year}년/${diaryInfo.month}월/${diaryInfo.date}일`;
-    return lastWritingDate !== currentDate;
-  };
-
   const removeImage = () => {
     setImage({
       imageId: 0,
@@ -234,11 +228,6 @@ const CreateDiary = () => {
   const handleSave = async () => {
     if (isContentEmpty) return; // 일기 내용이 비어 있으면 저장 요청 불가
     const { quillContent, isPrivate, hashArr, moodValue } = diaryInfo;
-
-    if (!checkWritingPermission()) {
-      toast(CREATE_MESSAGES.toast.already_written);
-      return;
-    }
 
     // 사용자가 이미지를 첨부할 경우 postImage -> createDiary 실행
     if (image.imageURL) {
@@ -259,9 +248,6 @@ const CreateDiary = () => {
               const currentDate = `${diaryInfo.year}년/${diaryInfo.month}월/${diaryInfo.date}일`;
               localStorage.setItem('lastWritingDate', currentDate);
             },
-            onError: error => {
-              console.error(error);
-            },
           });
         },
       });
@@ -280,9 +266,6 @@ const CreateDiary = () => {
           localStorage.removeItem('diary_draft');
           const currentDate = `${diaryInfo.year}년/${diaryInfo.month}월/${diaryInfo.date}일`;
           localStorage.setItem('lastWritingDate', currentDate);
-        },
-        onError: error => {
-          console.error(error);
         },
       });
     }
@@ -348,6 +331,23 @@ const CreateDiary = () => {
       document.removeEventListener('keydown', handleKeyDown);
     };
   }, [diaryInfo]);
+
+  // 자동 임시 저장
+  useEffect(() => {
+    const autoSave = 60000;
+
+    const autoSaveDraft = () => {
+      if (!isContentEmpty) {
+        handleSaveDraft();
+      }
+    };
+
+    const saveDataTime = setInterval(autoSaveDraft, autoSave);
+
+    return () => {
+      clearInterval(saveDataTime);
+    };
+  }, [diaryInfo, isContentEmpty]);
 
   return (
     <>

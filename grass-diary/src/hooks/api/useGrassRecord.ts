@@ -7,7 +7,7 @@ import { CONSOLE_ERROR } from '@constants/message';
 import { useError } from '@hooks/useError';
 
 export const useGrassRecord = () => {
-  const { memberId } = useUser();
+  const memberId = useUser();
   const { renderErrorPage } = useError();
   const fetchUseGrassRecord = async (): Promise<GrassApiResponse> => {
     const res = await API.get(END_POINT.grass(memberId));

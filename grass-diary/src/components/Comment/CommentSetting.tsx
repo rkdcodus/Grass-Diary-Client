@@ -13,7 +13,7 @@ import { Menus, Menu } from '@components/index';
 
 const CommentSetting = ({ commentId, writerId }: CommentSettingProps) => {
   const diaryId = useParamsId();
-  const { memberId } = useUser();
+  const memberId = useUser();
   const { detail } = useDiaryDetail(diaryId);
   const { setEditId } = useCommentActions();
   const { mutate: deleteComment } = useDeleteComment(diaryId);

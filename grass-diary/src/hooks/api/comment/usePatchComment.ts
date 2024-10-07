@@ -6,7 +6,6 @@ import { useError } from '@hooks/useError';
 
 export const usePatchComment = (diaryId: Id) => {
   const queryClient = useQueryClient();
-  const { renderErrorPage } = useError();
 
   return useMutation({
     mutationFn: (request: PatchRequest) => {
@@ -14,10 +13,6 @@ export const usePatchComment = (diaryId: Id) => {
     },
     onSuccess() {
       queryClient.invalidateQueries({ queryKey: ['comment', diaryId] });
-    },
-    onError(error: AxiosError<ApiErrorResponse>) {
-      console.error(error);
-      renderErrorPage(error);
     },
   });
 };

@@ -12,6 +12,7 @@ import { END_POINT } from '@constants/api';
 import { CONSOLE_ERROR, MODAL, SETTING_MESSAGES } from '@constants/message';
 import { useProfile } from '@state/profile/useProfile';
 import { useProfileActions } from '@state/profile/ProfileStore';
+import { Link } from 'react-router-dom';
 import { useModal } from '@state/modal/useModal';
 import { INTERACTION } from '@styles/interaction';
 import { semantic } from '@styles/semantic';
@@ -67,10 +68,6 @@ const Setting = () => {
       queryClient.invalidateQueries({ queryKey: ['profileInfo'] });
       setIsEditingNickname(false);
       setNickName(editNickname);
-    },
-    onError: error => {
-      console.error(CONSOLE_ERROR.member.patch + error);
-      renderErrorPage(error);
     },
   });
 
@@ -229,6 +226,24 @@ const Setting = () => {
               </a>
             </S.NavigateBox>
           </S.WithdrawBoxArticle>
+          <S.BottomSection>
+            <S.ApplyButton
+              onClick={() =>
+                updateProfile.mutate({
+                  nickname: nickname,
+                  profileIntro: profileIntro,
+                })
+              }
+            >
+              {SETTING_MESSAGES.button.apply}
+            </S.ApplyButton>
+            <Link to="/themesetting">
+              <S.NavigateButton>
+                {SETTING_MESSAGES.button.navigate}
+                <img src="/assets/icons/button-outlined-chevron-right.svg" />
+              </S.NavigateButton>
+            </Link>
+          </S.BottomSection>
         </S.DetailSettingSection>
       </S.ContentContainer>
     </S.SettingContainer>

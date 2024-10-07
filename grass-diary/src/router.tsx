@@ -10,8 +10,11 @@ import {
   Share,
   Setting,
   MyPage,
-  ErrorPage,
   RewardPage,
+  ThemeStorePage,
+  ThemeSettingPage,
+  ErrorPage,
+  NotFoundPage,
 } from '@pages/index';
 import Withdraw from '@pages/Withdraw/Withdraw';
 
@@ -23,19 +26,38 @@ const router = createBrowserRouter([
       { path: '/main', element: <Main /> },
       { path: '/share', element: <Share /> },
     ],
+    errorElement: <NotFoundPage />,
   },
 
   {
     element: <ProtectedRoute />,
     children: [
-      { path: '/creatediary', element: <CreateDiary /> },
+      {
+        path: '/creatediary',
+        element: <CreateDiary />,
+        errorElement: <NotFoundPage />,
+      },
       { path: '/editdiary/:diaryId', element: <EditDiary /> },
       { path: '/diary/:diaryId', element: <DiaryDetail /> },
-      { path: '/setting', element: <Setting /> },
-      { path: '/mypage', element: <MyPage /> },
-      { path: '/errorpage', element: <ErrorPage /> },
-      { path: '/rewardpage', element: <RewardPage /> },
-      { path: '/withdraw', element: <Withdraw /> },
+      { path: '/withdraw', element: <Withdraw />, errorElement: <NotFoundPage />  },
+      { path: '/themepage', element: <ThemeStorePage />, errorElement: <NotFoundPage /> },
+      { path: '/themesetting', element: <ThemeSettingPage />, errorElement: <NotFoundPage /> },
+      {
+        path: '/setting',
+        element: <Setting />,
+        errorElement: <NotFoundPage />,
+      },
+      { path: '/mypage', element: <MyPage />, errorElement: <NotFoundPage /> },
+      {
+        path: '/errorpage',
+        element: <ErrorPage />,
+        errorElement: <NotFoundPage />,
+      },
+      {
+        path: '/rewardpage',
+        element: <RewardPage />,
+        errorElement: <NotFoundPage />,
+      },
     ],
   },
 ]);

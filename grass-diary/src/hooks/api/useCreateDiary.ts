@@ -4,11 +4,8 @@ import { END_POINT } from '@constants/api';
 import { useSnackBar } from '@state/toast/useSnackBar';
 import { SNACKBAR } from '@constants/message';
 import { AxiosError } from 'axios';
-import { useError } from '@hooks/useError';
 
 export const useCreateDiary = (memberId: number) => {
-  const { renderErrorPage } = useError();
-
   const { snackBar } = useSnackBar();
   const queryClient = useQueryClient();
 
@@ -25,10 +22,6 @@ export const useCreateDiary = (memberId: number) => {
         SNACKBAR.reward.page,
       );
       queryClient.invalidateQueries({ queryKey: ['diaries'] });
-    },
-    onError: (error: AxiosError<ApiErrorResponse>) => {
-      console.error(error);
-      renderErrorPage(error);
     },
   });
 };

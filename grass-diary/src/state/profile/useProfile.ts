@@ -26,6 +26,7 @@ export const useProfile = () => {
     useProfileActions();
 
   const email = useEmail();
+  const { renderErrorPage } = useError();
   const nickname = useNickname();
   const profileIntro = useProfileIntro();
   const profileImageURL = useProfileImageURL();
