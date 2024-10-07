@@ -29,7 +29,7 @@ const ThemeStorePage = () => {
     () => Math.floor(Math.random() * 30) + 1,
   );
   const previewDays = 31;
-  const themePrice = 100;
+  const themePrice = 490;
 
   useEffect(() => {
     if (grassQuery) {
