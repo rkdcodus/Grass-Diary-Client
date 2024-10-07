@@ -1,15 +1,20 @@
 import { useMutation } from '@tanstack/react-query';
 import API from '@services/index';
 import { END_POINT } from '@constants/api';
+import { AxiosError } from 'axios';
+import { useError } from '@hooks/useError';
 
 export const usePostImage = () => {
+  const { renderErrorPage } = useError();
   return useMutation({
-    mutationFn: async (imageURL: string) => {
+    mutationFn: async (image: ImageInfo) => {
       // base64 형식을 객체로 변환.
-      const formData = await fetch(imageURL)
+      const formData = await fetch(image.imageURL)
         .then(res => res.blob())
         .then(blob => {
-          const file = new File([blob], 'image.jpg', { type: 'image/jpeg' });
+          const file = new File([blob], image.imageName, {
+            type: image.imageType,
+          });
           const formData = new FormData();
           formData.append('image', file);
           return formData;
@@ -17,8 +22,9 @@ export const usePostImage = () => {
 
       return API.post(END_POINT.image, formData);
     },
-    onError: error => {
+    onError: (error: AxiosError<ApiErrorResponse>) => {
       console.error(error.message);
+      renderErrorPage(error);
     },
   });
 };

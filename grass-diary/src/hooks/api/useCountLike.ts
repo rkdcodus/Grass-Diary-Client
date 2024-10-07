@@ -2,6 +2,8 @@ import API from '@services/index';
 import { END_POINT } from '@constants/api';
 import { useMutation } from '@tanstack/react-query';
 import { CONSOLE_ERROR } from '@constants/message';
+import { AxiosError } from 'axios';
+import { useError } from '@hooks/useError';
 
 interface IApiProps {
   diaryId: Id;
@@ -17,12 +19,14 @@ const deleteLikeApi = ({ diaryId, memberId }: IApiProps) => {
 };
 
 export const useCountLike = ({ diaryId, memberId }: IApiProps) => {
+  const { renderErrorPage } = useError();
   const { mutate: postLike, isSuccess: postSuccess } = useMutation({
     mutationFn: () => {
       return postLikeApi({ diaryId, memberId });
     },
-    onError: error => {
+    onError: (error: AxiosError<ApiErrorResponse>) => {
       console.error(CONSOLE_ERROR.like.post + error);
+      renderErrorPage(error);
     },
   });
 
@@ -30,8 +34,9 @@ export const useCountLike = ({ diaryId, memberId }: IApiProps) => {
     mutationFn: () => {
       return deleteLikeApi({ diaryId, memberId });
     },
-    onError: error => {
+    onError: (error: AxiosError<ApiErrorResponse>) => {
       console.error(CONSOLE_ERROR.like.delete + error);
+      renderErrorPage(error);
     },
   });
 

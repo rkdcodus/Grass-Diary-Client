@@ -12,7 +12,7 @@ interface ILikeProps {
 
 const Like = ({ diaryId, likeCount, setLikeCount, liked }: ILikeProps) => {
   const [isPushed, setIsPushed] = useState(false);
-  const memberId = useUser();
+  const { memberId } = useUser();
   const { postLike, deleteLike, postSuccess, deleteSuccess } = useCountLike({
     diaryId,
     memberId,

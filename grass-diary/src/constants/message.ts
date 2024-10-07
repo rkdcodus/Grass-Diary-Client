@@ -83,7 +83,12 @@ export const COMMENT = {
 } as const;
 
 export const FOOTER = {
-  copyright: 'Copyright © 2024 Jandi Diary. All rights reserved.',
+  terms_of_use_url:
+    'https://polite-dove-94b.notion.site/c6a77e0bb1d44a15bf6e0de621d6738d?pvs=4',
+  privacy_policy_url:
+    'https://polite-dove-94b.notion.site/de8c504ed1064c48a5502177041593dd?pvs=4',
+  copyright_front: 'Copyright © 2024 Jandi Diary. ',
+  copyright_back: 'All rights reserved.',
 } as const;
 
 export const MAIN_MESSAGES = {
@@ -240,6 +245,10 @@ export const MODAL = {
     new_entry: '새로 작성',
     continue_entry: '이어서 작성',
   },
+  login_expiration: {
+    title: '로그인 만료',
+    content: '로그인 만료 시간 30분이 지나\n자동으로 로그아웃 되었어요',
+  },
 } as const;
 
 export const TOAST = {
@@ -255,4 +264,3 @@ export const SNACKBAR = {
     page: '/rewardpage',
   },
 } as const;
-
