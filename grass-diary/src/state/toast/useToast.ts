@@ -6,7 +6,7 @@ export const useToast = () => {
   const timer = () => {
     setTimeout(() => {
       setActive();
-    }, 3000);
+    }, 3500);
   };
 
   const toast = (text: string) => {
