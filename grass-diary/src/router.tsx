@@ -39,9 +39,21 @@ const router = createBrowserRouter([
       },
       { path: '/editdiary/:diaryId', element: <EditDiary /> },
       { path: '/diary/:diaryId', element: <DiaryDetail /> },
-      { path: '/withdraw', element: <Withdraw />, errorElement: <NotFoundPage />  },
-      { path: '/themepage', element: <ThemeStorePage />, errorElement: <NotFoundPage /> },
-      { path: '/themesetting', element: <ThemeSettingPage />, errorElement: <NotFoundPage /> },
+      {
+        path: '/withdraw',
+        element: <Withdraw />,
+        errorElement: <NotFoundPage />,
+      },
+      {
+        path: '/themepage',
+        element: <ThemeStorePage />,
+        errorElement: <NotFoundPage />,
+      },
+      {
+        path: '/themesetting',
+        element: <ThemeSettingPage />,
+        errorElement: <NotFoundPage />,
+      },
       {
         path: '/setting',
         element: <Setting />,

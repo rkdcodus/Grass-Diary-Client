@@ -7,7 +7,7 @@ import { useUser } from '@state/user/useUser';
 import { useModal } from '@state/modal/useModal';
 import { useThemeSetting } from '@hooks/api/useThemeSetting';
 import { useGrassRecord } from '@hooks/api/useGrassRecord';
-import { useThemeList } from '@hooks/api/\buseThemeList';
+import { useThemeList } from '@hooks/api/useThemeList';
 
 const ThemeSettingPage = () => {
   const { modal } = useModal();

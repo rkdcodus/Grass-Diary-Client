@@ -9,7 +9,7 @@ import * as S from '../../styles/Setting/SettingStyles';
 import API from '@services/index';
 import { Profile } from '@components/index';
 import { END_POINT } from '@constants/api';
-import { CONSOLE_ERROR, MODAL, SETTING_MESSAGES } from '@constants/message';
+import { MODAL, SETTING_MESSAGES } from '@constants/message';
 import { useProfile } from '@state/profile/useProfile';
 import { useProfileActions } from '@state/profile/ProfileStore';
 import { Link } from 'react-router-dom';
@@ -17,13 +17,11 @@ import { useModal } from '@state/modal/useModal';
 import { INTERACTION } from '@styles/interaction';
 import { semantic } from '@styles/semantic';
 import { AxiosError } from 'axios';
-import { useError } from '@hooks/useError';
 
 const Setting = () => {
   const queryClient: QueryClient = useQueryClient();
   const { nickname, profileIntro, email }: omitProfileImageURL = useProfile();
   const { setNickName, setProfileIntro } = useProfileActions();
-  const { renderErrorPage } = useError();
   const { modal } = useModal();
 
   const [isFocused, setIsFocused] = useState(false);
@@ -196,9 +194,9 @@ const Setting = () => {
           <S.DetailSettingArticle>
             <S.NavigateBox>
               <S.SettingLabel>{SETTING_MESSAGES.label.theme}</S.SettingLabel>
-              <a href="#">
+              <Link to="/themesetting">
                 <S.WithdrawButton src="/assets/icons/icon-btn-chevron-right.svg" />
-              </a>
+              </Link>
             </S.NavigateBox>
             <S.SettingMessage>
               {SETTING_MESSAGES.message.theme}
@@ -226,24 +224,6 @@ const Setting = () => {
               </a>
             </S.NavigateBox>
           </S.WithdrawBoxArticle>
-          <S.BottomSection>
-            <S.ApplyButton
-              onClick={() =>
-                updateProfile.mutate({
-                  nickname: nickname,
-                  profileIntro: profileIntro,
-                })
-              }
-            >
-              {SETTING_MESSAGES.button.apply}
-            </S.ApplyButton>
-            <Link to="/themesetting">
-              <S.NavigateButton>
-                {SETTING_MESSAGES.button.navigate}
-                <img src="/assets/icons/button-outlined-chevron-right.svg" />
-              </S.NavigateButton>
-            </Link>
-          </S.BottomSection>
         </S.DetailSettingSection>
       </S.ContentContainer>
     </S.SettingContainer>
