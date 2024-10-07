@@ -5,6 +5,7 @@ import { ReactComponent as Arrow } from '@svg/chevron_right.svg';
 import { useReward } from '@hooks/api/useReward';
 import { useGrassRecord } from '@hooks/api/useGrassRecord';
 import { useRewardHistory } from '@hooks/api/useRewardHistory';
+import { Link } from 'react-router-dom';
 
 const RewardPage = () => {
   const { reward } = useReward();
@@ -55,14 +56,16 @@ const RewardPage = () => {
                 </S.TotalRewardCaptionText>
               </S.GrassRewardBox>
             </S.RewardContainer>
-            <S.ThemeBtn>
-              <S.ThemeBtnText>테마 상점</S.ThemeBtnText>
-              <Arrow
-                width={18}
-                height={18}
-                fill={semantic.light.accent.solid.hero}
-              />
-            </S.ThemeBtn>
+            <Link to="/themepage">
+              <S.ThemeBtn>
+                <S.ThemeBtnText>테마 상점</S.ThemeBtnText>
+                <Arrow
+                  width={18}
+                  height={18}
+                  fill={semantic.light.accent.solid.hero}
+                />
+              </S.ThemeBtn>
+            </Link>
           </S.RewardSection>
           <S.HistorySection>
             <S.DayContainer>
@@ -109,8 +112,11 @@ const RewardPage = () => {
                                   </S.RewardDateText>
                                 </S.RewardDate>
                                 <S.RewardPoint>
+                                  <Avatar />
                                   <S.RewardPointText>
-                                    <Avatar /> +{rewardHistory.rewardPoint}
+                                    {rewardHistory.rewardPoint < 0
+                                      ? rewardHistory.rewardPoint
+                                      : `+${rewardHistory.rewardPoint}`}
                                   </S.RewardPointText>
                                 </S.RewardPoint>
                               </S.RewardList>

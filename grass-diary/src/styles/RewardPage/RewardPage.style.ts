@@ -242,7 +242,7 @@ export const RewardDateText = styled.p`
 export const RewardPoint = styled.div`
   display: flex;
   align-items: center;
-  gap: var(--gap-2xs, 0.5rem);
+  gap: var(--gap-2xs, 1rem);
 `;
 
 export const RewardPointText = styled.p`

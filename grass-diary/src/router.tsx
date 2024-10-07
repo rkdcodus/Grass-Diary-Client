@@ -11,6 +11,8 @@ import {
   Setting,
   MyPage,
   RewardPage,
+  ThemeStorePage,
+  ThemeSettingPage,
   ErrorPage,
   NotFoundPage,
 } from '@pages/index';
@@ -36,6 +38,8 @@ const router = createBrowserRouter([
       },
       { path: '/editdiary/:diaryId', element: <EditDiary /> },
       { path: '/diary/:diaryId', element: <DiaryDetail /> },
+      { path: '/themepage', element: <ThemeStorePage />, errorElement: <NotFoundPage /> },
+      { path: '/themesetting', element: <ThemeSettingPage />, errorElement: <NotFoundPage /> },
       {
         path: '/setting',
         element: <Setting />,
