@@ -33,6 +33,9 @@ export const CONSOLE_ERROR = {
   reward: {
     get: '리워드 정보를 불러올 수 없습니다.',
   },
+  withdraw: {
+    delete: '회원 탈퇴에 실패했습니다.',
+  },
 } as const;
 
 export const ERROR = {
@@ -124,7 +127,6 @@ export const SETTING_MESSAGES = {
     save: '저장',
     amend: '수정',
     withdraw: '회원 탈퇴',
-    apply: '적용하기',
     navigate: '잔디 테마 설정 페이지로 이동하기',
   },
   placeholder: {
@@ -133,18 +135,20 @@ export const SETTING_MESSAGES = {
   label: {
     nickname: '닉네임',
     email: '이메일 주소',
-    theme: '테마',
+    mode: '모드 변경',
+    theme: '잔디 테마 설정',
     withdraw: '회원 탈퇴',
   },
   message: {
     nickname:
       '마이페이지의 최상단에 나타나는 닉네임을 8글자 이내로 설정할 수 있습니다.',
     email: '회원 인증 및 메일 발송에 사용되는 이메일 주소입니다.',
-    theme: '기본 모드와 나이트 모드를 선택할 수 있습니다.',
+    mode: '기본 모드와 나이트 모드를 선택할 수 있습니다.',
+    theme: '리워드로 구입한 잔디 테마를 변경할 수 있습니다.',
     withdraw:
       '회원 탈퇴 시 작성한 포스트 및 댓글은 모두 삭제되며 복구되지 않습니다.',
   },
-};
+} as const;
 
 export const CREATE_MESSAGES = {
   write_diary: '일기 쓰기',
@@ -267,3 +271,21 @@ export const SNACKBAR = {
     page: '/rewardpage',
   },
 } as const;
+
+export const WITHDRAW_MESSAGES = {
+  title: '잔디 일기 탈퇴하기',
+  cautionText:
+    '사용하고 계신 계정은 탈퇴할 경우\n본인과 타인 모두 재사용 및 복구가 불가하므로\n신중하게 선택해 주시길 바랍니다.',
+  description1:
+    '탈퇴 후 회원 정보 및, 잔디 일기 서비스 이용 기록이 모두 삭제됩니다.',
+  description2:
+    '회원 정보 및 작성 글, 프로필, 잔디 구매 이력 등의 잔디일기 서비스 이용 기록은 모두 삭제되며, 삭제된 데이터는 복구되지 않습니다.',
+  description3:
+    '삭제되는 내용을 확인하시고 필요한 데이터는 미리 백업을 부탁드립니다.',
+  description4:
+    '삭제 항목: 작성글, 사용자가 작성한 댓글 및 대댓글/일기 작성 날짜 이력/좋아요, 구입한 잔디 테마 이력/리워드 내역/이미지/해시태그',
+  description5: '탈퇴 후에는 기존 계정으로 다시 가입할 수 없습니다.',
+  description6: '해당 계정과 데이터는 복구할 수 없습니다.',
+  agreeText: '안내 사항을 모두 확인하였으며, 이에 동의합니다.',
+  withdrawButton: '탈퇴하기',
+};

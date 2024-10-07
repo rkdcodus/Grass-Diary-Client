@@ -21,7 +21,7 @@ import { useError } from '@hooks/useError';
 
 const Setting = () => {
   const queryClient: QueryClient = useQueryClient();
-  const { nickname, profileIntro }: omitProfileImageURL = useProfile();
+  const { nickname, profileIntro, email }: omitProfileImageURL = useProfile();
   const { setNickName, setProfileIntro } = useProfileActions();
   const { renderErrorPage } = useError();
   const { modal } = useModal();
@@ -123,12 +123,25 @@ const Setting = () => {
             <S.IntroductionCountText>
               {profileIntro.length}/150자
             </S.IntroductionCountText>
+            <S.IntroductionButtonBox>
+              <S.ApplyButton
+                onClick={() =>
+                  updateProfile.mutate({
+                    profileIntro: profileIntro,
+                    nickname,
+                    email,
+                  })
+                }
+              >
+                {SETTING_MESSAGES.button.save}
+              </S.ApplyButton>
+            </S.IntroductionButtonBox>
           </S.ProfileArticle>
         </S.ProfileSection>
         <S.DetailSettingSection>
           <S.DetailSettingArticle>
             <S.SettingBox>
-              <S.SettingLeftBox>
+              <S.SettingLeftBox $variant="nickname">
                 <S.SettingLabel>
                   {SETTING_MESSAGES.label.nickname}
                 </S.SettingLabel>
@@ -149,6 +162,7 @@ const Setting = () => {
                     updateProfile.mutate({
                       nickname: editNickname,
                       profileIntro,
+                      email,
                     })
                   }
                 >
@@ -169,7 +183,7 @@ const Setting = () => {
             <S.SettingBox>
               <S.SettingLeftBox $variant="email">
                 <S.SettingLabel>{SETTING_MESSAGES.label.email}</S.SettingLabel>
-                <S.SettingText>username@gmail.com</S.SettingText>
+                <S.SettingText>{email}</S.SettingText>
               </S.SettingLeftBox>
             </S.SettingBox>
             <S.SettingMessage>
@@ -179,11 +193,23 @@ const Setting = () => {
           {/* <S.DividerLine />
           <Temporary /> */}
           <S.DividerLine />
+          <S.DetailSettingArticle>
+            <S.NavigateBox>
+              <S.SettingLabel>{SETTING_MESSAGES.label.theme}</S.SettingLabel>
+              <a href="#">
+                <S.WithdrawButton src="/assets/icons/icon-btn-chevron-right.svg" />
+              </a>
+            </S.NavigateBox>
+            <S.SettingMessage>
+              {SETTING_MESSAGES.message.theme}
+            </S.SettingMessage>
+          </S.DetailSettingArticle>
+          <S.DividerLine />
           <S.ThemeContainer>
             <S.ThemeMessageBox>
-              <S.SettingLabel>{SETTING_MESSAGES.label.theme}</S.SettingLabel>
+              <S.SettingLabel>{SETTING_MESSAGES.label.mode}</S.SettingLabel>
               <S.SettingMessage>
-                {SETTING_MESSAGES.message.theme}
+                {SETTING_MESSAGES.message.mode}
               </S.SettingMessage>
             </S.ThemeMessageBox>
             <S.ThemeSelectBox>
@@ -193,19 +219,12 @@ const Setting = () => {
           </S.ThemeContainer>
           <S.DividerLine />
           <S.WithdrawBoxArticle>
-            <S.WithdrawBox>
+            <S.NavigateBox>
               <S.SettingLabel>{SETTING_MESSAGES.label.withdraw}</S.SettingLabel>
-              <S.WithdrawButton
-                onClick={() =>
-                  handleModal(MODAL.main.modal.modal_notice('회원 탈퇴 기능'))
-                }
-              >
-                {SETTING_MESSAGES.button.withdraw}
-              </S.WithdrawButton>
-            </S.WithdrawBox>
-            <S.SettingMessage>
-              {SETTING_MESSAGES.message.withdraw}
-            </S.SettingMessage>
+              <a href="/withdraw">
+                <S.WithdrawButton src="/assets/icons/icon-btn-chevron-right.svg" />
+              </a>
+            </S.NavigateBox>
           </S.WithdrawBoxArticle>
           <S.BottomSection>
             <S.ApplyButton
