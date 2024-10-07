@@ -41,7 +41,7 @@ export const ToastBox = styled.div<{ $active: boolean; $isRed: boolean }>`
   ${TYPO.label2}
   color: ${semantic.light.inverse.solid.hero};
   text-align: center;
-  animation: ${props => props.$active && toastFadeIn} 3s ease;
+  animation: ${props => props.$active && toastFadeIn} 3s 0.5s ease;
   transition: 1s;
 
   @media screen and (max-width: 60em) {

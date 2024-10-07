@@ -7,4 +7,5 @@ export { default as Share } from './Share/Share';
 export { default as Setting } from './Setting/Setting';
 export { default as MyPage } from './MyPage/MyPage';
 export { default as ErrorPage } from './Error/ErrorPage';
+export { default as NotFoundPage } from './Error/NotFoundPage';
 export { default as RewardPage } from './RewardPage/RewardPage';

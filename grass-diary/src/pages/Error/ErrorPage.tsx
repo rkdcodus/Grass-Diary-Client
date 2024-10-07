@@ -1,3 +1,4 @@
+import { ERROR } from '@constants/message';
 import * as S from '@styles/Error/Error';
 import { useLocation } from 'react-router-dom';
 

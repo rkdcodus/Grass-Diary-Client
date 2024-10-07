@@ -18,7 +18,7 @@ import { ReactComponent as Tag } from '@svg/tag.svg';
 
 const DiaryDetail = () => {
   const diaryId = useParamsId();
-  const { memberId } = useUser();
+  const memberId = useUser();
   const [likeCount, setLikeCount] = useState(0);
   const [imageModal, setImageModal] = useState(false);
   const { detail, writer } = useDiaryDetail(diaryId);

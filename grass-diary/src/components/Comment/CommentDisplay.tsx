@@ -10,7 +10,7 @@ import { COMMENT } from '@constants/message';
 
 const CommentDisplay = ({ comment, parentId }: CommentDisplayProps) => {
   const { data: writer } = useWriterProfile(comment.memberId);
-  const { memberId } = useUser();
+  const memberId = useUser();
   const { setReplyId } = useCommentActions();
   const { date } = useTodayDate();
   const [isToday, setIsToday] = useState(false);
