@@ -11,6 +11,28 @@ import { semantic } from '@styles/semantic';
 import { INTERACTION } from '@styles/interaction';
 import { useModal } from '@state/modal/useModal';
 import { useNetwork } from '@hooks/useNetwork';
+import { jwtDecode } from 'jwt-decode';
+
+const getTokenExpirationDate = (token: string) => {
+  try {
+    const decode = jwtDecode(token);
+    if (!decode.exp) return;
+    // JWT의 exp는 초 단위의 UNIX 타임스탬프이므로 이를 밀리초 단위로 변환한다.
+    const date = new Date(0);
+    date.setUTCSeconds(decode.exp);
+    return date;
+  } catch (error) {
+    console.error('Failed to decode token:', error);
+    return null;
+  }
+};
+
+const hasExpired = (expirationDate: Date) => {
+  if (!expirationDate) return false;
+  const currentDate = new Date();
+  const timeDiff = expirationDate.getTime() - currentDate.getTime();
+  return timeDiff <= 0 ? true : false;
+};
 
 const fetchAxios = async () => {
   const res = await API.get(END_POINT.member_info);
@@ -23,8 +45,9 @@ export const useUser = () => {
   const setMemberId = useSetMemberId();
   const { modal } = useModal();
   const isNetworkOffline = useNetwork();
+  const accessToken = localStorage.getItem('accessToken');
 
-  const { data, isSuccess, isError, error } = useQuery<
+  const { data, isSuccess, isError, error, refetch } = useQuery<
     number,
     AxiosError<ApiErrorResponse>,
     number,
@@ -33,22 +56,24 @@ export const useUser = () => {
     queryKey: ['memberId'],
     queryFn: fetchAxios,
     enabled: !!isAuthenticated,
-    retry: 0,
-    refetchInterval: 5000,
-    refetchIntervalInBackground: true,
+    retry: 1,
   });
 
   if (isError) {
     const manualLogout = localStorage.getItem('manualLogout');
 
     if (manualLogout === null) {
+      const content = isNetworkOffline
+        ? MODAL.network_error.content
+        : error.response
+        ? error.response?.data.description + '\n다시 로그인 해주세요'
+        : '다시 로그인 해주세요';
+
       const setting = {
         title: isNetworkOffline
           ? MODAL.network_error.title
           : MODAL.authentication_error.title,
-        content: isNetworkOffline
-          ? MODAL.network_error.content
-          : `${error.response?.data.description}\n` + '다시 로그인 해주세요',
+        content: content,
       };
 
       const button1 = {
@@ -68,6 +93,20 @@ export const useUser = () => {
     else if (isError) setMemberId(0);
     else if (isSuccess) setMemberId(data);
   }, [isAuthenticated, isError, isSuccess]);
+
+  useEffect(() => {
+    if (accessToken) {
+      const expirationDate = getTokenExpirationDate(accessToken);
+      if (expirationDate) {
+        const expireInterval = setInterval(() => {
+          if (hasExpired(expirationDate)) {
+            clearInterval(expireInterval);
+            refetch();
+          }
+        }, 5000);
+      }
+    }
+  }, [accessToken]);
 
   return memberId;
 };
