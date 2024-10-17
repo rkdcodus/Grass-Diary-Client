@@ -29,14 +29,13 @@ const Setting = ({ diaryId, createdDate, detail }: SettingProps) => {
   const { date } = useTodayDate();
   const [canEdit, setCanEdit] = useState(false);
   const { mutate: deleteDiary } = useDeleteDiaryDetail(diaryId);
+  const { mutate: patchVisibility } = usePatchVisibility(
+    diaryId,
+    detail?.isPrivate,
+  );
 
   const editVisibility = () => {
     if (detail) {
-      const { mutate: patchVisibility } = usePatchVisibility(
-        diaryId,
-        detail?.isPrivate,
-      );
-
       const setting = {
         title: detail.isPrivate ? '일기 공개하기' : '일기 비공개하기',
         content: detail.isPrivate

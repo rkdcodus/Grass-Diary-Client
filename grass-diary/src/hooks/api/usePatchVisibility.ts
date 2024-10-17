@@ -8,7 +8,7 @@ const fetchAxios = async (diaryId: Id) => {
   return res.data;
 };
 
-export const usePatchVisibility = (diaryId: Id, isPrivate: boolean) => {
+export const usePatchVisibility = (diaryId: Id, isPrivate?: boolean) => {
   const { toast } = useToast();
   const queryClient = useQueryClient();
 
