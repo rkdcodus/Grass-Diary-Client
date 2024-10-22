@@ -12,12 +12,12 @@ import { INTERACTION } from '@styles/interaction';
 import { useModal } from '@state/modal/useModal';
 import { useNetwork } from '@hooks/useNetwork';
 import { jwtDecode } from 'jwt-decode';
+import { useAuthActions } from '@state/auth/authStore';
 
 const getTokenExpirationDate = (token: string) => {
   try {
     const decode = jwtDecode(token);
     if (!decode.exp) return;
-    // JWT의 exp는 초 단위의 UNIX 타임스탬프이므로 이를 밀리초 단위로 변환한다.
     const date = new Date(0);
     date.setUTCSeconds(decode.exp);
     return date;
@@ -40,14 +40,15 @@ const fetchAxios = async () => {
 };
 
 export const useUser = () => {
+  const accessToken = localStorage.getItem('accessToken');
   const { isAuthenticated } = useAuth();
+  const { setIsAuthenticated } = useAuthActions();
   const memberId = useMemberId();
   const setMemberId = useSetMemberId();
   const { modal } = useModal();
   const isNetworkOffline = useNetwork();
-  const accessToken = localStorage.getItem('accessToken');
 
-  const { data, isSuccess, isError, error, refetch } = useQuery<
+  const { data, isSuccess, isError, error } = useQuery<
     number,
     AxiosError<ApiErrorResponse>,
     number,
@@ -59,53 +60,75 @@ export const useUser = () => {
     retry: 1,
   });
 
-  if (isError) {
-    const manualLogout = localStorage.getItem('manualLogout');
-
-    if (manualLogout === null) {
-      const content = isNetworkOffline
-        ? MODAL.network_error.content
-        : error.response
-        ? error.response?.data.description + '\n다시 로그인 해주세요'
-        : '다시 로그인 해주세요';
-
-      const setting = {
-        title: isNetworkOffline
-          ? MODAL.network_error.title
-          : MODAL.authentication_error.title,
-        content: content,
-      };
-
-      const button1 = {
-        active: true,
-        text: MODAL.confirm,
-        color: semantic.light.accent.solid.hero,
-        interaction: INTERACTION.accent.subtle(),
-        clickHandler: () => (window.location.href = '/'),
-      };
-
-      modal(setting, button1);
-    }
-  }
-
   useEffect(() => {
+    if (isSuccess) setMemberId(data);
     if (!isAuthenticated) setMemberId(0);
-    else if (isError) setMemberId(0);
-    else if (isSuccess) setMemberId(data);
-  }, [isAuthenticated, isError, isSuccess]);
+    if (isError) {
+      const logout = localStorage.getItem('logout');
+      if (logout === null) {
+        const content = isNetworkOffline
+          ? MODAL.network_error.content
+          : error.response
+          ? error.response?.data.description + '\n다시 로그인 해주세요'
+          : '다시 로그인 해주세요';
 
-  useEffect(() => {
-    if (accessToken) {
-      const expirationDate = getTokenExpirationDate(accessToken);
-      if (expirationDate) {
-        const expireInterval = setInterval(() => {
-          if (hasExpired(expirationDate)) {
-            clearInterval(expireInterval);
-            refetch();
-          }
-        }, 5000);
+        const setting = {
+          title: isNetworkOffline
+            ? MODAL.network_error.title
+            : MODAL.authentication_error.title,
+          content: content,
+        };
+
+        const button1 = {
+          active: true,
+          text: MODAL.confirm,
+          color: semantic.light.accent.solid.hero,
+          interaction: INTERACTION.accent.subtle(),
+          clickHandler: () => (window.location.href = '/'),
+        };
+
+        modal(setting, button1);
+        setMemberId(0);
       }
     }
+  }, [isAuthenticated, isError, isSuccess]);
+
+  // 로그인 만료 타이머
+  useEffect(() => {
+    let expireInterval: NodeJS.Timeout;
+
+    if (accessToken) {
+      const expirationDate = getTokenExpirationDate(accessToken);
+
+      if (expirationDate) {
+        expireInterval = setInterval(() => {
+          if (hasExpired(expirationDate)) {
+            const setting = {
+              title: MODAL.authentication_error.title,
+              content: MODAL.authentication_error.content,
+            };
+
+            const button1 = {
+              active: true,
+              text: MODAL.confirm,
+              color: semantic.light.accent.solid.hero,
+              interaction: INTERACTION.accent.subtle(),
+              clickHandler: () => (window.location.href = '/'),
+            };
+
+            localStorage.removeItem('accessToken');
+            localStorage.setItem('logout', 'true');
+            setIsAuthenticated(false);
+            setMemberId(0);
+            clearInterval(expireInterval);
+            modal(setting, button1);
+          }
+        }, 60000);
+      }
+    }
+    return () => {
+      if (expireInterval) clearInterval(expireInterval);
+    };
   }, [accessToken]);
 
   return memberId;
